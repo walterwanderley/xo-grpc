@@ -22,7 +22,7 @@ go install github.com/walterwanderley/xo-grpc@latest
 
 ### Example
 
-1. Generate go code to access your database using xo. For more informations about `xo comand-line parameters`, please visit [the xo Documentation](https://github.com/xo/xo)
+1. Generate go code to access your database using xo. For more informations about `xo command line parameters`, please visit [the xo Documentation](https://github.com/xo/xo)
 
 ```sh
 mkdir models
