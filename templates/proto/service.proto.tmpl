@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package {{.Package | SnakeCase}};
+
+option go_package = "{{.GoModule}}/proto/{{.Package | SnakeCase}}";
+{{range .ProtoImports}}{{ .}}
+{{end}}{{if .Messages}}import "typespb.proto";{{end}}
+
+service {{.Package | UpperFirst}}Service {
+    {{range .Services}}
+    rpc {{.RpcSignature}} { }
+    {{end}}
+}
+{{range .Services}}{{if and (not .HasCustomParams) (not .EmptyInput)}}
+message {{.Name}}Request { {{.ProtoInputs}}
+}
+{{end}}{{if and (not .HasCustomOutput) (not .EmptyOutput)}}
+message {{.Name}}Response {
+{{.ProtoOutputs -}}    
+}{{end}}{{end}}

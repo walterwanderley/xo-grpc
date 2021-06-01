@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package typespb;
+
+option go_package = "{{.GoModule}}/proto/typespb";
+
+{{range .ProtoImports}}{{ .}}
+{{end}}
+{{ range $key, $value := .Messages}}{{if not $value.ElementType}}
+message {{$key}} {
+{{$value.ProtoAttributes -}}
+}{{end}}
+{{end -}}

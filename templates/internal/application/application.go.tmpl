@@ -1,0 +1,43 @@
+package application
+
+import (
+	"context"
+	"database/sql"
+	"encoding/json"
+	"net"
+
+	"github.com/google/uuid"
+	"google.golang.org/protobuf/types/known/emptypb"
+	"google.golang.org/protobuf/types/known/timestamppb"
+	"google.golang.org/protobuf/types/known/wrapperspb"
+
+	pb "{{ .GoModule}}/proto/{{.Package | SnakeCase}}"
+	typespb "{{ .GoModule}}/proto/typespb"
+	{{.SrcPackage}} "{{.GoModule}}/{{.SrcPath}}"
+	"{{.GoModule}}/internal/validation"
+)
+	
+type {{.Package | UpperFirst}}Service struct {
+    pb.Unimplemented{{.Package | UpperFirst}}ServiceServer
+	db *sql.DB
+}
+	
+func New{{.Package | UpperFirst}}Service(db *sql.DB) *{{.Package | UpperFirst}}Service {
+	return &{{.Package | UpperFirst}}Service{db: db}
+}
+{{$package := .Package}}{{$srcPackage := .SrcPackage}}{{ range .Services }}
+func (s *{{$package | UpperFirst}}Service) {{.Name}}(ctx context.Context, req *{{.MethodInputType}}) (res *{{.MethodOutputType}}, err error) {
+    {{if .IsMethod}}m := new({{$srcPackage}}.{{$package}}){{end}}
+	{{ range .InputGrpc}}{{ .}}
+	{{end}}
+	{{ .ReturnCallDatabase}} err {{if not .EmptyOutput}}:{{end}}= {{if .IsMethod}}m{{else}}{{$srcPackage}}{{end}}.{{ .Name}}(s.db{{ .ParamsCallDatabase}})
+	if err != nil {			
+		return
+	}
+
+	res = new({{.MethodOutputType}})
+	{{ range .OutputGrpc}}{{ .}}		
+	{{end}}				
+	return
+}
+{{ end }}
