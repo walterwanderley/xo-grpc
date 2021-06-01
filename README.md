@@ -38,7 +38,7 @@ xo-grpc models
 3. Run the generated server:
 
 ```sh
-go run . -db "[Database Connection URL]
+go run . -db [Database Connection URL]
 ```
 
 ### Similar Projects
