@@ -62,7 +62,7 @@ func toProtoType(typ string) string {
 			return "typespb." + typ
 		}
 
-		if strings.Contains(typ, "encoding.TextUnmarshaler") {
+		if strings.Contains(typ, textUnmarshalerTypePrefix) || strings.Contains(typ, parserTypePrefix) {
 			return "string"
 		}
 		return typ

@@ -9,12 +9,13 @@ import (
 )
 
 type Message struct {
-	Name              string
-	AttrNames         []string
-	AttrTypes         []string
-	IsArray           bool
-	ElementType       string
-	IsTextUnmarshaler bool
+	Name               string
+	AttrNames          []string
+	AttrTypes          []string
+	IsArray            bool
+	ElementType        string
+	HasTextUnmarshaler bool
+	HasParser          bool
 }
 
 func (m *Message) ProtoAttributes() string {
@@ -34,9 +35,9 @@ func (m *Message) AttributeTypeByName(attrName string) string {
 	return ""
 }
 
-func (m *Message) ConvertTypeAlias(messages map[string]*Message) {
+func (m *Message) AdjustType(messages map[string]*Message) {
 	for i, t := range m.AttrTypes {
-		m.AttrTypes[i] = checkAliasType(t, messages)
+		m.AttrTypes[i] = adjustType(t, messages)
 	}
 }
 
@@ -65,6 +66,9 @@ func parseMessages(pkg *ast.Package) map[string]*Message {
 	for _, file := range pkg.Files {
 		if file.Scope != nil {
 			for name, obj := range file.Scope.Objects {
+				if isErrType(name) {
+					continue
+				}
 				if typ, ok := obj.Decl.(*ast.TypeSpec); ok {
 					switch t := typ.Type.(type) {
 					case *ast.Ident:
@@ -84,14 +88,19 @@ func parseMessages(pkg *ast.Package) map[string]*Message {
 				if r, ok := isTextUnmarshaler(fun); ok {
 					r = strings.TrimPrefix(r, "*")
 					if m, ok := messages[r]; ok {
-						m.IsTextUnmarshaler = true
+						m.HasTextUnmarshaler = true
+					}
+				} else if r, ok := isParseFromString(fun); ok {
+					r = strings.TrimPrefix(r, "*")
+					if m, ok := messages[r]; ok {
+						m.HasParser = true
 					}
 				}
 			}
 		}
 	}
 	for _, m := range messages {
-		m.ConvertTypeAlias(messages)
+		m.AdjustType(messages)
 	}
 	return messages
 }
@@ -136,4 +145,15 @@ func customType(typ string) bool {
 func firstIsUpper(s string) bool {
 	ru, _ := utf8.DecodeRuneInString(s[0:1])
 	return unicode.IsUpper(ru)
+}
+
+var errTypes = []string{"ErrDecodeFailed", "ErrInsertFailed", "ErrUpdateFailed", "ErrUpsertFailed"}
+
+func isErrType(name string) bool {
+	for _, n := range errTypes {
+		if n == name {
+			return true
+		}
+	}
+	return false
 }

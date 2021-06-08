@@ -7,7 +7,10 @@ import (
 	"strings"
 )
 
-const textUnmarshalerTypePrefix = "encoding.TextUnmarshaler."
+const (
+	textUnmarshalerTypePrefix = "encoding.TextUnmarshaler."
+	parserTypePrefix          = "encoding.Parser."
+)
 
 type Service struct {
 	Name             string
@@ -154,7 +157,7 @@ func bindToProto(src, dst, attrName, attrType string) []string {
 	case "uint16":
 		res = append(res, fmt.Sprintf("%s.%s = uint32(%s.%s)", dst, attrName, src, attrName))
 	default:
-		if strings.Contains(attrType, textUnmarshalerTypePrefix) {
+		if strings.Contains(attrType, textUnmarshalerTypePrefix) || strings.Contains(attrType, parserTypePrefix) {
 			res = append(res, fmt.Sprintf("%s.%s = %s.%s.String()", dst, attrName, src, attrName))
 		} else {
 			res = append(res, fmt.Sprintf("%s.%s = %s.%s", dst, attrName, src, attrName))
@@ -229,7 +232,7 @@ func bindToGo(src, dst, attrName, attrType string, newVar bool) []string {
 		res = append(res, fmt.Sprintf("if err = v.CheckValid(); err != nil { err = fmt.Errorf(\"invalid %s: %%s%%w\", err.Error(), validation.ErrUserInput)", attrName))
 		res = append(res, "return }")
 		res = append(res, fmt.Sprintf("%s.Time = v.AsTime()", dst))
-		res = append(res, fmt.Sprintf("}"))
+		res = append(res, "}")
 	case "uuid.UUID":
 		if newVar {
 			res = append(res, fmt.Sprintf("var %s %s", dst, attrType))
@@ -269,8 +272,8 @@ func bindToGo(src, dst, attrName, attrType string, newVar bool) []string {
 			res = append(res, fmt.Sprintf("%s = uint16(%s.Get%s())", dst, src, attrName))
 		}
 	default:
-
-		if strings.Contains(attrType, textUnmarshalerTypePrefix) {
+		switch {
+		case strings.Contains(attrType, textUnmarshalerTypePrefix):
 			attrType = strings.ReplaceAll(attrType, textUnmarshalerTypePrefix, "")
 			if newVar {
 				res = append(res, fmt.Sprintf("%s := new(%s)", dst, attrType))
@@ -278,7 +281,15 @@ func bindToGo(src, dst, attrName, attrType string, newVar bool) []string {
 			res = append(res, fmt.Sprintf("if err = %s.UnmarshalText([]byte(%s.Get%s())); err != nil {", dst, src, attrName))
 			res = append(res, fmt.Sprintf("err = fmt.Errorf(\"invalid %s: %%s%%w\", err.Error(), validation.ErrUserInput)", attrName))
 			res = append(res, "return }")
-		} else {
+		case strings.Contains(attrType, parserTypePrefix):
+			attrType = strings.ReplaceAll(attrType, parserTypePrefix, "")
+			if newVar {
+				res = append(res, fmt.Sprintf("%s := new(%s)", dst, attrType))
+			}
+			res = append(res, fmt.Sprintf("if err = %s.Parse(%s.Get%s()); err != nil {", dst, src, attrName))
+			res = append(res, fmt.Sprintf("err = fmt.Errorf(\"invalid %s: %%s%%w\", err.Error(), validation.ErrUserInput)", attrName))
+			res = append(res, "return }")
+		default:
 			if newVar {
 				res = append(res, fmt.Sprintf("%s := %s.Get%s()", dst, src, attrName))
 			} else {
@@ -378,17 +389,17 @@ func analyseFunc(fun *ast.FuncDecl, messages map[string]*Message) (owner string,
 	inputTypes := make([]string, 0)
 	output := make([]string, 0)
 
-	// XODB is the first parameter
-	for i := 1; i < len(fun.Type.Params.List); i++ {
+	// context is the first parameter and DB is the second parameter
+	for i := 2; i < len(fun.Type.Params.List); i++ {
 		p := fun.Type.Params.List[i]
 		inputNames = append(inputNames, p.Names[0].Name)
-		inputTypes = append(inputTypes, checkAliasType(exprToStr(p.Type), messages))
+		inputTypes = append(inputTypes, adjustType(exprToStr(p.Type), messages))
 	}
 
 	// error is the last result
 	for i := 0; i < len(fun.Type.Results.List)-1; i++ {
-		p := fun.Type.Results.List[0]
-		output = append(output, checkAliasType(exprToStr(p.Type), messages))
+		p := fun.Type.Results.List[i]
+		output = append(output, adjustType(exprToStr(p.Type), messages))
 	}
 
 	owner = strings.TrimPrefix(strings.TrimPrefix(getOwner(fun), "[]"), "*")
@@ -434,16 +445,20 @@ func analyseFunc(fun *ast.FuncDecl, messages map[string]*Message) (owner string,
 	return
 }
 
-func checkAliasType(typ string, messages map[string]*Message) string {
-	if m, ok := messages[typ]; ok && m.ElementType != "" {
+func adjustType(typ string, messages map[string]*Message) string {
+	if m, ok := messages[typ]; ok {
 		var prefix string
 		if m.IsArray {
 			prefix = "[]"
 		}
-		if m.IsTextUnmarshaler {
-			return fmt.Sprintf("%sencoding.TextUnmarshaler.%s", prefix, typ)
+		switch {
+		case m.HasTextUnmarshaler:
+			return fmt.Sprintf("%s%s.%s", prefix, textUnmarshalerTypePrefix, typ)
+		case m.HasParser:
+			return fmt.Sprintf("%s%s.%s", parserTypePrefix, prefix, typ)
+		case m.ElementType != "":
+			return prefix + m.ElementType
 		}
-		return prefix + m.ElementType
 	}
 
 	return typ
@@ -469,12 +484,17 @@ func isMethodValid(fun *ast.FuncDecl) bool {
 		return false
 	}
 
-	if fun.Type.Params == nil || len(fun.Type.Params.List) == 0 ||
+	// the first parameter is the context and XODB is the second parameter
+	if fun.Type.Params == nil || len(fun.Type.Params.List) < 2 ||
 		fun.Type.Results == nil || len(fun.Type.Results.List) == 0 {
 		return false
 	}
 
-	if t, ok := fun.Type.Params.List[0].Type.(*ast.Ident); !ok || t.Name != "XODB" {
+	if t, ok := fun.Type.Params.List[0].Type.(*ast.SelectorExpr); !ok || exprToStr(t) != "context.Context" {
+		return false
+	}
+
+	if t, ok := fun.Type.Params.List[1].Type.(*ast.Ident); !ok || t.Name != "DB" {
 		return false
 	}
 
@@ -497,6 +517,34 @@ func isTextUnmarshaler(fun *ast.FuncDecl) (receiver string, ok bool) {
 	}
 
 	if exprToStr(fun.Type.Params.List[0].Type) != "[]byte" {
+		return
+	}
+
+	if exprToStr(fun.Type.Results.List[0].Type) != "error" {
+		return
+	}
+
+	receiver = exprToStr(fun.Recv.List[0].Type)
+
+	if !strings.HasPrefix(receiver, "*") {
+		return
+	}
+
+	return receiver, true
+}
+
+func isParseFromString(fun *ast.FuncDecl) (receiver string, ok bool) {
+	if fun.Name.Name != "Parse" {
+		return
+	}
+
+	if fun.Recv == nil || len(fun.Recv.List) != 1 ||
+		fun.Type.Params == nil || len(fun.Type.Params.List) != 1 ||
+		fun.Type.Results == nil || len(fun.Type.Results.List) != 1 {
+		return
+	}
+
+	if exprToStr(fun.Type.Params.List[0].Type) != "string" {
 		return
 	}
 
