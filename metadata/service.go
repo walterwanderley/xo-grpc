@@ -20,6 +20,7 @@ type Service struct {
 	IsMethod         bool
 	InputMethodNames []string
 	InputMethodTypes []string
+	HasContext       bool
 
 	Messages map[string]*Message
 }
@@ -385,33 +386,36 @@ func analyseFunc(fun *ast.FuncDecl, messages map[string]*Message) (owner string,
 		return
 	}
 
-	inputNames := make([]string, 0)
-	inputTypes := make([]string, 0)
-	output := make([]string, 0)
-
+	srv = &Service{
+		Name:       fun.Name.String(),
+		InputNames: make([]string, 0),
+		InputTypes: make([]string, 0),
+		Output:     make([]string, 0),
+		IsMethod:   fun.Recv != nil && len(fun.Recv.List) > 0,
+	}
 	// context is the first parameter and DB is the second parameter
-	for i := 2; i < len(fun.Type.Params.List); i++ {
+	for i := 0; i < len(fun.Type.Params.List); i++ {
 		p := fun.Type.Params.List[i]
-		inputNames = append(inputNames, p.Names[0].Name)
-		inputTypes = append(inputTypes, adjustType(exprToStr(p.Type), messages))
+		if exprToStr(p.Type) == "context.Context" {
+			srv.HasContext = true
+			continue
+		}
+		if exprToStr(p.Type) == "DB" {
+			continue
+		}
+
+		srv.InputNames = append(srv.InputNames, p.Names[0].Name)
+		srv.InputTypes = append(srv.InputTypes, adjustType(exprToStr(p.Type), messages))
 	}
 
 	// error is the last result
 	for i := 0; i < len(fun.Type.Results.List)-1; i++ {
 		p := fun.Type.Results.List[i]
-		output = append(output, adjustType(exprToStr(p.Type), messages))
+		srv.Output = append(srv.Output, adjustType(exprToStr(p.Type), messages))
 	}
 
 	owner = strings.TrimPrefix(strings.TrimPrefix(getOwner(fun), "[]"), "*")
-	srv = &Service{
-		Name:       fun.Name.String(),
-		InputNames: inputNames,
-		InputTypes: inputTypes,
-		Output:     output,
-		IsMethod:   fun.Recv != nil && len(fun.Recv.List) > 0,
-	}
-	isMethod := fun.Recv != nil && len(fun.Recv.List) > 0
-	if isMethod {
+	if srv.IsMethod {
 		receiverName := fun.Recv.List[0].Names[0].Name
 		methodInputRequirements := make(map[string]struct{})
 		for _, stmt := range fun.Body.List {
@@ -484,17 +488,8 @@ func isMethodValid(fun *ast.FuncDecl) bool {
 		return false
 	}
 
-	// the first parameter is the context and XODB is the second parameter
-	if fun.Type.Params == nil || len(fun.Type.Params.List) < 2 ||
+	if fun.Type.Params == nil || len(fun.Type.Params.List) == 0 ||
 		fun.Type.Results == nil || len(fun.Type.Results.List) == 0 {
-		return false
-	}
-
-	if t, ok := fun.Type.Params.List[0].Type.(*ast.SelectorExpr); !ok || exprToStr(t) != "context.Context" {
-		return false
-	}
-
-	if t, ok := fun.Type.Params.List[1].Type.(*ast.Ident); !ok || t.Name != "DB" {
 		return false
 	}
 
@@ -502,7 +497,13 @@ func isMethodValid(fun *ast.FuncDecl) bool {
 		return false
 	}
 
-	return true
+	for _, param := range fun.Type.Params.List {
+		if t, ok := param.Type.(*ast.Ident); ok && t.Name == "DB" {
+			return true
+		}
+	}
+
+	return false
 }
 
 func isTextUnmarshaler(fun *ast.FuncDecl) (receiver string, ok bool) {

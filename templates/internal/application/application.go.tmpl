@@ -30,7 +30,7 @@ func (s *{{$package | UpperFirst}}Service) {{.Name}}(ctx context.Context, req *{
     {{if .IsMethod}}m := new({{$srcPackage}}.{{$package}}){{end}}
 	{{ range .InputGrpc}}{{ .}}
 	{{end}}
-	{{ .ReturnCallDatabase}} err {{if not .EmptyOutput}}:{{end}}= {{if .IsMethod}}m{{else}}{{$srcPackage}}{{end}}.{{ .Name}}(ctx, s.db{{ .ParamsCallDatabase}})
+	{{ .ReturnCallDatabase}} err {{if not .EmptyOutput}}:{{end}}= {{if .IsMethod}}m{{else}}{{$srcPackage}}{{end}}.{{ .Name}}({{if .HasContext}}ctx, {{end}}s.db{{ .ParamsCallDatabase}})
 	if err != nil {			
 		return
 	}
