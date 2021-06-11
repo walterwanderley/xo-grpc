@@ -120,6 +120,9 @@ func postProcess(def *metadata.Definition, workingDirectory string) {
 		}
 	}
 
+	fmt.Println("Generating OpenAPIv2 specs...")
+	execCommand("protoc -I. -Ivendor --openapiv2_out . --openapiv2_opt logtostderr=true,allow_repeated_fields_in_body=true,generate_unbound_methods=true,allow_merge=true " + strings.Join(protos, ".proto ") + ".proto")
+
 	if err := os.Chdir(workingDirectory); err != nil {
 		panic(err)
 	}
@@ -138,12 +141,7 @@ func compileProto(pkg string) error {
 		return err
 	}
 	fmt.Printf("Generating reverse proxy (grpc-gateway) %s.proto...\n", pkg)
-	err = execCommand(fmt.Sprintf("protoc -I. -Ivendor --grpc-gateway_out %s --grpc-gateway_opt logtostderr=true,paths=source_relative,allow_repeated_fields_in_body=true,generate_unbound_methods=true %s.proto", pkg, pkg))
-	if err != nil {
-		return err
-	}
-	fmt.Printf("Generating OpenAPIv2 specs %s.proto...\n", pkg)
-	return execCommand(fmt.Sprintf("protoc -I. -Ivendor --openapiv2_out %s --openapiv2_opt logtostderr=true,allow_repeated_fields_in_body=true,generate_unbound_methods=true %s.proto", pkg, pkg))
+	return execCommand(fmt.Sprintf("protoc -I. -Ivendor --grpc-gateway_out %s --grpc-gateway_opt logtostderr=true,paths=source_relative,allow_repeated_fields_in_body=true,generate_unbound_methods=true %s.proto", pkg, pkg))
 }
 
 func execCommand(command string) error {

@@ -5,12 +5,8 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	"fmt"
-	"io"
-	"io/fs"
 	"net"
 	"net/http"
-	"path/filepath"
-	"strings"
 	"time"
 
 	"github.com/flowchartsman/swaggerui"
@@ -25,7 +21,9 @@ import (
 	"google.golang.org/grpc/credentials"
 	"google.golang.org/grpc/health"
 	healthpb "google.golang.org/grpc/health/grpc_health_v1"
+	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/reflection"
+	protobuf "google.golang.org/protobuf/proto"
 
 	"{{ .GoModule}}/proto"
 	{{range .Packages}}pb_{{.Package}} "{{ .GoModule}}/proto/{{.Package | SnakeCase}}"
@@ -124,7 +122,7 @@ func (srv *Server) ListenAndServe() error {
 		}
 	}()
 
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
 	sAddr := fmt.Sprintf("dns:///localhost:%d", srv.cfg.Port)
@@ -138,7 +136,11 @@ func (srv *Server) ListenAndServe() error {
 	}
 	defer cc.Close()
 
-	gwmux := runtime.NewServeMux()
+	gwmux := runtime.NewServeMux(
+		runtime.WithMetadata(annotator),
+		runtime.WithForwardResponseOption(forwardResponse),
+		runtime.WithOutgoingHeaderMatcher(outcomingHeaderMatcher),
+	)
 	{{range .Packages}}if err := pb_{{.Package}}.Register{{ .Package | UpperFirst}}ServiceHandler(context.Background(), gwmux, cc); err != nil {
 		return err
 	}
@@ -152,25 +154,7 @@ func (srv *Server) ListenAndServe() error {
 	}
 
 	httpMux.Handle("/grpcui/", http.StripPrefix("/grpcui", grpcui))
-
-	specs, err := fs.Glob(proto.OpenAPIv2, "**/*.swagger.json")
-	if err != nil {
-		return err
-	}
-	for _, spec := range specs {
-		f, err := proto.OpenAPIv2.Open(spec)
-		if err != nil {
-			return err
-		}
-		data, err := io.ReadAll(f)
-		if err != nil {
-			return err
-		}
-		path := fmt.Sprintf("/swagger/%s/", filepath.Dir(spec))
-		srv.log.Info(fmt.Sprintf("Serving Swagger UI on %s://localhost:%d%s", schema, srv.cfg.Port, path))
-		httpMux.Handle(path, http.StripPrefix(strings.TrimSuffix(path, "/"), swaggerui.Handler(data)))
-	}
-
+	httpMux.Handle("/swagger/", http.StripPrefix("/swagger", swaggerui.Handler(proto.OpenAPIv2)))
 	httpMux.Handle("/", gwmux)
 
 	httpServer := &http.Server{
@@ -178,6 +162,7 @@ func (srv *Server) ListenAndServe() error {
 	}
 
 	srv.log.Info(fmt.Sprintf("Serving gRPC UI on %s://localhost:%d/grpcui", schema, srv.cfg.Port))
+	srv.log.Info(fmt.Sprintf("Serving Swagger UI on %s://localhost:%d/swagger", schema, srv.cfg.Port))
 	return httpServer.Serve(httpListener)
 }
 
@@ -202,4 +187,36 @@ func (srv *Server) Shutdown() {
 	srv.healthServer.Shutdown()
 	srv.log.Info("Graceful stop")
 	srv.grpcServer.GracefulStop()
+}
+
+func annotator(ctx context.Context, req *http.Request) metadata.MD {
+	return metadata.New(map[string]string{"requestURI": req.Host + req.URL.RequestURI()})
+}
+
+func forwardResponse(ctx context.Context, w http.ResponseWriter, message protobuf.Message) error {
+	md, ok := runtime.ServerMetadataFromContext(ctx)
+	if !ok {
+		return nil
+	}
+
+	if vals := md.HeaderMD.Get("x-http-code"); len(vals) > 0 {
+		code, err := strconv.Atoi(vals[0])
+		if err != nil {
+			return err
+		}
+		w.WriteHeader(code)
+		delete(md.HeaderMD, "x-http-code")
+		delete(w.Header(), "Grpc-Metadata-X-Http-Code")
+	}
+
+	return nil
+}
+
+func outcomingHeaderMatcher(header string) (string, bool) {
+	switch header {
+	case "location", "authorization", "access-control-expose-headers":
+		return header, true
+	default:
+		return header, false
+	}
 }

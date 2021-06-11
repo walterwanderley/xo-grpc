@@ -24,6 +24,13 @@ type Service struct {
 	Messages map[string]*Message
 }
 
+func (s *Service) SimplePK() string {
+	if m, ok := s.Messages[s.Owner]; ok && len(m.PkNames) == 1 {
+		return m.PkNames[0]
+	}
+	return ""
+}
+
 func (s *Service) MethodInputType() string {
 	switch {
 	case s.EmptyInput():
@@ -123,89 +130,6 @@ func (s *Service) OutputGrpc() []string {
 	return res
 }
 
-func (s *Service) HttpMethod() string {
-	switch s.Name {
-	case "Insert", "Upsert":
-		return "post"
-	case "Delete":
-		return "delete"
-	case "Update":
-		return "put"
-	default:
-		if s.EmptyOutput() {
-			return "post"
-		}
-		return "get"
-	}
-}
-
-func (s *Service) HttpPath() string {
-	path := "/v1/" + toKebabCase(s.Owner)
-	switch s.Name {
-	case "Insert":
-		return path
-	case "Delete", "Update":
-		if s.IsMethod {
-			owner := s.Messages[s.Owner]
-			if len(owner.PkNames) == 1 {
-				return fmt.Sprintf("%s/{%s}", path, owner.PkNames[0])
-			}
-		}
-		// do not include in path
-	default:
-		name := strings.TrimPrefix(s.Name, s.Owner+"s")
-		name = strings.TrimPrefix(name, s.Owner)
-		name = strings.TrimPrefix(name, "By")
-		if m, ok := s.Messages[s.Owner]; ok && !s.IsMethod {
-			if len(m.PkNames) == 1 && name == m.PkNames[0] {
-				name = ""
-			}
-		}
-		path = path + "/" + toKebabCase(name)
-	}
-	method := s.HttpMethod()
-
-	if method == "get" && !s.HasCustomParams() {
-		if len(s.InputNames) == 1 && !s.HasArrayParams() {
-			path = fmt.Sprintf("%s/{%s}", strings.TrimSuffix(path, "/"), s.InputNames[0])
-		} else if len(s.InputMethodNames) == 1 {
-			path = fmt.Sprintf("%s/{%s}", strings.TrimSuffix(path, "/"), s.InputMethodNames[0])
-
-		}
-	}
-	return path
-}
-
-func (s *Service) HttpBody() string {
-	switch s.HttpMethod() {
-	case "get", "delete":
-		return ""
-	default:
-		return "*"
-	}
-}
-
-func (s *Service) HttpResponseBody() string {
-	if s.HasArrayOutput() {
-		return "value"
-	}
-	return ""
-}
-
-func (s *Service) HttpOptions() []string {
-	res := make([]string, 0)
-	res = append(res, fmt.Sprintf("%s: \"%s\"", s.HttpMethod(), s.HttpPath()))
-	body := s.HttpBody()
-	if body != "" {
-		res = append(res, fmt.Sprintf("body: \"%s\"", body))
-	}
-	responseBody := s.HttpResponseBody()
-	if responseBody != "" {
-		res = append(res, fmt.Sprintf("response_body: \"%s\"", responseBody))
-	}
-	return res
-}
-
 func (s *Service) RpcSignature() string {
 	var b strings.Builder
 	b.WriteString(s.Name)
@@ -263,10 +187,7 @@ func (s *Service) HasArrayOutput() bool {
 func (s *Service) ProtoInputs() string {
 	var pk string
 	if s.IsMethod && s.Name == "Update" {
-		owner := s.Messages[s.Owner]
-		if len(owner.PkNames) == 1 {
-			pk = owner.PkNames[0]
-		}
+		pk = s.SimplePK()
 	}
 	var b strings.Builder
 	var count int

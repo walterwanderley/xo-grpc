@@ -1,6 +1,6 @@
 package proto
 
-import "embed"
+import _ "embed"
 
-//go:embed */*.swagger.json
-var OpenAPIv2 embed.FS
+//go:embed apidocs.swagger.json
+var OpenAPIv2 []byte

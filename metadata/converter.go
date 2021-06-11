@@ -70,21 +70,43 @@ func toProtoType(typ string) string {
 }
 
 func bindToProto(src, dst, attrName, attrType string) []string {
+	isArray := strings.HasPrefix(attrType, "[]")
+	attrType = strings.TrimPrefix(strings.TrimPrefix(attrType, "[]"), "*")
 	res := make([]string, 0)
 	switch attrType {
 	case "sql.NullBool":
+		if isArray {
+			res = append(res, bindToProtoWrappersArray(src, dst, attrName, "Bool")...)
+			break
+		}
 		res = append(res, fmt.Sprintf("if %s.%s.Valid {", src, attrName))
 		res = append(res, fmt.Sprintf("%s.%s = wrapperspb.Bool(%s.%s.Bool) }", dst, attrName, src, attrName))
 	case "sql.NullInt32":
+		if isArray {
+			res = append(res, bindToProtoWrappersArray(src, dst, attrName, "Int32")...)
+			break
+		}
 		res = append(res, fmt.Sprintf("if %s.%s.Valid {", src, attrName))
 		res = append(res, fmt.Sprintf("%s.%s = wrapperspb.Int32(%s.%s.Int32) }", dst, attrName, src, attrName))
 	case "sql.NullInt64":
+		if isArray {
+			res = append(res, bindToProtoWrappersArray(src, dst, attrName, "Int64")...)
+			break
+		}
 		res = append(res, fmt.Sprintf("if %s.%s.Valid {", src, attrName))
 		res = append(res, fmt.Sprintf("%s.%s = wrapperspb.Int64(%s.%s.Int64) }", dst, attrName, src, attrName))
 	case "sql.NullFloat64":
+		if isArray {
+			res = append(res, bindToProtoWrappersArray(src, dst, attrName, "Float64")...)
+			break
+		}
 		res = append(res, fmt.Sprintf("if %s.%s.Valid {", src, attrName))
 		res = append(res, fmt.Sprintf("%s.%s = wrapperspb.Float64(%s.%s.Float64) }", dst, attrName, src, attrName))
 	case "sql.NullString":
+		if isArray {
+			res = append(res, bindToProtoWrappersArray(src, dst, attrName, "String")...)
+			break
+		}
 		res = append(res, fmt.Sprintf("if %s.%s.Valid {", src, attrName))
 		res = append(res, fmt.Sprintf("%s.%s = wrapperspb.String(%s.%s.String) }", dst, attrName, src, attrName))
 	case "sql.NullTime", "pq.NullTime", "mysql.NullTime":
@@ -112,12 +134,31 @@ func bindToProto(src, dst, attrName, attrType string) []string {
 	return res
 }
 
+func bindToProtoWrappersArray(src, dst, attrName, typ string) []string {
+	res := make([]string, 0)
+	res = append(res, fmt.Sprintf("%s.%s = make([]*wrapperspb.%sValue, 0)", dst, attrName, typ))
+	res = append(res, fmt.Sprintf("for _, item := range %s.%s {", src, attrName))
+	res = append(res, "if item.Valid {")
+	res = append(res, fmt.Sprintf("%s.%s = append(%s.%s, &wrapperspb.%sValue{Value: item.%s})", dst, attrName, dst, attrName, typ, typ))
+	res = append(res, "} else {")
+	res = append(res, fmt.Sprintf("%s.%s = append(%s.%s, nil)", dst, attrName, dst, attrName))
+	res = append(res, "}")
+	res = append(res, "}")
+	return res
+}
+
 func bindToGo(src, dst, attrName, attrType string, newVar bool) []string {
+	isArray := strings.HasPrefix(attrType, "[]")
+	attrType = strings.TrimPrefix(strings.TrimPrefix(attrType, "[]"), "*")
 	res := make([]string, 0)
 	switch attrType {
 	case "sql.NullBool":
 		if newVar {
 			res = append(res, fmt.Sprintf("var %s %s", dst, attrType))
+		}
+		if isArray {
+			res = append(res, bindToGoWrappersArray(src, dst, attrName, attrType, "Bool")...)
+			break
 		}
 		res = append(res, fmt.Sprintf("if v := %s.Get%s(); v != nil {", src, attrName))
 		res = append(res, fmt.Sprintf("%s = sql.NullBool{Valid: true, Bool: v.Value}", dst))
@@ -126,12 +167,20 @@ func bindToGo(src, dst, attrName, attrType string, newVar bool) []string {
 		if newVar {
 			res = append(res, fmt.Sprintf("var %s %s", dst, attrType))
 		}
+		if isArray {
+			res = append(res, bindToGoWrappersArray(src, dst, attrName, attrType, "Int32")...)
+			break
+		}
 		res = append(res, fmt.Sprintf("if v := %s.Get%s(); v != nil {", src, attrName))
 		res = append(res, fmt.Sprintf("%s = sql.NullInt32{Valid: true, Int32: v.Value}", dst))
 		res = append(res, "}")
 	case "sql.NullInt64":
 		if newVar {
 			res = append(res, fmt.Sprintf("var %s %s", dst, attrType))
+		}
+		if isArray {
+			res = append(res, bindToGoWrappersArray(src, dst, attrName, attrType, "Int64")...)
+			break
 		}
 		res = append(res, fmt.Sprintf("if v := %s.Get%s(); v != nil {", src, attrName))
 		res = append(res, fmt.Sprintf("%s = sql.NullInt64{Valid: true, Int64: v.Value}", dst))
@@ -140,6 +189,10 @@ func bindToGo(src, dst, attrName, attrType string, newVar bool) []string {
 		if newVar {
 			res = append(res, fmt.Sprintf("var %s %s", dst, attrType))
 		}
+		if isArray {
+			res = append(res, bindToGoWrappersArray(src, dst, attrName, attrType, "Float64")...)
+			break
+		}
 		res = append(res, fmt.Sprintf("if v := %s.Get%s(); v != nil {", src, attrName))
 		res = append(res, fmt.Sprintf("%s = sql.NullFloat64{Valid: true, Float64: v.Value}", dst))
 		res = append(res, "}")
@@ -147,9 +200,14 @@ func bindToGo(src, dst, attrName, attrType string, newVar bool) []string {
 		if newVar {
 			res = append(res, fmt.Sprintf("var %s %s", dst, attrType))
 		}
+		if isArray {
+			res = append(res, bindToGoWrappersArray(src, dst, attrName, attrType, "String")...)
+			break
+		}
 		res = append(res, fmt.Sprintf("if v := %s.Get%s(); v != nil {", src, attrName))
 		res = append(res, fmt.Sprintf("%s = sql.NullString{Valid: true, String: v.Value}", dst))
 		res = append(res, "}")
+
 	case "sql.NullTime", "pq.NullTime", "mysql.NullTime":
 		if newVar {
 			res = append(res, fmt.Sprintf("var %s %s", dst, attrType))
@@ -243,6 +301,15 @@ func bindToGo(src, dst, attrName, attrType string, newVar bool) []string {
 			}
 		}
 	}
+	return res
+}
+
+func bindToGoWrappersArray(src, dst, attrName, attrType, valueType string) []string {
+	res := make([]string, 0)
+	res = append(res, fmt.Sprintf("%s = make([]%s, 0)", dst, attrType))
+	res = append(res, fmt.Sprintf("for _, item := range %s.Get%s() {", src, attrName))
+	res = append(res, fmt.Sprintf("%s = append(%s, %s{Valid: item != nil, %s: item.GetValue()})", dst, dst, attrType, valueType))
+	res = append(res, "}")
 	return res
 }
 

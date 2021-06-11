@@ -28,7 +28,7 @@ go install github.com/walterwanderley/xo-grpc@latest
 
 ```sh
 mkdir models
-xo -o models [Database Connection URL] 
+xo schema -o models [Database Connection URL] 
 ```
 
 2. Execute xo-grpc to generate the gRPC Server boilerplate code:
@@ -42,6 +42,11 @@ xo-grpc models
 ```sh
 go run . -db [Database Connection URL] -dev
 ```
+
+4. Enjoy!
+
+- gRPC UI [http://localhost:5000/grpcui](http://localhost:5000/grpcui)
+- Swagger UI [http://localhost:5000/swagger](http://localhost:5000/swagger)
 
 ### Similar Projects
 
