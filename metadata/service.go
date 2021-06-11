@@ -2,8 +2,6 @@ package metadata
 
 import (
 	"fmt"
-	"go/ast"
-	"sort"
 	"strings"
 )
 
@@ -13,6 +11,7 @@ const (
 )
 
 type Service struct {
+	Owner            string
 	Name             string
 	InputNames       []string
 	InputTypes       []string
@@ -124,179 +123,85 @@ func (s *Service) OutputGrpc() []string {
 	return res
 }
 
-func bindToProto(src, dst, attrName, attrType string) []string {
-	res := make([]string, 0)
-	switch attrType {
-	case "sql.NullBool":
-		res = append(res, fmt.Sprintf("if %s.%s.Valid {", src, attrName))
-		res = append(res, fmt.Sprintf("%s.%s = wrapperspb.Bool(%s.%s.Bool) }", dst, attrName, src, attrName))
-	case "sql.NullInt32":
-		res = append(res, fmt.Sprintf("if %s.%s.Valid {", src, attrName))
-		res = append(res, fmt.Sprintf("%s.%s = wrapperspb.Int32(%s.%s.Int32) }", dst, attrName, src, attrName))
-	case "sql.NullInt64":
-		res = append(res, fmt.Sprintf("if %s.%s.Valid {", src, attrName))
-		res = append(res, fmt.Sprintf("%s.%s = wrapperspb.Int64(%s.%s.Int64) }", dst, attrName, src, attrName))
-	case "sql.NullFloat64":
-		res = append(res, fmt.Sprintf("if %s.%s.Valid {", src, attrName))
-		res = append(res, fmt.Sprintf("%s.%s = wrapperspb.Float64(%s.%s.Float64) }", dst, attrName, src, attrName))
-	case "sql.NullString":
-		res = append(res, fmt.Sprintf("if %s.%s.Valid {", src, attrName))
-		res = append(res, fmt.Sprintf("%s.%s = wrapperspb.String(%s.%s.String) }", dst, attrName, src, attrName))
-	case "sql.NullTime", "pq.NullTime", "mysql.NullTime":
-		res = append(res, fmt.Sprintf("if %s.%s.Valid {", src, attrName))
-		res = append(res, fmt.Sprintf("%s.%s = timestamppb.New(%s.%s.Time) }", dst, attrName, src, attrName))
-	case "time.Time":
-		res = append(res, fmt.Sprintf("%s.%s = timestamppb.New(%s.%s)", dst, attrName, src, attrName))
-	case "xoutil.SqTime":
-		res = append(res, fmt.Sprintf("%s.%s = timestamppb.New(%s.%s.Timr)", dst, attrName, src, attrName))
-	case "uuid.UUID", "net.HardwareAddr", "net.IP":
-		res = append(res, fmt.Sprintf("%s.%s = %s.%s.String()", dst, attrName, src, attrName))
-	case "int16":
-		res = append(res, fmt.Sprintf("%s.%s = int32(%s.%s)", dst, attrName, src, attrName))
-	case "int":
-		res = append(res, fmt.Sprintf("%s.%s = int64(%s.%s)", dst, attrName, src, attrName))
-	case "uint16":
-		res = append(res, fmt.Sprintf("%s.%s = uint32(%s.%s)", dst, attrName, src, attrName))
+func (s *Service) HttpMethod() string {
+	switch s.Name {
+	case "Insert", "Upsert":
+		return "post"
+	case "Delete":
+		return "delete"
+	case "Update":
+		return "put"
 	default:
-		if strings.Contains(attrType, textUnmarshalerTypePrefix) || strings.Contains(attrType, parserTypePrefix) {
-			res = append(res, fmt.Sprintf("%s.%s = %s.%s.String()", dst, attrName, src, attrName))
-		} else {
-			res = append(res, fmt.Sprintf("%s.%s = %s.%s", dst, attrName, src, attrName))
+		if s.EmptyOutput() {
+			return "post"
 		}
+		return "get"
 	}
-	return res
 }
 
-func bindToGo(src, dst, attrName, attrType string, newVar bool) []string {
-	res := make([]string, 0)
-	switch attrType {
-	case "sql.NullBool":
-		if newVar {
-			res = append(res, fmt.Sprintf("var %s %s", dst, attrType))
+func (s *Service) HttpPath() string {
+	path := "/v1/" + toKebabCase(s.Owner)
+	switch s.Name {
+	case "Insert":
+		return path
+	case "Delete", "Update":
+		if s.IsMethod {
+			owner := s.Messages[s.Owner]
+			if len(owner.PkNames) == 1 {
+				return fmt.Sprintf("%s/{%s}", path, owner.PkNames[0])
+			}
 		}
-		res = append(res, fmt.Sprintf("if v := %s.Get%s(); v != nil {", src, attrName))
-		res = append(res, fmt.Sprintf("%s = sql.NullBool{Valid: true, Bool: v.Value}", dst))
-		res = append(res, "}")
-	case "sql.NullInt32":
-		if newVar {
-			res = append(res, fmt.Sprintf("var %s %s", dst, attrType))
-		}
-		res = append(res, fmt.Sprintf("if v := %s.Get%s(); v != nil {", src, attrName))
-		res = append(res, fmt.Sprintf("%s = sql.NullInt32{Valid: true, Int32: v.Value}", dst))
-		res = append(res, "}")
-	case "sql.NullInt64":
-		if newVar {
-			res = append(res, fmt.Sprintf("var %s %s", dst, attrType))
-		}
-		res = append(res, fmt.Sprintf("if v := %s.Get%s(); v != nil {", src, attrName))
-		res = append(res, fmt.Sprintf("%s = sql.NullInt64{Valid: true, Int64: v.Value}", dst))
-		res = append(res, "}")
-	case "sql.NullFloat64":
-		if newVar {
-			res = append(res, fmt.Sprintf("var %s %s", dst, attrType))
-		}
-		res = append(res, fmt.Sprintf("if v := %s.Get%s(); v != nil {", src, attrName))
-		res = append(res, fmt.Sprintf("%s = sql.NullFloat64{Valid: true, Float64: v.Value}", dst))
-		res = append(res, "}")
-	case "sql.NullString":
-		if newVar {
-			res = append(res, fmt.Sprintf("var %s %s", dst, attrType))
-		}
-		res = append(res, fmt.Sprintf("if v := %s.Get%s(); v != nil {", src, attrName))
-		res = append(res, fmt.Sprintf("%s = sql.NullString{Valid: true, String: v.Value}", dst))
-		res = append(res, "}")
-	case "sql.NullTime", "pq.NullTime", "mysql.NullTime":
-		if newVar {
-			res = append(res, fmt.Sprintf("var %s %s", dst, attrType))
-		}
-		res = append(res, fmt.Sprintf("if v := %s.Get%s(); v != nil {", src, attrName))
-		res = append(res, fmt.Sprintf("if err = v.CheckValid(); err != nil { err = fmt.Errorf(\"invalid %s: %%s%%w\", err.Error(), validation.ErrUserInput)", attrName))
-		res = append(res, "return }")
-		res = append(res, "if t := v.AsTime(); !t.IsZero() {")
-		res = append(res, fmt.Sprintf("%s.Valid = true", dst))
-		res = append(res, fmt.Sprintf("%s.Time = t } }", dst))
-	case "time.Time":
-		if newVar {
-			res = append(res, fmt.Sprintf("var %s %s", dst, attrType))
-		}
-		res = append(res, fmt.Sprintf("if v := %s.Get%s(); v != nil {", src, attrName))
-		res = append(res, fmt.Sprintf("if err = v.CheckValid(); err != nil { err = fmt.Errorf(\"invalid %s: %%s%%w\", err.Error(), validation.ErrUserInput)", attrName))
-		res = append(res, "return }")
-		res = append(res, fmt.Sprintf("%s = v.AsTime()", dst))
-		res = append(res, fmt.Sprintf("} else { err = fmt.Errorf(\"the %s attribute is required%%w\", validation.ErrUserInput)", attrName))
-		res = append(res, "return }")
-	case "xoutil.SqTime":
-		if newVar {
-			res = append(res, fmt.Sprintf("var %s %s", dst, attrType))
-		}
-		res = append(res, fmt.Sprintf("if v := %s.Get%s(); v != nil {", src, attrName))
-		res = append(res, fmt.Sprintf("if err = v.CheckValid(); err != nil { err = fmt.Errorf(\"invalid %s: %%s%%w\", err.Error(), validation.ErrUserInput)", attrName))
-		res = append(res, "return }")
-		res = append(res, fmt.Sprintf("%s.Time = v.AsTime()", dst))
-		res = append(res, "}")
-	case "uuid.UUID":
-		if newVar {
-			res = append(res, fmt.Sprintf("var %s %s", dst, attrType))
-		}
-		res = append(res, fmt.Sprintf("if %s, err = uuid.Parse(%s.Get%s()); err != nil {", dst, src, attrName))
-		res = append(res, fmt.Sprintf("err = fmt.Errorf(\"invalid %s: %%s%%w\", err.Error(), validation.ErrUserInput)", attrName))
-		res = append(res, "return }")
-	case "net.HardwareAddr":
-		if newVar {
-			res = append(res, fmt.Sprintf("var %s %s", dst, attrType))
-		}
-		res = append(res, fmt.Sprintf("if %s, err = net.ParseMAC(%s.Get%s()); err != nil {", dst, src, attrName))
-		res = append(res, fmt.Sprintf("err = fmt.Errorf(\"invalid %s: %%s%%w\", err.Error(), validation.ErrUserInput)", attrName))
-		res = append(res, "return }")
-	case "net.IP":
-		if newVar {
-			res = append(res, fmt.Sprintf("%s := net.ParseIP(%s.Get%s())", dst, src, attrName))
-		} else {
-			res = append(res, fmt.Sprintf("%s = net.ParseIP(%s.Get%s())", dst, src, attrName))
-		}
-	case "int16":
-		if newVar {
-			res = append(res, fmt.Sprintf("%s := int16(%s.Get%s())", dst, src, attrName))
-		} else {
-			res = append(res, fmt.Sprintf("%s = int16(%s.Get%s())", dst, src, attrName))
-		}
-	case "int":
-		if newVar {
-			res = append(res, fmt.Sprintf("%s := int(%s.Get%s())", dst, src, attrName))
-		} else {
-			res = append(res, fmt.Sprintf("%s = int(%s.Get%s())", dst, src, attrName))
-		}
-	case "uint16":
-		if newVar {
-			res = append(res, fmt.Sprintf("%s := uint16(%s.Get%s())", dst, src, attrName))
-		} else {
-			res = append(res, fmt.Sprintf("%s = uint16(%s.Get%s())", dst, src, attrName))
-		}
+		// do not include in path
 	default:
-		switch {
-		case strings.Contains(attrType, textUnmarshalerTypePrefix):
-			attrType = strings.ReplaceAll(attrType, textUnmarshalerTypePrefix, "")
-			if newVar {
-				res = append(res, fmt.Sprintf("%s := new(%s)", dst, attrType))
-			}
-			res = append(res, fmt.Sprintf("if err = %s.UnmarshalText([]byte(%s.Get%s())); err != nil {", dst, src, attrName))
-			res = append(res, fmt.Sprintf("err = fmt.Errorf(\"invalid %s: %%s%%w\", err.Error(), validation.ErrUserInput)", attrName))
-			res = append(res, "return }")
-		case strings.Contains(attrType, parserTypePrefix):
-			attrType = strings.ReplaceAll(attrType, parserTypePrefix, "")
-			if newVar {
-				res = append(res, fmt.Sprintf("%s := new(%s)", dst, attrType))
-			}
-			res = append(res, fmt.Sprintf("if err = %s.Parse(%s.Get%s()); err != nil {", dst, src, attrName))
-			res = append(res, fmt.Sprintf("err = fmt.Errorf(\"invalid %s: %%s%%w\", err.Error(), validation.ErrUserInput)", attrName))
-			res = append(res, "return }")
-		default:
-			if newVar {
-				res = append(res, fmt.Sprintf("%s := %s.Get%s()", dst, src, attrName))
-			} else {
-				res = append(res, fmt.Sprintf("%s = %s.Get%s()", dst, src, attrName))
+		name := strings.TrimPrefix(s.Name, s.Owner+"s")
+		name = strings.TrimPrefix(name, s.Owner)
+		name = strings.TrimPrefix(name, "By")
+		if m, ok := s.Messages[s.Owner]; ok && !s.IsMethod {
+			if len(m.PkNames) == 1 && name == m.PkNames[0] {
+				name = ""
 			}
 		}
+		path = path + "/" + toKebabCase(name)
+	}
+	method := s.HttpMethod()
+
+	if method == "get" && !s.HasCustomParams() {
+		if len(s.InputNames) == 1 && !s.HasArrayParams() {
+			path = fmt.Sprintf("%s/{%s}", strings.TrimSuffix(path, "/"), s.InputNames[0])
+		} else if len(s.InputMethodNames) == 1 {
+			path = fmt.Sprintf("%s/{%s}", strings.TrimSuffix(path, "/"), s.InputMethodNames[0])
+
+		}
+	}
+	return path
+}
+
+func (s *Service) HttpBody() string {
+	switch s.HttpMethod() {
+	case "get", "delete":
+		return ""
+	default:
+		return "*"
+	}
+}
+
+func (s *Service) HttpResponseBody() string {
+	if s.HasArrayOutput() {
+		return "value"
+	}
+	return ""
+}
+
+func (s *Service) HttpOptions() []string {
+	res := make([]string, 0)
+	res = append(res, fmt.Sprintf("%s: \"%s\"", s.HttpMethod(), s.HttpPath()))
+	body := s.HttpBody()
+	if body != "" {
+		res = append(res, fmt.Sprintf("body: \"%s\"", body))
+	}
+	responseBody := s.HttpResponseBody()
+	if responseBody != "" {
+		res = append(res, fmt.Sprintf("response_body: \"%s\"", responseBody))
 	}
 	return res
 }
@@ -332,6 +237,14 @@ func (s *Service) HasCustomParams() bool {
 	return customType(s.InputTypes[0])
 }
 
+func (s *Service) HasArrayParams() bool {
+	if s.EmptyInput() || len(s.InputTypes) == 0 {
+		return false
+	}
+
+	return strings.HasPrefix(s.InputTypes[0], "[]") && s.InputTypes[0] != "[]byte"
+}
+
 func (s *Service) HasCustomOutput() bool {
 	if s.EmptyOutput() {
 		return false
@@ -348,6 +261,13 @@ func (s *Service) HasArrayOutput() bool {
 }
 
 func (s *Service) ProtoInputs() string {
+	var pk string
+	if s.IsMethod && s.Name == "Update" {
+		owner := s.Messages[s.Owner]
+		if len(owner.PkNames) == 1 {
+			pk = owner.PkNames[0]
+		}
+	}
 	var b strings.Builder
 	var count int
 	for i, name := range s.InputNames {
@@ -356,6 +276,9 @@ func (s *Service) ProtoInputs() string {
 	}
 	for i, name := range s.InputMethodNames {
 		count = count + 1
+		if pk == name {
+			fmt.Fprint(&b, "\n    // Output only.")
+		}
 		fmt.Fprintf(&b, "\n    %s %s = %d;", toProtoType(s.InputMethodTypes[i]), name, count)
 	}
 	return b.String()
@@ -379,185 +302,4 @@ func (s *Service) ProtoOutputs() string {
 
 	}
 	return b.String()
-}
-
-func analyseFunc(fun *ast.FuncDecl, messages map[string]*Message) (owner string, srv *Service) {
-	if !isMethodValid(fun) {
-		return
-	}
-
-	srv = &Service{
-		Name:       fun.Name.String(),
-		InputNames: make([]string, 0),
-		InputTypes: make([]string, 0),
-		Output:     make([]string, 0),
-		IsMethod:   fun.Recv != nil && len(fun.Recv.List) > 0,
-	}
-	// context is the first parameter and DB is the second parameter
-	for i := 0; i < len(fun.Type.Params.List); i++ {
-		p := fun.Type.Params.List[i]
-		if exprToStr(p.Type) == "context.Context" {
-			srv.HasContext = true
-			continue
-		}
-		if exprToStr(p.Type) == "DB" {
-			continue
-		}
-
-		srv.InputNames = append(srv.InputNames, p.Names[0].Name)
-		srv.InputTypes = append(srv.InputTypes, adjustType(exprToStr(p.Type), messages))
-	}
-
-	// error is the last result
-	for i := 0; i < len(fun.Type.Results.List)-1; i++ {
-		p := fun.Type.Results.List[i]
-		srv.Output = append(srv.Output, adjustType(exprToStr(p.Type), messages))
-	}
-
-	owner = strings.TrimPrefix(strings.TrimPrefix(getOwner(fun), "[]"), "*")
-	if srv.IsMethod {
-		receiverName := fun.Recv.List[0].Names[0].Name
-		methodInputRequirements := make(map[string]struct{})
-		for _, stmt := range fun.Body.List {
-			ast.Inspect(stmt, func(n ast.Node) bool {
-				if selector, ok := n.(*ast.SelectorExpr); ok && fmt.Sprintf("%s", selector.X) == receiverName && firstIsUpper(selector.Sel.Name) {
-					methodInputRequirements[selector.Sel.Name] = struct{}{}
-					return false
-				}
-				// Ignore passing by reference
-				if _, ok := n.(*ast.UnaryExpr); ok {
-					return false
-				}
-				return true
-			})
-		}
-		methodAttributes := make([]string, 0)
-		for name := range methodInputRequirements {
-			methodAttributes = append(methodAttributes, name)
-		}
-		receiverType := strings.TrimPrefix(exprToStr(fun.Recv.List[0].Type), "*")
-		receiver := messages[receiverType]
-		sort.Strings(methodAttributes)
-		methodTypes := make([]string, 0)
-		for _, n := range methodAttributes {
-			methodTypes = append(methodTypes, receiver.AttributeTypeByName(n))
-		}
-		srv.InputMethodNames = methodAttributes
-		srv.InputMethodTypes = methodTypes
-	}
-
-	return
-}
-
-func adjustType(typ string, messages map[string]*Message) string {
-	if m, ok := messages[typ]; ok {
-		var prefix string
-		if m.IsArray {
-			prefix = "[]"
-		}
-		switch {
-		case m.HasTextUnmarshaler:
-			return fmt.Sprintf("%s%s.%s", prefix, textUnmarshalerTypePrefix, typ)
-		case m.HasParser:
-			return fmt.Sprintf("%s%s.%s", parserTypePrefix, prefix, typ)
-		case m.ElementType != "":
-			return prefix + m.ElementType
-		}
-	}
-
-	return typ
-}
-
-func getOwner(fun *ast.FuncDecl) string {
-	if fun.Recv != nil && len(fun.Recv.List) > 0 {
-		return exprToStr(fun.Recv.List[0].Type)
-	}
-
-	if len(fun.Type.Results.List) > 1 {
-		return exprToStr(fun.Type.Results.List[0].Type)
-	}
-	return ""
-}
-
-func isMethodValid(fun *ast.FuncDecl) bool {
-	if fun.Name == nil {
-		return false
-	}
-
-	if !fun.Name.IsExported() || fun.Name.Name == "Save" {
-		return false
-	}
-
-	if fun.Type.Params == nil || len(fun.Type.Params.List) == 0 ||
-		fun.Type.Results == nil || len(fun.Type.Results.List) == 0 {
-		return false
-	}
-
-	if exprToStr(fun.Type.Results.List[len(fun.Type.Results.List)-1].Type) != "error" {
-		return false
-	}
-
-	for _, param := range fun.Type.Params.List {
-		if t, ok := param.Type.(*ast.Ident); ok && t.Name == "DB" {
-			return true
-		}
-	}
-
-	return false
-}
-
-func isTextUnmarshaler(fun *ast.FuncDecl) (receiver string, ok bool) {
-	if fun.Name.Name != "UnmarshalText" {
-		return
-	}
-
-	if fun.Recv == nil || len(fun.Recv.List) != 1 ||
-		fun.Type.Params == nil || len(fun.Type.Params.List) != 1 ||
-		fun.Type.Results == nil || len(fun.Type.Results.List) != 1 {
-		return
-	}
-
-	if exprToStr(fun.Type.Params.List[0].Type) != "[]byte" {
-		return
-	}
-
-	if exprToStr(fun.Type.Results.List[0].Type) != "error" {
-		return
-	}
-
-	receiver = exprToStr(fun.Recv.List[0].Type)
-
-	if !strings.HasPrefix(receiver, "*") {
-		return
-	}
-
-	return receiver, true
-}
-
-func isParseFromString(fun *ast.FuncDecl) (receiver string, ok bool) {
-	if fun.Name.Name != "Parse" {
-		return
-	}
-
-	if fun.Recv == nil || len(fun.Recv.List) != 1 ||
-		fun.Type.Params == nil || len(fun.Type.Params.List) != 1 ||
-		fun.Type.Results == nil || len(fun.Type.Results.List) != 1 {
-		return
-	}
-
-	if exprToStr(fun.Type.Params.List[0].Type) != "string" {
-		return
-	}
-
-	if exprToStr(fun.Type.Results.List[0].Type) != "error" {
-		return
-	}
-
-	receiver = exprToStr(fun.Recv.List[0].Type)
-
-	if !strings.HasPrefix(receiver, "*") {
-		return
-	}
-
-	return receiver, true
 }

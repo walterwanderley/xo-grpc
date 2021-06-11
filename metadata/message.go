@@ -10,6 +10,7 @@ import (
 
 type Message struct {
 	Name               string
+	PkNames            []string
 	AttrNames          []string
 	AttrTypes          []string
 	IsArray            bool
@@ -61,50 +62,6 @@ func (m *Message) importWrappers() bool {
 	return false
 }
 
-func parseMessages(pkg *ast.Package) map[string]*Message {
-	messages := make(map[string]*Message)
-	for _, file := range pkg.Files {
-		if file.Scope != nil {
-			for name, obj := range file.Scope.Objects {
-				if isErrType(name) {
-					continue
-				}
-				if typ, ok := obj.Decl.(*ast.TypeSpec); ok {
-					switch t := typ.Type.(type) {
-					case *ast.Ident:
-						messages[name] = createAliasMessage(name, t)
-					case *ast.StructType:
-						messages[name] = createStructMessage(name, t)
-					case *ast.ArrayType:
-						messages[name] = createArrayMessage(name, t)
-					}
-				}
-			}
-		}
-	}
-	for _, file := range pkg.Files {
-		for _, n := range file.Decls {
-			if fun, ok := n.(*ast.FuncDecl); ok {
-				if r, ok := isTextUnmarshaler(fun); ok {
-					r = strings.TrimPrefix(r, "*")
-					if m, ok := messages[r]; ok {
-						m.HasTextUnmarshaler = true
-					}
-				} else if r, ok := isParseFromString(fun); ok {
-					r = strings.TrimPrefix(r, "*")
-					if m, ok := messages[r]; ok {
-						m.HasParser = true
-					}
-				}
-			}
-		}
-	}
-	for _, m := range messages {
-		m.AdjustType(messages)
-	}
-	return messages
-}
-
 func createStructMessage(name string, s *ast.StructType) *Message {
 	names := make([]string, 0)
 	types := make([]string, 0)
@@ -145,6 +102,25 @@ func customType(typ string) bool {
 func firstIsUpper(s string) bool {
 	ru, _ := utf8.DecodeRuneInString(s[0:1])
 	return unicode.IsUpper(ru)
+}
+
+func adjustType(typ string, messages map[string]*Message) string {
+	if m, ok := messages[typ]; ok {
+		var prefix string
+		if m.IsArray {
+			prefix = "[]"
+		}
+		switch {
+		case m.HasTextUnmarshaler:
+			return fmt.Sprintf("%s%s.%s", prefix, textUnmarshalerTypePrefix, typ)
+		case m.HasParser:
+			return fmt.Sprintf("%s%s.%s", parserTypePrefix, prefix, typ)
+		case m.ElementType != "":
+			return prefix + m.ElementType
+		}
+	}
+
+	return typ
 }
 
 var errTypes = []string{"ErrDecodeFailed", "ErrInsertFailed", "ErrUpdateFailed", "ErrUpsertFailed"}

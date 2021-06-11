@@ -1,6 +1,6 @@
 ## xo-grpc
 
-Create a gRPC Server from the generated code by the [xo project](https://github.com/xo/xo).
+Create a **gRPC** (and **HTTP/JSON** provided by grpc-gateway reverse proxy) **Server** from the generated code by the [xo project](https://github.com/xo/xo).
 
 ### Requirements
 
@@ -12,6 +12,8 @@ Create a gRPC Server from the generated code by the [xo project](https://github.
 go install github.com/xo/xo@latest
 go install google.golang.org/protobuf/cmd/protoc-gen-go@latest
 go install google.golang.org/grpc/cmd/protoc-gen-go-grpc@latest
+go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway@latest
+go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
 ```
 
 ### Installation
@@ -38,7 +40,7 @@ xo-grpc models
 3. Run the generated server:
 
 ```sh
-go run . -db [Database Connection URL]
+go run . -db [Database Connection URL] -dev
 ```
 
 ### Similar Projects

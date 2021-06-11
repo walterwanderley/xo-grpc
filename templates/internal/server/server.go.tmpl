@@ -5,13 +5,19 @@ import (
 	"crypto/tls"
 	"crypto/x509"
 	"fmt"
+	"io"
+	"io/fs"
 	"net"
 	"net/http"
+	"path/filepath"
+	"strings"
 	"time"
 
+	"github.com/flowchartsman/swaggerui"
 	"github.com/fullstorydev/grpcui/standalone"
 	grpc_zap "github.com/grpc-ecosystem/go-grpc-middleware/logging/zap"
 	grpc_prometheus "github.com/grpc-ecosystem/go-grpc-prometheus"
+	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/soheilhy/cmux"
 	"go.uber.org/zap"
@@ -21,6 +27,7 @@ import (
 	healthpb "google.golang.org/grpc/health/grpc_health_v1"
 	"google.golang.org/grpc/reflection"
 
+	"{{ .GoModule}}/proto"
 	{{range .Packages}}pb_{{.Package}} "{{ .GoModule}}/proto/{{.Package | SnakeCase}}"
 	{{end}}
 )
@@ -57,7 +64,7 @@ func (srv *Server) ListenAndServe() error {
 	reflection.Register(srv.grpcServer)
 	srv.healthServer = health.NewServer()
 	healthpb.RegisterHealthServer(srv.grpcServer, srv.healthServer)
-	srv.healthServer.SetServingStatus("serverName", healthpb.HealthCheckResponse_SERVING)
+	srv.healthServer.SetServingStatus("ww", healthpb.HealthCheckResponse_SERVING)
 
 	{{range .Packages}}pb_{{.Package}}.Register{{ .Package | UpperFirst}}ServiceServer(srv.grpcServer, srv.{{.Package}}Service)
 	{{end}}
@@ -131,16 +138,46 @@ func (srv *Server) ListenAndServe() error {
 	}
 	defer cc.Close()
 
-	handler, err := standalone.HandlerViaReflection(ctx, cc, sAddr)
+	gwmux := runtime.NewServeMux()
+	{{range .Packages}}if err := pb_{{.Package}}.Register{{ .Package | UpperFirst}}ServiceHandler(context.Background(), gwmux, cc); err != nil {
+		return err
+	}
+	{{end}}
+
+	httpMux := http.NewServeMux()
+
+	grpcui, err := standalone.HandlerViaReflection(ctx, cc, sAddr)
 	if err != nil {
 		return err
 	}
 
-	httpServer := &http.Server{
-		Handler: handler,
+	httpMux.Handle("/grpcui/", http.StripPrefix("/grpcui", grpcui))
+
+	specs, err := fs.Glob(proto.OpenAPIv2, "**/*.swagger.json")
+	if err != nil {
+		return err
+	}
+	for _, spec := range specs {
+		f, err := proto.OpenAPIv2.Open(spec)
+		if err != nil {
+			return err
+		}
+		data, err := io.ReadAll(f)
+		if err != nil {
+			return err
+		}
+		path := fmt.Sprintf("/swagger/%s/", filepath.Dir(spec))
+		srv.log.Info(fmt.Sprintf("Serving Swagger UI on %s://localhost:%d%s", schema, srv.cfg.Port, path))
+		httpMux.Handle(path, http.StripPrefix(strings.TrimSuffix(path, "/"), swaggerui.Handler(data)))
 	}
 
-	srv.log.Info(fmt.Sprintf("Serving gRPC UI on %s://localhost:%d", schema, srv.cfg.Port))
+	httpMux.Handle("/", gwmux)
+
+	httpServer := &http.Server{
+		Handler: httpMux,
+	}
+
+	srv.log.Info(fmt.Sprintf("Serving gRPC UI on %s://localhost:%d/grpcui", schema, srv.cfg.Port))
 	return httpServer.Serve(httpListener)
 }
 
