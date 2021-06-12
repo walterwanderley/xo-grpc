@@ -23,6 +23,20 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
 };
 service CustomerDemographicService {
     
+    rpc CustomerDemographicByCustomerTypeID(CustomerDemographicByCustomerTypeIDRequest) returns (typespb.CustomerDemographic) {
+        option (google.api.http) = {
+            get: "/v1/customer-demographic/{customerTypeID}"
+            
+        };
+    }
+    
+    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete: "/v1/customer-demographic/{CustomerTypeID}"
+            
+        };
+    }
+    
     rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/customer-demographic"
@@ -47,20 +61,14 @@ service CustomerDemographicService {
         };
     }
     
-    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            delete: "/v1/customer-demographic/{CustomerTypeID}"
-            
-        };
-    }
-    
-    rpc CustomerDemographicByCustomerTypeID(CustomerDemographicByCustomerTypeIDRequest) returns (typespb.CustomerDemographic) {
-        option (google.api.http) = {
-            get: "/v1/customer-demographic/{customerTypeID}"
-            
-        };
-    }
-    
+}
+
+message CustomerDemographicByCustomerTypeIDRequest { 
+    string customerTypeID = 1;
+}
+
+message DeleteRequest { 
+    string CustomerTypeID = 1;
 }
 
 message InsertRequest { 
@@ -77,12 +85,4 @@ message UpdateRequest {
 message UpsertRequest { 
     .google.protobuf.StringValue CustomerDesc = 1;
     string CustomerTypeID = 2;
-}
-
-message DeleteRequest { 
-    string CustomerTypeID = 1;
-}
-
-message CustomerDemographicByCustomerTypeIDRequest { 
-    string customerTypeID = 1;
 }

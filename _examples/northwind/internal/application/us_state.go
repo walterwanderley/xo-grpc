@@ -24,6 +24,22 @@ func NewUsStateService(db *sql.DB) *UsStateService {
 	return &UsStateService{db: db}
 }
 
+func (s *UsStateService) Delete(ctx context.Context, req *pb.DeleteRequest) (res *emptypb.Empty, err error) {
+	m, err := models.UsStateByStateID(ctx, s.db, int16(req.StateID))
+	if err != nil {
+		return
+	}
+
+	err = m.Delete(ctx, s.db)
+	if err != nil {
+		return
+	}
+
+	res = new(emptypb.Empty)
+
+	return
+}
+
 func (s *UsStateService) Insert(ctx context.Context, req *pb.InsertRequest) (res *emptypb.Empty, err error) {
 	var m models.UsState
 	if v := req.GetStateAbbr(); v != nil {
@@ -100,22 +116,6 @@ func (s *UsStateService) Upsert(ctx context.Context, req *pb.UpsertRequest) (res
 	}
 
 	err = m.Upsert(ctx, s.db)
-	if err != nil {
-		return
-	}
-
-	res = new(emptypb.Empty)
-
-	return
-}
-
-func (s *UsStateService) Delete(ctx context.Context, req *pb.DeleteRequest) (res *emptypb.Empty, err error) {
-	m, err := models.UsStateByStateID(ctx, s.db, int16(req.StateID))
-	if err != nil {
-		return
-	}
-
-	err = m.Delete(ctx, s.db)
 	if err != nil {
 		return
 	}

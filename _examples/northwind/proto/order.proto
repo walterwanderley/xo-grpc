@@ -24,10 +24,45 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
 };
 service OrderService {
     
+    rpc Customer(CustomerRequest) returns (typespb.Customer) {
+        option (google.api.http) = {
+            get: "/v1/order/customer/{CustomerID}"
+            
+        };
+    }
+    
+    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete: "/v1/order/{OrderID}"
+            
+        };
+    }
+    
+    rpc Employee(EmployeeRequest) returns (typespb.Employee) {
+        option (google.api.http) = {
+            get: "/v1/order/employee/{EmployeeID}"
+            
+        };
+    }
+    
     rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/order"
             body: "*"
+            
+        };
+    }
+    
+    rpc OrderByOrderID(OrderByOrderIDRequest) returns (typespb.Order) {
+        option (google.api.http) = {
+            get: "/v1/order/{orderID}"
+            
+        };
+    }
+    
+    rpc Shipper(ShipperRequest) returns (typespb.Shipper) {
+        option (google.api.http) = {
+            get: "/v1/order/shipper/{ShipVia}"
             
         };
     }
@@ -48,41 +83,18 @@ service OrderService {
         };
     }
     
-    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            delete: "/v1/order/{OrderID}"
-            
-        };
-    }
-    
-    rpc OrderByOrderID(OrderByOrderIDRequest) returns (typespb.Order) {
-        option (google.api.http) = {
-            get: "/v1/order/{orderID}"
-            
-        };
-    }
-    
-    rpc Customer(CustomerRequest) returns (typespb.Customer) {
-        option (google.api.http) = {
-            get: "/v1/order/customer/{CustomerID}"
-            
-        };
-    }
-    
-    rpc Employee(EmployeeRequest) returns (typespb.Employee) {
-        option (google.api.http) = {
-            get: "/v1/order/employee/{EmployeeID}"
-            
-        };
-    }
-    
-    rpc Shipper(ShipperRequest) returns (typespb.Shipper) {
-        option (google.api.http) = {
-            get: "/v1/order/shipper/{ShipVia}"
-            
-        };
-    }
-    
+}
+
+message CustomerRequest { 
+    .google.protobuf.StringValue CustomerID = 1;
+}
+
+message DeleteRequest { 
+    int32 OrderID = 1;
+}
+
+message EmployeeRequest { 
+    .google.protobuf.Int64Value EmployeeID = 1;
 }
 
 message InsertRequest { 
@@ -100,6 +112,14 @@ message InsertRequest {
     .google.protobuf.StringValue ShipRegion = 12;
     .google.protobuf.Int64Value ShipVia = 13;
     .google.protobuf.Timestamp ShippedDate = 14;
+}
+
+message OrderByOrderIDRequest { 
+    int32 orderID = 1;
+}
+
+message ShipperRequest { 
+    .google.protobuf.Int64Value ShipVia = 1;
 }
 
 message UpdateRequest { 
@@ -135,24 +155,4 @@ message UpsertRequest {
     .google.protobuf.StringValue ShipRegion = 12;
     .google.protobuf.Int64Value ShipVia = 13;
     .google.protobuf.Timestamp ShippedDate = 14;
-}
-
-message DeleteRequest { 
-    int32 OrderID = 1;
-}
-
-message OrderByOrderIDRequest { 
-    int32 orderID = 1;
-}
-
-message CustomerRequest { 
-    .google.protobuf.StringValue CustomerID = 1;
-}
-
-message EmployeeRequest { 
-    .google.protobuf.Int64Value EmployeeID = 1;
-}
-
-message ShipperRequest { 
-    .google.protobuf.Int64Value ShipVia = 1;
 }

@@ -23,6 +23,20 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
 };
 service CustomerService {
     
+    rpc CustomerByCustomerID(CustomerByCustomerIDRequest) returns (typespb.Customer) {
+        option (google.api.http) = {
+            get: "/v1/customer/{customerID}"
+            
+        };
+    }
+    
+    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete: "/v1/customer/{CustomerID}"
+            
+        };
+    }
+    
     rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/customer"
@@ -47,20 +61,14 @@ service CustomerService {
         };
     }
     
-    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            delete: "/v1/customer/{CustomerID}"
-            
-        };
-    }
-    
-    rpc CustomerByCustomerID(CustomerByCustomerIDRequest) returns (typespb.Customer) {
-        option (google.api.http) = {
-            get: "/v1/customer/{customerID}"
-            
-        };
-    }
-    
+}
+
+message CustomerByCustomerIDRequest { 
+    string customerID = 1;
+}
+
+message DeleteRequest { 
+    string CustomerID = 1;
 }
 
 message InsertRequest { 
@@ -104,12 +112,4 @@ message UpsertRequest {
     .google.protobuf.StringValue Phone = 9;
     .google.protobuf.StringValue PostalCode = 10;
     .google.protobuf.StringValue Region = 11;
-}
-
-message DeleteRequest { 
-    string CustomerID = 1;
-}
-
-message CustomerByCustomerIDRequest { 
-    string customerID = 1;
 }

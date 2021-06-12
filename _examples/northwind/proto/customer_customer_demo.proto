@@ -23,17 +23,9 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
 };
 service CustomerCustomerDemoService {
     
-    rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
+    rpc Customer(CustomerRequest) returns (typespb.Customer) {
         option (google.api.http) = {
-            post: "/v1/customer-customer-demo"
-            body: "*"
-            
-        };
-    }
-    
-    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            delete: "/v1/customer-customer-demo"
+            get: "/v1/customer-customer-demo/customer/{CustomerID}"
             
         };
     }
@@ -45,13 +37,6 @@ service CustomerCustomerDemoService {
         };
     }
     
-    rpc Customer(CustomerRequest) returns (typespb.Customer) {
-        option (google.api.http) = {
-            get: "/v1/customer-customer-demo/customer/{CustomerID}"
-            
-        };
-    }
-    
     rpc CustomerDemographic(CustomerDemographicRequest) returns (typespb.CustomerDemographic) {
         option (google.api.http) = {
             get: "/v1/customer-customer-demo/customer-demographic/{CustomerTypeID}"
@@ -59,16 +44,25 @@ service CustomerCustomerDemoService {
         };
     }
     
+    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete: "/v1/customer-customer-demo"
+            
+        };
+    }
+    
+    rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            post: "/v1/customer-customer-demo"
+            body: "*"
+            
+        };
+    }
+    
 }
 
-message InsertRequest { 
+message CustomerRequest { 
     string CustomerID = 1;
-    string CustomerTypeID = 2;
-}
-
-message DeleteRequest { 
-    string CustomerID = 1;
-    string CustomerTypeID = 2;
 }
 
 message CustomerCustomerDemoByCustomerIDCustomerTypeIDRequest { 
@@ -76,10 +70,16 @@ message CustomerCustomerDemoByCustomerIDCustomerTypeIDRequest {
     string customerTypeID = 2;
 }
 
-message CustomerRequest { 
-    string CustomerID = 1;
-}
-
 message CustomerDemographicRequest { 
     string CustomerTypeID = 1;
+}
+
+message DeleteRequest { 
+    string CustomerID = 1;
+    string CustomerTypeID = 2;
+}
+
+message InsertRequest { 
+    string CustomerID = 1;
+    string CustomerTypeID = 2;
 }

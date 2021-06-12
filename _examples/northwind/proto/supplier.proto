@@ -23,10 +23,24 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
 };
 service SupplierService {
     
+    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete: "/v1/supplier/{SupplierID}"
+            
+        };
+    }
+    
     rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/supplier"
             body: "*"
+            
+        };
+    }
+    
+    rpc SupplierBySupplierID(SupplierBySupplierIDRequest) returns (typespb.Supplier) {
+        option (google.api.http) = {
+            get: "/v1/supplier/{supplierID}"
             
         };
     }
@@ -47,20 +61,10 @@ service SupplierService {
         };
     }
     
-    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            delete: "/v1/supplier/{SupplierID}"
-            
-        };
-    }
-    
-    rpc SupplierBySupplierID(SupplierBySupplierIDRequest) returns (typespb.Supplier) {
-        option (google.api.http) = {
-            get: "/v1/supplier/{supplierID}"
-            
-        };
-    }
-    
+}
+
+message DeleteRequest { 
+    int32 SupplierID = 1;
 }
 
 message InsertRequest { 
@@ -76,6 +80,10 @@ message InsertRequest {
     .google.protobuf.StringValue PostalCode = 10;
     .google.protobuf.StringValue Region = 11;
     int32 SupplierID = 12;
+}
+
+message SupplierBySupplierIDRequest { 
+    int32 supplierID = 1;
 }
 
 message UpdateRequest { 
@@ -107,12 +115,4 @@ message UpsertRequest {
     .google.protobuf.StringValue PostalCode = 10;
     .google.protobuf.StringValue Region = 11;
     int32 SupplierID = 12;
-}
-
-message DeleteRequest { 
-    int32 SupplierID = 1;
-}
-
-message SupplierBySupplierIDRequest { 
-    int32 supplierID = 1;
 }

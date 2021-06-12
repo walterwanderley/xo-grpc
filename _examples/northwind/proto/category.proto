@@ -23,6 +23,20 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
 };
 service CategoryService {
     
+    rpc CategoryByCategoryID(CategoryByCategoryIDRequest) returns (typespb.Category) {
+        option (google.api.http) = {
+            get: "/v1/category/{categoryID}"
+            
+        };
+    }
+    
+    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete: "/v1/category/{CategoryID}"
+            
+        };
+    }
+    
     rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/category"
@@ -47,20 +61,14 @@ service CategoryService {
         };
     }
     
-    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            delete: "/v1/category/{CategoryID}"
-            
-        };
-    }
-    
-    rpc CategoryByCategoryID(CategoryByCategoryIDRequest) returns (typespb.Category) {
-        option (google.api.http) = {
-            get: "/v1/category/{categoryID}"
-            
-        };
-    }
-    
+}
+
+message CategoryByCategoryIDRequest { 
+    int32 categoryID = 1;
+}
+
+message DeleteRequest { 
+    int32 CategoryID = 1;
 }
 
 message InsertRequest { 
@@ -83,12 +91,4 @@ message UpsertRequest {
     string CategoryName = 2;
     .google.protobuf.StringValue Description = 3;
     bytes Picture = 4;
-}
-
-message DeleteRequest { 
-    int32 CategoryID = 1;
-}
-
-message CategoryByCategoryIDRequest { 
-    int32 categoryID = 1;
 }

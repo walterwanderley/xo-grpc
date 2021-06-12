@@ -22,10 +22,24 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
 };
 service RegionService {
     
+    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete: "/v1/region/{RegionID}"
+            
+        };
+    }
+    
     rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/region"
             body: "*"
+            
+        };
+    }
+    
+    rpc RegionByRegionID(RegionByRegionIDRequest) returns (typespb.Region) {
+        option (google.api.http) = {
+            get: "/v1/region/{regionID}"
             
         };
     }
@@ -46,25 +60,19 @@ service RegionService {
         };
     }
     
-    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            delete: "/v1/region/{RegionID}"
-            
-        };
-    }
-    
-    rpc RegionByRegionID(RegionByRegionIDRequest) returns (typespb.Region) {
-        option (google.api.http) = {
-            get: "/v1/region/{regionID}"
-            
-        };
-    }
-    
+}
+
+message DeleteRequest { 
+    int32 RegionID = 1;
 }
 
 message InsertRequest { 
     string RegionDescription = 1;
     int32 RegionID = 2;
+}
+
+message RegionByRegionIDRequest { 
+    int32 regionID = 1;
 }
 
 message UpdateRequest { 
@@ -76,12 +84,4 @@ message UpdateRequest {
 message UpsertRequest { 
     string RegionDescription = 1;
     int32 RegionID = 2;
-}
-
-message DeleteRequest { 
-    int32 RegionID = 1;
-}
-
-message RegionByRegionIDRequest { 
-    int32 regionID = 1;
 }

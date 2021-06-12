@@ -22,10 +22,31 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
 };
 service TerritoryService {
     
+    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete: "/v1/territory/{TerritoryID}"
+            
+        };
+    }
+    
     rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/territory"
             body: "*"
+            
+        };
+    }
+    
+    rpc Region(RegionRequest) returns (typespb.Region) {
+        option (google.api.http) = {
+            get: "/v1/territory/region/{RegionID}"
+            
+        };
+    }
+    
+    rpc TerritoryByTerritoryID(TerritoryByTerritoryIDRequest) returns (typespb.Territory) {
+        option (google.api.http) = {
+            get: "/v1/territory/{territoryID}"
             
         };
     }
@@ -46,33 +67,24 @@ service TerritoryService {
         };
     }
     
-    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            delete: "/v1/territory/{TerritoryID}"
-            
-        };
-    }
-    
-    rpc TerritoryByTerritoryID(TerritoryByTerritoryIDRequest) returns (typespb.Territory) {
-        option (google.api.http) = {
-            get: "/v1/territory/{territoryID}"
-            
-        };
-    }
-    
-    rpc Region(RegionRequest) returns (typespb.Region) {
-        option (google.api.http) = {
-            get: "/v1/territory/region/{RegionID}"
-            
-        };
-    }
-    
+}
+
+message DeleteRequest { 
+    string TerritoryID = 1;
 }
 
 message InsertRequest { 
     int32 RegionID = 1;
     string TerritoryDescription = 2;
     string TerritoryID = 3;
+}
+
+message RegionRequest { 
+    int32 RegionID = 1;
+}
+
+message TerritoryByTerritoryIDRequest { 
+    string territoryID = 1;
 }
 
 message UpdateRequest { 
@@ -86,16 +98,4 @@ message UpsertRequest {
     int32 RegionID = 1;
     string TerritoryDescription = 2;
     string TerritoryID = 3;
-}
-
-message DeleteRequest { 
-    string TerritoryID = 1;
-}
-
-message TerritoryByTerritoryIDRequest { 
-    string territoryID = 1;
-}
-
-message RegionRequest { 
-    int32 RegionID = 1;
 }

@@ -24,10 +24,38 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
 };
 service OrderDetailService {
     
+    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete: "/v1/order-detail"
+            
+        };
+    }
+    
     rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/order-detail"
             body: "*"
+            
+        };
+    }
+    
+    rpc Order(OrderRequest) returns (typespb.Order) {
+        option (google.api.http) = {
+            get: "/v1/order-detail/order/{OrderID}"
+            
+        };
+    }
+    
+    rpc OrderDetailByOrderIDProductID(OrderDetailByOrderIDProductIDRequest) returns (typespb.OrderDetail) {
+        option (google.api.http) = {
+            get: "/v1/order-detail"
+            
+        };
+    }
+    
+    rpc Product(ProductRequest) returns (typespb.Product) {
+        option (google.api.http) = {
+            get: "/v1/order-detail/product/{ProductID}"
             
         };
     }
@@ -48,34 +76,11 @@ service OrderDetailService {
         };
     }
     
-    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            delete: "/v1/order-detail"
-            
-        };
-    }
-    
-    rpc OrderDetailByOrderIDProductID(OrderDetailByOrderIDProductIDRequest) returns (typespb.OrderDetail) {
-        option (google.api.http) = {
-            get: "/v1/order-detail"
-            
-        };
-    }
-    
-    rpc Order(OrderRequest) returns (typespb.Order) {
-        option (google.api.http) = {
-            get: "/v1/order-detail/order/{OrderID}"
-            
-        };
-    }
-    
-    rpc Product(ProductRequest) returns (typespb.Product) {
-        option (google.api.http) = {
-            get: "/v1/order-detail/product/{ProductID}"
-            
-        };
-    }
-    
+}
+
+message DeleteRequest { 
+    int32 OrderID = 1;
+    int32 ProductID = 2;
 }
 
 message InsertRequest { 
@@ -84,6 +89,19 @@ message InsertRequest {
     int32 ProductID = 3;
     int32 Quantity = 4;
     float UnitPrice = 5;
+}
+
+message OrderRequest { 
+    int32 OrderID = 1;
+}
+
+message OrderDetailByOrderIDProductIDRequest { 
+    int32 orderID = 1;
+    int32 productID = 2;
+}
+
+message ProductRequest { 
+    int32 ProductID = 1;
 }
 
 message UpdateRequest { 
@@ -100,22 +118,4 @@ message UpsertRequest {
     int32 ProductID = 3;
     int32 Quantity = 4;
     float UnitPrice = 5;
-}
-
-message DeleteRequest { 
-    int32 OrderID = 1;
-    int32 ProductID = 2;
-}
-
-message OrderDetailByOrderIDProductIDRequest { 
-    int32 orderID = 1;
-    int32 productID = 2;
-}
-
-message OrderRequest { 
-    int32 OrderID = 1;
-}
-
-message ProductRequest { 
-    int32 ProductID = 1;
 }

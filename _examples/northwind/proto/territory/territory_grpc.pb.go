@@ -20,12 +20,12 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type TerritoryServiceClient interface {
+	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Insert(ctx context.Context, in *InsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	Region(ctx context.Context, in *RegionRequest, opts ...grpc.CallOption) (*typespb.Region, error)
+	TerritoryByTerritoryID(ctx context.Context, in *TerritoryByTerritoryIDRequest, opts ...grpc.CallOption) (*typespb.Territory, error)
 	Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Upsert(ctx context.Context, in *UpsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	TerritoryByTerritoryID(ctx context.Context, in *TerritoryByTerritoryIDRequest, opts ...grpc.CallOption) (*typespb.Territory, error)
-	Region(ctx context.Context, in *RegionRequest, opts ...grpc.CallOption) (*typespb.Region, error)
 }
 
 type territoryServiceClient struct {
@@ -36,9 +36,36 @@ func NewTerritoryServiceClient(cc grpc.ClientConnInterface) TerritoryServiceClie
 	return &territoryServiceClient{cc}
 }
 
+func (c *territoryServiceClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/territory.TerritoryService/Delete", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *territoryServiceClient) Insert(ctx context.Context, in *InsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/territory.TerritoryService/Insert", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *territoryServiceClient) Region(ctx context.Context, in *RegionRequest, opts ...grpc.CallOption) (*typespb.Region, error) {
+	out := new(typespb.Region)
+	err := c.cc.Invoke(ctx, "/territory.TerritoryService/Region", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *territoryServiceClient) TerritoryByTerritoryID(ctx context.Context, in *TerritoryByTerritoryIDRequest, opts ...grpc.CallOption) (*typespb.Territory, error) {
+	out := new(typespb.Territory)
+	err := c.cc.Invoke(ctx, "/territory.TerritoryService/TerritoryByTerritoryID", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -63,43 +90,16 @@ func (c *territoryServiceClient) Upsert(ctx context.Context, in *UpsertRequest, 
 	return out, nil
 }
 
-func (c *territoryServiceClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/territory.TerritoryService/Delete", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *territoryServiceClient) TerritoryByTerritoryID(ctx context.Context, in *TerritoryByTerritoryIDRequest, opts ...grpc.CallOption) (*typespb.Territory, error) {
-	out := new(typespb.Territory)
-	err := c.cc.Invoke(ctx, "/territory.TerritoryService/TerritoryByTerritoryID", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *territoryServiceClient) Region(ctx context.Context, in *RegionRequest, opts ...grpc.CallOption) (*typespb.Region, error) {
-	out := new(typespb.Region)
-	err := c.cc.Invoke(ctx, "/territory.TerritoryService/Region", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // TerritoryServiceServer is the server API for TerritoryService service.
 // All implementations must embed UnimplementedTerritoryServiceServer
 // for forward compatibility
 type TerritoryServiceServer interface {
+	Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error)
 	Insert(context.Context, *InsertRequest) (*emptypb.Empty, error)
+	Region(context.Context, *RegionRequest) (*typespb.Region, error)
+	TerritoryByTerritoryID(context.Context, *TerritoryByTerritoryIDRequest) (*typespb.Territory, error)
 	Update(context.Context, *UpdateRequest) (*emptypb.Empty, error)
 	Upsert(context.Context, *UpsertRequest) (*emptypb.Empty, error)
-	Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error)
-	TerritoryByTerritoryID(context.Context, *TerritoryByTerritoryIDRequest) (*typespb.Territory, error)
-	Region(context.Context, *RegionRequest) (*typespb.Region, error)
 	mustEmbedUnimplementedTerritoryServiceServer()
 }
 
@@ -107,23 +107,23 @@ type TerritoryServiceServer interface {
 type UnimplementedTerritoryServiceServer struct {
 }
 
+func (UnimplementedTerritoryServiceServer) Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
+}
 func (UnimplementedTerritoryServiceServer) Insert(context.Context, *InsertRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Insert not implemented")
+}
+func (UnimplementedTerritoryServiceServer) Region(context.Context, *RegionRequest) (*typespb.Region, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Region not implemented")
+}
+func (UnimplementedTerritoryServiceServer) TerritoryByTerritoryID(context.Context, *TerritoryByTerritoryIDRequest) (*typespb.Territory, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method TerritoryByTerritoryID not implemented")
 }
 func (UnimplementedTerritoryServiceServer) Update(context.Context, *UpdateRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
 }
 func (UnimplementedTerritoryServiceServer) Upsert(context.Context, *UpsertRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Upsert not implemented")
-}
-func (UnimplementedTerritoryServiceServer) Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
-}
-func (UnimplementedTerritoryServiceServer) TerritoryByTerritoryID(context.Context, *TerritoryByTerritoryIDRequest) (*typespb.Territory, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method TerritoryByTerritoryID not implemented")
-}
-func (UnimplementedTerritoryServiceServer) Region(context.Context, *RegionRequest) (*typespb.Region, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Region not implemented")
 }
 func (UnimplementedTerritoryServiceServer) mustEmbedUnimplementedTerritoryServiceServer() {}
 
@@ -136,6 +136,24 @@ type UnsafeTerritoryServiceServer interface {
 
 func RegisterTerritoryServiceServer(s grpc.ServiceRegistrar, srv TerritoryServiceServer) {
 	s.RegisterService(&TerritoryService_ServiceDesc, srv)
+}
+
+func _TerritoryService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TerritoryServiceServer).Delete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/territory.TerritoryService/Delete",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TerritoryServiceServer).Delete(ctx, req.(*DeleteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _TerritoryService_Insert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -152,6 +170,42 @@ func _TerritoryService_Insert_Handler(srv interface{}, ctx context.Context, dec 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TerritoryServiceServer).Insert(ctx, req.(*InsertRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TerritoryService_Region_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RegionRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TerritoryServiceServer).Region(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/territory.TerritoryService/Region",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TerritoryServiceServer).Region(ctx, req.(*RegionRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TerritoryService_TerritoryByTerritoryID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TerritoryByTerritoryIDRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TerritoryServiceServer).TerritoryByTerritoryID(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/territory.TerritoryService/TerritoryByTerritoryID",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TerritoryServiceServer).TerritoryByTerritoryID(ctx, req.(*TerritoryByTerritoryIDRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -192,60 +246,6 @@ func _TerritoryService_Upsert_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _TerritoryService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TerritoryServiceServer).Delete(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/territory.TerritoryService/Delete",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TerritoryServiceServer).Delete(ctx, req.(*DeleteRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _TerritoryService_TerritoryByTerritoryID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(TerritoryByTerritoryIDRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TerritoryServiceServer).TerritoryByTerritoryID(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/territory.TerritoryService/TerritoryByTerritoryID",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TerritoryServiceServer).TerritoryByTerritoryID(ctx, req.(*TerritoryByTerritoryIDRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _TerritoryService_Region_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(RegionRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TerritoryServiceServer).Region(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/territory.TerritoryService/Region",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TerritoryServiceServer).Region(ctx, req.(*RegionRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // TerritoryService_ServiceDesc is the grpc.ServiceDesc for TerritoryService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -254,8 +254,20 @@ var TerritoryService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*TerritoryServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
+			MethodName: "Delete",
+			Handler:    _TerritoryService_Delete_Handler,
+		},
+		{
 			MethodName: "Insert",
 			Handler:    _TerritoryService_Insert_Handler,
+		},
+		{
+			MethodName: "Region",
+			Handler:    _TerritoryService_Region_Handler,
+		},
+		{
+			MethodName: "TerritoryByTerritoryID",
+			Handler:    _TerritoryService_TerritoryByTerritoryID_Handler,
 		},
 		{
 			MethodName: "Update",
@@ -264,18 +276,6 @@ var TerritoryService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Upsert",
 			Handler:    _TerritoryService_Upsert_Handler,
-		},
-		{
-			MethodName: "Delete",
-			Handler:    _TerritoryService_Delete_Handler,
-		},
-		{
-			MethodName: "TerritoryByTerritoryID",
-			Handler:    _TerritoryService_TerritoryByTerritoryID_Handler,
-		},
-		{
-			MethodName: "Region",
-			Handler:    _TerritoryService_Region_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

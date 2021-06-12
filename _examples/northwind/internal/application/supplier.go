@@ -24,6 +24,22 @@ func NewSupplierService(db *sql.DB) *SupplierService {
 	return &SupplierService{db: db}
 }
 
+func (s *SupplierService) Delete(ctx context.Context, req *pb.DeleteRequest) (res *emptypb.Empty, err error) {
+	m, err := models.SupplierBySupplierID(ctx, s.db, int16(req.SupplierID))
+	if err != nil {
+		return
+	}
+
+	err = m.Delete(ctx, s.db)
+	if err != nil {
+		return
+	}
+
+	res = new(emptypb.Empty)
+
+	return
+}
+
 func (s *SupplierService) Insert(ctx context.Context, req *pb.InsertRequest) (res *emptypb.Empty, err error) {
 	var m models.Supplier
 	if v := req.GetAddress(); v != nil {
@@ -77,6 +93,52 @@ func (s *SupplierService) Insert(ctx context.Context, req *pb.InsertRequest) (re
 				return
 			}
 		}
+	}
+
+	return
+}
+
+func (s *SupplierService) SupplierBySupplierID(ctx context.Context, req *pb.SupplierBySupplierIDRequest) (res *typespb.Supplier, err error) {
+
+	supplierID := int16(req.GetSupplierID())
+
+	result, err := models.SupplierBySupplierID(ctx, s.db, supplierID)
+	if err != nil {
+		return
+	}
+
+	res = new(typespb.Supplier)
+	res.SupplierID = int32(result.SupplierID)
+	res.CompanyName = result.CompanyName
+	if result.ContactName.Valid {
+		res.ContactName = wrapperspb.String(result.ContactName.String)
+	}
+	if result.ContactTitle.Valid {
+		res.ContactTitle = wrapperspb.String(result.ContactTitle.String)
+	}
+	if result.Address.Valid {
+		res.Address = wrapperspb.String(result.Address.String)
+	}
+	if result.City.Valid {
+		res.City = wrapperspb.String(result.City.String)
+	}
+	if result.Region.Valid {
+		res.Region = wrapperspb.String(result.Region.String)
+	}
+	if result.PostalCode.Valid {
+		res.PostalCode = wrapperspb.String(result.PostalCode.String)
+	}
+	if result.Country.Valid {
+		res.Country = wrapperspb.String(result.Country.String)
+	}
+	if result.Phone.Valid {
+		res.Phone = wrapperspb.String(result.Phone.String)
+	}
+	if result.Fax.Valid {
+		res.Fax = wrapperspb.String(result.Fax.String)
+	}
+	if result.Homepage.Valid {
+		res.Homepage = wrapperspb.String(result.Homepage.String)
 	}
 
 	return
@@ -171,68 +233,6 @@ func (s *SupplierService) Upsert(ctx context.Context, req *pb.UpsertRequest) (re
 	}
 
 	res = new(emptypb.Empty)
-
-	return
-}
-
-func (s *SupplierService) Delete(ctx context.Context, req *pb.DeleteRequest) (res *emptypb.Empty, err error) {
-	m, err := models.SupplierBySupplierID(ctx, s.db, int16(req.SupplierID))
-	if err != nil {
-		return
-	}
-
-	err = m.Delete(ctx, s.db)
-	if err != nil {
-		return
-	}
-
-	res = new(emptypb.Empty)
-
-	return
-}
-
-func (s *SupplierService) SupplierBySupplierID(ctx context.Context, req *pb.SupplierBySupplierIDRequest) (res *typespb.Supplier, err error) {
-
-	supplierID := int16(req.GetSupplierID())
-
-	result, err := models.SupplierBySupplierID(ctx, s.db, supplierID)
-	if err != nil {
-		return
-	}
-
-	res = new(typespb.Supplier)
-	res.SupplierID = int32(result.SupplierID)
-	res.CompanyName = result.CompanyName
-	if result.ContactName.Valid {
-		res.ContactName = wrapperspb.String(result.ContactName.String)
-	}
-	if result.ContactTitle.Valid {
-		res.ContactTitle = wrapperspb.String(result.ContactTitle.String)
-	}
-	if result.Address.Valid {
-		res.Address = wrapperspb.String(result.Address.String)
-	}
-	if result.City.Valid {
-		res.City = wrapperspb.String(result.City.String)
-	}
-	if result.Region.Valid {
-		res.Region = wrapperspb.String(result.Region.String)
-	}
-	if result.PostalCode.Valid {
-		res.PostalCode = wrapperspb.String(result.PostalCode.String)
-	}
-	if result.Country.Valid {
-		res.Country = wrapperspb.String(result.Country.String)
-	}
-	if result.Phone.Valid {
-		res.Phone = wrapperspb.String(result.Phone.String)
-	}
-	if result.Fax.Valid {
-		res.Fax = wrapperspb.String(result.Fax.String)
-	}
-	if result.Homepage.Valid {
-		res.Homepage = wrapperspb.String(result.Homepage.String)
-	}
 
 	return
 }

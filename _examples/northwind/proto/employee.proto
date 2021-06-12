@@ -24,6 +24,27 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
 };
 service EmployeeService {
     
+    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete: "/v1/employee/{EmployeeID}"
+            
+        };
+    }
+    
+    rpc Employee(EmployeeRequest) returns (typespb.Employee) {
+        option (google.api.http) = {
+            get: "/v1/employee/{ReportsTo}"
+            
+        };
+    }
+    
+    rpc EmployeeByEmployeeID(EmployeeByEmployeeIDRequest) returns (typespb.Employee) {
+        option (google.api.http) = {
+            get: "/v1/employee/{employeeID}"
+            
+        };
+    }
+    
     rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/employee"
@@ -48,27 +69,18 @@ service EmployeeService {
         };
     }
     
-    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            delete: "/v1/employee/{EmployeeID}"
-            
-        };
-    }
-    
-    rpc EmployeeByEmployeeID(EmployeeByEmployeeIDRequest) returns (typespb.Employee) {
-        option (google.api.http) = {
-            get: "/v1/employee/{employeeID}"
-            
-        };
-    }
-    
-    rpc Employee(EmployeeRequest) returns (typespb.Employee) {
-        option (google.api.http) = {
-            get: "/v1/employee/{ReportsTo}"
-            
-        };
-    }
-    
+}
+
+message DeleteRequest { 
+    int32 EmployeeID = 1;
+}
+
+message EmployeeRequest { 
+    .google.protobuf.Int64Value ReportsTo = 1;
+}
+
+message EmployeeByEmployeeIDRequest { 
+    int32 employeeID = 1;
 }
 
 message InsertRequest { 
@@ -133,16 +145,4 @@ message UpsertRequest {
     .google.protobuf.Int64Value ReportsTo = 16;
     .google.protobuf.StringValue Title = 17;
     .google.protobuf.StringValue TitleOfCourtesy = 18;
-}
-
-message DeleteRequest { 
-    int32 EmployeeID = 1;
-}
-
-message EmployeeByEmployeeIDRequest { 
-    int32 employeeID = 1;
-}
-
-message EmployeeRequest { 
-    .google.protobuf.Int64Value ReportsTo = 1;
 }

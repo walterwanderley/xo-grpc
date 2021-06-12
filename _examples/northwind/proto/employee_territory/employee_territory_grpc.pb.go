@@ -20,10 +20,10 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type EmployeeTerritoryServiceClient interface {
-	Insert(ctx context.Context, in *InsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	EmployeeTerritoryByEmployeeIDTerritoryID(ctx context.Context, in *EmployeeTerritoryByEmployeeIDTerritoryIDRequest, opts ...grpc.CallOption) (*typespb.EmployeeTerritory, error)
 	Employee(ctx context.Context, in *EmployeeRequest, opts ...grpc.CallOption) (*typespb.Employee, error)
+	EmployeeTerritoryByEmployeeIDTerritoryID(ctx context.Context, in *EmployeeTerritoryByEmployeeIDTerritoryIDRequest, opts ...grpc.CallOption) (*typespb.EmployeeTerritory, error)
+	Insert(ctx context.Context, in *InsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Territory(ctx context.Context, in *TerritoryRequest, opts ...grpc.CallOption) (*typespb.Territory, error)
 }
 
@@ -35,18 +35,18 @@ func NewEmployeeTerritoryServiceClient(cc grpc.ClientConnInterface) EmployeeTerr
 	return &employeeTerritoryServiceClient{cc}
 }
 
-func (c *employeeTerritoryServiceClient) Insert(ctx context.Context, in *InsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *employeeTerritoryServiceClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/employee_territory.EmployeeTerritoryService/Insert", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/employee_territory.EmployeeTerritoryService/Delete", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *employeeTerritoryServiceClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/employee_territory.EmployeeTerritoryService/Delete", in, out, opts...)
+func (c *employeeTerritoryServiceClient) Employee(ctx context.Context, in *EmployeeRequest, opts ...grpc.CallOption) (*typespb.Employee, error) {
+	out := new(typespb.Employee)
+	err := c.cc.Invoke(ctx, "/employee_territory.EmployeeTerritoryService/Employee", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -62,9 +62,9 @@ func (c *employeeTerritoryServiceClient) EmployeeTerritoryByEmployeeIDTerritoryI
 	return out, nil
 }
 
-func (c *employeeTerritoryServiceClient) Employee(ctx context.Context, in *EmployeeRequest, opts ...grpc.CallOption) (*typespb.Employee, error) {
-	out := new(typespb.Employee)
-	err := c.cc.Invoke(ctx, "/employee_territory.EmployeeTerritoryService/Employee", in, out, opts...)
+func (c *employeeTerritoryServiceClient) Insert(ctx context.Context, in *InsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/employee_territory.EmployeeTerritoryService/Insert", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -84,10 +84,10 @@ func (c *employeeTerritoryServiceClient) Territory(ctx context.Context, in *Terr
 // All implementations must embed UnimplementedEmployeeTerritoryServiceServer
 // for forward compatibility
 type EmployeeTerritoryServiceServer interface {
-	Insert(context.Context, *InsertRequest) (*emptypb.Empty, error)
 	Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error)
-	EmployeeTerritoryByEmployeeIDTerritoryID(context.Context, *EmployeeTerritoryByEmployeeIDTerritoryIDRequest) (*typespb.EmployeeTerritory, error)
 	Employee(context.Context, *EmployeeRequest) (*typespb.Employee, error)
+	EmployeeTerritoryByEmployeeIDTerritoryID(context.Context, *EmployeeTerritoryByEmployeeIDTerritoryIDRequest) (*typespb.EmployeeTerritory, error)
+	Insert(context.Context, *InsertRequest) (*emptypb.Empty, error)
 	Territory(context.Context, *TerritoryRequest) (*typespb.Territory, error)
 	mustEmbedUnimplementedEmployeeTerritoryServiceServer()
 }
@@ -96,17 +96,17 @@ type EmployeeTerritoryServiceServer interface {
 type UnimplementedEmployeeTerritoryServiceServer struct {
 }
 
-func (UnimplementedEmployeeTerritoryServiceServer) Insert(context.Context, *InsertRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Insert not implemented")
-}
 func (UnimplementedEmployeeTerritoryServiceServer) Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
+}
+func (UnimplementedEmployeeTerritoryServiceServer) Employee(context.Context, *EmployeeRequest) (*typespb.Employee, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Employee not implemented")
 }
 func (UnimplementedEmployeeTerritoryServiceServer) EmployeeTerritoryByEmployeeIDTerritoryID(context.Context, *EmployeeTerritoryByEmployeeIDTerritoryIDRequest) (*typespb.EmployeeTerritory, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method EmployeeTerritoryByEmployeeIDTerritoryID not implemented")
 }
-func (UnimplementedEmployeeTerritoryServiceServer) Employee(context.Context, *EmployeeRequest) (*typespb.Employee, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Employee not implemented")
+func (UnimplementedEmployeeTerritoryServiceServer) Insert(context.Context, *InsertRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Insert not implemented")
 }
 func (UnimplementedEmployeeTerritoryServiceServer) Territory(context.Context, *TerritoryRequest) (*typespb.Territory, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Territory not implemented")
@@ -125,24 +125,6 @@ func RegisterEmployeeTerritoryServiceServer(s grpc.ServiceRegistrar, srv Employe
 	s.RegisterService(&EmployeeTerritoryService_ServiceDesc, srv)
 }
 
-func _EmployeeTerritoryService_Insert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(InsertRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(EmployeeTerritoryServiceServer).Insert(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/employee_territory.EmployeeTerritoryService/Insert",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EmployeeTerritoryServiceServer).Insert(ctx, req.(*InsertRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _EmployeeTerritoryService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteRequest)
 	if err := dec(in); err != nil {
@@ -157,6 +139,24 @@ func _EmployeeTerritoryService_Delete_Handler(srv interface{}, ctx context.Conte
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(EmployeeTerritoryServiceServer).Delete(ctx, req.(*DeleteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _EmployeeTerritoryService_Employee_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(EmployeeRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(EmployeeTerritoryServiceServer).Employee(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/employee_territory.EmployeeTerritoryService/Employee",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(EmployeeTerritoryServiceServer).Employee(ctx, req.(*EmployeeRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -179,20 +179,20 @@ func _EmployeeTerritoryService_EmployeeTerritoryByEmployeeIDTerritoryID_Handler(
 	return interceptor(ctx, in, info, handler)
 }
 
-func _EmployeeTerritoryService_Employee_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(EmployeeRequest)
+func _EmployeeTerritoryService_Insert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(InsertRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(EmployeeTerritoryServiceServer).Employee(ctx, in)
+		return srv.(EmployeeTerritoryServiceServer).Insert(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/employee_territory.EmployeeTerritoryService/Employee",
+		FullMethod: "/employee_territory.EmployeeTerritoryService/Insert",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(EmployeeTerritoryServiceServer).Employee(ctx, req.(*EmployeeRequest))
+		return srv.(EmployeeTerritoryServiceServer).Insert(ctx, req.(*InsertRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -223,20 +223,20 @@ var EmployeeTerritoryService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*EmployeeTerritoryServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "Insert",
-			Handler:    _EmployeeTerritoryService_Insert_Handler,
-		},
-		{
 			MethodName: "Delete",
 			Handler:    _EmployeeTerritoryService_Delete_Handler,
+		},
+		{
+			MethodName: "Employee",
+			Handler:    _EmployeeTerritoryService_Employee_Handler,
 		},
 		{
 			MethodName: "EmployeeTerritoryByEmployeeIDTerritoryID",
 			Handler:    _EmployeeTerritoryService_EmployeeTerritoryByEmployeeIDTerritoryID_Handler,
 		},
 		{
-			MethodName: "Employee",
-			Handler:    _EmployeeTerritoryService_Employee_Handler,
+			MethodName: "Insert",
+			Handler:    _EmployeeTerritoryService_Insert_Handler,
 		},
 		{
 			MethodName: "Territory",

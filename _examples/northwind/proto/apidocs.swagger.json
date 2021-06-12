@@ -11,25 +11,22 @@
   },
   "tags": [
     {
-      "name": "TerritoryService"
-    },
-    {
-      "name": "ShipperService"
-    },
-    {
-      "name": "EmployeeTerritoryService"
+      "name": "CategoryService"
     },
     {
       "name": "CustomerService"
     },
     {
-      "name": "RegionService"
+      "name": "CustomerCustomerDemoService"
+    },
+    {
+      "name": "CustomerDemographicService"
     },
     {
       "name": "EmployeeService"
     },
     {
-      "name": "UsStateService"
+      "name": "EmployeeTerritoryService"
     },
     {
       "name": "OrderService"
@@ -38,19 +35,22 @@
       "name": "OrderDetailService"
     },
     {
-      "name": "CustomerDemographicService"
+      "name": "ProductService"
     },
     {
-      "name": "CategoryService"
+      "name": "RegionService"
+    },
+    {
+      "name": "ShipperService"
     },
     {
       "name": "SupplierService"
     },
     {
-      "name": "CustomerCustomerDemoService"
+      "name": "TerritoryService"
     },
     {
-      "name": "ProductService"
+      "name": "UsStateService"
     }
   ],
   "consumes": [

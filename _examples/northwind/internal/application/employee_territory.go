@@ -22,21 +22,6 @@ func NewEmployeeTerritoryService(db *sql.DB) *EmployeeTerritoryService {
 	return &EmployeeTerritoryService{db: db}
 }
 
-func (s *EmployeeTerritoryService) Insert(ctx context.Context, req *pb.InsertRequest) (res *emptypb.Empty, err error) {
-	var m models.EmployeeTerritory
-	m.EmployeeID = int16(req.GetEmployeeID())
-	m.TerritoryID = req.GetTerritoryID()
-
-	err = m.Insert(ctx, s.db)
-	if err != nil {
-		return
-	}
-
-	res = new(emptypb.Empty)
-
-	return
-}
-
 func (s *EmployeeTerritoryService) Delete(ctx context.Context, req *pb.DeleteRequest) (res *emptypb.Empty, err error) {
 	m, err := models.EmployeeTerritoryByEmployeeIDTerritoryID(ctx, s.db, int16(req.EmployeeID), req.TerritoryID)
 	if err != nil {
@@ -49,23 +34,6 @@ func (s *EmployeeTerritoryService) Delete(ctx context.Context, req *pb.DeleteReq
 	}
 
 	res = new(emptypb.Empty)
-
-	return
-}
-
-func (s *EmployeeTerritoryService) EmployeeTerritoryByEmployeeIDTerritoryID(ctx context.Context, req *pb.EmployeeTerritoryByEmployeeIDTerritoryIDRequest) (res *typespb.EmployeeTerritory, err error) {
-
-	employeeID := int16(req.GetEmployeeID())
-	territoryID := req.GetTerritoryID()
-
-	result, err := models.EmployeeTerritoryByEmployeeIDTerritoryID(ctx, s.db, employeeID, territoryID)
-	if err != nil {
-		return
-	}
-
-	res = new(typespb.EmployeeTerritory)
-	res.EmployeeID = int32(result.EmployeeID)
-	res.TerritoryID = result.TerritoryID
 
 	return
 }
@@ -126,6 +94,38 @@ func (s *EmployeeTerritoryService) Employee(ctx context.Context, req *pb.Employe
 	if result.PhotoPath.Valid {
 		res.PhotoPath = wrapperspb.String(result.PhotoPath.String)
 	}
+
+	return
+}
+
+func (s *EmployeeTerritoryService) EmployeeTerritoryByEmployeeIDTerritoryID(ctx context.Context, req *pb.EmployeeTerritoryByEmployeeIDTerritoryIDRequest) (res *typespb.EmployeeTerritory, err error) {
+
+	employeeID := int16(req.GetEmployeeID())
+	territoryID := req.GetTerritoryID()
+
+	result, err := models.EmployeeTerritoryByEmployeeIDTerritoryID(ctx, s.db, employeeID, territoryID)
+	if err != nil {
+		return
+	}
+
+	res = new(typespb.EmployeeTerritory)
+	res.EmployeeID = int32(result.EmployeeID)
+	res.TerritoryID = result.TerritoryID
+
+	return
+}
+
+func (s *EmployeeTerritoryService) Insert(ctx context.Context, req *pb.InsertRequest) (res *emptypb.Empty, err error) {
+	var m models.EmployeeTerritory
+	m.EmployeeID = int16(req.GetEmployeeID())
+	m.TerritoryID = req.GetTerritoryID()
+
+	err = m.Insert(ctx, s.db)
+	if err != nil {
+		return
+	}
+
+	res = new(emptypb.Empty)
 
 	return
 }

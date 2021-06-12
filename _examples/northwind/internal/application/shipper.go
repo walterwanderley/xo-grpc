@@ -24,6 +24,22 @@ func NewShipperService(db *sql.DB) *ShipperService {
 	return &ShipperService{db: db}
 }
 
+func (s *ShipperService) Delete(ctx context.Context, req *pb.DeleteRequest) (res *emptypb.Empty, err error) {
+	m, err := models.ShipperByShipperID(ctx, s.db, int16(req.ShipperID))
+	if err != nil {
+		return
+	}
+
+	err = m.Delete(ctx, s.db)
+	if err != nil {
+		return
+	}
+
+	res = new(emptypb.Empty)
+
+	return
+}
+
 func (s *ShipperService) Insert(ctx context.Context, req *pb.InsertRequest) (res *emptypb.Empty, err error) {
 	var m models.Shipper
 	m.CompanyName = req.GetCompanyName()
@@ -50,6 +66,25 @@ func (s *ShipperService) Insert(ctx context.Context, req *pb.InsertRequest) (res
 				return
 			}
 		}
+	}
+
+	return
+}
+
+func (s *ShipperService) ShipperByShipperID(ctx context.Context, req *pb.ShipperByShipperIDRequest) (res *typespb.Shipper, err error) {
+
+	shipperID := int16(req.GetShipperID())
+
+	result, err := models.ShipperByShipperID(ctx, s.db, shipperID)
+	if err != nil {
+		return
+	}
+
+	res = new(typespb.Shipper)
+	res.ShipperID = int32(result.ShipperID)
+	res.CompanyName = result.CompanyName
+	if result.Phone.Valid {
+		res.Phone = wrapperspb.String(result.Phone.String)
 	}
 
 	return
@@ -90,41 +125,6 @@ func (s *ShipperService) Upsert(ctx context.Context, req *pb.UpsertRequest) (res
 	}
 
 	res = new(emptypb.Empty)
-
-	return
-}
-
-func (s *ShipperService) Delete(ctx context.Context, req *pb.DeleteRequest) (res *emptypb.Empty, err error) {
-	m, err := models.ShipperByShipperID(ctx, s.db, int16(req.ShipperID))
-	if err != nil {
-		return
-	}
-
-	err = m.Delete(ctx, s.db)
-	if err != nil {
-		return
-	}
-
-	res = new(emptypb.Empty)
-
-	return
-}
-
-func (s *ShipperService) ShipperByShipperID(ctx context.Context, req *pb.ShipperByShipperIDRequest) (res *typespb.Shipper, err error) {
-
-	shipperID := int16(req.GetShipperID())
-
-	result, err := models.ShipperByShipperID(ctx, s.db, shipperID)
-	if err != nil {
-		return
-	}
-
-	res = new(typespb.Shipper)
-	res.ShipperID = int32(result.ShipperID)
-	res.CompanyName = result.CompanyName
-	if result.Phone.Valid {
-		res.Phone = wrapperspb.String(result.Phone.String)
-	}
 
 	return
 }

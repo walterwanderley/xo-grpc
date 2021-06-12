@@ -24,6 +24,42 @@ func NewCategoryService(db *sql.DB) *CategoryService {
 	return &CategoryService{db: db}
 }
 
+func (s *CategoryService) CategoryByCategoryID(ctx context.Context, req *pb.CategoryByCategoryIDRequest) (res *typespb.Category, err error) {
+
+	categoryID := int16(req.GetCategoryID())
+
+	result, err := models.CategoryByCategoryID(ctx, s.db, categoryID)
+	if err != nil {
+		return
+	}
+
+	res = new(typespb.Category)
+	res.CategoryID = int32(result.CategoryID)
+	res.CategoryName = result.CategoryName
+	if result.Description.Valid {
+		res.Description = wrapperspb.String(result.Description.String)
+	}
+	res.Picture = result.Picture
+
+	return
+}
+
+func (s *CategoryService) Delete(ctx context.Context, req *pb.DeleteRequest) (res *emptypb.Empty, err error) {
+	m, err := models.CategoryByCategoryID(ctx, s.db, int16(req.CategoryID))
+	if err != nil {
+		return
+	}
+
+	err = m.Delete(ctx, s.db)
+	if err != nil {
+		return
+	}
+
+	res = new(emptypb.Empty)
+
+	return
+}
+
 func (s *CategoryService) Insert(ctx context.Context, req *pb.InsertRequest) (res *emptypb.Empty, err error) {
 	var m models.Category
 	m.CategoryID = int16(req.GetCategoryID())
@@ -93,42 +129,6 @@ func (s *CategoryService) Upsert(ctx context.Context, req *pb.UpsertRequest) (re
 	}
 
 	res = new(emptypb.Empty)
-
-	return
-}
-
-func (s *CategoryService) Delete(ctx context.Context, req *pb.DeleteRequest) (res *emptypb.Empty, err error) {
-	m, err := models.CategoryByCategoryID(ctx, s.db, int16(req.CategoryID))
-	if err != nil {
-		return
-	}
-
-	err = m.Delete(ctx, s.db)
-	if err != nil {
-		return
-	}
-
-	res = new(emptypb.Empty)
-
-	return
-}
-
-func (s *CategoryService) CategoryByCategoryID(ctx context.Context, req *pb.CategoryByCategoryIDRequest) (res *typespb.Category, err error) {
-
-	categoryID := int16(req.GetCategoryID())
-
-	result, err := models.CategoryByCategoryID(ctx, s.db, categoryID)
-	if err != nil {
-		return
-	}
-
-	res = new(typespb.Category)
-	res.CategoryID = int32(result.CategoryID)
-	res.CategoryName = result.CategoryName
-	if result.Description.Valid {
-		res.Description = wrapperspb.String(result.Description.String)
-	}
-	res.Picture = result.Picture
 
 	return
 }

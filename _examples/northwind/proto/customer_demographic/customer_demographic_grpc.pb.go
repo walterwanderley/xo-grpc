@@ -20,11 +20,11 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type CustomerDemographicServiceClient interface {
+	CustomerDemographicByCustomerTypeID(ctx context.Context, in *CustomerDemographicByCustomerTypeIDRequest, opts ...grpc.CallOption) (*typespb.CustomerDemographic, error)
+	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Insert(ctx context.Context, in *InsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Upsert(ctx context.Context, in *UpsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	CustomerDemographicByCustomerTypeID(ctx context.Context, in *CustomerDemographicByCustomerTypeIDRequest, opts ...grpc.CallOption) (*typespb.CustomerDemographic, error)
 }
 
 type customerDemographicServiceClient struct {
@@ -33,6 +33,24 @@ type customerDemographicServiceClient struct {
 
 func NewCustomerDemographicServiceClient(cc grpc.ClientConnInterface) CustomerDemographicServiceClient {
 	return &customerDemographicServiceClient{cc}
+}
+
+func (c *customerDemographicServiceClient) CustomerDemographicByCustomerTypeID(ctx context.Context, in *CustomerDemographicByCustomerTypeIDRequest, opts ...grpc.CallOption) (*typespb.CustomerDemographic, error) {
+	out := new(typespb.CustomerDemographic)
+	err := c.cc.Invoke(ctx, "/customer_demographic.CustomerDemographicService/CustomerDemographicByCustomerTypeID", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *customerDemographicServiceClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/customer_demographic.CustomerDemographicService/Delete", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *customerDemographicServiceClient) Insert(ctx context.Context, in *InsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
@@ -62,33 +80,15 @@ func (c *customerDemographicServiceClient) Upsert(ctx context.Context, in *Upser
 	return out, nil
 }
 
-func (c *customerDemographicServiceClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/customer_demographic.CustomerDemographicService/Delete", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *customerDemographicServiceClient) CustomerDemographicByCustomerTypeID(ctx context.Context, in *CustomerDemographicByCustomerTypeIDRequest, opts ...grpc.CallOption) (*typespb.CustomerDemographic, error) {
-	out := new(typespb.CustomerDemographic)
-	err := c.cc.Invoke(ctx, "/customer_demographic.CustomerDemographicService/CustomerDemographicByCustomerTypeID", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // CustomerDemographicServiceServer is the server API for CustomerDemographicService service.
 // All implementations must embed UnimplementedCustomerDemographicServiceServer
 // for forward compatibility
 type CustomerDemographicServiceServer interface {
+	CustomerDemographicByCustomerTypeID(context.Context, *CustomerDemographicByCustomerTypeIDRequest) (*typespb.CustomerDemographic, error)
+	Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error)
 	Insert(context.Context, *InsertRequest) (*emptypb.Empty, error)
 	Update(context.Context, *UpdateRequest) (*emptypb.Empty, error)
 	Upsert(context.Context, *UpsertRequest) (*emptypb.Empty, error)
-	Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error)
-	CustomerDemographicByCustomerTypeID(context.Context, *CustomerDemographicByCustomerTypeIDRequest) (*typespb.CustomerDemographic, error)
 	mustEmbedUnimplementedCustomerDemographicServiceServer()
 }
 
@@ -96,6 +96,12 @@ type CustomerDemographicServiceServer interface {
 type UnimplementedCustomerDemographicServiceServer struct {
 }
 
+func (UnimplementedCustomerDemographicServiceServer) CustomerDemographicByCustomerTypeID(context.Context, *CustomerDemographicByCustomerTypeIDRequest) (*typespb.CustomerDemographic, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CustomerDemographicByCustomerTypeID not implemented")
+}
+func (UnimplementedCustomerDemographicServiceServer) Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
+}
 func (UnimplementedCustomerDemographicServiceServer) Insert(context.Context, *InsertRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Insert not implemented")
 }
@@ -104,12 +110,6 @@ func (UnimplementedCustomerDemographicServiceServer) Update(context.Context, *Up
 }
 func (UnimplementedCustomerDemographicServiceServer) Upsert(context.Context, *UpsertRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Upsert not implemented")
-}
-func (UnimplementedCustomerDemographicServiceServer) Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
-}
-func (UnimplementedCustomerDemographicServiceServer) CustomerDemographicByCustomerTypeID(context.Context, *CustomerDemographicByCustomerTypeIDRequest) (*typespb.CustomerDemographic, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method CustomerDemographicByCustomerTypeID not implemented")
 }
 func (UnimplementedCustomerDemographicServiceServer) mustEmbedUnimplementedCustomerDemographicServiceServer() {
 }
@@ -123,6 +123,42 @@ type UnsafeCustomerDemographicServiceServer interface {
 
 func RegisterCustomerDemographicServiceServer(s grpc.ServiceRegistrar, srv CustomerDemographicServiceServer) {
 	s.RegisterService(&CustomerDemographicService_ServiceDesc, srv)
+}
+
+func _CustomerDemographicService_CustomerDemographicByCustomerTypeID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CustomerDemographicByCustomerTypeIDRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CustomerDemographicServiceServer).CustomerDemographicByCustomerTypeID(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/customer_demographic.CustomerDemographicService/CustomerDemographicByCustomerTypeID",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CustomerDemographicServiceServer).CustomerDemographicByCustomerTypeID(ctx, req.(*CustomerDemographicByCustomerTypeIDRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _CustomerDemographicService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(CustomerDemographicServiceServer).Delete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/customer_demographic.CustomerDemographicService/Delete",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(CustomerDemographicServiceServer).Delete(ctx, req.(*DeleteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _CustomerDemographicService_Insert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -179,42 +215,6 @@ func _CustomerDemographicService_Upsert_Handler(srv interface{}, ctx context.Con
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CustomerDemographicService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(CustomerDemographicServiceServer).Delete(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/customer_demographic.CustomerDemographicService/Delete",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CustomerDemographicServiceServer).Delete(ctx, req.(*DeleteRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _CustomerDemographicService_CustomerDemographicByCustomerTypeID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CustomerDemographicByCustomerTypeIDRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(CustomerDemographicServiceServer).CustomerDemographicByCustomerTypeID(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/customer_demographic.CustomerDemographicService/CustomerDemographicByCustomerTypeID",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CustomerDemographicServiceServer).CustomerDemographicByCustomerTypeID(ctx, req.(*CustomerDemographicByCustomerTypeIDRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // CustomerDemographicService_ServiceDesc is the grpc.ServiceDesc for CustomerDemographicService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -222,6 +222,14 @@ var CustomerDemographicService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "customer_demographic.CustomerDemographicService",
 	HandlerType: (*CustomerDemographicServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "CustomerDemographicByCustomerTypeID",
+			Handler:    _CustomerDemographicService_CustomerDemographicByCustomerTypeID_Handler,
+		},
+		{
+			MethodName: "Delete",
+			Handler:    _CustomerDemographicService_Delete_Handler,
+		},
 		{
 			MethodName: "Insert",
 			Handler:    _CustomerDemographicService_Insert_Handler,
@@ -233,14 +241,6 @@ var CustomerDemographicService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Upsert",
 			Handler:    _CustomerDemographicService_Upsert_Handler,
-		},
-		{
-			MethodName: "Delete",
-			Handler:    _CustomerDemographicService_Delete_Handler,
-		},
-		{
-			MethodName: "CustomerDemographicByCustomerTypeID",
-			Handler:    _CustomerDemographicService_CustomerDemographicByCustomerTypeID_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

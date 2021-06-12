@@ -22,63 +22,6 @@ func NewOrderDetailService(db *sql.DB) *OrderDetailService {
 	return &OrderDetailService{db: db}
 }
 
-func (s *OrderDetailService) Insert(ctx context.Context, req *pb.InsertRequest) (res *emptypb.Empty, err error) {
-	var m models.OrderDetail
-	m.Discount = req.GetDiscount()
-	m.OrderID = int16(req.GetOrderID())
-	m.ProductID = int16(req.GetProductID())
-	m.Quantity = int16(req.GetQuantity())
-	m.UnitPrice = req.GetUnitPrice()
-
-	err = m.Insert(ctx, s.db)
-	if err != nil {
-		return
-	}
-
-	res = new(emptypb.Empty)
-
-	return
-}
-
-func (s *OrderDetailService) Update(ctx context.Context, req *pb.UpdateRequest) (res *emptypb.Empty, err error) {
-	m, err := models.OrderDetailByOrderIDProductID(ctx, s.db, int16(req.OrderID), int16(req.ProductID))
-	if err != nil {
-		return
-	}
-	m.Discount = req.GetDiscount()
-	m.OrderID = int16(req.GetOrderID())
-	m.ProductID = int16(req.GetProductID())
-	m.Quantity = int16(req.GetQuantity())
-	m.UnitPrice = req.GetUnitPrice()
-
-	err = m.Update(ctx, s.db)
-	if err != nil {
-		return
-	}
-
-	res = new(emptypb.Empty)
-
-	return
-}
-
-func (s *OrderDetailService) Upsert(ctx context.Context, req *pb.UpsertRequest) (res *emptypb.Empty, err error) {
-	var m models.OrderDetail
-	m.Discount = req.GetDiscount()
-	m.OrderID = int16(req.GetOrderID())
-	m.ProductID = int16(req.GetProductID())
-	m.Quantity = int16(req.GetQuantity())
-	m.UnitPrice = req.GetUnitPrice()
-
-	err = m.Upsert(ctx, s.db)
-	if err != nil {
-		return
-	}
-
-	res = new(emptypb.Empty)
-
-	return
-}
-
 func (s *OrderDetailService) Delete(ctx context.Context, req *pb.DeleteRequest) (res *emptypb.Empty, err error) {
 	m, err := models.OrderDetailByOrderIDProductID(ctx, s.db, int16(req.OrderID), int16(req.ProductID))
 	if err != nil {
@@ -95,22 +38,20 @@ func (s *OrderDetailService) Delete(ctx context.Context, req *pb.DeleteRequest) 
 	return
 }
 
-func (s *OrderDetailService) OrderDetailByOrderIDProductID(ctx context.Context, req *pb.OrderDetailByOrderIDProductIDRequest) (res *typespb.OrderDetail, err error) {
+func (s *OrderDetailService) Insert(ctx context.Context, req *pb.InsertRequest) (res *emptypb.Empty, err error) {
+	var m models.OrderDetail
+	m.Discount = req.GetDiscount()
+	m.OrderID = int16(req.GetOrderID())
+	m.ProductID = int16(req.GetProductID())
+	m.Quantity = int16(req.GetQuantity())
+	m.UnitPrice = req.GetUnitPrice()
 
-	orderID := int16(req.GetOrderID())
-	productID := int16(req.GetProductID())
-
-	result, err := models.OrderDetailByOrderIDProductID(ctx, s.db, orderID, productID)
+	err = m.Insert(ctx, s.db)
 	if err != nil {
 		return
 	}
 
-	res = new(typespb.OrderDetail)
-	res.OrderID = int32(result.OrderID)
-	res.ProductID = int32(result.ProductID)
-	res.UnitPrice = result.UnitPrice
-	res.Quantity = int32(result.Quantity)
-	res.Discount = result.Discount
+	res = new(emptypb.Empty)
 
 	return
 }
@@ -169,6 +110,26 @@ func (s *OrderDetailService) Order(ctx context.Context, req *pb.OrderRequest) (r
 	return
 }
 
+func (s *OrderDetailService) OrderDetailByOrderIDProductID(ctx context.Context, req *pb.OrderDetailByOrderIDProductIDRequest) (res *typespb.OrderDetail, err error) {
+
+	orderID := int16(req.GetOrderID())
+	productID := int16(req.GetProductID())
+
+	result, err := models.OrderDetailByOrderIDProductID(ctx, s.db, orderID, productID)
+	if err != nil {
+		return
+	}
+
+	res = new(typespb.OrderDetail)
+	res.OrderID = int32(result.OrderID)
+	res.ProductID = int32(result.ProductID)
+	res.UnitPrice = result.UnitPrice
+	res.Quantity = int32(result.Quantity)
+	res.Discount = result.Discount
+
+	return
+}
+
 func (s *OrderDetailService) Product(ctx context.Context, req *pb.ProductRequest) (res *typespb.Product, err error) {
 	var m models.OrderDetail
 	m.ProductID = int16(req.GetProductID())
@@ -203,6 +164,45 @@ func (s *OrderDetailService) Product(ctx context.Context, req *pb.ProductRequest
 		res.ReorderLevel = wrapperspb.Int64(result.ReorderLevel.Int64)
 	}
 	res.Discontinued = int64(result.Discontinued)
+
+	return
+}
+
+func (s *OrderDetailService) Update(ctx context.Context, req *pb.UpdateRequest) (res *emptypb.Empty, err error) {
+	m, err := models.OrderDetailByOrderIDProductID(ctx, s.db, int16(req.OrderID), int16(req.ProductID))
+	if err != nil {
+		return
+	}
+	m.Discount = req.GetDiscount()
+	m.OrderID = int16(req.GetOrderID())
+	m.ProductID = int16(req.GetProductID())
+	m.Quantity = int16(req.GetQuantity())
+	m.UnitPrice = req.GetUnitPrice()
+
+	err = m.Update(ctx, s.db)
+	if err != nil {
+		return
+	}
+
+	res = new(emptypb.Empty)
+
+	return
+}
+
+func (s *OrderDetailService) Upsert(ctx context.Context, req *pb.UpsertRequest) (res *emptypb.Empty, err error) {
+	var m models.OrderDetail
+	m.Discount = req.GetDiscount()
+	m.OrderID = int16(req.GetOrderID())
+	m.ProductID = int16(req.GetProductID())
+	m.Quantity = int16(req.GetQuantity())
+	m.UnitPrice = req.GetUnitPrice()
+
+	err = m.Upsert(ctx, s.db)
+	if err != nil {
+		return
+	}
+
+	res = new(emptypb.Empty)
 
 	return
 }

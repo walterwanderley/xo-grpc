@@ -21,54 +21,6 @@ func NewCustomerCustomerDemoService(db *sql.DB) *CustomerCustomerDemoService {
 	return &CustomerCustomerDemoService{db: db}
 }
 
-func (s *CustomerCustomerDemoService) Insert(ctx context.Context, req *pb.InsertRequest) (res *emptypb.Empty, err error) {
-	var m models.CustomerCustomerDemo
-	m.CustomerID = req.GetCustomerID()
-	m.CustomerTypeID = req.GetCustomerTypeID()
-
-	err = m.Insert(ctx, s.db)
-	if err != nil {
-		return
-	}
-
-	res = new(emptypb.Empty)
-
-	return
-}
-
-func (s *CustomerCustomerDemoService) Delete(ctx context.Context, req *pb.DeleteRequest) (res *emptypb.Empty, err error) {
-	m, err := models.CustomerCustomerDemoByCustomerIDCustomerTypeID(ctx, s.db, req.CustomerID, req.CustomerTypeID)
-	if err != nil {
-		return
-	}
-
-	err = m.Delete(ctx, s.db)
-	if err != nil {
-		return
-	}
-
-	res = new(emptypb.Empty)
-
-	return
-}
-
-func (s *CustomerCustomerDemoService) CustomerCustomerDemoByCustomerIDCustomerTypeID(ctx context.Context, req *pb.CustomerCustomerDemoByCustomerIDCustomerTypeIDRequest) (res *typespb.CustomerCustomerDemo, err error) {
-
-	customerID := req.GetCustomerID()
-	customerTypeID := req.GetCustomerTypeID()
-
-	result, err := models.CustomerCustomerDemoByCustomerIDCustomerTypeID(ctx, s.db, customerID, customerTypeID)
-	if err != nil {
-		return
-	}
-
-	res = new(typespb.CustomerCustomerDemo)
-	res.CustomerID = result.CustomerID
-	res.CustomerTypeID = result.CustomerTypeID
-
-	return
-}
-
 func (s *CustomerCustomerDemoService) Customer(ctx context.Context, req *pb.CustomerRequest) (res *typespb.Customer, err error) {
 	var m models.CustomerCustomerDemo
 	m.CustomerID = req.GetCustomerID()
@@ -112,6 +64,23 @@ func (s *CustomerCustomerDemoService) Customer(ctx context.Context, req *pb.Cust
 	return
 }
 
+func (s *CustomerCustomerDemoService) CustomerCustomerDemoByCustomerIDCustomerTypeID(ctx context.Context, req *pb.CustomerCustomerDemoByCustomerIDCustomerTypeIDRequest) (res *typespb.CustomerCustomerDemo, err error) {
+
+	customerID := req.GetCustomerID()
+	customerTypeID := req.GetCustomerTypeID()
+
+	result, err := models.CustomerCustomerDemoByCustomerIDCustomerTypeID(ctx, s.db, customerID, customerTypeID)
+	if err != nil {
+		return
+	}
+
+	res = new(typespb.CustomerCustomerDemo)
+	res.CustomerID = result.CustomerID
+	res.CustomerTypeID = result.CustomerTypeID
+
+	return
+}
+
 func (s *CustomerCustomerDemoService) CustomerDemographic(ctx context.Context, req *pb.CustomerDemographicRequest) (res *typespb.CustomerDemographic, err error) {
 	var m models.CustomerCustomerDemo
 	m.CustomerTypeID = req.GetCustomerTypeID()
@@ -126,6 +95,37 @@ func (s *CustomerCustomerDemoService) CustomerDemographic(ctx context.Context, r
 	if result.CustomerDesc.Valid {
 		res.CustomerDesc = wrapperspb.String(result.CustomerDesc.String)
 	}
+
+	return
+}
+
+func (s *CustomerCustomerDemoService) Delete(ctx context.Context, req *pb.DeleteRequest) (res *emptypb.Empty, err error) {
+	m, err := models.CustomerCustomerDemoByCustomerIDCustomerTypeID(ctx, s.db, req.CustomerID, req.CustomerTypeID)
+	if err != nil {
+		return
+	}
+
+	err = m.Delete(ctx, s.db)
+	if err != nil {
+		return
+	}
+
+	res = new(emptypb.Empty)
+
+	return
+}
+
+func (s *CustomerCustomerDemoService) Insert(ctx context.Context, req *pb.InsertRequest) (res *emptypb.Empty, err error) {
+	var m models.CustomerCustomerDemo
+	m.CustomerID = req.GetCustomerID()
+	m.CustomerTypeID = req.GetCustomerTypeID()
+
+	err = m.Insert(ctx, s.db)
+	if err != nil {
+		return
+	}
+
+	res = new(emptypb.Empty)
 
 	return
 }

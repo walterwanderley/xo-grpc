@@ -23,6 +23,22 @@ func NewTerritoryService(db *sql.DB) *TerritoryService {
 	return &TerritoryService{db: db}
 }
 
+func (s *TerritoryService) Delete(ctx context.Context, req *pb.DeleteRequest) (res *emptypb.Empty, err error) {
+	m, err := models.TerritoryByTerritoryID(ctx, s.db, req.TerritoryID)
+	if err != nil {
+		return
+	}
+
+	err = m.Delete(ctx, s.db)
+	if err != nil {
+		return
+	}
+
+	res = new(emptypb.Empty)
+
+	return
+}
+
 func (s *TerritoryService) Insert(ctx context.Context, req *pb.InsertRequest) (res *emptypb.Empty, err error) {
 	var m models.Territory
 	m.RegionID = int16(req.GetRegionID())
@@ -48,6 +64,39 @@ func (s *TerritoryService) Insert(ctx context.Context, req *pb.InsertRequest) (r
 			}
 		}
 	}
+
+	return
+}
+
+func (s *TerritoryService) Region(ctx context.Context, req *pb.RegionRequest) (res *typespb.Region, err error) {
+	var m models.Territory
+	m.RegionID = int16(req.GetRegionID())
+
+	result, err := m.Region(ctx, s.db)
+	if err != nil {
+		return
+	}
+
+	res = new(typespb.Region)
+	res.RegionID = int32(result.RegionID)
+	res.RegionDescription = result.RegionDescription
+
+	return
+}
+
+func (s *TerritoryService) TerritoryByTerritoryID(ctx context.Context, req *pb.TerritoryByTerritoryIDRequest) (res *typespb.Territory, err error) {
+
+	territoryID := req.GetTerritoryID()
+
+	result, err := models.TerritoryByTerritoryID(ctx, s.db, territoryID)
+	if err != nil {
+		return
+	}
+
+	res = new(typespb.Territory)
+	res.TerritoryID = result.TerritoryID
+	res.TerritoryDescription = result.TerritoryDescription
+	res.RegionID = int32(result.RegionID)
 
 	return
 }
@@ -83,55 +132,6 @@ func (s *TerritoryService) Upsert(ctx context.Context, req *pb.UpsertRequest) (r
 	}
 
 	res = new(emptypb.Empty)
-
-	return
-}
-
-func (s *TerritoryService) Delete(ctx context.Context, req *pb.DeleteRequest) (res *emptypb.Empty, err error) {
-	m, err := models.TerritoryByTerritoryID(ctx, s.db, req.TerritoryID)
-	if err != nil {
-		return
-	}
-
-	err = m.Delete(ctx, s.db)
-	if err != nil {
-		return
-	}
-
-	res = new(emptypb.Empty)
-
-	return
-}
-
-func (s *TerritoryService) TerritoryByTerritoryID(ctx context.Context, req *pb.TerritoryByTerritoryIDRequest) (res *typespb.Territory, err error) {
-
-	territoryID := req.GetTerritoryID()
-
-	result, err := models.TerritoryByTerritoryID(ctx, s.db, territoryID)
-	if err != nil {
-		return
-	}
-
-	res = new(typespb.Territory)
-	res.TerritoryID = result.TerritoryID
-	res.TerritoryDescription = result.TerritoryDescription
-	res.RegionID = int32(result.RegionID)
-
-	return
-}
-
-func (s *TerritoryService) Region(ctx context.Context, req *pb.RegionRequest) (res *typespb.Region, err error) {
-	var m models.Territory
-	m.RegionID = int16(req.GetRegionID())
-
-	result, err := m.Region(ctx, s.db)
-	if err != nil {
-		return
-	}
-
-	res = new(typespb.Region)
-	res.RegionID = int32(result.RegionID)
-	res.RegionDescription = result.RegionDescription
 
 	return
 }

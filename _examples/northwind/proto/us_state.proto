@@ -23,6 +23,13 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
 };
 service UsStateService {
     
+    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete: "/v1/us-state/{StateID}"
+            
+        };
+    }
+    
     rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/us-state"
@@ -47,13 +54,6 @@ service UsStateService {
         };
     }
     
-    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            delete: "/v1/us-state/{StateID}"
-            
-        };
-    }
-    
     rpc UsStateByStateID(UsStateByStateIDRequest) returns (typespb.UsState) {
         option (google.api.http) = {
             get: "/v1/us-state/{stateID}"
@@ -61,6 +61,10 @@ service UsStateService {
         };
     }
     
+}
+
+message DeleteRequest { 
+    int32 StateID = 1;
 }
 
 message InsertRequest { 
@@ -83,10 +87,6 @@ message UpsertRequest {
     int32 StateID = 2;
     .google.protobuf.StringValue StateName = 3;
     .google.protobuf.StringValue StateRegion = 4;
-}
-
-message DeleteRequest { 
-    int32 StateID = 1;
 }
 
 message UsStateByStateIDRequest { 

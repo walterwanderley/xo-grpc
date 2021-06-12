@@ -24,17 +24,16 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
 };
 service EmployeeTerritoryService {
     
-    rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
+    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
-            post: "/v1/employee-territory"
-            body: "*"
+            delete: "/v1/employee-territory"
             
         };
     }
     
-    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
+    rpc Employee(EmployeeRequest) returns (typespb.Employee) {
         option (google.api.http) = {
-            delete: "/v1/employee-territory"
+            get: "/v1/employee-territory/employee/{EmployeeID}"
             
         };
     }
@@ -46,9 +45,10 @@ service EmployeeTerritoryService {
         };
     }
     
-    rpc Employee(EmployeeRequest) returns (typespb.Employee) {
+    rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
-            get: "/v1/employee-territory/employee/{EmployeeID}"
+            post: "/v1/employee-territory"
+            body: "*"
             
         };
     }
@@ -62,14 +62,13 @@ service EmployeeTerritoryService {
     
 }
 
-message InsertRequest { 
+message DeleteRequest { 
     int32 EmployeeID = 1;
     string TerritoryID = 2;
 }
 
-message DeleteRequest { 
+message EmployeeRequest { 
     int32 EmployeeID = 1;
-    string TerritoryID = 2;
 }
 
 message EmployeeTerritoryByEmployeeIDTerritoryIDRequest { 
@@ -77,8 +76,9 @@ message EmployeeTerritoryByEmployeeIDTerritoryIDRequest {
     string territoryID = 2;
 }
 
-message EmployeeRequest { 
+message InsertRequest { 
     int32 EmployeeID = 1;
+    string TerritoryID = 2;
 }
 
 message TerritoryRequest { 

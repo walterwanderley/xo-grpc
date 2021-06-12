@@ -20,10 +20,10 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type UsStateServiceClient interface {
+	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Insert(ctx context.Context, in *InsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Upsert(ctx context.Context, in *UpsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	UsStateByStateID(ctx context.Context, in *UsStateByStateIDRequest, opts ...grpc.CallOption) (*typespb.UsState, error)
 }
 
@@ -33,6 +33,15 @@ type usStateServiceClient struct {
 
 func NewUsStateServiceClient(cc grpc.ClientConnInterface) UsStateServiceClient {
 	return &usStateServiceClient{cc}
+}
+
+func (c *usStateServiceClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/us_state.UsStateService/Delete", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *usStateServiceClient) Insert(ctx context.Context, in *InsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
@@ -62,15 +71,6 @@ func (c *usStateServiceClient) Upsert(ctx context.Context, in *UpsertRequest, op
 	return out, nil
 }
 
-func (c *usStateServiceClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/us_state.UsStateService/Delete", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 func (c *usStateServiceClient) UsStateByStateID(ctx context.Context, in *UsStateByStateIDRequest, opts ...grpc.CallOption) (*typespb.UsState, error) {
 	out := new(typespb.UsState)
 	err := c.cc.Invoke(ctx, "/us_state.UsStateService/UsStateByStateID", in, out, opts...)
@@ -84,10 +84,10 @@ func (c *usStateServiceClient) UsStateByStateID(ctx context.Context, in *UsState
 // All implementations must embed UnimplementedUsStateServiceServer
 // for forward compatibility
 type UsStateServiceServer interface {
+	Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error)
 	Insert(context.Context, *InsertRequest) (*emptypb.Empty, error)
 	Update(context.Context, *UpdateRequest) (*emptypb.Empty, error)
 	Upsert(context.Context, *UpsertRequest) (*emptypb.Empty, error)
-	Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error)
 	UsStateByStateID(context.Context, *UsStateByStateIDRequest) (*typespb.UsState, error)
 	mustEmbedUnimplementedUsStateServiceServer()
 }
@@ -96,6 +96,9 @@ type UsStateServiceServer interface {
 type UnimplementedUsStateServiceServer struct {
 }
 
+func (UnimplementedUsStateServiceServer) Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
+}
 func (UnimplementedUsStateServiceServer) Insert(context.Context, *InsertRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Insert not implemented")
 }
@@ -104,9 +107,6 @@ func (UnimplementedUsStateServiceServer) Update(context.Context, *UpdateRequest)
 }
 func (UnimplementedUsStateServiceServer) Upsert(context.Context, *UpsertRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Upsert not implemented")
-}
-func (UnimplementedUsStateServiceServer) Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
 }
 func (UnimplementedUsStateServiceServer) UsStateByStateID(context.Context, *UsStateByStateIDRequest) (*typespb.UsState, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UsStateByStateID not implemented")
@@ -122,6 +122,24 @@ type UnsafeUsStateServiceServer interface {
 
 func RegisterUsStateServiceServer(s grpc.ServiceRegistrar, srv UsStateServiceServer) {
 	s.RegisterService(&UsStateService_ServiceDesc, srv)
+}
+
+func _UsStateService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UsStateServiceServer).Delete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/us_state.UsStateService/Delete",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UsStateServiceServer).Delete(ctx, req.(*DeleteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _UsStateService_Insert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -178,24 +196,6 @@ func _UsStateService_Upsert_Handler(srv interface{}, ctx context.Context, dec fu
 	return interceptor(ctx, in, info, handler)
 }
 
-func _UsStateService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(UsStateServiceServer).Delete(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/us_state.UsStateService/Delete",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UsStateServiceServer).Delete(ctx, req.(*DeleteRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 func _UsStateService_UsStateByStateID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UsStateByStateIDRequest)
 	if err := dec(in); err != nil {
@@ -222,6 +222,10 @@ var UsStateService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*UsStateServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
+			MethodName: "Delete",
+			Handler:    _UsStateService_Delete_Handler,
+		},
+		{
 			MethodName: "Insert",
 			Handler:    _UsStateService_Insert_Handler,
 		},
@@ -232,10 +236,6 @@ var UsStateService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Upsert",
 			Handler:    _UsStateService_Upsert_Handler,
-		},
-		{
-			MethodName: "Delete",
-			Handler:    _UsStateService_Delete_Handler,
 		},
 		{
 			MethodName: "UsStateByStateID",

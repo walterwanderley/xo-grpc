@@ -62,20 +62,20 @@ func main() {
 	}
 
 	srv := server.New(cfg, log,
-		application.NewTerritoryService(db),
-		application.NewShipperService(db),
-		application.NewEmployeeTerritoryService(db),
+		application.NewCategoryService(db),
 		application.NewCustomerService(db),
-		application.NewRegionService(db),
+		application.NewCustomerCustomerDemoService(db),
+		application.NewCustomerDemographicService(db),
 		application.NewEmployeeService(db),
-		application.NewUsStateService(db),
+		application.NewEmployeeTerritoryService(db),
 		application.NewOrderService(db),
 		application.NewOrderDetailService(db),
-		application.NewCustomerDemographicService(db),
-		application.NewCategoryService(db),
-		application.NewSupplierService(db),
-		application.NewCustomerCustomerDemoService(db),
 		application.NewProductService(db),
+		application.NewRegionService(db),
+		application.NewShipperService(db),
+		application.NewSupplierService(db),
+		application.NewTerritoryService(db),
+		application.NewUsStateService(db),
 	)
 
 	done := make(chan os.Signal, 1)

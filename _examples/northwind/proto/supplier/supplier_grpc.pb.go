@@ -20,11 +20,11 @@ const _ = grpc.SupportPackageIsVersion7
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type SupplierServiceClient interface {
+	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Insert(ctx context.Context, in *InsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	SupplierBySupplierID(ctx context.Context, in *SupplierBySupplierIDRequest, opts ...grpc.CallOption) (*typespb.Supplier, error)
 	Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Upsert(ctx context.Context, in *UpsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	SupplierBySupplierID(ctx context.Context, in *SupplierBySupplierIDRequest, opts ...grpc.CallOption) (*typespb.Supplier, error)
 }
 
 type supplierServiceClient struct {
@@ -35,9 +35,27 @@ func NewSupplierServiceClient(cc grpc.ClientConnInterface) SupplierServiceClient
 	return &supplierServiceClient{cc}
 }
 
+func (c *supplierServiceClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, "/supplier.SupplierService/Delete", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *supplierServiceClient) Insert(ctx context.Context, in *InsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, "/supplier.SupplierService/Insert", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *supplierServiceClient) SupplierBySupplierID(ctx context.Context, in *SupplierBySupplierIDRequest, opts ...grpc.CallOption) (*typespb.Supplier, error) {
+	out := new(typespb.Supplier)
+	err := c.cc.Invoke(ctx, "/supplier.SupplierService/SupplierBySupplierID", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -62,33 +80,15 @@ func (c *supplierServiceClient) Upsert(ctx context.Context, in *UpsertRequest, o
 	return out, nil
 }
 
-func (c *supplierServiceClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
-	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/supplier.SupplierService/Delete", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *supplierServiceClient) SupplierBySupplierID(ctx context.Context, in *SupplierBySupplierIDRequest, opts ...grpc.CallOption) (*typespb.Supplier, error) {
-	out := new(typespb.Supplier)
-	err := c.cc.Invoke(ctx, "/supplier.SupplierService/SupplierBySupplierID", in, out, opts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
 // SupplierServiceServer is the server API for SupplierService service.
 // All implementations must embed UnimplementedSupplierServiceServer
 // for forward compatibility
 type SupplierServiceServer interface {
+	Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error)
 	Insert(context.Context, *InsertRequest) (*emptypb.Empty, error)
+	SupplierBySupplierID(context.Context, *SupplierBySupplierIDRequest) (*typespb.Supplier, error)
 	Update(context.Context, *UpdateRequest) (*emptypb.Empty, error)
 	Upsert(context.Context, *UpsertRequest) (*emptypb.Empty, error)
-	Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error)
-	SupplierBySupplierID(context.Context, *SupplierBySupplierIDRequest) (*typespb.Supplier, error)
 	mustEmbedUnimplementedSupplierServiceServer()
 }
 
@@ -96,20 +96,20 @@ type SupplierServiceServer interface {
 type UnimplementedSupplierServiceServer struct {
 }
 
+func (UnimplementedSupplierServiceServer) Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
+}
 func (UnimplementedSupplierServiceServer) Insert(context.Context, *InsertRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Insert not implemented")
+}
+func (UnimplementedSupplierServiceServer) SupplierBySupplierID(context.Context, *SupplierBySupplierIDRequest) (*typespb.Supplier, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method SupplierBySupplierID not implemented")
 }
 func (UnimplementedSupplierServiceServer) Update(context.Context, *UpdateRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
 }
 func (UnimplementedSupplierServiceServer) Upsert(context.Context, *UpsertRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Upsert not implemented")
-}
-func (UnimplementedSupplierServiceServer) Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
-}
-func (UnimplementedSupplierServiceServer) SupplierBySupplierID(context.Context, *SupplierBySupplierIDRequest) (*typespb.Supplier, error) {
-	return nil, status.Errorf(codes.Unimplemented, "method SupplierBySupplierID not implemented")
 }
 func (UnimplementedSupplierServiceServer) mustEmbedUnimplementedSupplierServiceServer() {}
 
@@ -122,6 +122,24 @@ type UnsafeSupplierServiceServer interface {
 
 func RegisterSupplierServiceServer(s grpc.ServiceRegistrar, srv SupplierServiceServer) {
 	s.RegisterService(&SupplierService_ServiceDesc, srv)
+}
+
+func _SupplierService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SupplierServiceServer).Delete(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/supplier.SupplierService/Delete",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SupplierServiceServer).Delete(ctx, req.(*DeleteRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _SupplierService_Insert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -138,6 +156,24 @@ func _SupplierService_Insert_Handler(srv interface{}, ctx context.Context, dec f
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(SupplierServiceServer).Insert(ctx, req.(*InsertRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _SupplierService_SupplierBySupplierID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SupplierBySupplierIDRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(SupplierServiceServer).SupplierBySupplierID(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/supplier.SupplierService/SupplierBySupplierID",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(SupplierServiceServer).SupplierBySupplierID(ctx, req.(*SupplierBySupplierIDRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -178,42 +214,6 @@ func _SupplierService_Upsert_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
-func _SupplierService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SupplierServiceServer).Delete(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/supplier.SupplierService/Delete",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SupplierServiceServer).Delete(ctx, req.(*DeleteRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _SupplierService_SupplierBySupplierID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(SupplierBySupplierIDRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(SupplierServiceServer).SupplierBySupplierID(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: "/supplier.SupplierService/SupplierBySupplierID",
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(SupplierServiceServer).SupplierBySupplierID(ctx, req.(*SupplierBySupplierIDRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
 // SupplierService_ServiceDesc is the grpc.ServiceDesc for SupplierService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -222,8 +222,16 @@ var SupplierService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*SupplierServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
+			MethodName: "Delete",
+			Handler:    _SupplierService_Delete_Handler,
+		},
+		{
 			MethodName: "Insert",
 			Handler:    _SupplierService_Insert_Handler,
+		},
+		{
+			MethodName: "SupplierBySupplierID",
+			Handler:    _SupplierService_SupplierBySupplierID_Handler,
 		},
 		{
 			MethodName: "Update",
@@ -232,14 +240,6 @@ var SupplierService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Upsert",
 			Handler:    _SupplierService_Upsert_Handler,
-		},
-		{
-			MethodName: "Delete",
-			Handler:    _SupplierService_Delete_Handler,
-		},
-		{
-			MethodName: "SupplierBySupplierID",
-			Handler:    _SupplierService_SupplierBySupplierID_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

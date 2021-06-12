@@ -31,40 +31,6 @@ var _ = runtime.String
 var _ = utilities.NewDoubleArray
 var _ = metadata.Join
 
-func request_EmployeeTerritoryService_Insert_0(ctx context.Context, marshaler runtime.Marshaler, client EmployeeTerritoryServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq InsertRequest
-	var metadata runtime.ServerMetadata
-
-	newReader, berr := utilities.IOReaderFactory(req.Body)
-	if berr != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
-	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-
-	msg, err := client.Insert(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
-	return msg, metadata, err
-
-}
-
-func local_request_EmployeeTerritoryService_Insert_0(ctx context.Context, marshaler runtime.Marshaler, server EmployeeTerritoryServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq InsertRequest
-	var metadata runtime.ServerMetadata
-
-	newReader, berr := utilities.IOReaderFactory(req.Body)
-	if berr != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
-	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-
-	msg, err := server.Insert(ctx, &protoReq)
-	return msg, metadata, err
-
-}
-
 var (
 	filter_EmployeeTerritoryService_Delete_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
 )
@@ -97,42 +63,6 @@ func local_request_EmployeeTerritoryService_Delete_0(ctx context.Context, marsha
 	}
 
 	msg, err := server.Delete(ctx, &protoReq)
-	return msg, metadata, err
-
-}
-
-var (
-	filter_EmployeeTerritoryService_EmployeeTerritoryByEmployeeIDTerritoryID_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
-)
-
-func request_EmployeeTerritoryService_EmployeeTerritoryByEmployeeIDTerritoryID_0(ctx context.Context, marshaler runtime.Marshaler, client EmployeeTerritoryServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq EmployeeTerritoryByEmployeeIDTerritoryIDRequest
-	var metadata runtime.ServerMetadata
-
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_EmployeeTerritoryService_EmployeeTerritoryByEmployeeIDTerritoryID_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-
-	msg, err := client.EmployeeTerritoryByEmployeeIDTerritoryID(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
-	return msg, metadata, err
-
-}
-
-func local_request_EmployeeTerritoryService_EmployeeTerritoryByEmployeeIDTerritoryID_0(ctx context.Context, marshaler runtime.Marshaler, server EmployeeTerritoryServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq EmployeeTerritoryByEmployeeIDTerritoryIDRequest
-	var metadata runtime.ServerMetadata
-
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_EmployeeTerritoryService_EmployeeTerritoryByEmployeeIDTerritoryID_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-
-	msg, err := server.EmployeeTerritoryByEmployeeIDTerritoryID(ctx, &protoReq)
 	return msg, metadata, err
 
 }
@@ -185,6 +115,76 @@ func local_request_EmployeeTerritoryService_Employee_0(ctx context.Context, mars
 	}
 
 	msg, err := server.Employee(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+var (
+	filter_EmployeeTerritoryService_EmployeeTerritoryByEmployeeIDTerritoryID_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+)
+
+func request_EmployeeTerritoryService_EmployeeTerritoryByEmployeeIDTerritoryID_0(ctx context.Context, marshaler runtime.Marshaler, client EmployeeTerritoryServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq EmployeeTerritoryByEmployeeIDTerritoryIDRequest
+	var metadata runtime.ServerMetadata
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_EmployeeTerritoryService_EmployeeTerritoryByEmployeeIDTerritoryID_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := client.EmployeeTerritoryByEmployeeIDTerritoryID(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_EmployeeTerritoryService_EmployeeTerritoryByEmployeeIDTerritoryID_0(ctx context.Context, marshaler runtime.Marshaler, server EmployeeTerritoryServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq EmployeeTerritoryByEmployeeIDTerritoryIDRequest
+	var metadata runtime.ServerMetadata
+
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_EmployeeTerritoryService_EmployeeTerritoryByEmployeeIDTerritoryID_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := server.EmployeeTerritoryByEmployeeIDTerritoryID(ctx, &protoReq)
+	return msg, metadata, err
+
+}
+
+func request_EmployeeTerritoryService_Insert_0(ctx context.Context, marshaler runtime.Marshaler, client EmployeeTerritoryServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq InsertRequest
+	var metadata runtime.ServerMetadata
+
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
+	}
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := client.Insert(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+
+}
+
+func local_request_EmployeeTerritoryService_Insert_0(ctx context.Context, marshaler runtime.Marshaler, server EmployeeTerritoryServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq InsertRequest
+	var metadata runtime.ServerMetadata
+
+	newReader, berr := utilities.IOReaderFactory(req.Body)
+	if berr != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
+	}
+	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	msg, err := server.Insert(ctx, &protoReq)
 	return msg, metadata, err
 
 }
@@ -247,29 +247,6 @@ func local_request_EmployeeTerritoryService_Territory_0(ctx context.Context, mar
 // Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterEmployeeTerritoryServiceHandlerFromEndpoint instead.
 func RegisterEmployeeTerritoryServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server EmployeeTerritoryServiceServer) error {
 
-	mux.Handle("POST", pattern_EmployeeTerritoryService_Insert_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		var stream runtime.ServerTransportStream
-		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/employee_territory.EmployeeTerritoryService/Insert")
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := local_request_EmployeeTerritoryService_Insert_0(rctx, inboundMarshaler, server, req, pathParams)
-		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
-		ctx = runtime.NewServerMetadataContext(ctx, md)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-
-		forward_EmployeeTerritoryService_Insert_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-
-	})
-
 	mux.Handle("DELETE", pattern_EmployeeTerritoryService_Delete_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
@@ -290,6 +267,29 @@ func RegisterEmployeeTerritoryServiceHandlerServer(ctx context.Context, mux *run
 		}
 
 		forward_EmployeeTerritoryService_Delete_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("GET", pattern_EmployeeTerritoryService_Employee_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/employee_territory.EmployeeTerritoryService/Employee")
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_EmployeeTerritoryService_Employee_0(rctx, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_EmployeeTerritoryService_Employee_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -316,18 +316,18 @@ func RegisterEmployeeTerritoryServiceHandlerServer(ctx context.Context, mux *run
 
 	})
 
-	mux.Handle("GET", pattern_EmployeeTerritoryService_Employee_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_EmployeeTerritoryService_Insert_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/employee_territory.EmployeeTerritoryService/Employee")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/employee_territory.EmployeeTerritoryService/Insert")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_EmployeeTerritoryService_Employee_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_EmployeeTerritoryService_Insert_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -335,7 +335,7 @@ func RegisterEmployeeTerritoryServiceHandlerServer(ctx context.Context, mux *run
 			return
 		}
 
-		forward_EmployeeTerritoryService_Employee_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_EmployeeTerritoryService_Insert_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -403,26 +403,6 @@ func RegisterEmployeeTerritoryServiceHandler(ctx context.Context, mux *runtime.S
 // "EmployeeTerritoryServiceClient" to call the correct interceptors.
 func RegisterEmployeeTerritoryServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client EmployeeTerritoryServiceClient) error {
 
-	mux.Handle("POST", pattern_EmployeeTerritoryService_Insert_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
-		ctx, cancel := context.WithCancel(req.Context())
-		defer cancel()
-		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/employee_territory.EmployeeTerritoryService/Insert")
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-		resp, md, err := request_EmployeeTerritoryService_Insert_0(rctx, inboundMarshaler, client, req, pathParams)
-		ctx = runtime.NewServerMetadataContext(ctx, md)
-		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
-			return
-		}
-
-		forward_EmployeeTerritoryService_Insert_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
-
-	})
-
 	mux.Handle("DELETE", pattern_EmployeeTerritoryService_Delete_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
@@ -440,6 +420,26 @@ func RegisterEmployeeTerritoryServiceHandlerClient(ctx context.Context, mux *run
 		}
 
 		forward_EmployeeTerritoryService_Delete_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+
+	})
+
+	mux.Handle("GET", pattern_EmployeeTerritoryService_Employee_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/employee_territory.EmployeeTerritoryService/Employee")
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_EmployeeTerritoryService_Employee_0(rctx, inboundMarshaler, client, req, pathParams)
+		ctx = runtime.NewServerMetadataContext(ctx, md)
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+
+		forward_EmployeeTerritoryService_Employee_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -463,23 +463,23 @@ func RegisterEmployeeTerritoryServiceHandlerClient(ctx context.Context, mux *run
 
 	})
 
-	mux.Handle("GET", pattern_EmployeeTerritoryService_Employee_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_EmployeeTerritoryService_Insert_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/employee_territory.EmployeeTerritoryService/Employee")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/employee_territory.EmployeeTerritoryService/Insert")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_EmployeeTerritoryService_Employee_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_EmployeeTerritoryService_Insert_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_EmployeeTerritoryService_Employee_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_EmployeeTerritoryService_Insert_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -507,25 +507,25 @@ func RegisterEmployeeTerritoryServiceHandlerClient(ctx context.Context, mux *run
 }
 
 var (
-	pattern_EmployeeTerritoryService_Insert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "employee-territory"}, ""))
-
 	pattern_EmployeeTerritoryService_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "employee-territory"}, ""))
+
+	pattern_EmployeeTerritoryService_Employee_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "employee-territory", "employee", "EmployeeID"}, ""))
 
 	pattern_EmployeeTerritoryService_EmployeeTerritoryByEmployeeIDTerritoryID_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "employee-territory"}, ""))
 
-	pattern_EmployeeTerritoryService_Employee_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "employee-territory", "employee", "EmployeeID"}, ""))
+	pattern_EmployeeTerritoryService_Insert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "employee-territory"}, ""))
 
 	pattern_EmployeeTerritoryService_Territory_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "employee-territory", "territory", "TerritoryID"}, ""))
 )
 
 var (
-	forward_EmployeeTerritoryService_Insert_0 = runtime.ForwardResponseMessage
-
 	forward_EmployeeTerritoryService_Delete_0 = runtime.ForwardResponseMessage
+
+	forward_EmployeeTerritoryService_Employee_0 = runtime.ForwardResponseMessage
 
 	forward_EmployeeTerritoryService_EmployeeTerritoryByEmployeeIDTerritoryID_0 = runtime.ForwardResponseMessage
 
-	forward_EmployeeTerritoryService_Employee_0 = runtime.ForwardResponseMessage
+	forward_EmployeeTerritoryService_Insert_0 = runtime.ForwardResponseMessage
 
 	forward_EmployeeTerritoryService_Territory_0 = runtime.ForwardResponseMessage
 )

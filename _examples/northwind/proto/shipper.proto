@@ -23,10 +23,24 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
 };
 service ShipperService {
     
+    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete: "/v1/shipper/{ShipperID}"
+            
+        };
+    }
+    
     rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/shipper"
             body: "*"
+            
+        };
+    }
+    
+    rpc ShipperByShipperID(ShipperByShipperIDRequest) returns (typespb.Shipper) {
+        option (google.api.http) = {
+            get: "/v1/shipper/{shipperID}"
             
         };
     }
@@ -47,26 +61,20 @@ service ShipperService {
         };
     }
     
-    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            delete: "/v1/shipper/{ShipperID}"
-            
-        };
-    }
-    
-    rpc ShipperByShipperID(ShipperByShipperIDRequest) returns (typespb.Shipper) {
-        option (google.api.http) = {
-            get: "/v1/shipper/{shipperID}"
-            
-        };
-    }
-    
+}
+
+message DeleteRequest { 
+    int32 ShipperID = 1;
 }
 
 message InsertRequest { 
     string CompanyName = 1;
     .google.protobuf.StringValue Phone = 2;
     int32 ShipperID = 3;
+}
+
+message ShipperByShipperIDRequest { 
+    int32 shipperID = 1;
 }
 
 message UpdateRequest { 
@@ -80,12 +88,4 @@ message UpsertRequest {
     string CompanyName = 1;
     .google.protobuf.StringValue Phone = 2;
     int32 ShipperID = 3;
-}
-
-message DeleteRequest { 
-    int32 ShipperID = 1;
-}
-
-message ShipperByShipperIDRequest { 
-    int32 shipperID = 1;
 }

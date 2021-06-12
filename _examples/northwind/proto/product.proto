@@ -23,10 +23,38 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
 };
 service ProductService {
     
+    rpc Category(CategoryRequest) returns (typespb.Category) {
+        option (google.api.http) = {
+            get: "/v1/product/category/{CategoryID}"
+            
+        };
+    }
+    
+    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete: "/v1/product/{ProductID}"
+            
+        };
+    }
+    
     rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/product"
             body: "*"
+            
+        };
+    }
+    
+    rpc ProductByProductID(ProductByProductIDRequest) returns (typespb.Product) {
+        option (google.api.http) = {
+            get: "/v1/product/{productID}"
+            
+        };
+    }
+    
+    rpc Supplier(SupplierRequest) returns (typespb.Supplier) {
+        option (google.api.http) = {
+            get: "/v1/product/supplier/{SupplierID}"
             
         };
     }
@@ -47,34 +75,14 @@ service ProductService {
         };
     }
     
-    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            delete: "/v1/product/{ProductID}"
-            
-        };
-    }
-    
-    rpc ProductByProductID(ProductByProductIDRequest) returns (typespb.Product) {
-        option (google.api.http) = {
-            get: "/v1/product/{productID}"
-            
-        };
-    }
-    
-    rpc Category(CategoryRequest) returns (typespb.Category) {
-        option (google.api.http) = {
-            get: "/v1/product/category/{CategoryID}"
-            
-        };
-    }
-    
-    rpc Supplier(SupplierRequest) returns (typespb.Supplier) {
-        option (google.api.http) = {
-            get: "/v1/product/supplier/{SupplierID}"
-            
-        };
-    }
-    
+}
+
+message CategoryRequest { 
+    .google.protobuf.Int64Value CategoryID = 1;
+}
+
+message DeleteRequest { 
+    int32 ProductID = 1;
 }
 
 message InsertRequest { 
@@ -88,6 +96,14 @@ message InsertRequest {
     .google.protobuf.DoubleValue UnitPrice = 8;
     .google.protobuf.Int64Value UnitsInStock = 9;
     .google.protobuf.Int64Value UnitsOnOrder = 10;
+}
+
+message ProductByProductIDRequest { 
+    int32 productID = 1;
+}
+
+message SupplierRequest { 
+    .google.protobuf.Int64Value SupplierID = 1;
 }
 
 message UpdateRequest { 
@@ -115,20 +131,4 @@ message UpsertRequest {
     .google.protobuf.DoubleValue UnitPrice = 8;
     .google.protobuf.Int64Value UnitsInStock = 9;
     .google.protobuf.Int64Value UnitsOnOrder = 10;
-}
-
-message DeleteRequest { 
-    int32 ProductID = 1;
-}
-
-message ProductByProductIDRequest { 
-    int32 productID = 1;
-}
-
-message CategoryRequest { 
-    .google.protobuf.Int64Value CategoryID = 1;
-}
-
-message SupplierRequest { 
-    .google.protobuf.Int64Value SupplierID = 1;
 }
