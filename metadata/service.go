@@ -42,9 +42,12 @@ func (s *Service) PKParams(prefix string) string {
 	if m, ok := s.Messages[s.Owner]; ok {
 		params := make([]string, len(m.PkNames))
 		for i, n := range m.PkNames {
-			if m.AttributeTypeByName(n) == "int" {
+			switch m.AttributeTypeByName(n) {
+			case "int":
 				params[i] = "int(" + prefix + n + ")"
-			} else {
+			case "int16":
+				params[i] = "int16(" + prefix + n + ")"
+			default:
 				params[i] = prefix + n
 			}
 		}
