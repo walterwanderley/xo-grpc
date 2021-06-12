@@ -5,6 +5,7 @@ import (
 	"go/ast"
 	"go/parser"
 	"go/token"
+	"sort"
 	"strings"
 )
 
@@ -163,6 +164,9 @@ func ParsePackages(src, module string) ([]*Package, error) {
 	}
 	result := make([]*Package, 0)
 	for owner, services := range owners {
+		sort.SliceStable(services, func(i, j int) bool {
+			return strings.Compare(services[i].Name, services[j].Name) < 0
+		})
 		result = append(result, &Package{
 			Package:    owner,
 			SrcPath:    src,
@@ -172,5 +176,8 @@ func ParsePackages(src, module string) ([]*Package, error) {
 			Services:   services,
 		})
 	}
+	sort.SliceStable(result, func(i, j int) bool {
+		return strings.Compare(result[i].Package, result[j].Package) < 0
+	})
 	return result, nil
 }
