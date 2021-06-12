@@ -3,8 +3,10 @@ package main
 import (
 	"database/sql"
 	"flag"
+	"fmt"
 	"os"
 	"os/signal"
+	"strings"
 	"syscall"
 
 	"go.uber.org/automaxprocs/maxprocs"
@@ -13,6 +15,7 @@ import (
 	// database driver
 	_ "{{.DatabaseDriverModule}}"
 
+	"{{ .GoModule}}/{{.ModelsPath}}"
 	"{{ .GoModule}}/internal/application"
 	"{{ .GoModule}}/internal/server"
 )
@@ -34,6 +37,16 @@ func main() {
 
 	log := logger(dev)
 	defer log.Sync()
+
+	if dev {
+		models.SetLogger(func(s string, args ...interface{}) {
+			params := make([]string, len(args))
+			for i, arg := range args {
+				params[i] = fmt.Sprintf("%v", arg)
+			}
+			log.Debug(fmt.Sprintf("%s; Params -> [%s]", s, strings.Join(params, ", ")))
+		})
+	}
 
 	if _, err := maxprocs.Set(); err != nil {
 		log.Error("startup", zap.Error(err))

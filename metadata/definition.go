@@ -12,6 +12,7 @@ type Definition struct {
 	GoModule             string
 	DatabaseDriverModule string
 	DatabaseDriverName   string
+	ModelsPath           string
 	Packages             []*Package
 }
 

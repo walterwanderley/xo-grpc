@@ -47,7 +47,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	modelsPath := strings.TrimSuffix(flag.Arg(0), "/")
+	modelsPath := strings.TrimPrefix(strings.TrimPrefix(strings.TrimSuffix(flag.Arg(0), "/"), "."), "/")
 
 	if m := moduleFromGoMod(); m != "" {
 		fmt.Println("Using module path from go.mod:", m)
@@ -58,6 +58,7 @@ func main() {
 		GoModule:             module,
 		DatabaseDriverModule: databaseDriverModule,
 		DatabaseDriverName:   databaseDriverName,
+		ModelsPath:           modelsPath,
 		Packages:             make([]*metadata.Package, 0),
 	}
 
