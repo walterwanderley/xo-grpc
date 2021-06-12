@@ -10,9 +10,9 @@ import (
 	"google.golang.org/protobuf/types/known/emptypb"
 	"google.golang.org/protobuf/types/known/wrapperspb"
 
-	models "github.com/walterwanderley/xo-grpc/_examples/northwind/internal/models"
-	typespb "github.com/walterwanderley/xo-grpc/_examples/northwind/proto/typespb"
-	pb "github.com/walterwanderley/xo-grpc/_examples/northwind/proto/us_state"
+	models "northwind/internal/models"
+	typespb "northwind/proto/typespb"
+	pb "northwind/proto/us_state"
 )
 
 type UsStateService struct {

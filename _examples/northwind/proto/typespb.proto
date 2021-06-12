@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package typespb;
 
-option go_package = "github.com/walterwanderley/xo-grpc/_examples/northwind/proto/typespb";
+option go_package = "northwind/proto/typespb";
 
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";

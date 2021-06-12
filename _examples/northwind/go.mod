@@ -1,4 +1,4 @@
-module github.com/walterwanderley/xo-grpc/_examples/northwind
+module northwind
 
 go 1.16
 

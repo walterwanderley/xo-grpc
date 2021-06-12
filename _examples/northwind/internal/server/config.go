@@ -9,7 +9,7 @@ import (
 	"go.uber.org/zap"
 	"google.golang.org/grpc"
 
-	"github.com/walterwanderley/xo-grpc/_examples/northwind/internal/server/middleware"
+	"northwind/internal/server/middleware"
 )
 
 // Config represents the server configuration

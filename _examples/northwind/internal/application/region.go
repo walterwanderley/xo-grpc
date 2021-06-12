@@ -9,9 +9,9 @@ import (
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/protobuf/types/known/emptypb"
 
-	models "github.com/walterwanderley/xo-grpc/_examples/northwind/internal/models"
-	pb "github.com/walterwanderley/xo-grpc/_examples/northwind/proto/region"
-	typespb "github.com/walterwanderley/xo-grpc/_examples/northwind/proto/typespb"
+	models "northwind/internal/models"
+	pb "northwind/proto/region"
+	typespb "northwind/proto/typespb"
 )
 
 type RegionService struct {

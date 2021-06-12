@@ -8,9 +8,9 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 	"google.golang.org/protobuf/types/known/wrapperspb"
 
-	models "github.com/walterwanderley/xo-grpc/_examples/northwind/internal/models"
-	pb "github.com/walterwanderley/xo-grpc/_examples/northwind/proto/employee_territory"
-	typespb "github.com/walterwanderley/xo-grpc/_examples/northwind/proto/typespb"
+	models "northwind/internal/models"
+	pb "northwind/proto/employee_territory"
+	typespb "northwind/proto/typespb"
 )
 
 type EmployeeTerritoryService struct {

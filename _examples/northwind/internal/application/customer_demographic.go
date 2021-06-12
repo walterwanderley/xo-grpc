@@ -10,9 +10,9 @@ import (
 	"google.golang.org/protobuf/types/known/emptypb"
 	"google.golang.org/protobuf/types/known/wrapperspb"
 
-	models "github.com/walterwanderley/xo-grpc/_examples/northwind/internal/models"
-	pb "github.com/walterwanderley/xo-grpc/_examples/northwind/proto/customer_demographic"
-	typespb "github.com/walterwanderley/xo-grpc/_examples/northwind/proto/typespb"
+	models "northwind/internal/models"
+	pb "northwind/proto/customer_demographic"
+	typespb "northwind/proto/typespb"
 )
 
 type CustomerDemographicService struct {

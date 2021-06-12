@@ -17,12 +17,12 @@ import (
 	// database driver
 	_ "github.com/jackc/pgx/v4/stdlib"
 
-	"github.com/walterwanderley/xo-grpc/_examples/northwind/internal/application"
-	"github.com/walterwanderley/xo-grpc/_examples/northwind/internal/models"
-	"github.com/walterwanderley/xo-grpc/_examples/northwind/internal/server"
+	"northwind/internal/application"
+	"northwind/internal/models"
+	"northwind/internal/server"
 )
 
-const serviceName = "github.com/walterwanderley/xo-grpc/_examples/northwind"
+const serviceName = "northwind"
 
 func main() {
 	var cfg server.Config

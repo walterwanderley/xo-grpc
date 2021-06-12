@@ -8,9 +8,9 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 	"google.golang.org/protobuf/types/known/wrapperspb"
 
-	models "github.com/walterwanderley/xo-grpc/_examples/northwind/internal/models"
-	pb "github.com/walterwanderley/xo-grpc/_examples/northwind/proto/order_detail"
-	typespb "github.com/walterwanderley/xo-grpc/_examples/northwind/proto/typespb"
+	models "northwind/internal/models"
+	pb "northwind/proto/order_detail"
+	typespb "northwind/proto/typespb"
 )
 
 type OrderDetailService struct {

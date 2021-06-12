@@ -11,10 +11,10 @@ import (
 	"google.golang.org/protobuf/types/known/timestamppb"
 	"google.golang.org/protobuf/types/known/wrapperspb"
 
-	models "github.com/walterwanderley/xo-grpc/_examples/northwind/internal/models"
-	"github.com/walterwanderley/xo-grpc/_examples/northwind/internal/validation"
-	pb "github.com/walterwanderley/xo-grpc/_examples/northwind/proto/order"
-	typespb "github.com/walterwanderley/xo-grpc/_examples/northwind/proto/typespb"
+	models "northwind/internal/models"
+	"northwind/internal/validation"
+	pb "northwind/proto/order"
+	typespb "northwind/proto/typespb"
 )
 
 type OrderService struct {
