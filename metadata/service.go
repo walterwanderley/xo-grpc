@@ -31,6 +31,28 @@ func (s *Service) SimplePK() string {
 	return ""
 }
 
+func (s *Service) PKJoin(sep string) string {
+	if m, ok := s.Messages[s.Owner]; ok {
+		return strings.Join(m.PkNames, sep)
+	}
+	return ""
+}
+
+func (s *Service) PKParams(prefix string) string {
+	if m, ok := s.Messages[s.Owner]; ok {
+		params := make([]string, len(m.PkNames))
+		for i, n := range m.PkNames {
+			if m.AttributeTypeByName(n) == "int" {
+				params[i] = "int(" + prefix + n + ")"
+			} else {
+				params[i] = prefix + n
+			}
+		}
+		return strings.Join(params, ", ")
+	}
+	return ""
+}
+
 func (s *Service) MethodInputType() string {
 	switch {
 	case s.EmptyInput():

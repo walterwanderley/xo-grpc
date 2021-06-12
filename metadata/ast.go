@@ -30,8 +30,10 @@ func analyseFunc(fun *ast.FuncDecl, messages map[string]*Message) (owner string,
 			continue
 		}
 
-		srv.InputNames = append(srv.InputNames, p.Names[0].Name)
-		srv.InputTypes = append(srv.InputTypes, adjustType(exprToStr(p.Type), messages))
+		for _, n := range p.Names {
+			srv.InputNames = append(srv.InputNames, n.Name)
+			srv.InputTypes = append(srv.InputTypes, adjustType(exprToStr(p.Type), messages))
+		}
 	}
 
 	// error is the last result
