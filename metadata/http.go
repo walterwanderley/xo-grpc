@@ -36,12 +36,12 @@ func (s *Service) HttpPath() string {
 		name := strings.TrimPrefix(s.Name, s.Owner+"s")
 		name = strings.TrimPrefix(name, s.Owner)
 		name = strings.TrimPrefix(name, "By")
-		if pk := s.SimplePK(); pk != "" && !s.IsMethod {
-			if name == pk {
-				name = ""
-			}
+		if pk := s.PKJoin(""); name == pk && !s.IsMethod {
+			name = ""
 		}
-		path = path + "/" + toKebabCase(name)
+		if name != "" {
+			path = path + "/" + toKebabCase(name)
+		}
 	}
 	method := s.HttpMethod()
 
