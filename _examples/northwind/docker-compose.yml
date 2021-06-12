@@ -1,0 +1,39 @@
+version: '3'
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"    
+    volumes:
+      - .:/app
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:13-alpine
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./northwind_ddl.sql:/docker-entrypoint-initdb.d/1-ddl.sql
+      - ./northwind_data.sql:/docker-entrypoint-initdb.d/2-data.sql
+      
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=secret
+
+  prometheus:
+    image: prom/prometheus
+    command: --config.file=/etc/config/prometheus.yml        
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./configs/prometheus.yml:/etc/config/prometheus.yml
+    restart: on-failure
+
+  grafana:
+    image: grafana/grafana
+    volumes:
+      - ./configs/grafana/datasources:/etc/grafana/provisioning/datasources/
+      - ./configs/grafana/dashboards:/etc/grafana/provisioning/dashboards/
+    ports:
+      - "3000:3000"

@@ -1,0 +1,145 @@
+syntax = "proto3";
+
+package typespb;
+
+option go_package = "github.com/walterwanderley/xo-grpc/_examples/northwind/proto/typespb";
+
+import "google/protobuf/timestamp.proto";
+import "google/protobuf/wrappers.proto";
+
+
+message Category {
+    int32 CategoryID = 1;
+    string CategoryName = 2;
+    .google.protobuf.StringValue Description = 3;
+    bytes Picture = 4;
+}
+
+message Customer {
+    string CustomerID = 1;
+    string CompanyName = 2;
+    .google.protobuf.StringValue ContactName = 3;
+    .google.protobuf.StringValue ContactTitle = 4;
+    .google.protobuf.StringValue Address = 5;
+    .google.protobuf.StringValue City = 6;
+    .google.protobuf.StringValue Region = 7;
+    .google.protobuf.StringValue PostalCode = 8;
+    .google.protobuf.StringValue Country = 9;
+    .google.protobuf.StringValue Phone = 10;
+    .google.protobuf.StringValue Fax = 11;
+}
+
+message CustomerCustomerDemo {
+    string CustomerID = 1;
+    string CustomerTypeID = 2;
+}
+
+message CustomerDemographic {
+    string CustomerTypeID = 1;
+    .google.protobuf.StringValue CustomerDesc = 2;
+}
+
+message Employee {
+    int32 EmployeeID = 1;
+    string LastName = 2;
+    string FirstName = 3;
+    .google.protobuf.StringValue Title = 4;
+    .google.protobuf.StringValue TitleOfCourtesy = 5;
+    .google.protobuf.Timestamp BirthDate = 6;
+    .google.protobuf.Timestamp HireDate = 7;
+    .google.protobuf.StringValue Address = 8;
+    .google.protobuf.StringValue City = 9;
+    .google.protobuf.StringValue Region = 10;
+    .google.protobuf.StringValue PostalCode = 11;
+    .google.protobuf.StringValue Country = 12;
+    .google.protobuf.StringValue HomePhone = 13;
+    .google.protobuf.StringValue Extension = 14;
+    bytes Photo = 15;
+    .google.protobuf.StringValue Notes = 16;
+    .google.protobuf.Int64Value ReportsTo = 17;
+    .google.protobuf.StringValue PhotoPath = 18;
+}
+
+message EmployeeTerritory {
+    int32 EmployeeID = 1;
+    string TerritoryID = 2;
+}
+
+
+message Order {
+    int32 OrderID = 1;
+    .google.protobuf.StringValue CustomerID = 2;
+    .google.protobuf.Int64Value EmployeeID = 3;
+    .google.protobuf.Timestamp OrderDate = 4;
+    .google.protobuf.Timestamp RequiredDate = 5;
+    .google.protobuf.Timestamp ShippedDate = 6;
+    .google.protobuf.Int64Value ShipVia = 7;
+    .google.protobuf.DoubleValue Freight = 8;
+    .google.protobuf.StringValue ShipName = 9;
+    .google.protobuf.StringValue ShipAddress = 10;
+    .google.protobuf.StringValue ShipCity = 11;
+    .google.protobuf.StringValue ShipRegion = 12;
+    .google.protobuf.StringValue ShipPostalCode = 13;
+    .google.protobuf.StringValue ShipCountry = 14;
+}
+
+message OrderDetail {
+    int32 OrderID = 1;
+    int32 ProductID = 2;
+    float UnitPrice = 3;
+    int32 Quantity = 4;
+    float Discount = 5;
+}
+
+message Product {
+    int32 ProductID = 1;
+    string ProductName = 2;
+    .google.protobuf.Int64Value SupplierID = 3;
+    .google.protobuf.Int64Value CategoryID = 4;
+    .google.protobuf.StringValue QuantityPerUnit = 5;
+    .google.protobuf.DoubleValue UnitPrice = 6;
+    .google.protobuf.Int64Value UnitsInStock = 7;
+    .google.protobuf.Int64Value UnitsOnOrder = 8;
+    .google.protobuf.Int64Value ReorderLevel = 9;
+    int64 Discontinued = 10;
+}
+
+message Region {
+    int32 RegionID = 1;
+    string RegionDescription = 2;
+}
+
+message Shipper {
+    int32 ShipperID = 1;
+    string CompanyName = 2;
+    .google.protobuf.StringValue Phone = 3;
+}
+
+
+message Supplier {
+    int32 SupplierID = 1;
+    string CompanyName = 2;
+    .google.protobuf.StringValue ContactName = 3;
+    .google.protobuf.StringValue ContactTitle = 4;
+    .google.protobuf.StringValue Address = 5;
+    .google.protobuf.StringValue City = 6;
+    .google.protobuf.StringValue Region = 7;
+    .google.protobuf.StringValue PostalCode = 8;
+    .google.protobuf.StringValue Country = 9;
+    .google.protobuf.StringValue Phone = 10;
+    .google.protobuf.StringValue Fax = 11;
+    .google.protobuf.StringValue Homepage = 12;
+}
+
+message Territory {
+    string TerritoryID = 1;
+    string TerritoryDescription = 2;
+    int32 RegionID = 3;
+}
+
+message UsState {
+    int32 StateID = 1;
+    .google.protobuf.StringValue StateName = 2;
+    .google.protobuf.StringValue StateAbbr = 3;
+    .google.protobuf.StringValue StateRegion = 4;
+}
