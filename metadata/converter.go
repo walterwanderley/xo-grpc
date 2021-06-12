@@ -97,11 +97,18 @@ func bindToProto(src, dst, attrName, attrType string) []string {
 		res = append(res, fmt.Sprintf("%s.%s = wrapperspb.Int64(%s.%s.Int64) }", dst, attrName, src, attrName))
 	case "sql.NullFloat64":
 		if isArray {
-			res = append(res, bindToProtoWrappersArray(src, dst, attrName, "Float64")...)
+			res = append(res, fmt.Sprintf("%s.%s = make([]*wrapperspb.DoubleValue, 0)", dst, attrName))
+			res = append(res, fmt.Sprintf("for _, item := range %s.%s {", src, attrName))
+			res = append(res, "if item.Valid {")
+			res = append(res, fmt.Sprintf("%s.%s = append(%s.%s, &wrapperspb.DoubleValue{Value: item.Float64})", dst, attrName, dst, attrName))
+			res = append(res, "} else {")
+			res = append(res, fmt.Sprintf("%s.%s = append(%s.%s, nil)", dst, attrName, dst, attrName))
+			res = append(res, "}")
+			res = append(res, "}")
 			break
 		}
 		res = append(res, fmt.Sprintf("if %s.%s.Valid {", src, attrName))
-		res = append(res, fmt.Sprintf("%s.%s = wrapperspb.Float64(%s.%s.Float64) }", dst, attrName, src, attrName))
+		res = append(res, fmt.Sprintf("%s.%s = wrapperspb.Double(%s.%s.Float64) }", dst, attrName, src, attrName))
 	case "sql.NullString":
 		if isArray {
 			res = append(res, bindToProtoWrappersArray(src, dst, attrName, "String")...)
