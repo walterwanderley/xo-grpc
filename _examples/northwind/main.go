@@ -25,7 +25,9 @@ import (
 const serviceName = "northwind"
 
 func main() {
-	var cfg server.Config
+	cfg := server.Config{
+		ServiceName: serviceName,
+	}
 	var dbURL string
 	var dev bool
 	flag.StringVar(&dbURL, "db", "", "The Database connection URL")
@@ -39,16 +41,6 @@ func main() {
 
 	log := logger(dev)
 	defer log.Sync()
-
-	if dev {
-		models.SetLogger(func(s string, args ...interface{}) {
-			params := make([]string, len(args))
-			for i, arg := range args {
-				params[i] = fmt.Sprintf("%v", arg)
-			}
-			log.Debug(fmt.Sprintf("%s; Params -> [%s]", s, strings.Join(params, ", ")))
-		})
-	}
 
 	if _, err := maxprocs.Set(); err != nil {
 		log.Error("startup", zap.Error(err))
@@ -111,6 +103,15 @@ func logger(dev bool) *zap.Logger {
 	if err != nil {
 		fmt.Println(err)
 		os.Exit(1)
+	}
+	if dev {
+		models.SetLogger(func(s string, args ...interface{}) {
+			params := make([]string, len(args))
+			for i, arg := range args {
+				params[i] = fmt.Sprintf("%v", arg)
+			}
+			log.Debug(fmt.Sprintf("%s; Params -> [%s]", s, strings.Join(params, ", ")))
+		})
 	}
 	return log
 }

@@ -14,7 +14,6 @@ services:
     volumes:
       - ./northwind_ddl.sql:/docker-entrypoint-initdb.d/1-ddl.sql
       - ./northwind_data.sql:/docker-entrypoint-initdb.d/2-data.sql
-      
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=secret
@@ -24,7 +23,6 @@ services:
     command: --config.file=/etc/config/prometheus.yml        
     volumes:
       - ./configs/prometheus.yml:/etc/config/prometheus.yml
-    restart: on-failure
 
   grafana:
     image: grafana/grafana
@@ -33,3 +31,8 @@ services:
       - ./configs/grafana/dashboards:/etc/grafana/provisioning/dashboards/
     ports:
       - "3000:3000"
+
+  jaeger:
+    image: jaegertracing/all-in-one
+    ports:
+      - "16686:16686"
