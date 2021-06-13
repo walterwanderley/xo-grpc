@@ -3,6 +3,7 @@ package application
 import (
 	"context"
 	"database/sql"
+	"fmt"
 
 	"google.golang.org/protobuf/types/known/emptypb"
 	"google.golang.org/protobuf/types/known/timestamppb"
@@ -52,6 +53,8 @@ func (s *OrderDetailService) Insert(ctx context.Context, req *pb.InsertRequest) 
 	}
 
 	res = new(emptypb.Empty)
+
+	err = sendResourceLocation(ctx, fmt.Sprintf("?OrderID=%v&ProductID=%v", m.OrderID, m.ProductID))
 
 	return
 }

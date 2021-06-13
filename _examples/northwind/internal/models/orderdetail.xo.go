@@ -44,7 +44,7 @@ func (od *OrderDetail) Insert(ctx context.Context, db DB) error {
 		`)`
 	// run
 	logf(sqlstr, od.OrderID, od.ProductID, od.UnitPrice, od.Quantity, od.Discount)
-	if err := db.QueryRowContext(ctx, sqlstr, od.OrderID, od.ProductID, od.UnitPrice, od.Quantity, od.Discount).Scan(&od.ProductID); err != nil {
+	if _, err := db.ExecContext(ctx, sqlstr, od.OrderID, od.ProductID, od.UnitPrice, od.Quantity, od.Discount); err != nil {
 		return logerror(err)
 	}
 	// set exists

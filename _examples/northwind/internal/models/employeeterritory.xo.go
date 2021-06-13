@@ -41,7 +41,7 @@ func (et *EmployeeTerritory) Insert(ctx context.Context, db DB) error {
 		`)`
 	// run
 	logf(sqlstr, et.EmployeeID, et.TerritoryID)
-	if err := db.QueryRowContext(ctx, sqlstr, et.EmployeeID, et.TerritoryID).Scan(&et.TerritoryID); err != nil {
+	if _, err := db.ExecContext(ctx, sqlstr, et.EmployeeID, et.TerritoryID); err != nil {
 		return logerror(err)
 	}
 	// set exists

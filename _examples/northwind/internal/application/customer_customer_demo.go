@@ -3,6 +3,7 @@ package application
 import (
 	"context"
 	"database/sql"
+	"fmt"
 
 	"google.golang.org/protobuf/types/known/emptypb"
 	"google.golang.org/protobuf/types/known/wrapperspb"
@@ -126,6 +127,8 @@ func (s *CustomerCustomerDemoService) Insert(ctx context.Context, req *pb.Insert
 	}
 
 	res = new(emptypb.Empty)
+
+	err = sendResourceLocation(ctx, fmt.Sprintf("?CustomerID=%v&CustomerTypeID=%v", m.CustomerID, m.CustomerTypeID))
 
 	return
 }

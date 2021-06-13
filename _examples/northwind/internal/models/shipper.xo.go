@@ -43,7 +43,7 @@ func (s *Shipper) Insert(ctx context.Context, db DB) error {
 		`)`
 	// run
 	logf(sqlstr, s.ShipperID, s.CompanyName, s.Phone)
-	if err := db.QueryRowContext(ctx, sqlstr, s.ShipperID, s.CompanyName, s.Phone).Scan(&s.ShipperID); err != nil {
+	if _, err := db.ExecContext(ctx, sqlstr, s.ShipperID, s.CompanyName, s.Phone); err != nil {
 		return logerror(err)
 	}
 	// set exists

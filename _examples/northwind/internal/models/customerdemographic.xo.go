@@ -42,7 +42,7 @@ func (cd *CustomerDemographic) Insert(ctx context.Context, db DB) error {
 		`)`
 	// run
 	logf(sqlstr, cd.CustomerTypeID, cd.CustomerDesc)
-	if err := db.QueryRowContext(ctx, sqlstr, cd.CustomerTypeID, cd.CustomerDesc).Scan(&cd.CustomerTypeID); err != nil {
+	if _, err := db.ExecContext(ctx, sqlstr, cd.CustomerTypeID, cd.CustomerDesc); err != nil {
 		return logerror(err)
 	}
 	// set exists

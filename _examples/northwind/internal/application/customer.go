@@ -5,8 +5,6 @@ import (
 	"database/sql"
 	"fmt"
 
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/metadata"
 	"google.golang.org/protobuf/types/known/emptypb"
 	"google.golang.org/protobuf/types/known/wrapperspb"
 
@@ -122,18 +120,7 @@ func (s *CustomerService) Insert(ctx context.Context, req *pb.InsertRequest) (re
 
 	res = new(emptypb.Empty)
 
-	if md, ok := metadata.FromIncomingContext(ctx); ok {
-		uri := md.Get("requestURI")
-		if len(uri) == 1 {
-			err = grpc.SendHeader(ctx, metadata.Pairs(
-				"location", fmt.Sprintf("%s/%v", uri[0], m.CustomerID),
-				"x-http-code", "201"),
-			)
-			if err != nil {
-				return
-			}
-		}
-	}
+	err = sendResourceLocation(ctx, fmt.Sprintf("/%v", m.CustomerID))
 
 	return
 }
