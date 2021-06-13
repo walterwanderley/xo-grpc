@@ -31,7 +31,7 @@ var _ = runtime.String
 var _ = utilities.NewDoubleArray
 var _ = metadata.Join
 
-func request_CustomerCustomerDemoService_Customer_0(ctx context.Context, marshaler runtime.Marshaler, client CustomerCustomerDemoServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_CustomerCustomerDemo_Customer_0(ctx context.Context, marshaler runtime.Marshaler, client CustomerCustomerDemoClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq CustomerRequest
 	var metadata runtime.ServerMetadata
 
@@ -57,7 +57,7 @@ func request_CustomerCustomerDemoService_Customer_0(ctx context.Context, marshal
 
 }
 
-func local_request_CustomerCustomerDemoService_Customer_0(ctx context.Context, marshaler runtime.Marshaler, server CustomerCustomerDemoServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_CustomerCustomerDemo_Customer_0(ctx context.Context, marshaler runtime.Marshaler, server CustomerCustomerDemoServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq CustomerRequest
 	var metadata runtime.ServerMetadata
 
@@ -84,17 +84,17 @@ func local_request_CustomerCustomerDemoService_Customer_0(ctx context.Context, m
 }
 
 var (
-	filter_CustomerCustomerDemoService_CustomerCustomerDemoByCustomerIDCustomerTypeID_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+	filter_CustomerCustomerDemo_CustomerCustomerDemoByCustomerIDCustomerTypeID_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
 )
 
-func request_CustomerCustomerDemoService_CustomerCustomerDemoByCustomerIDCustomerTypeID_0(ctx context.Context, marshaler runtime.Marshaler, client CustomerCustomerDemoServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_CustomerCustomerDemo_CustomerCustomerDemoByCustomerIDCustomerTypeID_0(ctx context.Context, marshaler runtime.Marshaler, client CustomerCustomerDemoClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq CustomerCustomerDemoByCustomerIDCustomerTypeIDRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_CustomerCustomerDemoService_CustomerCustomerDemoByCustomerIDCustomerTypeID_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_CustomerCustomerDemo_CustomerCustomerDemoByCustomerIDCustomerTypeID_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -103,14 +103,14 @@ func request_CustomerCustomerDemoService_CustomerCustomerDemoByCustomerIDCustome
 
 }
 
-func local_request_CustomerCustomerDemoService_CustomerCustomerDemoByCustomerIDCustomerTypeID_0(ctx context.Context, marshaler runtime.Marshaler, server CustomerCustomerDemoServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_CustomerCustomerDemo_CustomerCustomerDemoByCustomerIDCustomerTypeID_0(ctx context.Context, marshaler runtime.Marshaler, server CustomerCustomerDemoServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq CustomerCustomerDemoByCustomerIDCustomerTypeIDRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_CustomerCustomerDemoService_CustomerCustomerDemoByCustomerIDCustomerTypeID_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_CustomerCustomerDemo_CustomerCustomerDemoByCustomerIDCustomerTypeID_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -119,7 +119,7 @@ func local_request_CustomerCustomerDemoService_CustomerCustomerDemoByCustomerIDC
 
 }
 
-func request_CustomerCustomerDemoService_CustomerDemographic_0(ctx context.Context, marshaler runtime.Marshaler, client CustomerCustomerDemoServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_CustomerCustomerDemo_CustomerDemographic_0(ctx context.Context, marshaler runtime.Marshaler, client CustomerCustomerDemoClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq CustomerDemographicRequest
 	var metadata runtime.ServerMetadata
 
@@ -145,7 +145,7 @@ func request_CustomerCustomerDemoService_CustomerDemographic_0(ctx context.Conte
 
 }
 
-func local_request_CustomerCustomerDemoService_CustomerDemographic_0(ctx context.Context, marshaler runtime.Marshaler, server CustomerCustomerDemoServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_CustomerCustomerDemo_CustomerDemographic_0(ctx context.Context, marshaler runtime.Marshaler, server CustomerCustomerDemoServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq CustomerDemographicRequest
 	var metadata runtime.ServerMetadata
 
@@ -172,17 +172,17 @@ func local_request_CustomerCustomerDemoService_CustomerDemographic_0(ctx context
 }
 
 var (
-	filter_CustomerCustomerDemoService_Delete_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+	filter_CustomerCustomerDemo_Delete_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
 )
 
-func request_CustomerCustomerDemoService_Delete_0(ctx context.Context, marshaler runtime.Marshaler, client CustomerCustomerDemoServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_CustomerCustomerDemo_Delete_0(ctx context.Context, marshaler runtime.Marshaler, client CustomerCustomerDemoClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq DeleteRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_CustomerCustomerDemoService_Delete_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_CustomerCustomerDemo_Delete_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -191,14 +191,14 @@ func request_CustomerCustomerDemoService_Delete_0(ctx context.Context, marshaler
 
 }
 
-func local_request_CustomerCustomerDemoService_Delete_0(ctx context.Context, marshaler runtime.Marshaler, server CustomerCustomerDemoServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_CustomerCustomerDemo_Delete_0(ctx context.Context, marshaler runtime.Marshaler, server CustomerCustomerDemoServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq DeleteRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_CustomerCustomerDemoService_Delete_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_CustomerCustomerDemo_Delete_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -207,7 +207,7 @@ func local_request_CustomerCustomerDemoService_Delete_0(ctx context.Context, mar
 
 }
 
-func request_CustomerCustomerDemoService_Insert_0(ctx context.Context, marshaler runtime.Marshaler, client CustomerCustomerDemoServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_CustomerCustomerDemo_Insert_0(ctx context.Context, marshaler runtime.Marshaler, client CustomerCustomerDemoClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq InsertRequest
 	var metadata runtime.ServerMetadata
 
@@ -224,7 +224,7 @@ func request_CustomerCustomerDemoService_Insert_0(ctx context.Context, marshaler
 
 }
 
-func local_request_CustomerCustomerDemoService_Insert_0(ctx context.Context, marshaler runtime.Marshaler, server CustomerCustomerDemoServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_CustomerCustomerDemo_Insert_0(ctx context.Context, marshaler runtime.Marshaler, server CustomerCustomerDemoServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq InsertRequest
 	var metadata runtime.ServerMetadata
 
@@ -241,24 +241,24 @@ func local_request_CustomerCustomerDemoService_Insert_0(ctx context.Context, mar
 
 }
 
-// RegisterCustomerCustomerDemoServiceHandlerServer registers the http handlers for service CustomerCustomerDemoService to "mux".
-// UnaryRPC     :call CustomerCustomerDemoServiceServer directly.
+// RegisterCustomerCustomerDemoHandlerServer registers the http handlers for service CustomerCustomerDemo to "mux".
+// UnaryRPC     :call CustomerCustomerDemoServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
-// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterCustomerCustomerDemoServiceHandlerFromEndpoint instead.
-func RegisterCustomerCustomerDemoServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server CustomerCustomerDemoServiceServer) error {
+// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterCustomerCustomerDemoHandlerFromEndpoint instead.
+func RegisterCustomerCustomerDemoHandlerServer(ctx context.Context, mux *runtime.ServeMux, server CustomerCustomerDemoServer) error {
 
-	mux.Handle("GET", pattern_CustomerCustomerDemoService_Customer_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_CustomerCustomerDemo_Customer_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/customer_customer_demo.CustomerCustomerDemoService/Customer")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/customer_customer_demo.CustomerCustomerDemo/Customer")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_CustomerCustomerDemoService_Customer_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_CustomerCustomerDemo_Customer_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -266,22 +266,22 @@ func RegisterCustomerCustomerDemoServiceHandlerServer(ctx context.Context, mux *
 			return
 		}
 
-		forward_CustomerCustomerDemoService_Customer_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_CustomerCustomerDemo_Customer_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_CustomerCustomerDemoService_CustomerCustomerDemoByCustomerIDCustomerTypeID_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_CustomerCustomerDemo_CustomerCustomerDemoByCustomerIDCustomerTypeID_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/customer_customer_demo.CustomerCustomerDemoService/CustomerCustomerDemoByCustomerIDCustomerTypeID")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/customer_customer_demo.CustomerCustomerDemo/CustomerCustomerDemoByCustomerIDCustomerTypeID")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_CustomerCustomerDemoService_CustomerCustomerDemoByCustomerIDCustomerTypeID_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_CustomerCustomerDemo_CustomerCustomerDemoByCustomerIDCustomerTypeID_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -289,22 +289,22 @@ func RegisterCustomerCustomerDemoServiceHandlerServer(ctx context.Context, mux *
 			return
 		}
 
-		forward_CustomerCustomerDemoService_CustomerCustomerDemoByCustomerIDCustomerTypeID_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_CustomerCustomerDemo_CustomerCustomerDemoByCustomerIDCustomerTypeID_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_CustomerCustomerDemoService_CustomerDemographic_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_CustomerCustomerDemo_CustomerDemographic_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/customer_customer_demo.CustomerCustomerDemoService/CustomerDemographic")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/customer_customer_demo.CustomerCustomerDemo/CustomerDemographic")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_CustomerCustomerDemoService_CustomerDemographic_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_CustomerCustomerDemo_CustomerDemographic_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -312,22 +312,22 @@ func RegisterCustomerCustomerDemoServiceHandlerServer(ctx context.Context, mux *
 			return
 		}
 
-		forward_CustomerCustomerDemoService_CustomerDemographic_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_CustomerCustomerDemo_CustomerDemographic_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("DELETE", pattern_CustomerCustomerDemoService_Delete_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("DELETE", pattern_CustomerCustomerDemo_Delete_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/customer_customer_demo.CustomerCustomerDemoService/Delete")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/customer_customer_demo.CustomerCustomerDemo/Delete")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_CustomerCustomerDemoService_Delete_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_CustomerCustomerDemo_Delete_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -335,22 +335,22 @@ func RegisterCustomerCustomerDemoServiceHandlerServer(ctx context.Context, mux *
 			return
 		}
 
-		forward_CustomerCustomerDemoService_Delete_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_CustomerCustomerDemo_Delete_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_CustomerCustomerDemoService_Insert_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_CustomerCustomerDemo_Insert_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/customer_customer_demo.CustomerCustomerDemoService/Insert")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/customer_customer_demo.CustomerCustomerDemo/Insert")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_CustomerCustomerDemoService_Insert_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_CustomerCustomerDemo_Insert_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -358,16 +358,16 @@ func RegisterCustomerCustomerDemoServiceHandlerServer(ctx context.Context, mux *
 			return
 		}
 
-		forward_CustomerCustomerDemoService_Insert_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_CustomerCustomerDemo_Insert_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
 	return nil
 }
 
-// RegisterCustomerCustomerDemoServiceHandlerFromEndpoint is same as RegisterCustomerCustomerDemoServiceHandler but
+// RegisterCustomerCustomerDemoHandlerFromEndpoint is same as RegisterCustomerCustomerDemoHandler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterCustomerCustomerDemoServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+func RegisterCustomerCustomerDemoHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
 	conn, err := grpc.Dial(endpoint, opts...)
 	if err != nil {
 		return err
@@ -387,119 +387,119 @@ func RegisterCustomerCustomerDemoServiceHandlerFromEndpoint(ctx context.Context,
 		}()
 	}()
 
-	return RegisterCustomerCustomerDemoServiceHandler(ctx, mux, conn)
+	return RegisterCustomerCustomerDemoHandler(ctx, mux, conn)
 }
 
-// RegisterCustomerCustomerDemoServiceHandler registers the http handlers for service CustomerCustomerDemoService to "mux".
+// RegisterCustomerCustomerDemoHandler registers the http handlers for service CustomerCustomerDemo to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
-func RegisterCustomerCustomerDemoServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return RegisterCustomerCustomerDemoServiceHandlerClient(ctx, mux, NewCustomerCustomerDemoServiceClient(conn))
+func RegisterCustomerCustomerDemoHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	return RegisterCustomerCustomerDemoHandlerClient(ctx, mux, NewCustomerCustomerDemoClient(conn))
 }
 
-// RegisterCustomerCustomerDemoServiceHandlerClient registers the http handlers for service CustomerCustomerDemoService
-// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "CustomerCustomerDemoServiceClient".
-// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "CustomerCustomerDemoServiceClient"
+// RegisterCustomerCustomerDemoHandlerClient registers the http handlers for service CustomerCustomerDemo
+// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "CustomerCustomerDemoClient".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "CustomerCustomerDemoClient"
 // doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
-// "CustomerCustomerDemoServiceClient" to call the correct interceptors.
-func RegisterCustomerCustomerDemoServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client CustomerCustomerDemoServiceClient) error {
+// "CustomerCustomerDemoClient" to call the correct interceptors.
+func RegisterCustomerCustomerDemoHandlerClient(ctx context.Context, mux *runtime.ServeMux, client CustomerCustomerDemoClient) error {
 
-	mux.Handle("GET", pattern_CustomerCustomerDemoService_Customer_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_CustomerCustomerDemo_Customer_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/customer_customer_demo.CustomerCustomerDemoService/Customer")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/customer_customer_demo.CustomerCustomerDemo/Customer")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_CustomerCustomerDemoService_Customer_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_CustomerCustomerDemo_Customer_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_CustomerCustomerDemoService_Customer_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_CustomerCustomerDemo_Customer_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_CustomerCustomerDemoService_CustomerCustomerDemoByCustomerIDCustomerTypeID_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_CustomerCustomerDemo_CustomerCustomerDemoByCustomerIDCustomerTypeID_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/customer_customer_demo.CustomerCustomerDemoService/CustomerCustomerDemoByCustomerIDCustomerTypeID")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/customer_customer_demo.CustomerCustomerDemo/CustomerCustomerDemoByCustomerIDCustomerTypeID")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_CustomerCustomerDemoService_CustomerCustomerDemoByCustomerIDCustomerTypeID_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_CustomerCustomerDemo_CustomerCustomerDemoByCustomerIDCustomerTypeID_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_CustomerCustomerDemoService_CustomerCustomerDemoByCustomerIDCustomerTypeID_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_CustomerCustomerDemo_CustomerCustomerDemoByCustomerIDCustomerTypeID_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_CustomerCustomerDemoService_CustomerDemographic_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_CustomerCustomerDemo_CustomerDemographic_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/customer_customer_demo.CustomerCustomerDemoService/CustomerDemographic")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/customer_customer_demo.CustomerCustomerDemo/CustomerDemographic")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_CustomerCustomerDemoService_CustomerDemographic_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_CustomerCustomerDemo_CustomerDemographic_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_CustomerCustomerDemoService_CustomerDemographic_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_CustomerCustomerDemo_CustomerDemographic_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("DELETE", pattern_CustomerCustomerDemoService_Delete_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("DELETE", pattern_CustomerCustomerDemo_Delete_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/customer_customer_demo.CustomerCustomerDemoService/Delete")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/customer_customer_demo.CustomerCustomerDemo/Delete")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_CustomerCustomerDemoService_Delete_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_CustomerCustomerDemo_Delete_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_CustomerCustomerDemoService_Delete_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_CustomerCustomerDemo_Delete_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_CustomerCustomerDemoService_Insert_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_CustomerCustomerDemo_Insert_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/customer_customer_demo.CustomerCustomerDemoService/Insert")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/customer_customer_demo.CustomerCustomerDemo/Insert")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_CustomerCustomerDemoService_Insert_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_CustomerCustomerDemo_Insert_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_CustomerCustomerDemoService_Insert_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_CustomerCustomerDemo_Insert_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -507,25 +507,25 @@ func RegisterCustomerCustomerDemoServiceHandlerClient(ctx context.Context, mux *
 }
 
 var (
-	pattern_CustomerCustomerDemoService_Customer_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "customer-customer-demo", "customer", "CustomerID"}, ""))
+	pattern_CustomerCustomerDemo_Customer_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "customer-customer-demo", "customer", "CustomerID"}, ""))
 
-	pattern_CustomerCustomerDemoService_CustomerCustomerDemoByCustomerIDCustomerTypeID_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "customer-customer-demo"}, ""))
+	pattern_CustomerCustomerDemo_CustomerCustomerDemoByCustomerIDCustomerTypeID_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "customer-customer-demo"}, ""))
 
-	pattern_CustomerCustomerDemoService_CustomerDemographic_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "customer-customer-demo", "customer-demographic", "CustomerTypeID"}, ""))
+	pattern_CustomerCustomerDemo_CustomerDemographic_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "customer-customer-demo", "customer-demographic", "CustomerTypeID"}, ""))
 
-	pattern_CustomerCustomerDemoService_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "customer-customer-demo"}, ""))
+	pattern_CustomerCustomerDemo_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "customer-customer-demo"}, ""))
 
-	pattern_CustomerCustomerDemoService_Insert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "customer-customer-demo"}, ""))
+	pattern_CustomerCustomerDemo_Insert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "customer-customer-demo"}, ""))
 )
 
 var (
-	forward_CustomerCustomerDemoService_Customer_0 = runtime.ForwardResponseMessage
+	forward_CustomerCustomerDemo_Customer_0 = runtime.ForwardResponseMessage
 
-	forward_CustomerCustomerDemoService_CustomerCustomerDemoByCustomerIDCustomerTypeID_0 = runtime.ForwardResponseMessage
+	forward_CustomerCustomerDemo_CustomerCustomerDemoByCustomerIDCustomerTypeID_0 = runtime.ForwardResponseMessage
 
-	forward_CustomerCustomerDemoService_CustomerDemographic_0 = runtime.ForwardResponseMessage
+	forward_CustomerCustomerDemo_CustomerDemographic_0 = runtime.ForwardResponseMessage
 
-	forward_CustomerCustomerDemoService_Delete_0 = runtime.ForwardResponseMessage
+	forward_CustomerCustomerDemo_Delete_0 = runtime.ForwardResponseMessage
 
-	forward_CustomerCustomerDemoService_Insert_0 = runtime.ForwardResponseMessage
+	forward_CustomerCustomerDemo_Insert_0 = runtime.ForwardResponseMessage
 )

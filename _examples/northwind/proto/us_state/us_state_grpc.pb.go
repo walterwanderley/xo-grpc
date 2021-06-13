@@ -16,10 +16,10 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// UsStateServiceClient is the client API for UsStateService service.
+// UsStateClient is the client API for UsState service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type UsStateServiceClient interface {
+type UsStateClient interface {
 	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Insert(ctx context.Context, in *InsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
@@ -27,219 +27,219 @@ type UsStateServiceClient interface {
 	UsStateByStateID(ctx context.Context, in *UsStateByStateIDRequest, opts ...grpc.CallOption) (*typespb.UsState, error)
 }
 
-type usStateServiceClient struct {
+type usStateClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewUsStateServiceClient(cc grpc.ClientConnInterface) UsStateServiceClient {
-	return &usStateServiceClient{cc}
+func NewUsStateClient(cc grpc.ClientConnInterface) UsStateClient {
+	return &usStateClient{cc}
 }
 
-func (c *usStateServiceClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *usStateClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/us_state.UsStateService/Delete", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/us_state.UsState/Delete", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *usStateServiceClient) Insert(ctx context.Context, in *InsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *usStateClient) Insert(ctx context.Context, in *InsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/us_state.UsStateService/Insert", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/us_state.UsState/Insert", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *usStateServiceClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *usStateClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/us_state.UsStateService/Update", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/us_state.UsState/Update", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *usStateServiceClient) Upsert(ctx context.Context, in *UpsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *usStateClient) Upsert(ctx context.Context, in *UpsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/us_state.UsStateService/Upsert", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/us_state.UsState/Upsert", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *usStateServiceClient) UsStateByStateID(ctx context.Context, in *UsStateByStateIDRequest, opts ...grpc.CallOption) (*typespb.UsState, error) {
+func (c *usStateClient) UsStateByStateID(ctx context.Context, in *UsStateByStateIDRequest, opts ...grpc.CallOption) (*typespb.UsState, error) {
 	out := new(typespb.UsState)
-	err := c.cc.Invoke(ctx, "/us_state.UsStateService/UsStateByStateID", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/us_state.UsState/UsStateByStateID", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// UsStateServiceServer is the server API for UsStateService service.
-// All implementations must embed UnimplementedUsStateServiceServer
+// UsStateServer is the server API for UsState service.
+// All implementations must embed UnimplementedUsStateServer
 // for forward compatibility
-type UsStateServiceServer interface {
+type UsStateServer interface {
 	Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error)
 	Insert(context.Context, *InsertRequest) (*emptypb.Empty, error)
 	Update(context.Context, *UpdateRequest) (*emptypb.Empty, error)
 	Upsert(context.Context, *UpsertRequest) (*emptypb.Empty, error)
 	UsStateByStateID(context.Context, *UsStateByStateIDRequest) (*typespb.UsState, error)
-	mustEmbedUnimplementedUsStateServiceServer()
+	mustEmbedUnimplementedUsStateServer()
 }
 
-// UnimplementedUsStateServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedUsStateServiceServer struct {
+// UnimplementedUsStateServer must be embedded to have forward compatible implementations.
+type UnimplementedUsStateServer struct {
 }
 
-func (UnimplementedUsStateServiceServer) Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error) {
+func (UnimplementedUsStateServer) Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
 }
-func (UnimplementedUsStateServiceServer) Insert(context.Context, *InsertRequest) (*emptypb.Empty, error) {
+func (UnimplementedUsStateServer) Insert(context.Context, *InsertRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Insert not implemented")
 }
-func (UnimplementedUsStateServiceServer) Update(context.Context, *UpdateRequest) (*emptypb.Empty, error) {
+func (UnimplementedUsStateServer) Update(context.Context, *UpdateRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
 }
-func (UnimplementedUsStateServiceServer) Upsert(context.Context, *UpsertRequest) (*emptypb.Empty, error) {
+func (UnimplementedUsStateServer) Upsert(context.Context, *UpsertRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Upsert not implemented")
 }
-func (UnimplementedUsStateServiceServer) UsStateByStateID(context.Context, *UsStateByStateIDRequest) (*typespb.UsState, error) {
+func (UnimplementedUsStateServer) UsStateByStateID(context.Context, *UsStateByStateIDRequest) (*typespb.UsState, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method UsStateByStateID not implemented")
 }
-func (UnimplementedUsStateServiceServer) mustEmbedUnimplementedUsStateServiceServer() {}
+func (UnimplementedUsStateServer) mustEmbedUnimplementedUsStateServer() {}
 
-// UnsafeUsStateServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to UsStateServiceServer will
+// UnsafeUsStateServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to UsStateServer will
 // result in compilation errors.
-type UnsafeUsStateServiceServer interface {
-	mustEmbedUnimplementedUsStateServiceServer()
+type UnsafeUsStateServer interface {
+	mustEmbedUnimplementedUsStateServer()
 }
 
-func RegisterUsStateServiceServer(s grpc.ServiceRegistrar, srv UsStateServiceServer) {
-	s.RegisterService(&UsStateService_ServiceDesc, srv)
+func RegisterUsStateServer(s grpc.ServiceRegistrar, srv UsStateServer) {
+	s.RegisterService(&UsState_ServiceDesc, srv)
 }
 
-func _UsStateService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _UsState_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UsStateServiceServer).Delete(ctx, in)
+		return srv.(UsStateServer).Delete(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/us_state.UsStateService/Delete",
+		FullMethod: "/us_state.UsState/Delete",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UsStateServiceServer).Delete(ctx, req.(*DeleteRequest))
+		return srv.(UsStateServer).Delete(ctx, req.(*DeleteRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _UsStateService_Insert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _UsState_Insert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(InsertRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UsStateServiceServer).Insert(ctx, in)
+		return srv.(UsStateServer).Insert(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/us_state.UsStateService/Insert",
+		FullMethod: "/us_state.UsState/Insert",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UsStateServiceServer).Insert(ctx, req.(*InsertRequest))
+		return srv.(UsStateServer).Insert(ctx, req.(*InsertRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _UsStateService_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _UsState_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UsStateServiceServer).Update(ctx, in)
+		return srv.(UsStateServer).Update(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/us_state.UsStateService/Update",
+		FullMethod: "/us_state.UsState/Update",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UsStateServiceServer).Update(ctx, req.(*UpdateRequest))
+		return srv.(UsStateServer).Update(ctx, req.(*UpdateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _UsStateService_Upsert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _UsState_Upsert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpsertRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UsStateServiceServer).Upsert(ctx, in)
+		return srv.(UsStateServer).Upsert(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/us_state.UsStateService/Upsert",
+		FullMethod: "/us_state.UsState/Upsert",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UsStateServiceServer).Upsert(ctx, req.(*UpsertRequest))
+		return srv.(UsStateServer).Upsert(ctx, req.(*UpsertRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _UsStateService_UsStateByStateID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _UsState_UsStateByStateID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UsStateByStateIDRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(UsStateServiceServer).UsStateByStateID(ctx, in)
+		return srv.(UsStateServer).UsStateByStateID(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/us_state.UsStateService/UsStateByStateID",
+		FullMethod: "/us_state.UsState/UsStateByStateID",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(UsStateServiceServer).UsStateByStateID(ctx, req.(*UsStateByStateIDRequest))
+		return srv.(UsStateServer).UsStateByStateID(ctx, req.(*UsStateByStateIDRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// UsStateService_ServiceDesc is the grpc.ServiceDesc for UsStateService service.
+// UsState_ServiceDesc is the grpc.ServiceDesc for UsState service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var UsStateService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "us_state.UsStateService",
-	HandlerType: (*UsStateServiceServer)(nil),
+var UsState_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "us_state.UsState",
+	HandlerType: (*UsStateServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Delete",
-			Handler:    _UsStateService_Delete_Handler,
+			Handler:    _UsState_Delete_Handler,
 		},
 		{
 			MethodName: "Insert",
-			Handler:    _UsStateService_Insert_Handler,
+			Handler:    _UsState_Insert_Handler,
 		},
 		{
 			MethodName: "Update",
-			Handler:    _UsStateService_Update_Handler,
+			Handler:    _UsState_Update_Handler,
 		},
 		{
 			MethodName: "Upsert",
-			Handler:    _UsStateService_Upsert_Handler,
+			Handler:    _UsState_Upsert_Handler,
 		},
 		{
 			MethodName: "UsStateByStateID",
-			Handler:    _UsStateService_UsStateByStateID_Handler,
+			Handler:    _UsState_UsStateByStateID_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

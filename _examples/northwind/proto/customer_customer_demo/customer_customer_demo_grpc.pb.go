@@ -16,10 +16,10 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// CustomerCustomerDemoServiceClient is the client API for CustomerCustomerDemoService service.
+// CustomerCustomerDemoClient is the client API for CustomerCustomerDemo service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type CustomerCustomerDemoServiceClient interface {
+type CustomerCustomerDemoClient interface {
 	Customer(ctx context.Context, in *CustomerRequest, opts ...grpc.CallOption) (*typespb.Customer, error)
 	CustomerCustomerDemoByCustomerIDCustomerTypeID(ctx context.Context, in *CustomerCustomerDemoByCustomerIDCustomerTypeIDRequest, opts ...grpc.CallOption) (*typespb.CustomerCustomerDemo, error)
 	CustomerDemographic(ctx context.Context, in *CustomerDemographicRequest, opts ...grpc.CallOption) (*typespb.CustomerDemographic, error)
@@ -27,220 +27,219 @@ type CustomerCustomerDemoServiceClient interface {
 	Insert(ctx context.Context, in *InsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
-type customerCustomerDemoServiceClient struct {
+type customerCustomerDemoClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewCustomerCustomerDemoServiceClient(cc grpc.ClientConnInterface) CustomerCustomerDemoServiceClient {
-	return &customerCustomerDemoServiceClient{cc}
+func NewCustomerCustomerDemoClient(cc grpc.ClientConnInterface) CustomerCustomerDemoClient {
+	return &customerCustomerDemoClient{cc}
 }
 
-func (c *customerCustomerDemoServiceClient) Customer(ctx context.Context, in *CustomerRequest, opts ...grpc.CallOption) (*typespb.Customer, error) {
+func (c *customerCustomerDemoClient) Customer(ctx context.Context, in *CustomerRequest, opts ...grpc.CallOption) (*typespb.Customer, error) {
 	out := new(typespb.Customer)
-	err := c.cc.Invoke(ctx, "/customer_customer_demo.CustomerCustomerDemoService/Customer", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/customer_customer_demo.CustomerCustomerDemo/Customer", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *customerCustomerDemoServiceClient) CustomerCustomerDemoByCustomerIDCustomerTypeID(ctx context.Context, in *CustomerCustomerDemoByCustomerIDCustomerTypeIDRequest, opts ...grpc.CallOption) (*typespb.CustomerCustomerDemo, error) {
+func (c *customerCustomerDemoClient) CustomerCustomerDemoByCustomerIDCustomerTypeID(ctx context.Context, in *CustomerCustomerDemoByCustomerIDCustomerTypeIDRequest, opts ...grpc.CallOption) (*typespb.CustomerCustomerDemo, error) {
 	out := new(typespb.CustomerCustomerDemo)
-	err := c.cc.Invoke(ctx, "/customer_customer_demo.CustomerCustomerDemoService/CustomerCustomerDemoByCustomerIDCustomerTypeID", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/customer_customer_demo.CustomerCustomerDemo/CustomerCustomerDemoByCustomerIDCustomerTypeID", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *customerCustomerDemoServiceClient) CustomerDemographic(ctx context.Context, in *CustomerDemographicRequest, opts ...grpc.CallOption) (*typespb.CustomerDemographic, error) {
+func (c *customerCustomerDemoClient) CustomerDemographic(ctx context.Context, in *CustomerDemographicRequest, opts ...grpc.CallOption) (*typespb.CustomerDemographic, error) {
 	out := new(typespb.CustomerDemographic)
-	err := c.cc.Invoke(ctx, "/customer_customer_demo.CustomerCustomerDemoService/CustomerDemographic", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/customer_customer_demo.CustomerCustomerDemo/CustomerDemographic", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *customerCustomerDemoServiceClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *customerCustomerDemoClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/customer_customer_demo.CustomerCustomerDemoService/Delete", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/customer_customer_demo.CustomerCustomerDemo/Delete", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *customerCustomerDemoServiceClient) Insert(ctx context.Context, in *InsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *customerCustomerDemoClient) Insert(ctx context.Context, in *InsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/customer_customer_demo.CustomerCustomerDemoService/Insert", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/customer_customer_demo.CustomerCustomerDemo/Insert", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// CustomerCustomerDemoServiceServer is the server API for CustomerCustomerDemoService service.
-// All implementations must embed UnimplementedCustomerCustomerDemoServiceServer
+// CustomerCustomerDemoServer is the server API for CustomerCustomerDemo service.
+// All implementations must embed UnimplementedCustomerCustomerDemoServer
 // for forward compatibility
-type CustomerCustomerDemoServiceServer interface {
+type CustomerCustomerDemoServer interface {
 	Customer(context.Context, *CustomerRequest) (*typespb.Customer, error)
 	CustomerCustomerDemoByCustomerIDCustomerTypeID(context.Context, *CustomerCustomerDemoByCustomerIDCustomerTypeIDRequest) (*typespb.CustomerCustomerDemo, error)
 	CustomerDemographic(context.Context, *CustomerDemographicRequest) (*typespb.CustomerDemographic, error)
 	Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error)
 	Insert(context.Context, *InsertRequest) (*emptypb.Empty, error)
-	mustEmbedUnimplementedCustomerCustomerDemoServiceServer()
+	mustEmbedUnimplementedCustomerCustomerDemoServer()
 }
 
-// UnimplementedCustomerCustomerDemoServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedCustomerCustomerDemoServiceServer struct {
+// UnimplementedCustomerCustomerDemoServer must be embedded to have forward compatible implementations.
+type UnimplementedCustomerCustomerDemoServer struct {
 }
 
-func (UnimplementedCustomerCustomerDemoServiceServer) Customer(context.Context, *CustomerRequest) (*typespb.Customer, error) {
+func (UnimplementedCustomerCustomerDemoServer) Customer(context.Context, *CustomerRequest) (*typespb.Customer, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Customer not implemented")
 }
-func (UnimplementedCustomerCustomerDemoServiceServer) CustomerCustomerDemoByCustomerIDCustomerTypeID(context.Context, *CustomerCustomerDemoByCustomerIDCustomerTypeIDRequest) (*typespb.CustomerCustomerDemo, error) {
+func (UnimplementedCustomerCustomerDemoServer) CustomerCustomerDemoByCustomerIDCustomerTypeID(context.Context, *CustomerCustomerDemoByCustomerIDCustomerTypeIDRequest) (*typespb.CustomerCustomerDemo, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CustomerCustomerDemoByCustomerIDCustomerTypeID not implemented")
 }
-func (UnimplementedCustomerCustomerDemoServiceServer) CustomerDemographic(context.Context, *CustomerDemographicRequest) (*typespb.CustomerDemographic, error) {
+func (UnimplementedCustomerCustomerDemoServer) CustomerDemographic(context.Context, *CustomerDemographicRequest) (*typespb.CustomerDemographic, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CustomerDemographic not implemented")
 }
-func (UnimplementedCustomerCustomerDemoServiceServer) Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error) {
+func (UnimplementedCustomerCustomerDemoServer) Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
 }
-func (UnimplementedCustomerCustomerDemoServiceServer) Insert(context.Context, *InsertRequest) (*emptypb.Empty, error) {
+func (UnimplementedCustomerCustomerDemoServer) Insert(context.Context, *InsertRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Insert not implemented")
 }
-func (UnimplementedCustomerCustomerDemoServiceServer) mustEmbedUnimplementedCustomerCustomerDemoServiceServer() {
-}
+func (UnimplementedCustomerCustomerDemoServer) mustEmbedUnimplementedCustomerCustomerDemoServer() {}
 
-// UnsafeCustomerCustomerDemoServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to CustomerCustomerDemoServiceServer will
+// UnsafeCustomerCustomerDemoServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to CustomerCustomerDemoServer will
 // result in compilation errors.
-type UnsafeCustomerCustomerDemoServiceServer interface {
-	mustEmbedUnimplementedCustomerCustomerDemoServiceServer()
+type UnsafeCustomerCustomerDemoServer interface {
+	mustEmbedUnimplementedCustomerCustomerDemoServer()
 }
 
-func RegisterCustomerCustomerDemoServiceServer(s grpc.ServiceRegistrar, srv CustomerCustomerDemoServiceServer) {
-	s.RegisterService(&CustomerCustomerDemoService_ServiceDesc, srv)
+func RegisterCustomerCustomerDemoServer(s grpc.ServiceRegistrar, srv CustomerCustomerDemoServer) {
+	s.RegisterService(&CustomerCustomerDemo_ServiceDesc, srv)
 }
 
-func _CustomerCustomerDemoService_Customer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CustomerCustomerDemo_Customer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CustomerRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CustomerCustomerDemoServiceServer).Customer(ctx, in)
+		return srv.(CustomerCustomerDemoServer).Customer(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/customer_customer_demo.CustomerCustomerDemoService/Customer",
+		FullMethod: "/customer_customer_demo.CustomerCustomerDemo/Customer",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CustomerCustomerDemoServiceServer).Customer(ctx, req.(*CustomerRequest))
+		return srv.(CustomerCustomerDemoServer).Customer(ctx, req.(*CustomerRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CustomerCustomerDemoService_CustomerCustomerDemoByCustomerIDCustomerTypeID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CustomerCustomerDemo_CustomerCustomerDemoByCustomerIDCustomerTypeID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CustomerCustomerDemoByCustomerIDCustomerTypeIDRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CustomerCustomerDemoServiceServer).CustomerCustomerDemoByCustomerIDCustomerTypeID(ctx, in)
+		return srv.(CustomerCustomerDemoServer).CustomerCustomerDemoByCustomerIDCustomerTypeID(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/customer_customer_demo.CustomerCustomerDemoService/CustomerCustomerDemoByCustomerIDCustomerTypeID",
+		FullMethod: "/customer_customer_demo.CustomerCustomerDemo/CustomerCustomerDemoByCustomerIDCustomerTypeID",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CustomerCustomerDemoServiceServer).CustomerCustomerDemoByCustomerIDCustomerTypeID(ctx, req.(*CustomerCustomerDemoByCustomerIDCustomerTypeIDRequest))
+		return srv.(CustomerCustomerDemoServer).CustomerCustomerDemoByCustomerIDCustomerTypeID(ctx, req.(*CustomerCustomerDemoByCustomerIDCustomerTypeIDRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CustomerCustomerDemoService_CustomerDemographic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CustomerCustomerDemo_CustomerDemographic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CustomerDemographicRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CustomerCustomerDemoServiceServer).CustomerDemographic(ctx, in)
+		return srv.(CustomerCustomerDemoServer).CustomerDemographic(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/customer_customer_demo.CustomerCustomerDemoService/CustomerDemographic",
+		FullMethod: "/customer_customer_demo.CustomerCustomerDemo/CustomerDemographic",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CustomerCustomerDemoServiceServer).CustomerDemographic(ctx, req.(*CustomerDemographicRequest))
+		return srv.(CustomerCustomerDemoServer).CustomerDemographic(ctx, req.(*CustomerDemographicRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CustomerCustomerDemoService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CustomerCustomerDemo_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CustomerCustomerDemoServiceServer).Delete(ctx, in)
+		return srv.(CustomerCustomerDemoServer).Delete(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/customer_customer_demo.CustomerCustomerDemoService/Delete",
+		FullMethod: "/customer_customer_demo.CustomerCustomerDemo/Delete",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CustomerCustomerDemoServiceServer).Delete(ctx, req.(*DeleteRequest))
+		return srv.(CustomerCustomerDemoServer).Delete(ctx, req.(*DeleteRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _CustomerCustomerDemoService_Insert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _CustomerCustomerDemo_Insert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(InsertRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(CustomerCustomerDemoServiceServer).Insert(ctx, in)
+		return srv.(CustomerCustomerDemoServer).Insert(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/customer_customer_demo.CustomerCustomerDemoService/Insert",
+		FullMethod: "/customer_customer_demo.CustomerCustomerDemo/Insert",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CustomerCustomerDemoServiceServer).Insert(ctx, req.(*InsertRequest))
+		return srv.(CustomerCustomerDemoServer).Insert(ctx, req.(*InsertRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// CustomerCustomerDemoService_ServiceDesc is the grpc.ServiceDesc for CustomerCustomerDemoService service.
+// CustomerCustomerDemo_ServiceDesc is the grpc.ServiceDesc for CustomerCustomerDemo service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var CustomerCustomerDemoService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "customer_customer_demo.CustomerCustomerDemoService",
-	HandlerType: (*CustomerCustomerDemoServiceServer)(nil),
+var CustomerCustomerDemo_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "customer_customer_demo.CustomerCustomerDemo",
+	HandlerType: (*CustomerCustomerDemoServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Customer",
-			Handler:    _CustomerCustomerDemoService_Customer_Handler,
+			Handler:    _CustomerCustomerDemo_Customer_Handler,
 		},
 		{
 			MethodName: "CustomerCustomerDemoByCustomerIDCustomerTypeID",
-			Handler:    _CustomerCustomerDemoService_CustomerCustomerDemoByCustomerIDCustomerTypeID_Handler,
+			Handler:    _CustomerCustomerDemo_CustomerCustomerDemoByCustomerIDCustomerTypeID_Handler,
 		},
 		{
 			MethodName: "CustomerDemographic",
-			Handler:    _CustomerCustomerDemoService_CustomerDemographic_Handler,
+			Handler:    _CustomerCustomerDemo_CustomerDemographic_Handler,
 		},
 		{
 			MethodName: "Delete",
-			Handler:    _CustomerCustomerDemoService_Delete_Handler,
+			Handler:    _CustomerCustomerDemo_Delete_Handler,
 		},
 		{
 			MethodName: "Insert",
-			Handler:    _CustomerCustomerDemoService_Insert_Handler,
+			Handler:    _CustomerCustomerDemo_Insert_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

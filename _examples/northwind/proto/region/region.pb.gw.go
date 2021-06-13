@@ -31,7 +31,7 @@ var _ = runtime.String
 var _ = utilities.NewDoubleArray
 var _ = metadata.Join
 
-func request_RegionService_Delete_0(ctx context.Context, marshaler runtime.Marshaler, client RegionServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_Region_Delete_0(ctx context.Context, marshaler runtime.Marshaler, client RegionClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq DeleteRequest
 	var metadata runtime.ServerMetadata
 
@@ -57,7 +57,7 @@ func request_RegionService_Delete_0(ctx context.Context, marshaler runtime.Marsh
 
 }
 
-func local_request_RegionService_Delete_0(ctx context.Context, marshaler runtime.Marshaler, server RegionServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_Region_Delete_0(ctx context.Context, marshaler runtime.Marshaler, server RegionServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq DeleteRequest
 	var metadata runtime.ServerMetadata
 
@@ -83,7 +83,7 @@ func local_request_RegionService_Delete_0(ctx context.Context, marshaler runtime
 
 }
 
-func request_RegionService_Insert_0(ctx context.Context, marshaler runtime.Marshaler, client RegionServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_Region_Insert_0(ctx context.Context, marshaler runtime.Marshaler, client RegionClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq InsertRequest
 	var metadata runtime.ServerMetadata
 
@@ -100,7 +100,7 @@ func request_RegionService_Insert_0(ctx context.Context, marshaler runtime.Marsh
 
 }
 
-func local_request_RegionService_Insert_0(ctx context.Context, marshaler runtime.Marshaler, server RegionServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_Region_Insert_0(ctx context.Context, marshaler runtime.Marshaler, server RegionServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq InsertRequest
 	var metadata runtime.ServerMetadata
 
@@ -117,7 +117,7 @@ func local_request_RegionService_Insert_0(ctx context.Context, marshaler runtime
 
 }
 
-func request_RegionService_RegionByRegionID_0(ctx context.Context, marshaler runtime.Marshaler, client RegionServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_Region_RegionByRegionID_0(ctx context.Context, marshaler runtime.Marshaler, client RegionClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq RegionByRegionIDRequest
 	var metadata runtime.ServerMetadata
 
@@ -143,7 +143,7 @@ func request_RegionService_RegionByRegionID_0(ctx context.Context, marshaler run
 
 }
 
-func local_request_RegionService_RegionByRegionID_0(ctx context.Context, marshaler runtime.Marshaler, server RegionServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_Region_RegionByRegionID_0(ctx context.Context, marshaler runtime.Marshaler, server RegionServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq RegionByRegionIDRequest
 	var metadata runtime.ServerMetadata
 
@@ -169,7 +169,7 @@ func local_request_RegionService_RegionByRegionID_0(ctx context.Context, marshal
 
 }
 
-func request_RegionService_Update_0(ctx context.Context, marshaler runtime.Marshaler, client RegionServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_Region_Update_0(ctx context.Context, marshaler runtime.Marshaler, client RegionClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq UpdateRequest
 	var metadata runtime.ServerMetadata
 
@@ -203,7 +203,7 @@ func request_RegionService_Update_0(ctx context.Context, marshaler runtime.Marsh
 
 }
 
-func local_request_RegionService_Update_0(ctx context.Context, marshaler runtime.Marshaler, server RegionServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_Region_Update_0(ctx context.Context, marshaler runtime.Marshaler, server RegionServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq UpdateRequest
 	var metadata runtime.ServerMetadata
 
@@ -237,7 +237,7 @@ func local_request_RegionService_Update_0(ctx context.Context, marshaler runtime
 
 }
 
-func request_RegionService_Upsert_0(ctx context.Context, marshaler runtime.Marshaler, client RegionServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_Region_Upsert_0(ctx context.Context, marshaler runtime.Marshaler, client RegionClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq UpsertRequest
 	var metadata runtime.ServerMetadata
 
@@ -254,7 +254,7 @@ func request_RegionService_Upsert_0(ctx context.Context, marshaler runtime.Marsh
 
 }
 
-func local_request_RegionService_Upsert_0(ctx context.Context, marshaler runtime.Marshaler, server RegionServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_Region_Upsert_0(ctx context.Context, marshaler runtime.Marshaler, server RegionServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq UpsertRequest
 	var metadata runtime.ServerMetadata
 
@@ -271,24 +271,24 @@ func local_request_RegionService_Upsert_0(ctx context.Context, marshaler runtime
 
 }
 
-// RegisterRegionServiceHandlerServer registers the http handlers for service RegionService to "mux".
-// UnaryRPC     :call RegionServiceServer directly.
+// RegisterRegionHandlerServer registers the http handlers for service Region to "mux".
+// UnaryRPC     :call RegionServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
-// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterRegionServiceHandlerFromEndpoint instead.
-func RegisterRegionServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server RegionServiceServer) error {
+// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterRegionHandlerFromEndpoint instead.
+func RegisterRegionHandlerServer(ctx context.Context, mux *runtime.ServeMux, server RegionServer) error {
 
-	mux.Handle("DELETE", pattern_RegionService_Delete_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("DELETE", pattern_Region_Delete_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/region.RegionService/Delete")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/region.Region/Delete")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_RegionService_Delete_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_Region_Delete_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -296,22 +296,22 @@ func RegisterRegionServiceHandlerServer(ctx context.Context, mux *runtime.ServeM
 			return
 		}
 
-		forward_RegionService_Delete_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Region_Delete_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_RegionService_Insert_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_Region_Insert_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/region.RegionService/Insert")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/region.Region/Insert")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_RegionService_Insert_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_Region_Insert_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -319,22 +319,22 @@ func RegisterRegionServiceHandlerServer(ctx context.Context, mux *runtime.ServeM
 			return
 		}
 
-		forward_RegionService_Insert_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Region_Insert_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_RegionService_RegionByRegionID_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_Region_RegionByRegionID_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/region.RegionService/RegionByRegionID")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/region.Region/RegionByRegionID")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_RegionService_RegionByRegionID_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_Region_RegionByRegionID_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -342,22 +342,22 @@ func RegisterRegionServiceHandlerServer(ctx context.Context, mux *runtime.ServeM
 			return
 		}
 
-		forward_RegionService_RegionByRegionID_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Region_RegionByRegionID_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("PUT", pattern_RegionService_Update_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PUT", pattern_Region_Update_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/region.RegionService/Update")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/region.Region/Update")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_RegionService_Update_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_Region_Update_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -365,22 +365,22 @@ func RegisterRegionServiceHandlerServer(ctx context.Context, mux *runtime.ServeM
 			return
 		}
 
-		forward_RegionService_Update_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Region_Update_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_RegionService_Upsert_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_Region_Upsert_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/region.RegionService/Upsert")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/region.Region/Upsert")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_RegionService_Upsert_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_Region_Upsert_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -388,16 +388,16 @@ func RegisterRegionServiceHandlerServer(ctx context.Context, mux *runtime.ServeM
 			return
 		}
 
-		forward_RegionService_Upsert_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Region_Upsert_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
 	return nil
 }
 
-// RegisterRegionServiceHandlerFromEndpoint is same as RegisterRegionServiceHandler but
+// RegisterRegionHandlerFromEndpoint is same as RegisterRegionHandler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterRegionServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+func RegisterRegionHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
 	conn, err := grpc.Dial(endpoint, opts...)
 	if err != nil {
 		return err
@@ -417,119 +417,119 @@ func RegisterRegionServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.
 		}()
 	}()
 
-	return RegisterRegionServiceHandler(ctx, mux, conn)
+	return RegisterRegionHandler(ctx, mux, conn)
 }
 
-// RegisterRegionServiceHandler registers the http handlers for service RegionService to "mux".
+// RegisterRegionHandler registers the http handlers for service Region to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
-func RegisterRegionServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return RegisterRegionServiceHandlerClient(ctx, mux, NewRegionServiceClient(conn))
+func RegisterRegionHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	return RegisterRegionHandlerClient(ctx, mux, NewRegionClient(conn))
 }
 
-// RegisterRegionServiceHandlerClient registers the http handlers for service RegionService
-// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "RegionServiceClient".
-// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "RegionServiceClient"
+// RegisterRegionHandlerClient registers the http handlers for service Region
+// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "RegionClient".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "RegionClient"
 // doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
-// "RegionServiceClient" to call the correct interceptors.
-func RegisterRegionServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client RegionServiceClient) error {
+// "RegionClient" to call the correct interceptors.
+func RegisterRegionHandlerClient(ctx context.Context, mux *runtime.ServeMux, client RegionClient) error {
 
-	mux.Handle("DELETE", pattern_RegionService_Delete_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("DELETE", pattern_Region_Delete_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/region.RegionService/Delete")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/region.Region/Delete")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_RegionService_Delete_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_Region_Delete_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RegionService_Delete_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Region_Delete_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_RegionService_Insert_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_Region_Insert_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/region.RegionService/Insert")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/region.Region/Insert")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_RegionService_Insert_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_Region_Insert_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RegionService_Insert_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Region_Insert_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_RegionService_RegionByRegionID_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_Region_RegionByRegionID_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/region.RegionService/RegionByRegionID")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/region.Region/RegionByRegionID")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_RegionService_RegionByRegionID_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_Region_RegionByRegionID_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RegionService_RegionByRegionID_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Region_RegionByRegionID_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("PUT", pattern_RegionService_Update_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PUT", pattern_Region_Update_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/region.RegionService/Update")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/region.Region/Update")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_RegionService_Update_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_Region_Update_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RegionService_Update_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Region_Update_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_RegionService_Upsert_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_Region_Upsert_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/region.RegionService/Upsert")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/region.Region/Upsert")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_RegionService_Upsert_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_Region_Upsert_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_RegionService_Upsert_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Region_Upsert_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -537,25 +537,25 @@ func RegisterRegionServiceHandlerClient(ctx context.Context, mux *runtime.ServeM
 }
 
 var (
-	pattern_RegionService_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "region", "RegionID"}, ""))
+	pattern_Region_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "region", "RegionID"}, ""))
 
-	pattern_RegionService_Insert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "region"}, ""))
+	pattern_Region_Insert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "region"}, ""))
 
-	pattern_RegionService_RegionByRegionID_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "region", "regionID"}, ""))
+	pattern_Region_RegionByRegionID_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "region", "regionID"}, ""))
 
-	pattern_RegionService_Update_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "region", "RegionID"}, ""))
+	pattern_Region_Update_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "region", "RegionID"}, ""))
 
-	pattern_RegionService_Upsert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "region", "upsert"}, ""))
+	pattern_Region_Upsert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "region", "upsert"}, ""))
 )
 
 var (
-	forward_RegionService_Delete_0 = runtime.ForwardResponseMessage
+	forward_Region_Delete_0 = runtime.ForwardResponseMessage
 
-	forward_RegionService_Insert_0 = runtime.ForwardResponseMessage
+	forward_Region_Insert_0 = runtime.ForwardResponseMessage
 
-	forward_RegionService_RegionByRegionID_0 = runtime.ForwardResponseMessage
+	forward_Region_RegionByRegionID_0 = runtime.ForwardResponseMessage
 
-	forward_RegionService_Update_0 = runtime.ForwardResponseMessage
+	forward_Region_Update_0 = runtime.ForwardResponseMessage
 
-	forward_RegionService_Upsert_0 = runtime.ForwardResponseMessage
+	forward_Region_Upsert_0 = runtime.ForwardResponseMessage
 )

@@ -14,7 +14,7 @@ import (
 )
 
 type SupplierService struct {
-	pb.UnimplementedSupplierServiceServer
+	pb.UnimplementedSupplierServer
 	db *sql.DB
 }
 

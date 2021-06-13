@@ -22,7 +22,7 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
         };
     };
 };
-service OrderService {
+service Order {
     
     rpc Customer(CustomerRequest) returns (typespb.Customer) {
         option (google.api.http) = {

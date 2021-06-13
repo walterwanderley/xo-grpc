@@ -13,7 +13,7 @@ import (
 )
 
 type RegionService struct {
-	pb.UnimplementedRegionServiceServer
+	pb.UnimplementedRegionServer
 	db *sql.DB
 }
 

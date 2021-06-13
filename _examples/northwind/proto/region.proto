@@ -20,7 +20,7 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
         };
     };
 };
-service RegionService {
+service Region {
     
     rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {

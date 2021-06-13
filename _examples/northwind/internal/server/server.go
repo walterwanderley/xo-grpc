@@ -51,38 +51,38 @@ type Server struct {
 	log                         *zap.Logger
 	grpcServer                  *grpc.Server
 	healthServer                *health.Server
-	CategoryService             pb_Category.CategoryServiceServer
-	CustomerService             pb_Customer.CustomerServiceServer
-	CustomerCustomerDemoService pb_CustomerCustomerDemo.CustomerCustomerDemoServiceServer
-	CustomerDemographicService  pb_CustomerDemographic.CustomerDemographicServiceServer
-	EmployeeService             pb_Employee.EmployeeServiceServer
-	EmployeeTerritoryService    pb_EmployeeTerritory.EmployeeTerritoryServiceServer
-	OrderService                pb_Order.OrderServiceServer
-	OrderDetailService          pb_OrderDetail.OrderDetailServiceServer
-	ProductService              pb_Product.ProductServiceServer
-	RegionService               pb_Region.RegionServiceServer
-	ShipperService              pb_Shipper.ShipperServiceServer
-	SupplierService             pb_Supplier.SupplierServiceServer
-	TerritoryService            pb_Territory.TerritoryServiceServer
-	UsStateService              pb_UsState.UsStateServiceServer
+	CategoryService             pb_Category.CategoryServer
+	CustomerService             pb_Customer.CustomerServer
+	CustomerCustomerDemoService pb_CustomerCustomerDemo.CustomerCustomerDemoServer
+	CustomerDemographicService  pb_CustomerDemographic.CustomerDemographicServer
+	EmployeeService             pb_Employee.EmployeeServer
+	EmployeeTerritoryService    pb_EmployeeTerritory.EmployeeTerritoryServer
+	OrderService                pb_Order.OrderServer
+	OrderDetailService          pb_OrderDetail.OrderDetailServer
+	ProductService              pb_Product.ProductServer
+	RegionService               pb_Region.RegionServer
+	ShipperService              pb_Shipper.ShipperServer
+	SupplierService             pb_Supplier.SupplierServer
+	TerritoryService            pb_Territory.TerritoryServer
+	UsStateService              pb_UsState.UsStateServer
 }
 
 // New gRPC server
 func New(cfg Config, log *zap.Logger,
-	CategoryService pb_Category.CategoryServiceServer,
-	CustomerService pb_Customer.CustomerServiceServer,
-	CustomerCustomerDemoService pb_CustomerCustomerDemo.CustomerCustomerDemoServiceServer,
-	CustomerDemographicService pb_CustomerDemographic.CustomerDemographicServiceServer,
-	EmployeeService pb_Employee.EmployeeServiceServer,
-	EmployeeTerritoryService pb_EmployeeTerritory.EmployeeTerritoryServiceServer,
-	OrderService pb_Order.OrderServiceServer,
-	OrderDetailService pb_OrderDetail.OrderDetailServiceServer,
-	ProductService pb_Product.ProductServiceServer,
-	RegionService pb_Region.RegionServiceServer,
-	ShipperService pb_Shipper.ShipperServiceServer,
-	SupplierService pb_Supplier.SupplierServiceServer,
-	TerritoryService pb_Territory.TerritoryServiceServer,
-	UsStateService pb_UsState.UsStateServiceServer,
+	CategoryService pb_Category.CategoryServer,
+	CustomerService pb_Customer.CustomerServer,
+	CustomerCustomerDemoService pb_CustomerCustomerDemo.CustomerCustomerDemoServer,
+	CustomerDemographicService pb_CustomerDemographic.CustomerDemographicServer,
+	EmployeeService pb_Employee.EmployeeServer,
+	EmployeeTerritoryService pb_EmployeeTerritory.EmployeeTerritoryServer,
+	OrderService pb_Order.OrderServer,
+	OrderDetailService pb_OrderDetail.OrderDetailServer,
+	ProductService pb_Product.ProductServer,
+	RegionService pb_Region.RegionServer,
+	ShipperService pb_Shipper.ShipperServer,
+	SupplierService pb_Supplier.SupplierServer,
+	TerritoryService pb_Territory.TerritoryServer,
+	UsStateService pb_UsState.UsStateServer,
 
 ) *Server {
 	return &Server{
@@ -114,20 +114,20 @@ func (srv *Server) ListenAndServe() error {
 	healthpb.RegisterHealthServer(srv.grpcServer, srv.healthServer)
 	srv.healthServer.SetServingStatus("ww", healthpb.HealthCheckResponse_SERVING)
 
-	pb_Category.RegisterCategoryServiceServer(srv.grpcServer, srv.CategoryService)
-	pb_Customer.RegisterCustomerServiceServer(srv.grpcServer, srv.CustomerService)
-	pb_CustomerCustomerDemo.RegisterCustomerCustomerDemoServiceServer(srv.grpcServer, srv.CustomerCustomerDemoService)
-	pb_CustomerDemographic.RegisterCustomerDemographicServiceServer(srv.grpcServer, srv.CustomerDemographicService)
-	pb_Employee.RegisterEmployeeServiceServer(srv.grpcServer, srv.EmployeeService)
-	pb_EmployeeTerritory.RegisterEmployeeTerritoryServiceServer(srv.grpcServer, srv.EmployeeTerritoryService)
-	pb_Order.RegisterOrderServiceServer(srv.grpcServer, srv.OrderService)
-	pb_OrderDetail.RegisterOrderDetailServiceServer(srv.grpcServer, srv.OrderDetailService)
-	pb_Product.RegisterProductServiceServer(srv.grpcServer, srv.ProductService)
-	pb_Region.RegisterRegionServiceServer(srv.grpcServer, srv.RegionService)
-	pb_Shipper.RegisterShipperServiceServer(srv.grpcServer, srv.ShipperService)
-	pb_Supplier.RegisterSupplierServiceServer(srv.grpcServer, srv.SupplierService)
-	pb_Territory.RegisterTerritoryServiceServer(srv.grpcServer, srv.TerritoryService)
-	pb_UsState.RegisterUsStateServiceServer(srv.grpcServer, srv.UsStateService)
+	pb_Category.RegisterCategoryServer(srv.grpcServer, srv.CategoryService)
+	pb_Customer.RegisterCustomerServer(srv.grpcServer, srv.CustomerService)
+	pb_CustomerCustomerDemo.RegisterCustomerCustomerDemoServer(srv.grpcServer, srv.CustomerCustomerDemoService)
+	pb_CustomerDemographic.RegisterCustomerDemographicServer(srv.grpcServer, srv.CustomerDemographicService)
+	pb_Employee.RegisterEmployeeServer(srv.grpcServer, srv.EmployeeService)
+	pb_EmployeeTerritory.RegisterEmployeeTerritoryServer(srv.grpcServer, srv.EmployeeTerritoryService)
+	pb_Order.RegisterOrderServer(srv.grpcServer, srv.OrderService)
+	pb_OrderDetail.RegisterOrderDetailServer(srv.grpcServer, srv.OrderDetailService)
+	pb_Product.RegisterProductServer(srv.grpcServer, srv.ProductService)
+	pb_Region.RegisterRegionServer(srv.grpcServer, srv.RegionService)
+	pb_Shipper.RegisterShipperServer(srv.grpcServer, srv.ShipperService)
+	pb_Supplier.RegisterSupplierServer(srv.grpcServer, srv.SupplierService)
+	pb_Territory.RegisterTerritoryServer(srv.grpcServer, srv.TerritoryService)
+	pb_UsState.RegisterUsStateServer(srv.grpcServer, srv.UsStateService)
 
 	var listen net.Listener
 	dialOptions := []grpc.DialOption{grpc.WithBlock()}
@@ -203,46 +203,46 @@ func (srv *Server) ListenAndServe() error {
 		runtime.WithForwardResponseOption(forwardResponse),
 		runtime.WithOutgoingHeaderMatcher(outcomingHeaderMatcher),
 	)
-	if err := pb_Category.RegisterCategoryServiceHandler(context.Background(), gwmux, cc); err != nil {
+	if err := pb_Category.RegisterCategoryHandler(context.Background(), gwmux, cc); err != nil {
 		return err
 	}
-	if err := pb_Customer.RegisterCustomerServiceHandler(context.Background(), gwmux, cc); err != nil {
+	if err := pb_Customer.RegisterCustomerHandler(context.Background(), gwmux, cc); err != nil {
 		return err
 	}
-	if err := pb_CustomerCustomerDemo.RegisterCustomerCustomerDemoServiceHandler(context.Background(), gwmux, cc); err != nil {
+	if err := pb_CustomerCustomerDemo.RegisterCustomerCustomerDemoHandler(context.Background(), gwmux, cc); err != nil {
 		return err
 	}
-	if err := pb_CustomerDemographic.RegisterCustomerDemographicServiceHandler(context.Background(), gwmux, cc); err != nil {
+	if err := pb_CustomerDemographic.RegisterCustomerDemographicHandler(context.Background(), gwmux, cc); err != nil {
 		return err
 	}
-	if err := pb_Employee.RegisterEmployeeServiceHandler(context.Background(), gwmux, cc); err != nil {
+	if err := pb_Employee.RegisterEmployeeHandler(context.Background(), gwmux, cc); err != nil {
 		return err
 	}
-	if err := pb_EmployeeTerritory.RegisterEmployeeTerritoryServiceHandler(context.Background(), gwmux, cc); err != nil {
+	if err := pb_EmployeeTerritory.RegisterEmployeeTerritoryHandler(context.Background(), gwmux, cc); err != nil {
 		return err
 	}
-	if err := pb_Order.RegisterOrderServiceHandler(context.Background(), gwmux, cc); err != nil {
+	if err := pb_Order.RegisterOrderHandler(context.Background(), gwmux, cc); err != nil {
 		return err
 	}
-	if err := pb_OrderDetail.RegisterOrderDetailServiceHandler(context.Background(), gwmux, cc); err != nil {
+	if err := pb_OrderDetail.RegisterOrderDetailHandler(context.Background(), gwmux, cc); err != nil {
 		return err
 	}
-	if err := pb_Product.RegisterProductServiceHandler(context.Background(), gwmux, cc); err != nil {
+	if err := pb_Product.RegisterProductHandler(context.Background(), gwmux, cc); err != nil {
 		return err
 	}
-	if err := pb_Region.RegisterRegionServiceHandler(context.Background(), gwmux, cc); err != nil {
+	if err := pb_Region.RegisterRegionHandler(context.Background(), gwmux, cc); err != nil {
 		return err
 	}
-	if err := pb_Shipper.RegisterShipperServiceHandler(context.Background(), gwmux, cc); err != nil {
+	if err := pb_Shipper.RegisterShipperHandler(context.Background(), gwmux, cc); err != nil {
 		return err
 	}
-	if err := pb_Supplier.RegisterSupplierServiceHandler(context.Background(), gwmux, cc); err != nil {
+	if err := pb_Supplier.RegisterSupplierHandler(context.Background(), gwmux, cc); err != nil {
 		return err
 	}
-	if err := pb_Territory.RegisterTerritoryServiceHandler(context.Background(), gwmux, cc); err != nil {
+	if err := pb_Territory.RegisterTerritoryHandler(context.Background(), gwmux, cc); err != nil {
 		return err
 	}
-	if err := pb_UsState.RegisterUsStateServiceHandler(context.Background(), gwmux, cc); err != nil {
+	if err := pb_UsState.RegisterUsStateHandler(context.Background(), gwmux, cc); err != nil {
 		return err
 	}
 

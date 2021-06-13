@@ -16,7 +16,7 @@ import (
 )
 
 type OrderService struct {
-	pb.UnimplementedOrderServiceServer
+	pb.UnimplementedOrderServer
 	db *sql.DB
 }
 

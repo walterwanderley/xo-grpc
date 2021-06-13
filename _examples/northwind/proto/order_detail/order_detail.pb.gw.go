@@ -32,17 +32,17 @@ var _ = utilities.NewDoubleArray
 var _ = metadata.Join
 
 var (
-	filter_OrderDetailService_Delete_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+	filter_OrderDetail_Delete_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
 )
 
-func request_OrderDetailService_Delete_0(ctx context.Context, marshaler runtime.Marshaler, client OrderDetailServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_OrderDetail_Delete_0(ctx context.Context, marshaler runtime.Marshaler, client OrderDetailClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq DeleteRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_OrderDetailService_Delete_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_OrderDetail_Delete_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -51,14 +51,14 @@ func request_OrderDetailService_Delete_0(ctx context.Context, marshaler runtime.
 
 }
 
-func local_request_OrderDetailService_Delete_0(ctx context.Context, marshaler runtime.Marshaler, server OrderDetailServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_OrderDetail_Delete_0(ctx context.Context, marshaler runtime.Marshaler, server OrderDetailServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq DeleteRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_OrderDetailService_Delete_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_OrderDetail_Delete_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -67,7 +67,7 @@ func local_request_OrderDetailService_Delete_0(ctx context.Context, marshaler ru
 
 }
 
-func request_OrderDetailService_Insert_0(ctx context.Context, marshaler runtime.Marshaler, client OrderDetailServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_OrderDetail_Insert_0(ctx context.Context, marshaler runtime.Marshaler, client OrderDetailClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq InsertRequest
 	var metadata runtime.ServerMetadata
 
@@ -84,7 +84,7 @@ func request_OrderDetailService_Insert_0(ctx context.Context, marshaler runtime.
 
 }
 
-func local_request_OrderDetailService_Insert_0(ctx context.Context, marshaler runtime.Marshaler, server OrderDetailServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_OrderDetail_Insert_0(ctx context.Context, marshaler runtime.Marshaler, server OrderDetailServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq InsertRequest
 	var metadata runtime.ServerMetadata
 
@@ -101,7 +101,7 @@ func local_request_OrderDetailService_Insert_0(ctx context.Context, marshaler ru
 
 }
 
-func request_OrderDetailService_Order_0(ctx context.Context, marshaler runtime.Marshaler, client OrderDetailServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_OrderDetail_Order_0(ctx context.Context, marshaler runtime.Marshaler, client OrderDetailClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OrderRequest
 	var metadata runtime.ServerMetadata
 
@@ -127,7 +127,7 @@ func request_OrderDetailService_Order_0(ctx context.Context, marshaler runtime.M
 
 }
 
-func local_request_OrderDetailService_Order_0(ctx context.Context, marshaler runtime.Marshaler, server OrderDetailServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_OrderDetail_Order_0(ctx context.Context, marshaler runtime.Marshaler, server OrderDetailServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OrderRequest
 	var metadata runtime.ServerMetadata
 
@@ -154,17 +154,17 @@ func local_request_OrderDetailService_Order_0(ctx context.Context, marshaler run
 }
 
 var (
-	filter_OrderDetailService_OrderDetailByOrderIDProductID_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+	filter_OrderDetail_OrderDetailByOrderIDProductID_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
 )
 
-func request_OrderDetailService_OrderDetailByOrderIDProductID_0(ctx context.Context, marshaler runtime.Marshaler, client OrderDetailServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_OrderDetail_OrderDetailByOrderIDProductID_0(ctx context.Context, marshaler runtime.Marshaler, client OrderDetailClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OrderDetailByOrderIDProductIDRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_OrderDetailService_OrderDetailByOrderIDProductID_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_OrderDetail_OrderDetailByOrderIDProductID_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -173,14 +173,14 @@ func request_OrderDetailService_OrderDetailByOrderIDProductID_0(ctx context.Cont
 
 }
 
-func local_request_OrderDetailService_OrderDetailByOrderIDProductID_0(ctx context.Context, marshaler runtime.Marshaler, server OrderDetailServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_OrderDetail_OrderDetailByOrderIDProductID_0(ctx context.Context, marshaler runtime.Marshaler, server OrderDetailServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OrderDetailByOrderIDProductIDRequest
 	var metadata runtime.ServerMetadata
 
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_OrderDetailService_OrderDetailByOrderIDProductID_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_OrderDetail_OrderDetailByOrderIDProductID_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
@@ -189,7 +189,7 @@ func local_request_OrderDetailService_OrderDetailByOrderIDProductID_0(ctx contex
 
 }
 
-func request_OrderDetailService_Product_0(ctx context.Context, marshaler runtime.Marshaler, client OrderDetailServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_OrderDetail_Product_0(ctx context.Context, marshaler runtime.Marshaler, client OrderDetailClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ProductRequest
 	var metadata runtime.ServerMetadata
 
@@ -215,7 +215,7 @@ func request_OrderDetailService_Product_0(ctx context.Context, marshaler runtime
 
 }
 
-func local_request_OrderDetailService_Product_0(ctx context.Context, marshaler runtime.Marshaler, server OrderDetailServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_OrderDetail_Product_0(ctx context.Context, marshaler runtime.Marshaler, server OrderDetailServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq ProductRequest
 	var metadata runtime.ServerMetadata
 
@@ -241,7 +241,7 @@ func local_request_OrderDetailService_Product_0(ctx context.Context, marshaler r
 
 }
 
-func request_OrderDetailService_Update_0(ctx context.Context, marshaler runtime.Marshaler, client OrderDetailServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_OrderDetail_Update_0(ctx context.Context, marshaler runtime.Marshaler, client OrderDetailClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq UpdateRequest
 	var metadata runtime.ServerMetadata
 
@@ -258,7 +258,7 @@ func request_OrderDetailService_Update_0(ctx context.Context, marshaler runtime.
 
 }
 
-func local_request_OrderDetailService_Update_0(ctx context.Context, marshaler runtime.Marshaler, server OrderDetailServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_OrderDetail_Update_0(ctx context.Context, marshaler runtime.Marshaler, server OrderDetailServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq UpdateRequest
 	var metadata runtime.ServerMetadata
 
@@ -275,7 +275,7 @@ func local_request_OrderDetailService_Update_0(ctx context.Context, marshaler ru
 
 }
 
-func request_OrderDetailService_Upsert_0(ctx context.Context, marshaler runtime.Marshaler, client OrderDetailServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_OrderDetail_Upsert_0(ctx context.Context, marshaler runtime.Marshaler, client OrderDetailClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq UpsertRequest
 	var metadata runtime.ServerMetadata
 
@@ -292,7 +292,7 @@ func request_OrderDetailService_Upsert_0(ctx context.Context, marshaler runtime.
 
 }
 
-func local_request_OrderDetailService_Upsert_0(ctx context.Context, marshaler runtime.Marshaler, server OrderDetailServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_OrderDetail_Upsert_0(ctx context.Context, marshaler runtime.Marshaler, server OrderDetailServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq UpsertRequest
 	var metadata runtime.ServerMetadata
 
@@ -309,24 +309,24 @@ func local_request_OrderDetailService_Upsert_0(ctx context.Context, marshaler ru
 
 }
 
-// RegisterOrderDetailServiceHandlerServer registers the http handlers for service OrderDetailService to "mux".
-// UnaryRPC     :call OrderDetailServiceServer directly.
+// RegisterOrderDetailHandlerServer registers the http handlers for service OrderDetail to "mux".
+// UnaryRPC     :call OrderDetailServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
-// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterOrderDetailServiceHandlerFromEndpoint instead.
-func RegisterOrderDetailServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server OrderDetailServiceServer) error {
+// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterOrderDetailHandlerFromEndpoint instead.
+func RegisterOrderDetailHandlerServer(ctx context.Context, mux *runtime.ServeMux, server OrderDetailServer) error {
 
-	mux.Handle("DELETE", pattern_OrderDetailService_Delete_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("DELETE", pattern_OrderDetail_Delete_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.OrderDetailService/Delete")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.OrderDetail/Delete")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_OrderDetailService_Delete_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_OrderDetail_Delete_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -334,22 +334,22 @@ func RegisterOrderDetailServiceHandlerServer(ctx context.Context, mux *runtime.S
 			return
 		}
 
-		forward_OrderDetailService_Delete_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_OrderDetail_Delete_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_OrderDetailService_Insert_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_OrderDetail_Insert_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.OrderDetailService/Insert")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.OrderDetail/Insert")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_OrderDetailService_Insert_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_OrderDetail_Insert_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -357,22 +357,22 @@ func RegisterOrderDetailServiceHandlerServer(ctx context.Context, mux *runtime.S
 			return
 		}
 
-		forward_OrderDetailService_Insert_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_OrderDetail_Insert_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_OrderDetailService_Order_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_OrderDetail_Order_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.OrderDetailService/Order")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.OrderDetail/Order")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_OrderDetailService_Order_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_OrderDetail_Order_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -380,22 +380,22 @@ func RegisterOrderDetailServiceHandlerServer(ctx context.Context, mux *runtime.S
 			return
 		}
 
-		forward_OrderDetailService_Order_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_OrderDetail_Order_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_OrderDetailService_OrderDetailByOrderIDProductID_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_OrderDetail_OrderDetailByOrderIDProductID_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.OrderDetailService/OrderDetailByOrderIDProductID")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.OrderDetail/OrderDetailByOrderIDProductID")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_OrderDetailService_OrderDetailByOrderIDProductID_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_OrderDetail_OrderDetailByOrderIDProductID_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -403,22 +403,22 @@ func RegisterOrderDetailServiceHandlerServer(ctx context.Context, mux *runtime.S
 			return
 		}
 
-		forward_OrderDetailService_OrderDetailByOrderIDProductID_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_OrderDetail_OrderDetailByOrderIDProductID_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_OrderDetailService_Product_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_OrderDetail_Product_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.OrderDetailService/Product")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.OrderDetail/Product")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_OrderDetailService_Product_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_OrderDetail_Product_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -426,22 +426,22 @@ func RegisterOrderDetailServiceHandlerServer(ctx context.Context, mux *runtime.S
 			return
 		}
 
-		forward_OrderDetailService_Product_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_OrderDetail_Product_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("PUT", pattern_OrderDetailService_Update_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PUT", pattern_OrderDetail_Update_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.OrderDetailService/Update")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.OrderDetail/Update")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_OrderDetailService_Update_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_OrderDetail_Update_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -449,22 +449,22 @@ func RegisterOrderDetailServiceHandlerServer(ctx context.Context, mux *runtime.S
 			return
 		}
 
-		forward_OrderDetailService_Update_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_OrderDetail_Update_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_OrderDetailService_Upsert_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_OrderDetail_Upsert_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.OrderDetailService/Upsert")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.OrderDetail/Upsert")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_OrderDetailService_Upsert_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_OrderDetail_Upsert_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -472,16 +472,16 @@ func RegisterOrderDetailServiceHandlerServer(ctx context.Context, mux *runtime.S
 			return
 		}
 
-		forward_OrderDetailService_Upsert_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_OrderDetail_Upsert_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
 	return nil
 }
 
-// RegisterOrderDetailServiceHandlerFromEndpoint is same as RegisterOrderDetailServiceHandler but
+// RegisterOrderDetailHandlerFromEndpoint is same as RegisterOrderDetailHandler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterOrderDetailServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+func RegisterOrderDetailHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
 	conn, err := grpc.Dial(endpoint, opts...)
 	if err != nil {
 		return err
@@ -501,159 +501,159 @@ func RegisterOrderDetailServiceHandlerFromEndpoint(ctx context.Context, mux *run
 		}()
 	}()
 
-	return RegisterOrderDetailServiceHandler(ctx, mux, conn)
+	return RegisterOrderDetailHandler(ctx, mux, conn)
 }
 
-// RegisterOrderDetailServiceHandler registers the http handlers for service OrderDetailService to "mux".
+// RegisterOrderDetailHandler registers the http handlers for service OrderDetail to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
-func RegisterOrderDetailServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return RegisterOrderDetailServiceHandlerClient(ctx, mux, NewOrderDetailServiceClient(conn))
+func RegisterOrderDetailHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	return RegisterOrderDetailHandlerClient(ctx, mux, NewOrderDetailClient(conn))
 }
 
-// RegisterOrderDetailServiceHandlerClient registers the http handlers for service OrderDetailService
-// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "OrderDetailServiceClient".
-// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "OrderDetailServiceClient"
+// RegisterOrderDetailHandlerClient registers the http handlers for service OrderDetail
+// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "OrderDetailClient".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "OrderDetailClient"
 // doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
-// "OrderDetailServiceClient" to call the correct interceptors.
-func RegisterOrderDetailServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client OrderDetailServiceClient) error {
+// "OrderDetailClient" to call the correct interceptors.
+func RegisterOrderDetailHandlerClient(ctx context.Context, mux *runtime.ServeMux, client OrderDetailClient) error {
 
-	mux.Handle("DELETE", pattern_OrderDetailService_Delete_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("DELETE", pattern_OrderDetail_Delete_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/order_detail.OrderDetailService/Delete")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/order_detail.OrderDetail/Delete")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_OrderDetailService_Delete_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_OrderDetail_Delete_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_OrderDetailService_Delete_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_OrderDetail_Delete_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_OrderDetailService_Insert_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_OrderDetail_Insert_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/order_detail.OrderDetailService/Insert")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/order_detail.OrderDetail/Insert")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_OrderDetailService_Insert_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_OrderDetail_Insert_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_OrderDetailService_Insert_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_OrderDetail_Insert_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_OrderDetailService_Order_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_OrderDetail_Order_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/order_detail.OrderDetailService/Order")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/order_detail.OrderDetail/Order")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_OrderDetailService_Order_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_OrderDetail_Order_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_OrderDetailService_Order_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_OrderDetail_Order_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_OrderDetailService_OrderDetailByOrderIDProductID_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_OrderDetail_OrderDetailByOrderIDProductID_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/order_detail.OrderDetailService/OrderDetailByOrderIDProductID")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/order_detail.OrderDetail/OrderDetailByOrderIDProductID")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_OrderDetailService_OrderDetailByOrderIDProductID_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_OrderDetail_OrderDetailByOrderIDProductID_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_OrderDetailService_OrderDetailByOrderIDProductID_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_OrderDetail_OrderDetailByOrderIDProductID_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_OrderDetailService_Product_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_OrderDetail_Product_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/order_detail.OrderDetailService/Product")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/order_detail.OrderDetail/Product")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_OrderDetailService_Product_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_OrderDetail_Product_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_OrderDetailService_Product_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_OrderDetail_Product_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("PUT", pattern_OrderDetailService_Update_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PUT", pattern_OrderDetail_Update_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/order_detail.OrderDetailService/Update")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/order_detail.OrderDetail/Update")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_OrderDetailService_Update_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_OrderDetail_Update_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_OrderDetailService_Update_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_OrderDetail_Update_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_OrderDetailService_Upsert_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_OrderDetail_Upsert_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/order_detail.OrderDetailService/Upsert")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/order_detail.OrderDetail/Upsert")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_OrderDetailService_Upsert_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_OrderDetail_Upsert_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_OrderDetailService_Upsert_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_OrderDetail_Upsert_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -661,33 +661,33 @@ func RegisterOrderDetailServiceHandlerClient(ctx context.Context, mux *runtime.S
 }
 
 var (
-	pattern_OrderDetailService_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "order-detail"}, ""))
+	pattern_OrderDetail_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "order-detail"}, ""))
 
-	pattern_OrderDetailService_Insert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "order-detail"}, ""))
+	pattern_OrderDetail_Insert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "order-detail"}, ""))
 
-	pattern_OrderDetailService_Order_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "order-detail", "order", "OrderID"}, ""))
+	pattern_OrderDetail_Order_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "order-detail", "order", "OrderID"}, ""))
 
-	pattern_OrderDetailService_OrderDetailByOrderIDProductID_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "order-detail"}, ""))
+	pattern_OrderDetail_OrderDetailByOrderIDProductID_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "order-detail"}, ""))
 
-	pattern_OrderDetailService_Product_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "order-detail", "product", "ProductID"}, ""))
+	pattern_OrderDetail_Product_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "order-detail", "product", "ProductID"}, ""))
 
-	pattern_OrderDetailService_Update_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "order-detail"}, ""))
+	pattern_OrderDetail_Update_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "order-detail"}, ""))
 
-	pattern_OrderDetailService_Upsert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "order-detail", "upsert"}, ""))
+	pattern_OrderDetail_Upsert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "order-detail", "upsert"}, ""))
 )
 
 var (
-	forward_OrderDetailService_Delete_0 = runtime.ForwardResponseMessage
+	forward_OrderDetail_Delete_0 = runtime.ForwardResponseMessage
 
-	forward_OrderDetailService_Insert_0 = runtime.ForwardResponseMessage
+	forward_OrderDetail_Insert_0 = runtime.ForwardResponseMessage
 
-	forward_OrderDetailService_Order_0 = runtime.ForwardResponseMessage
+	forward_OrderDetail_Order_0 = runtime.ForwardResponseMessage
 
-	forward_OrderDetailService_OrderDetailByOrderIDProductID_0 = runtime.ForwardResponseMessage
+	forward_OrderDetail_OrderDetailByOrderIDProductID_0 = runtime.ForwardResponseMessage
 
-	forward_OrderDetailService_Product_0 = runtime.ForwardResponseMessage
+	forward_OrderDetail_Product_0 = runtime.ForwardResponseMessage
 
-	forward_OrderDetailService_Update_0 = runtime.ForwardResponseMessage
+	forward_OrderDetail_Update_0 = runtime.ForwardResponseMessage
 
-	forward_OrderDetailService_Upsert_0 = runtime.ForwardResponseMessage
+	forward_OrderDetail_Upsert_0 = runtime.ForwardResponseMessage
 )

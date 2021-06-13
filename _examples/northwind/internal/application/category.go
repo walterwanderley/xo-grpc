@@ -14,7 +14,7 @@ import (
 )
 
 type CategoryService struct {
-	pb.UnimplementedCategoryServiceServer
+	pb.UnimplementedCategoryServer
 	db *sql.DB
 }
 

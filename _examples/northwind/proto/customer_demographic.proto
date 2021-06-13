@@ -21,7 +21,7 @@ option (grpc.gateway.protoc_gen_openapiv2.options.openapiv2_swagger) = {
         };
     };
 };
-service CustomerDemographicService {
+service CustomerDemographic {
     
     rpc CustomerDemographicByCustomerTypeID(CustomerDemographicByCustomerTypeIDRequest) returns (typespb.CustomerDemographic) {
         option (google.api.http) = {

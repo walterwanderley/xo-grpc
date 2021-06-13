@@ -11,46 +11,46 @@
   },
   "tags": [
     {
-      "name": "CategoryService"
+      "name": "Category"
     },
     {
-      "name": "CustomerService"
+      "name": "Customer"
     },
     {
-      "name": "CustomerCustomerDemoService"
+      "name": "CustomerCustomerDemo"
     },
     {
-      "name": "CustomerDemographicService"
+      "name": "CustomerDemographic"
     },
     {
-      "name": "EmployeeService"
+      "name": "Employee"
     },
     {
-      "name": "EmployeeTerritoryService"
+      "name": "EmployeeTerritory"
     },
     {
-      "name": "OrderService"
+      "name": "Order"
     },
     {
-      "name": "OrderDetailService"
+      "name": "OrderDetail"
     },
     {
-      "name": "ProductService"
+      "name": "Product"
     },
     {
-      "name": "RegionService"
+      "name": "Region"
     },
     {
-      "name": "ShipperService"
+      "name": "Shipper"
     },
     {
-      "name": "SupplierService"
+      "name": "Supplier"
     },
     {
-      "name": "TerritoryService"
+      "name": "Territory"
     },
     {
-      "name": "UsStateService"
+      "name": "UsState"
     }
   ],
   "consumes": [
@@ -62,7 +62,7 @@
   "paths": {
     "/v1/category": {
       "post": {
-        "operationId": "CategoryService_Insert",
+        "operationId": "Category_Insert",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -88,13 +88,13 @@
           }
         ],
         "tags": [
-          "CategoryService"
+          "Category"
         ]
       }
     },
     "/v1/category/upsert": {
       "post": {
-        "operationId": "CategoryService_Upsert",
+        "operationId": "Category_Upsert",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -120,13 +120,13 @@
           }
         ],
         "tags": [
-          "CategoryService"
+          "Category"
         ]
       }
     },
     "/v1/category/{CategoryID}": {
       "delete": {
-        "operationId": "CategoryService_Delete",
+        "operationId": "Category_Delete",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -151,11 +151,11 @@
           }
         ],
         "tags": [
-          "CategoryService"
+          "Category"
         ]
       },
       "put": {
-        "operationId": "CategoryService_Update",
+        "operationId": "Category_Update",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -201,13 +201,13 @@
           }
         ],
         "tags": [
-          "CategoryService"
+          "Category"
         ]
       }
     },
     "/v1/category/{categoryID}": {
       "get": {
-        "operationId": "CategoryService_CategoryByCategoryID",
+        "operationId": "Category_CategoryByCategoryID",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -232,13 +232,13 @@
           }
         ],
         "tags": [
-          "CategoryService"
+          "Category"
         ]
       }
     },
     "/v1/customer": {
       "post": {
-        "operationId": "CustomerService_Insert",
+        "operationId": "Customer_Insert",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -264,13 +264,13 @@
           }
         ],
         "tags": [
-          "CustomerService"
+          "Customer"
         ]
       }
     },
     "/v1/customer-customer-demo": {
       "get": {
-        "operationId": "CustomerCustomerDemoService_CustomerCustomerDemoByCustomerIDCustomerTypeID",
+        "operationId": "CustomerCustomerDemo_CustomerCustomerDemoByCustomerIDCustomerTypeID",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -300,11 +300,11 @@
           }
         ],
         "tags": [
-          "CustomerCustomerDemoService"
+          "CustomerCustomerDemo"
         ]
       },
       "delete": {
-        "operationId": "CustomerCustomerDemoService_Delete",
+        "operationId": "CustomerCustomerDemo_Delete",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -334,11 +334,11 @@
           }
         ],
         "tags": [
-          "CustomerCustomerDemoService"
+          "CustomerCustomerDemo"
         ]
       },
       "post": {
-        "operationId": "CustomerCustomerDemoService_Insert",
+        "operationId": "CustomerCustomerDemo_Insert",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -364,13 +364,13 @@
           }
         ],
         "tags": [
-          "CustomerCustomerDemoService"
+          "CustomerCustomerDemo"
         ]
       }
     },
     "/v1/customer-customer-demo/customer-demographic/{CustomerTypeID}": {
       "get": {
-        "operationId": "CustomerCustomerDemoService_CustomerDemographic",
+        "operationId": "CustomerCustomerDemo_CustomerDemographic",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -394,13 +394,13 @@
           }
         ],
         "tags": [
-          "CustomerCustomerDemoService"
+          "CustomerCustomerDemo"
         ]
       }
     },
     "/v1/customer-customer-demo/customer/{CustomerID}": {
       "get": {
-        "operationId": "CustomerCustomerDemoService_Customer",
+        "operationId": "CustomerCustomerDemo_Customer",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -424,13 +424,13 @@
           }
         ],
         "tags": [
-          "CustomerCustomerDemoService"
+          "CustomerCustomerDemo"
         ]
       }
     },
     "/v1/customer-demographic": {
       "post": {
-        "operationId": "CustomerDemographicService_Insert",
+        "operationId": "CustomerDemographic_Insert",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -456,13 +456,13 @@
           }
         ],
         "tags": [
-          "CustomerDemographicService"
+          "CustomerDemographic"
         ]
       }
     },
     "/v1/customer-demographic/upsert": {
       "post": {
-        "operationId": "CustomerDemographicService_Upsert",
+        "operationId": "CustomerDemographic_Upsert",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -488,13 +488,13 @@
           }
         ],
         "tags": [
-          "CustomerDemographicService"
+          "CustomerDemographic"
         ]
       }
     },
     "/v1/customer-demographic/{CustomerTypeID}": {
       "delete": {
-        "operationId": "CustomerDemographicService_Delete",
+        "operationId": "CustomerDemographic_Delete",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -518,11 +518,11 @@
           }
         ],
         "tags": [
-          "CustomerDemographicService"
+          "CustomerDemographic"
         ]
       },
       "put": {
-        "operationId": "CustomerDemographicService_Update",
+        "operationId": "CustomerDemographic_Update",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -560,13 +560,13 @@
           }
         ],
         "tags": [
-          "CustomerDemographicService"
+          "CustomerDemographic"
         ]
       }
     },
     "/v1/customer-demographic/{customerTypeID}": {
       "get": {
-        "operationId": "CustomerDemographicService_CustomerDemographicByCustomerTypeID",
+        "operationId": "CustomerDemographic_CustomerDemographicByCustomerTypeID",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -590,13 +590,13 @@
           }
         ],
         "tags": [
-          "CustomerDemographicService"
+          "CustomerDemographic"
         ]
       }
     },
     "/v1/customer/upsert": {
       "post": {
-        "operationId": "CustomerService_Upsert",
+        "operationId": "Customer_Upsert",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -622,13 +622,13 @@
           }
         ],
         "tags": [
-          "CustomerService"
+          "Customer"
         ]
       }
     },
     "/v1/customer/{CustomerID}": {
       "delete": {
-        "operationId": "CustomerService_Delete",
+        "operationId": "Customer_Delete",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -652,11 +652,11 @@
           }
         ],
         "tags": [
-          "CustomerService"
+          "Customer"
         ]
       },
       "put": {
-        "operationId": "CustomerService_Update",
+        "operationId": "Customer_Update",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -721,13 +721,13 @@
           }
         ],
         "tags": [
-          "CustomerService"
+          "Customer"
         ]
       }
     },
     "/v1/customer/{customerID}": {
       "get": {
-        "operationId": "CustomerService_CustomerByCustomerID",
+        "operationId": "Customer_CustomerByCustomerID",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -751,13 +751,13 @@
           }
         ],
         "tags": [
-          "CustomerService"
+          "Customer"
         ]
       }
     },
     "/v1/employee": {
       "post": {
-        "operationId": "EmployeeService_Insert",
+        "operationId": "Employee_Insert",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -783,13 +783,13 @@
           }
         ],
         "tags": [
-          "EmployeeService"
+          "Employee"
         ]
       }
     },
     "/v1/employee-territory": {
       "get": {
-        "operationId": "EmployeeTerritoryService_EmployeeTerritoryByEmployeeIDTerritoryID",
+        "operationId": "EmployeeTerritory_EmployeeTerritoryByEmployeeIDTerritoryID",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -820,11 +820,11 @@
           }
         ],
         "tags": [
-          "EmployeeTerritoryService"
+          "EmployeeTerritory"
         ]
       },
       "delete": {
-        "operationId": "EmployeeTerritoryService_Delete",
+        "operationId": "EmployeeTerritory_Delete",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -855,11 +855,11 @@
           }
         ],
         "tags": [
-          "EmployeeTerritoryService"
+          "EmployeeTerritory"
         ]
       },
       "post": {
-        "operationId": "EmployeeTerritoryService_Insert",
+        "operationId": "EmployeeTerritory_Insert",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -885,13 +885,13 @@
           }
         ],
         "tags": [
-          "EmployeeTerritoryService"
+          "EmployeeTerritory"
         ]
       }
     },
     "/v1/employee-territory/employee/{EmployeeID}": {
       "get": {
-        "operationId": "EmployeeTerritoryService_Employee",
+        "operationId": "EmployeeTerritory_Employee",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -916,13 +916,13 @@
           }
         ],
         "tags": [
-          "EmployeeTerritoryService"
+          "EmployeeTerritory"
         ]
       }
     },
     "/v1/employee-territory/territory/{TerritoryID}": {
       "get": {
-        "operationId": "EmployeeTerritoryService_Territory",
+        "operationId": "EmployeeTerritory_Territory",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -946,13 +946,13 @@
           }
         ],
         "tags": [
-          "EmployeeTerritoryService"
+          "EmployeeTerritory"
         ]
       }
     },
     "/v1/employee/upsert": {
       "post": {
-        "operationId": "EmployeeService_Upsert",
+        "operationId": "Employee_Upsert",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -978,13 +978,13 @@
           }
         ],
         "tags": [
-          "EmployeeService"
+          "Employee"
         ]
       }
     },
     "/v1/employee/{EmployeeID}": {
       "delete": {
-        "operationId": "EmployeeService_Delete",
+        "operationId": "Employee_Delete",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1009,11 +1009,11 @@
           }
         ],
         "tags": [
-          "EmployeeService"
+          "Employee"
         ]
       },
       "put": {
-        "operationId": "EmployeeService_Update",
+        "operationId": "Employee_Update",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1104,13 +1104,13 @@
           }
         ],
         "tags": [
-          "EmployeeService"
+          "Employee"
         ]
       }
     },
     "/v1/employee/{ReportsTo}": {
       "get": {
-        "operationId": "EmployeeService_Employee",
+        "operationId": "Employee_Employee",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1135,13 +1135,13 @@
           }
         ],
         "tags": [
-          "EmployeeService"
+          "Employee"
         ]
       }
     },
     "/v1/employee/{employeeID}": {
       "get": {
-        "operationId": "EmployeeService_EmployeeByEmployeeID",
+        "operationId": "Employee_EmployeeByEmployeeID",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1166,13 +1166,13 @@
           }
         ],
         "tags": [
-          "EmployeeService"
+          "Employee"
         ]
       }
     },
     "/v1/order": {
       "post": {
-        "operationId": "OrderService_Insert",
+        "operationId": "Order_Insert",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1198,13 +1198,13 @@
           }
         ],
         "tags": [
-          "OrderService"
+          "Order"
         ]
       }
     },
     "/v1/order-detail": {
       "get": {
-        "operationId": "OrderDetailService_OrderDetailByOrderIDProductID",
+        "operationId": "OrderDetail_OrderDetailByOrderIDProductID",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1236,11 +1236,11 @@
           }
         ],
         "tags": [
-          "OrderDetailService"
+          "OrderDetail"
         ]
       },
       "delete": {
-        "operationId": "OrderDetailService_Delete",
+        "operationId": "OrderDetail_Delete",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1272,11 +1272,11 @@
           }
         ],
         "tags": [
-          "OrderDetailService"
+          "OrderDetail"
         ]
       },
       "post": {
-        "operationId": "OrderDetailService_Insert",
+        "operationId": "OrderDetail_Insert",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1302,11 +1302,11 @@
           }
         ],
         "tags": [
-          "OrderDetailService"
+          "OrderDetail"
         ]
       },
       "put": {
-        "operationId": "OrderDetailService_Update",
+        "operationId": "OrderDetail_Update",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1332,13 +1332,13 @@
           }
         ],
         "tags": [
-          "OrderDetailService"
+          "OrderDetail"
         ]
       }
     },
     "/v1/order-detail/order/{OrderID}": {
       "get": {
-        "operationId": "OrderDetailService_Order",
+        "operationId": "OrderDetail_Order",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1363,13 +1363,13 @@
           }
         ],
         "tags": [
-          "OrderDetailService"
+          "OrderDetail"
         ]
       }
     },
     "/v1/order-detail/product/{ProductID}": {
       "get": {
-        "operationId": "OrderDetailService_Product",
+        "operationId": "OrderDetail_Product",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1394,13 +1394,13 @@
           }
         ],
         "tags": [
-          "OrderDetailService"
+          "OrderDetail"
         ]
       }
     },
     "/v1/order-detail/upsert": {
       "post": {
-        "operationId": "OrderDetailService_Upsert",
+        "operationId": "OrderDetail_Upsert",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1426,13 +1426,13 @@
           }
         ],
         "tags": [
-          "OrderDetailService"
+          "OrderDetail"
         ]
       }
     },
     "/v1/order/customer/{CustomerID}": {
       "get": {
-        "operationId": "OrderService_Customer",
+        "operationId": "Order_Customer",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1456,13 +1456,13 @@
           }
         ],
         "tags": [
-          "OrderService"
+          "Order"
         ]
       }
     },
     "/v1/order/employee/{EmployeeID}": {
       "get": {
-        "operationId": "OrderService_Employee",
+        "operationId": "Order_Employee",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1487,13 +1487,13 @@
           }
         ],
         "tags": [
-          "OrderService"
+          "Order"
         ]
       }
     },
     "/v1/order/shipper/{ShipVia}": {
       "get": {
-        "operationId": "OrderService_Shipper",
+        "operationId": "Order_Shipper",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1518,13 +1518,13 @@
           }
         ],
         "tags": [
-          "OrderService"
+          "Order"
         ]
       }
     },
     "/v1/order/upsert": {
       "post": {
-        "operationId": "OrderService_Upsert",
+        "operationId": "Order_Upsert",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1550,13 +1550,13 @@
           }
         ],
         "tags": [
-          "OrderService"
+          "Order"
         ]
       }
     },
     "/v1/order/{OrderID}": {
       "delete": {
-        "operationId": "OrderService_Delete",
+        "operationId": "Order_Delete",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1581,11 +1581,11 @@
           }
         ],
         "tags": [
-          "OrderService"
+          "Order"
         ]
       },
       "put": {
-        "operationId": "OrderService_Update",
+        "operationId": "Order_Update",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1666,13 +1666,13 @@
           }
         ],
         "tags": [
-          "OrderService"
+          "Order"
         ]
       }
     },
     "/v1/order/{orderID}": {
       "get": {
-        "operationId": "OrderService_OrderByOrderID",
+        "operationId": "Order_OrderByOrderID",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1697,13 +1697,13 @@
           }
         ],
         "tags": [
-          "OrderService"
+          "Order"
         ]
       }
     },
     "/v1/product": {
       "post": {
-        "operationId": "ProductService_Insert",
+        "operationId": "Product_Insert",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1729,13 +1729,13 @@
           }
         ],
         "tags": [
-          "ProductService"
+          "Product"
         ]
       }
     },
     "/v1/product/category/{CategoryID}": {
       "get": {
-        "operationId": "ProductService_Category",
+        "operationId": "Product_Category",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1760,13 +1760,13 @@
           }
         ],
         "tags": [
-          "ProductService"
+          "Product"
         ]
       }
     },
     "/v1/product/supplier/{SupplierID}": {
       "get": {
-        "operationId": "ProductService_Supplier",
+        "operationId": "Product_Supplier",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1791,13 +1791,13 @@
           }
         ],
         "tags": [
-          "ProductService"
+          "Product"
         ]
       }
     },
     "/v1/product/upsert": {
       "post": {
-        "operationId": "ProductService_Upsert",
+        "operationId": "Product_Upsert",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1823,13 +1823,13 @@
           }
         ],
         "tags": [
-          "ProductService"
+          "Product"
         ]
       }
     },
     "/v1/product/{ProductID}": {
       "delete": {
-        "operationId": "ProductService_Delete",
+        "operationId": "Product_Delete",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1854,11 +1854,11 @@
           }
         ],
         "tags": [
-          "ProductService"
+          "Product"
         ]
       },
       "put": {
-        "operationId": "ProductService_Update",
+        "operationId": "Product_Update",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1928,13 +1928,13 @@
           }
         ],
         "tags": [
-          "ProductService"
+          "Product"
         ]
       }
     },
     "/v1/product/{productID}": {
       "get": {
-        "operationId": "ProductService_ProductByProductID",
+        "operationId": "Product_ProductByProductID",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1959,13 +1959,13 @@
           }
         ],
         "tags": [
-          "ProductService"
+          "Product"
         ]
       }
     },
     "/v1/region": {
       "post": {
-        "operationId": "RegionService_Insert",
+        "operationId": "Region_Insert",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -1991,13 +1991,13 @@
           }
         ],
         "tags": [
-          "RegionService"
+          "Region"
         ]
       }
     },
     "/v1/region/upsert": {
       "post": {
-        "operationId": "RegionService_Upsert",
+        "operationId": "Region_Upsert",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2023,13 +2023,13 @@
           }
         ],
         "tags": [
-          "RegionService"
+          "Region"
         ]
       }
     },
     "/v1/region/{RegionID}": {
       "delete": {
-        "operationId": "RegionService_Delete",
+        "operationId": "Region_Delete",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2054,11 +2054,11 @@
           }
         ],
         "tags": [
-          "RegionService"
+          "Region"
         ]
       },
       "put": {
-        "operationId": "RegionService_Update",
+        "operationId": "Region_Update",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2097,13 +2097,13 @@
           }
         ],
         "tags": [
-          "RegionService"
+          "Region"
         ]
       }
     },
     "/v1/region/{regionID}": {
       "get": {
-        "operationId": "RegionService_RegionByRegionID",
+        "operationId": "Region_RegionByRegionID",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2128,13 +2128,13 @@
           }
         ],
         "tags": [
-          "RegionService"
+          "Region"
         ]
       }
     },
     "/v1/shipper": {
       "post": {
-        "operationId": "ShipperService_Insert",
+        "operationId": "Shipper_Insert",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2160,13 +2160,13 @@
           }
         ],
         "tags": [
-          "ShipperService"
+          "Shipper"
         ]
       }
     },
     "/v1/shipper/upsert": {
       "post": {
-        "operationId": "ShipperService_Upsert",
+        "operationId": "Shipper_Upsert",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2192,13 +2192,13 @@
           }
         ],
         "tags": [
-          "ShipperService"
+          "Shipper"
         ]
       }
     },
     "/v1/shipper/{ShipperID}": {
       "delete": {
-        "operationId": "ShipperService_Delete",
+        "operationId": "Shipper_Delete",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2223,11 +2223,11 @@
           }
         ],
         "tags": [
-          "ShipperService"
+          "Shipper"
         ]
       },
       "put": {
-        "operationId": "ShipperService_Update",
+        "operationId": "Shipper_Update",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2269,13 +2269,13 @@
           }
         ],
         "tags": [
-          "ShipperService"
+          "Shipper"
         ]
       }
     },
     "/v1/shipper/{shipperID}": {
       "get": {
-        "operationId": "ShipperService_ShipperByShipperID",
+        "operationId": "Shipper_ShipperByShipperID",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2300,13 +2300,13 @@
           }
         ],
         "tags": [
-          "ShipperService"
+          "Shipper"
         ]
       }
     },
     "/v1/supplier": {
       "post": {
-        "operationId": "SupplierService_Insert",
+        "operationId": "Supplier_Insert",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2332,13 +2332,13 @@
           }
         ],
         "tags": [
-          "SupplierService"
+          "Supplier"
         ]
       }
     },
     "/v1/supplier/upsert": {
       "post": {
-        "operationId": "SupplierService_Upsert",
+        "operationId": "Supplier_Upsert",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2364,13 +2364,13 @@
           }
         ],
         "tags": [
-          "SupplierService"
+          "Supplier"
         ]
       }
     },
     "/v1/supplier/{SupplierID}": {
       "delete": {
-        "operationId": "SupplierService_Delete",
+        "operationId": "Supplier_Delete",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2395,11 +2395,11 @@
           }
         ],
         "tags": [
-          "SupplierService"
+          "Supplier"
         ]
       },
       "put": {
-        "operationId": "SupplierService_Update",
+        "operationId": "Supplier_Update",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2468,13 +2468,13 @@
           }
         ],
         "tags": [
-          "SupplierService"
+          "Supplier"
         ]
       }
     },
     "/v1/supplier/{supplierID}": {
       "get": {
-        "operationId": "SupplierService_SupplierBySupplierID",
+        "operationId": "Supplier_SupplierBySupplierID",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2499,13 +2499,13 @@
           }
         ],
         "tags": [
-          "SupplierService"
+          "Supplier"
         ]
       }
     },
     "/v1/territory": {
       "post": {
-        "operationId": "TerritoryService_Insert",
+        "operationId": "Territory_Insert",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2531,13 +2531,13 @@
           }
         ],
         "tags": [
-          "TerritoryService"
+          "Territory"
         ]
       }
     },
     "/v1/territory/region/{RegionID}": {
       "get": {
-        "operationId": "TerritoryService_Region",
+        "operationId": "Territory_Region",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2562,13 +2562,13 @@
           }
         ],
         "tags": [
-          "TerritoryService"
+          "Territory"
         ]
       }
     },
     "/v1/territory/upsert": {
       "post": {
-        "operationId": "TerritoryService_Upsert",
+        "operationId": "Territory_Upsert",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2594,13 +2594,13 @@
           }
         ],
         "tags": [
-          "TerritoryService"
+          "Territory"
         ]
       }
     },
     "/v1/territory/{TerritoryID}": {
       "delete": {
-        "operationId": "TerritoryService_Delete",
+        "operationId": "Territory_Delete",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2624,11 +2624,11 @@
           }
         ],
         "tags": [
-          "TerritoryService"
+          "Territory"
         ]
       },
       "put": {
-        "operationId": "TerritoryService_Update",
+        "operationId": "Territory_Update",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2670,13 +2670,13 @@
           }
         ],
         "tags": [
-          "TerritoryService"
+          "Territory"
         ]
       }
     },
     "/v1/territory/{territoryID}": {
       "get": {
-        "operationId": "TerritoryService_TerritoryByTerritoryID",
+        "operationId": "Territory_TerritoryByTerritoryID",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2700,13 +2700,13 @@
           }
         ],
         "tags": [
-          "TerritoryService"
+          "Territory"
         ]
       }
     },
     "/v1/us-state": {
       "post": {
-        "operationId": "UsStateService_Insert",
+        "operationId": "UsState_Insert",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2732,13 +2732,13 @@
           }
         ],
         "tags": [
-          "UsStateService"
+          "UsState"
         ]
       }
     },
     "/v1/us-state/upsert": {
       "post": {
-        "operationId": "UsStateService_Upsert",
+        "operationId": "UsState_Upsert",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2764,13 +2764,13 @@
           }
         ],
         "tags": [
-          "UsStateService"
+          "UsState"
         ]
       }
     },
     "/v1/us-state/{StateID}": {
       "delete": {
-        "operationId": "UsStateService_Delete",
+        "operationId": "UsState_Delete",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2795,11 +2795,11 @@
           }
         ],
         "tags": [
-          "UsStateService"
+          "UsState"
         ]
       },
       "put": {
-        "operationId": "UsStateService_Update",
+        "operationId": "UsState_Update",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2844,13 +2844,13 @@
           }
         ],
         "tags": [
-          "UsStateService"
+          "UsState"
         ]
       }
     },
     "/v1/us-state/{stateID}": {
       "get": {
-        "operationId": "UsStateService_UsStateByStateID",
+        "operationId": "UsState_UsStateByStateID",
         "responses": {
           "200": {
             "description": "A successful response.",
@@ -2875,7 +2875,7 @@
           }
         ],
         "tags": [
-          "UsStateService"
+          "UsState"
         ]
       }
     }

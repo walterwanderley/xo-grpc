@@ -16,10 +16,10 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// ShipperServiceClient is the client API for ShipperService service.
+// ShipperClient is the client API for Shipper service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type ShipperServiceClient interface {
+type ShipperClient interface {
 	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Insert(ctx context.Context, in *InsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	ShipperByShipperID(ctx context.Context, in *ShipperByShipperIDRequest, opts ...grpc.CallOption) (*typespb.Shipper, error)
@@ -27,219 +27,219 @@ type ShipperServiceClient interface {
 	Upsert(ctx context.Context, in *UpsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
-type shipperServiceClient struct {
+type shipperClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewShipperServiceClient(cc grpc.ClientConnInterface) ShipperServiceClient {
-	return &shipperServiceClient{cc}
+func NewShipperClient(cc grpc.ClientConnInterface) ShipperClient {
+	return &shipperClient{cc}
 }
 
-func (c *shipperServiceClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *shipperClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/shipper.ShipperService/Delete", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/shipper.Shipper/Delete", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *shipperServiceClient) Insert(ctx context.Context, in *InsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *shipperClient) Insert(ctx context.Context, in *InsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/shipper.ShipperService/Insert", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/shipper.Shipper/Insert", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *shipperServiceClient) ShipperByShipperID(ctx context.Context, in *ShipperByShipperIDRequest, opts ...grpc.CallOption) (*typespb.Shipper, error) {
+func (c *shipperClient) ShipperByShipperID(ctx context.Context, in *ShipperByShipperIDRequest, opts ...grpc.CallOption) (*typespb.Shipper, error) {
 	out := new(typespb.Shipper)
-	err := c.cc.Invoke(ctx, "/shipper.ShipperService/ShipperByShipperID", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/shipper.Shipper/ShipperByShipperID", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *shipperServiceClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *shipperClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/shipper.ShipperService/Update", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/shipper.Shipper/Update", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *shipperServiceClient) Upsert(ctx context.Context, in *UpsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *shipperClient) Upsert(ctx context.Context, in *UpsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/shipper.ShipperService/Upsert", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/shipper.Shipper/Upsert", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// ShipperServiceServer is the server API for ShipperService service.
-// All implementations must embed UnimplementedShipperServiceServer
+// ShipperServer is the server API for Shipper service.
+// All implementations must embed UnimplementedShipperServer
 // for forward compatibility
-type ShipperServiceServer interface {
+type ShipperServer interface {
 	Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error)
 	Insert(context.Context, *InsertRequest) (*emptypb.Empty, error)
 	ShipperByShipperID(context.Context, *ShipperByShipperIDRequest) (*typespb.Shipper, error)
 	Update(context.Context, *UpdateRequest) (*emptypb.Empty, error)
 	Upsert(context.Context, *UpsertRequest) (*emptypb.Empty, error)
-	mustEmbedUnimplementedShipperServiceServer()
+	mustEmbedUnimplementedShipperServer()
 }
 
-// UnimplementedShipperServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedShipperServiceServer struct {
+// UnimplementedShipperServer must be embedded to have forward compatible implementations.
+type UnimplementedShipperServer struct {
 }
 
-func (UnimplementedShipperServiceServer) Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error) {
+func (UnimplementedShipperServer) Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
 }
-func (UnimplementedShipperServiceServer) Insert(context.Context, *InsertRequest) (*emptypb.Empty, error) {
+func (UnimplementedShipperServer) Insert(context.Context, *InsertRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Insert not implemented")
 }
-func (UnimplementedShipperServiceServer) ShipperByShipperID(context.Context, *ShipperByShipperIDRequest) (*typespb.Shipper, error) {
+func (UnimplementedShipperServer) ShipperByShipperID(context.Context, *ShipperByShipperIDRequest) (*typespb.Shipper, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ShipperByShipperID not implemented")
 }
-func (UnimplementedShipperServiceServer) Update(context.Context, *UpdateRequest) (*emptypb.Empty, error) {
+func (UnimplementedShipperServer) Update(context.Context, *UpdateRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
 }
-func (UnimplementedShipperServiceServer) Upsert(context.Context, *UpsertRequest) (*emptypb.Empty, error) {
+func (UnimplementedShipperServer) Upsert(context.Context, *UpsertRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Upsert not implemented")
 }
-func (UnimplementedShipperServiceServer) mustEmbedUnimplementedShipperServiceServer() {}
+func (UnimplementedShipperServer) mustEmbedUnimplementedShipperServer() {}
 
-// UnsafeShipperServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to ShipperServiceServer will
+// UnsafeShipperServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to ShipperServer will
 // result in compilation errors.
-type UnsafeShipperServiceServer interface {
-	mustEmbedUnimplementedShipperServiceServer()
+type UnsafeShipperServer interface {
+	mustEmbedUnimplementedShipperServer()
 }
 
-func RegisterShipperServiceServer(s grpc.ServiceRegistrar, srv ShipperServiceServer) {
-	s.RegisterService(&ShipperService_ServiceDesc, srv)
+func RegisterShipperServer(s grpc.ServiceRegistrar, srv ShipperServer) {
+	s.RegisterService(&Shipper_ServiceDesc, srv)
 }
 
-func _ShipperService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Shipper_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ShipperServiceServer).Delete(ctx, in)
+		return srv.(ShipperServer).Delete(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/shipper.ShipperService/Delete",
+		FullMethod: "/shipper.Shipper/Delete",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ShipperServiceServer).Delete(ctx, req.(*DeleteRequest))
+		return srv.(ShipperServer).Delete(ctx, req.(*DeleteRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ShipperService_Insert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Shipper_Insert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(InsertRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ShipperServiceServer).Insert(ctx, in)
+		return srv.(ShipperServer).Insert(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/shipper.ShipperService/Insert",
+		FullMethod: "/shipper.Shipper/Insert",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ShipperServiceServer).Insert(ctx, req.(*InsertRequest))
+		return srv.(ShipperServer).Insert(ctx, req.(*InsertRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ShipperService_ShipperByShipperID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Shipper_ShipperByShipperID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ShipperByShipperIDRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ShipperServiceServer).ShipperByShipperID(ctx, in)
+		return srv.(ShipperServer).ShipperByShipperID(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/shipper.ShipperService/ShipperByShipperID",
+		FullMethod: "/shipper.Shipper/ShipperByShipperID",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ShipperServiceServer).ShipperByShipperID(ctx, req.(*ShipperByShipperIDRequest))
+		return srv.(ShipperServer).ShipperByShipperID(ctx, req.(*ShipperByShipperIDRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ShipperService_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Shipper_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ShipperServiceServer).Update(ctx, in)
+		return srv.(ShipperServer).Update(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/shipper.ShipperService/Update",
+		FullMethod: "/shipper.Shipper/Update",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ShipperServiceServer).Update(ctx, req.(*UpdateRequest))
+		return srv.(ShipperServer).Update(ctx, req.(*UpdateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ShipperService_Upsert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Shipper_Upsert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpsertRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ShipperServiceServer).Upsert(ctx, in)
+		return srv.(ShipperServer).Upsert(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/shipper.ShipperService/Upsert",
+		FullMethod: "/shipper.Shipper/Upsert",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ShipperServiceServer).Upsert(ctx, req.(*UpsertRequest))
+		return srv.(ShipperServer).Upsert(ctx, req.(*UpsertRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// ShipperService_ServiceDesc is the grpc.ServiceDesc for ShipperService service.
+// Shipper_ServiceDesc is the grpc.ServiceDesc for Shipper service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var ShipperService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "shipper.ShipperService",
-	HandlerType: (*ShipperServiceServer)(nil),
+var Shipper_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "shipper.Shipper",
+	HandlerType: (*ShipperServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Delete",
-			Handler:    _ShipperService_Delete_Handler,
+			Handler:    _Shipper_Delete_Handler,
 		},
 		{
 			MethodName: "Insert",
-			Handler:    _ShipperService_Insert_Handler,
+			Handler:    _Shipper_Insert_Handler,
 		},
 		{
 			MethodName: "ShipperByShipperID",
-			Handler:    _ShipperService_ShipperByShipperID_Handler,
+			Handler:    _Shipper_ShipperByShipperID_Handler,
 		},
 		{
 			MethodName: "Update",
-			Handler:    _ShipperService_Update_Handler,
+			Handler:    _Shipper_Update_Handler,
 		},
 		{
 			MethodName: "Upsert",
-			Handler:    _ShipperService_Upsert_Handler,
+			Handler:    _Shipper_Upsert_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

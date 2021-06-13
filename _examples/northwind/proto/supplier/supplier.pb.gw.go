@@ -31,7 +31,7 @@ var _ = runtime.String
 var _ = utilities.NewDoubleArray
 var _ = metadata.Join
 
-func request_SupplierService_Delete_0(ctx context.Context, marshaler runtime.Marshaler, client SupplierServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_Supplier_Delete_0(ctx context.Context, marshaler runtime.Marshaler, client SupplierClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq DeleteRequest
 	var metadata runtime.ServerMetadata
 
@@ -57,7 +57,7 @@ func request_SupplierService_Delete_0(ctx context.Context, marshaler runtime.Mar
 
 }
 
-func local_request_SupplierService_Delete_0(ctx context.Context, marshaler runtime.Marshaler, server SupplierServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_Supplier_Delete_0(ctx context.Context, marshaler runtime.Marshaler, server SupplierServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq DeleteRequest
 	var metadata runtime.ServerMetadata
 
@@ -83,7 +83,7 @@ func local_request_SupplierService_Delete_0(ctx context.Context, marshaler runti
 
 }
 
-func request_SupplierService_Insert_0(ctx context.Context, marshaler runtime.Marshaler, client SupplierServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_Supplier_Insert_0(ctx context.Context, marshaler runtime.Marshaler, client SupplierClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq InsertRequest
 	var metadata runtime.ServerMetadata
 
@@ -100,7 +100,7 @@ func request_SupplierService_Insert_0(ctx context.Context, marshaler runtime.Mar
 
 }
 
-func local_request_SupplierService_Insert_0(ctx context.Context, marshaler runtime.Marshaler, server SupplierServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_Supplier_Insert_0(ctx context.Context, marshaler runtime.Marshaler, server SupplierServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq InsertRequest
 	var metadata runtime.ServerMetadata
 
@@ -117,7 +117,7 @@ func local_request_SupplierService_Insert_0(ctx context.Context, marshaler runti
 
 }
 
-func request_SupplierService_SupplierBySupplierID_0(ctx context.Context, marshaler runtime.Marshaler, client SupplierServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_Supplier_SupplierBySupplierID_0(ctx context.Context, marshaler runtime.Marshaler, client SupplierClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq SupplierBySupplierIDRequest
 	var metadata runtime.ServerMetadata
 
@@ -143,7 +143,7 @@ func request_SupplierService_SupplierBySupplierID_0(ctx context.Context, marshal
 
 }
 
-func local_request_SupplierService_SupplierBySupplierID_0(ctx context.Context, marshaler runtime.Marshaler, server SupplierServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_Supplier_SupplierBySupplierID_0(ctx context.Context, marshaler runtime.Marshaler, server SupplierServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq SupplierBySupplierIDRequest
 	var metadata runtime.ServerMetadata
 
@@ -169,7 +169,7 @@ func local_request_SupplierService_SupplierBySupplierID_0(ctx context.Context, m
 
 }
 
-func request_SupplierService_Update_0(ctx context.Context, marshaler runtime.Marshaler, client SupplierServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_Supplier_Update_0(ctx context.Context, marshaler runtime.Marshaler, client SupplierClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq UpdateRequest
 	var metadata runtime.ServerMetadata
 
@@ -203,7 +203,7 @@ func request_SupplierService_Update_0(ctx context.Context, marshaler runtime.Mar
 
 }
 
-func local_request_SupplierService_Update_0(ctx context.Context, marshaler runtime.Marshaler, server SupplierServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_Supplier_Update_0(ctx context.Context, marshaler runtime.Marshaler, server SupplierServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq UpdateRequest
 	var metadata runtime.ServerMetadata
 
@@ -237,7 +237,7 @@ func local_request_SupplierService_Update_0(ctx context.Context, marshaler runti
 
 }
 
-func request_SupplierService_Upsert_0(ctx context.Context, marshaler runtime.Marshaler, client SupplierServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_Supplier_Upsert_0(ctx context.Context, marshaler runtime.Marshaler, client SupplierClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq UpsertRequest
 	var metadata runtime.ServerMetadata
 
@@ -254,7 +254,7 @@ func request_SupplierService_Upsert_0(ctx context.Context, marshaler runtime.Mar
 
 }
 
-func local_request_SupplierService_Upsert_0(ctx context.Context, marshaler runtime.Marshaler, server SupplierServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_Supplier_Upsert_0(ctx context.Context, marshaler runtime.Marshaler, server SupplierServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq UpsertRequest
 	var metadata runtime.ServerMetadata
 
@@ -271,24 +271,24 @@ func local_request_SupplierService_Upsert_0(ctx context.Context, marshaler runti
 
 }
 
-// RegisterSupplierServiceHandlerServer registers the http handlers for service SupplierService to "mux".
-// UnaryRPC     :call SupplierServiceServer directly.
+// RegisterSupplierHandlerServer registers the http handlers for service Supplier to "mux".
+// UnaryRPC     :call SupplierServer directly.
 // StreamingRPC :currently unsupported pending https://github.com/grpc/grpc-go/issues/906.
-// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterSupplierServiceHandlerFromEndpoint instead.
-func RegisterSupplierServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux, server SupplierServiceServer) error {
+// Note that using this registration option will cause many gRPC library features to stop working. Consider using RegisterSupplierHandlerFromEndpoint instead.
+func RegisterSupplierHandlerServer(ctx context.Context, mux *runtime.ServeMux, server SupplierServer) error {
 
-	mux.Handle("DELETE", pattern_SupplierService_Delete_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("DELETE", pattern_Supplier_Delete_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/supplier.SupplierService/Delete")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/supplier.Supplier/Delete")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_SupplierService_Delete_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_Supplier_Delete_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -296,22 +296,22 @@ func RegisterSupplierServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 			return
 		}
 
-		forward_SupplierService_Delete_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Supplier_Delete_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_SupplierService_Insert_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_Supplier_Insert_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/supplier.SupplierService/Insert")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/supplier.Supplier/Insert")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_SupplierService_Insert_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_Supplier_Insert_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -319,22 +319,22 @@ func RegisterSupplierServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 			return
 		}
 
-		forward_SupplierService_Insert_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Supplier_Insert_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_SupplierService_SupplierBySupplierID_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_Supplier_SupplierBySupplierID_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/supplier.SupplierService/SupplierBySupplierID")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/supplier.Supplier/SupplierBySupplierID")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_SupplierService_SupplierBySupplierID_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_Supplier_SupplierBySupplierID_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -342,22 +342,22 @@ func RegisterSupplierServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 			return
 		}
 
-		forward_SupplierService_SupplierBySupplierID_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Supplier_SupplierBySupplierID_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("PUT", pattern_SupplierService_Update_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PUT", pattern_Supplier_Update_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/supplier.SupplierService/Update")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/supplier.Supplier/Update")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_SupplierService_Update_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_Supplier_Update_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -365,22 +365,22 @@ func RegisterSupplierServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 			return
 		}
 
-		forward_SupplierService_Update_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Supplier_Update_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_SupplierService_Upsert_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_Supplier_Upsert_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/supplier.SupplierService/Upsert")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/supplier.Supplier/Upsert")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_SupplierService_Upsert_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_Supplier_Upsert_0(rctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -388,16 +388,16 @@ func RegisterSupplierServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 			return
 		}
 
-		forward_SupplierService_Upsert_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Supplier_Upsert_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
 	return nil
 }
 
-// RegisterSupplierServiceHandlerFromEndpoint is same as RegisterSupplierServiceHandler but
+// RegisterSupplierHandlerFromEndpoint is same as RegisterSupplierHandler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
-func RegisterSupplierServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
+func RegisterSupplierHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
 	conn, err := grpc.Dial(endpoint, opts...)
 	if err != nil {
 		return err
@@ -417,119 +417,119 @@ func RegisterSupplierServiceHandlerFromEndpoint(ctx context.Context, mux *runtim
 		}()
 	}()
 
-	return RegisterSupplierServiceHandler(ctx, mux, conn)
+	return RegisterSupplierHandler(ctx, mux, conn)
 }
 
-// RegisterSupplierServiceHandler registers the http handlers for service SupplierService to "mux".
+// RegisterSupplierHandler registers the http handlers for service Supplier to "mux".
 // The handlers forward requests to the grpc endpoint over "conn".
-func RegisterSupplierServiceHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
-	return RegisterSupplierServiceHandlerClient(ctx, mux, NewSupplierServiceClient(conn))
+func RegisterSupplierHandler(ctx context.Context, mux *runtime.ServeMux, conn *grpc.ClientConn) error {
+	return RegisterSupplierHandlerClient(ctx, mux, NewSupplierClient(conn))
 }
 
-// RegisterSupplierServiceHandlerClient registers the http handlers for service SupplierService
-// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "SupplierServiceClient".
-// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "SupplierServiceClient"
+// RegisterSupplierHandlerClient registers the http handlers for service Supplier
+// to "mux". The handlers forward requests to the grpc endpoint over the given implementation of "SupplierClient".
+// Note: the gRPC framework executes interceptors within the gRPC handler. If the passed in "SupplierClient"
 // doesn't go through the normal gRPC flow (creating a gRPC client etc.) then it will be up to the passed in
-// "SupplierServiceClient" to call the correct interceptors.
-func RegisterSupplierServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux, client SupplierServiceClient) error {
+// "SupplierClient" to call the correct interceptors.
+func RegisterSupplierHandlerClient(ctx context.Context, mux *runtime.ServeMux, client SupplierClient) error {
 
-	mux.Handle("DELETE", pattern_SupplierService_Delete_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("DELETE", pattern_Supplier_Delete_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/supplier.SupplierService/Delete")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/supplier.Supplier/Delete")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_SupplierService_Delete_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_Supplier_Delete_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_SupplierService_Delete_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Supplier_Delete_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_SupplierService_Insert_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_Supplier_Insert_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/supplier.SupplierService/Insert")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/supplier.Supplier/Insert")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_SupplierService_Insert_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_Supplier_Insert_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_SupplierService_Insert_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Supplier_Insert_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_SupplierService_SupplierBySupplierID_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_Supplier_SupplierBySupplierID_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/supplier.SupplierService/SupplierBySupplierID")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/supplier.Supplier/SupplierBySupplierID")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_SupplierService_SupplierBySupplierID_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_Supplier_SupplierBySupplierID_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_SupplierService_SupplierBySupplierID_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Supplier_SupplierBySupplierID_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("PUT", pattern_SupplierService_Update_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("PUT", pattern_Supplier_Update_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/supplier.SupplierService/Update")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/supplier.Supplier/Update")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_SupplierService_Update_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_Supplier_Update_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_SupplierService_Update_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Supplier_Update_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("POST", pattern_SupplierService_Upsert_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("POST", pattern_Supplier_Upsert_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/supplier.SupplierService/Upsert")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/supplier.Supplier/Upsert")
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_SupplierService_Upsert_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_Supplier_Upsert_0(rctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_SupplierService_Upsert_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_Supplier_Upsert_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -537,25 +537,25 @@ func RegisterSupplierServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 }
 
 var (
-	pattern_SupplierService_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "supplier", "SupplierID"}, ""))
+	pattern_Supplier_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "supplier", "SupplierID"}, ""))
 
-	pattern_SupplierService_Insert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "supplier"}, ""))
+	pattern_Supplier_Insert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "supplier"}, ""))
 
-	pattern_SupplierService_SupplierBySupplierID_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "supplier", "supplierID"}, ""))
+	pattern_Supplier_SupplierBySupplierID_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "supplier", "supplierID"}, ""))
 
-	pattern_SupplierService_Update_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "supplier", "SupplierID"}, ""))
+	pattern_Supplier_Update_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "supplier", "SupplierID"}, ""))
 
-	pattern_SupplierService_Upsert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "supplier", "upsert"}, ""))
+	pattern_Supplier_Upsert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "supplier", "upsert"}, ""))
 )
 
 var (
-	forward_SupplierService_Delete_0 = runtime.ForwardResponseMessage
+	forward_Supplier_Delete_0 = runtime.ForwardResponseMessage
 
-	forward_SupplierService_Insert_0 = runtime.ForwardResponseMessage
+	forward_Supplier_Insert_0 = runtime.ForwardResponseMessage
 
-	forward_SupplierService_SupplierBySupplierID_0 = runtime.ForwardResponseMessage
+	forward_Supplier_SupplierBySupplierID_0 = runtime.ForwardResponseMessage
 
-	forward_SupplierService_Update_0 = runtime.ForwardResponseMessage
+	forward_Supplier_Update_0 = runtime.ForwardResponseMessage
 
-	forward_SupplierService_Upsert_0 = runtime.ForwardResponseMessage
+	forward_Supplier_Upsert_0 = runtime.ForwardResponseMessage
 )

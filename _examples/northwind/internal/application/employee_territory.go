@@ -15,7 +15,7 @@ import (
 )
 
 type EmployeeTerritoryService struct {
-	pb.UnimplementedEmployeeTerritoryServiceServer
+	pb.UnimplementedEmployeeTerritoryServer
 	db *sql.DB
 }
 

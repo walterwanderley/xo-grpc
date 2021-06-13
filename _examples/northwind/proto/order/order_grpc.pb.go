@@ -16,10 +16,10 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// OrderServiceClient is the client API for OrderService service.
+// OrderClient is the client API for Order service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type OrderServiceClient interface {
+type OrderClient interface {
 	Customer(ctx context.Context, in *CustomerRequest, opts ...grpc.CallOption) (*typespb.Customer, error)
 	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Employee(ctx context.Context, in *EmployeeRequest, opts ...grpc.CallOption) (*typespb.Employee, error)
@@ -30,90 +30,90 @@ type OrderServiceClient interface {
 	Upsert(ctx context.Context, in *UpsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
-type orderServiceClient struct {
+type orderClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewOrderServiceClient(cc grpc.ClientConnInterface) OrderServiceClient {
-	return &orderServiceClient{cc}
+func NewOrderClient(cc grpc.ClientConnInterface) OrderClient {
+	return &orderClient{cc}
 }
 
-func (c *orderServiceClient) Customer(ctx context.Context, in *CustomerRequest, opts ...grpc.CallOption) (*typespb.Customer, error) {
+func (c *orderClient) Customer(ctx context.Context, in *CustomerRequest, opts ...grpc.CallOption) (*typespb.Customer, error) {
 	out := new(typespb.Customer)
-	err := c.cc.Invoke(ctx, "/order.OrderService/Customer", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/order.Order/Customer", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *orderServiceClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *orderClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/order.OrderService/Delete", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/order.Order/Delete", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *orderServiceClient) Employee(ctx context.Context, in *EmployeeRequest, opts ...grpc.CallOption) (*typespb.Employee, error) {
+func (c *orderClient) Employee(ctx context.Context, in *EmployeeRequest, opts ...grpc.CallOption) (*typespb.Employee, error) {
 	out := new(typespb.Employee)
-	err := c.cc.Invoke(ctx, "/order.OrderService/Employee", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/order.Order/Employee", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *orderServiceClient) Insert(ctx context.Context, in *InsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *orderClient) Insert(ctx context.Context, in *InsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/order.OrderService/Insert", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/order.Order/Insert", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *orderServiceClient) OrderByOrderID(ctx context.Context, in *OrderByOrderIDRequest, opts ...grpc.CallOption) (*typespb.Order, error) {
+func (c *orderClient) OrderByOrderID(ctx context.Context, in *OrderByOrderIDRequest, opts ...grpc.CallOption) (*typespb.Order, error) {
 	out := new(typespb.Order)
-	err := c.cc.Invoke(ctx, "/order.OrderService/OrderByOrderID", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/order.Order/OrderByOrderID", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *orderServiceClient) Shipper(ctx context.Context, in *ShipperRequest, opts ...grpc.CallOption) (*typespb.Shipper, error) {
+func (c *orderClient) Shipper(ctx context.Context, in *ShipperRequest, opts ...grpc.CallOption) (*typespb.Shipper, error) {
 	out := new(typespb.Shipper)
-	err := c.cc.Invoke(ctx, "/order.OrderService/Shipper", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/order.Order/Shipper", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *orderServiceClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *orderClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/order.OrderService/Update", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/order.Order/Update", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *orderServiceClient) Upsert(ctx context.Context, in *UpsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *orderClient) Upsert(ctx context.Context, in *UpsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/order.OrderService/Upsert", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/order.Order/Upsert", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// OrderServiceServer is the server API for OrderService service.
-// All implementations must embed UnimplementedOrderServiceServer
+// OrderServer is the server API for Order service.
+// All implementations must embed UnimplementedOrderServer
 // for forward compatibility
-type OrderServiceServer interface {
+type OrderServer interface {
 	Customer(context.Context, *CustomerRequest) (*typespb.Customer, error)
 	Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error)
 	Employee(context.Context, *EmployeeRequest) (*typespb.Employee, error)
@@ -122,232 +122,232 @@ type OrderServiceServer interface {
 	Shipper(context.Context, *ShipperRequest) (*typespb.Shipper, error)
 	Update(context.Context, *UpdateRequest) (*emptypb.Empty, error)
 	Upsert(context.Context, *UpsertRequest) (*emptypb.Empty, error)
-	mustEmbedUnimplementedOrderServiceServer()
+	mustEmbedUnimplementedOrderServer()
 }
 
-// UnimplementedOrderServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedOrderServiceServer struct {
+// UnimplementedOrderServer must be embedded to have forward compatible implementations.
+type UnimplementedOrderServer struct {
 }
 
-func (UnimplementedOrderServiceServer) Customer(context.Context, *CustomerRequest) (*typespb.Customer, error) {
+func (UnimplementedOrderServer) Customer(context.Context, *CustomerRequest) (*typespb.Customer, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Customer not implemented")
 }
-func (UnimplementedOrderServiceServer) Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error) {
+func (UnimplementedOrderServer) Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
 }
-func (UnimplementedOrderServiceServer) Employee(context.Context, *EmployeeRequest) (*typespb.Employee, error) {
+func (UnimplementedOrderServer) Employee(context.Context, *EmployeeRequest) (*typespb.Employee, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Employee not implemented")
 }
-func (UnimplementedOrderServiceServer) Insert(context.Context, *InsertRequest) (*emptypb.Empty, error) {
+func (UnimplementedOrderServer) Insert(context.Context, *InsertRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Insert not implemented")
 }
-func (UnimplementedOrderServiceServer) OrderByOrderID(context.Context, *OrderByOrderIDRequest) (*typespb.Order, error) {
+func (UnimplementedOrderServer) OrderByOrderID(context.Context, *OrderByOrderIDRequest) (*typespb.Order, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method OrderByOrderID not implemented")
 }
-func (UnimplementedOrderServiceServer) Shipper(context.Context, *ShipperRequest) (*typespb.Shipper, error) {
+func (UnimplementedOrderServer) Shipper(context.Context, *ShipperRequest) (*typespb.Shipper, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Shipper not implemented")
 }
-func (UnimplementedOrderServiceServer) Update(context.Context, *UpdateRequest) (*emptypb.Empty, error) {
+func (UnimplementedOrderServer) Update(context.Context, *UpdateRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
 }
-func (UnimplementedOrderServiceServer) Upsert(context.Context, *UpsertRequest) (*emptypb.Empty, error) {
+func (UnimplementedOrderServer) Upsert(context.Context, *UpsertRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Upsert not implemented")
 }
-func (UnimplementedOrderServiceServer) mustEmbedUnimplementedOrderServiceServer() {}
+func (UnimplementedOrderServer) mustEmbedUnimplementedOrderServer() {}
 
-// UnsafeOrderServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to OrderServiceServer will
+// UnsafeOrderServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to OrderServer will
 // result in compilation errors.
-type UnsafeOrderServiceServer interface {
-	mustEmbedUnimplementedOrderServiceServer()
+type UnsafeOrderServer interface {
+	mustEmbedUnimplementedOrderServer()
 }
 
-func RegisterOrderServiceServer(s grpc.ServiceRegistrar, srv OrderServiceServer) {
-	s.RegisterService(&OrderService_ServiceDesc, srv)
+func RegisterOrderServer(s grpc.ServiceRegistrar, srv OrderServer) {
+	s.RegisterService(&Order_ServiceDesc, srv)
 }
 
-func _OrderService_Customer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Order_Customer_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CustomerRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(OrderServiceServer).Customer(ctx, in)
+		return srv.(OrderServer).Customer(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/order.OrderService/Customer",
+		FullMethod: "/order.Order/Customer",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrderServiceServer).Customer(ctx, req.(*CustomerRequest))
+		return srv.(OrderServer).Customer(ctx, req.(*CustomerRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _OrderService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Order_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(OrderServiceServer).Delete(ctx, in)
+		return srv.(OrderServer).Delete(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/order.OrderService/Delete",
+		FullMethod: "/order.Order/Delete",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrderServiceServer).Delete(ctx, req.(*DeleteRequest))
+		return srv.(OrderServer).Delete(ctx, req.(*DeleteRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _OrderService_Employee_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Order_Employee_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(EmployeeRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(OrderServiceServer).Employee(ctx, in)
+		return srv.(OrderServer).Employee(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/order.OrderService/Employee",
+		FullMethod: "/order.Order/Employee",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrderServiceServer).Employee(ctx, req.(*EmployeeRequest))
+		return srv.(OrderServer).Employee(ctx, req.(*EmployeeRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _OrderService_Insert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Order_Insert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(InsertRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(OrderServiceServer).Insert(ctx, in)
+		return srv.(OrderServer).Insert(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/order.OrderService/Insert",
+		FullMethod: "/order.Order/Insert",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrderServiceServer).Insert(ctx, req.(*InsertRequest))
+		return srv.(OrderServer).Insert(ctx, req.(*InsertRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _OrderService_OrderByOrderID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Order_OrderByOrderID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(OrderByOrderIDRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(OrderServiceServer).OrderByOrderID(ctx, in)
+		return srv.(OrderServer).OrderByOrderID(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/order.OrderService/OrderByOrderID",
+		FullMethod: "/order.Order/OrderByOrderID",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrderServiceServer).OrderByOrderID(ctx, req.(*OrderByOrderIDRequest))
+		return srv.(OrderServer).OrderByOrderID(ctx, req.(*OrderByOrderIDRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _OrderService_Shipper_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Order_Shipper_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ShipperRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(OrderServiceServer).Shipper(ctx, in)
+		return srv.(OrderServer).Shipper(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/order.OrderService/Shipper",
+		FullMethod: "/order.Order/Shipper",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrderServiceServer).Shipper(ctx, req.(*ShipperRequest))
+		return srv.(OrderServer).Shipper(ctx, req.(*ShipperRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _OrderService_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Order_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(OrderServiceServer).Update(ctx, in)
+		return srv.(OrderServer).Update(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/order.OrderService/Update",
+		FullMethod: "/order.Order/Update",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrderServiceServer).Update(ctx, req.(*UpdateRequest))
+		return srv.(OrderServer).Update(ctx, req.(*UpdateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _OrderService_Upsert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Order_Upsert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpsertRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(OrderServiceServer).Upsert(ctx, in)
+		return srv.(OrderServer).Upsert(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/order.OrderService/Upsert",
+		FullMethod: "/order.Order/Upsert",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(OrderServiceServer).Upsert(ctx, req.(*UpsertRequest))
+		return srv.(OrderServer).Upsert(ctx, req.(*UpsertRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// OrderService_ServiceDesc is the grpc.ServiceDesc for OrderService service.
+// Order_ServiceDesc is the grpc.ServiceDesc for Order service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var OrderService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "order.OrderService",
-	HandlerType: (*OrderServiceServer)(nil),
+var Order_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "order.Order",
+	HandlerType: (*OrderServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Customer",
-			Handler:    _OrderService_Customer_Handler,
+			Handler:    _Order_Customer_Handler,
 		},
 		{
 			MethodName: "Delete",
-			Handler:    _OrderService_Delete_Handler,
+			Handler:    _Order_Delete_Handler,
 		},
 		{
 			MethodName: "Employee",
-			Handler:    _OrderService_Employee_Handler,
+			Handler:    _Order_Employee_Handler,
 		},
 		{
 			MethodName: "Insert",
-			Handler:    _OrderService_Insert_Handler,
+			Handler:    _Order_Insert_Handler,
 		},
 		{
 			MethodName: "OrderByOrderID",
-			Handler:    _OrderService_OrderByOrderID_Handler,
+			Handler:    _Order_OrderByOrderID_Handler,
 		},
 		{
 			MethodName: "Shipper",
-			Handler:    _OrderService_Shipper_Handler,
+			Handler:    _Order_Shipper_Handler,
 		},
 		{
 			MethodName: "Update",
-			Handler:    _OrderService_Update_Handler,
+			Handler:    _Order_Update_Handler,
 		},
 		{
 			MethodName: "Upsert",
-			Handler:    _OrderService_Upsert_Handler,
+			Handler:    _Order_Upsert_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

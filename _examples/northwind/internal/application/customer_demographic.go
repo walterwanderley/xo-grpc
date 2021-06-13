@@ -14,7 +14,7 @@ import (
 )
 
 type CustomerDemographicService struct {
-	pb.UnimplementedCustomerDemographicServiceServer
+	pb.UnimplementedCustomerDemographicServer
 	db *sql.DB
 }
 

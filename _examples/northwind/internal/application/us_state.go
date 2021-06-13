@@ -14,7 +14,7 @@ import (
 )
 
 type UsStateService struct {
-	pb.UnimplementedUsStateServiceServer
+	pb.UnimplementedUsStateServer
 	db *sql.DB
 }
 

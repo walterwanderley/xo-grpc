@@ -14,7 +14,7 @@ import (
 )
 
 type ProductService struct {
-	pb.UnimplementedProductServiceServer
+	pb.UnimplementedProductServer
 	db *sql.DB
 }
 

@@ -13,7 +13,7 @@ import (
 )
 
 type TerritoryService struct {
-	pb.UnimplementedTerritoryServiceServer
+	pb.UnimplementedTerritoryServer
 	db *sql.DB
 }
 

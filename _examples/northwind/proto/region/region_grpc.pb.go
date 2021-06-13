@@ -16,10 +16,10 @@ import (
 // Requires gRPC-Go v1.32.0 or later.
 const _ = grpc.SupportPackageIsVersion7
 
-// RegionServiceClient is the client API for RegionService service.
+// RegionClient is the client API for Region service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type RegionServiceClient interface {
+type RegionClient interface {
 	Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Insert(ctx context.Context, in *InsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	RegionByRegionID(ctx context.Context, in *RegionByRegionIDRequest, opts ...grpc.CallOption) (*typespb.Region, error)
@@ -27,219 +27,219 @@ type RegionServiceClient interface {
 	Upsert(ctx context.Context, in *UpsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
-type regionServiceClient struct {
+type regionClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewRegionServiceClient(cc grpc.ClientConnInterface) RegionServiceClient {
-	return &regionServiceClient{cc}
+func NewRegionClient(cc grpc.ClientConnInterface) RegionClient {
+	return &regionClient{cc}
 }
 
-func (c *regionServiceClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *regionClient) Delete(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/region.RegionService/Delete", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/region.Region/Delete", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *regionServiceClient) Insert(ctx context.Context, in *InsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *regionClient) Insert(ctx context.Context, in *InsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/region.RegionService/Insert", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/region.Region/Insert", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *regionServiceClient) RegionByRegionID(ctx context.Context, in *RegionByRegionIDRequest, opts ...grpc.CallOption) (*typespb.Region, error) {
+func (c *regionClient) RegionByRegionID(ctx context.Context, in *RegionByRegionIDRequest, opts ...grpc.CallOption) (*typespb.Region, error) {
 	out := new(typespb.Region)
-	err := c.cc.Invoke(ctx, "/region.RegionService/RegionByRegionID", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/region.Region/RegionByRegionID", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *regionServiceClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *regionClient) Update(ctx context.Context, in *UpdateRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/region.RegionService/Update", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/region.Region/Update", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *regionServiceClient) Upsert(ctx context.Context, in *UpsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *regionClient) Upsert(ctx context.Context, in *UpsertRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, "/region.RegionService/Upsert", in, out, opts...)
+	err := c.cc.Invoke(ctx, "/region.Region/Upsert", in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-// RegionServiceServer is the server API for RegionService service.
-// All implementations must embed UnimplementedRegionServiceServer
+// RegionServer is the server API for Region service.
+// All implementations must embed UnimplementedRegionServer
 // for forward compatibility
-type RegionServiceServer interface {
+type RegionServer interface {
 	Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error)
 	Insert(context.Context, *InsertRequest) (*emptypb.Empty, error)
 	RegionByRegionID(context.Context, *RegionByRegionIDRequest) (*typespb.Region, error)
 	Update(context.Context, *UpdateRequest) (*emptypb.Empty, error)
 	Upsert(context.Context, *UpsertRequest) (*emptypb.Empty, error)
-	mustEmbedUnimplementedRegionServiceServer()
+	mustEmbedUnimplementedRegionServer()
 }
 
-// UnimplementedRegionServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedRegionServiceServer struct {
+// UnimplementedRegionServer must be embedded to have forward compatible implementations.
+type UnimplementedRegionServer struct {
 }
 
-func (UnimplementedRegionServiceServer) Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error) {
+func (UnimplementedRegionServer) Delete(context.Context, *DeleteRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Delete not implemented")
 }
-func (UnimplementedRegionServiceServer) Insert(context.Context, *InsertRequest) (*emptypb.Empty, error) {
+func (UnimplementedRegionServer) Insert(context.Context, *InsertRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Insert not implemented")
 }
-func (UnimplementedRegionServiceServer) RegionByRegionID(context.Context, *RegionByRegionIDRequest) (*typespb.Region, error) {
+func (UnimplementedRegionServer) RegionByRegionID(context.Context, *RegionByRegionIDRequest) (*typespb.Region, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method RegionByRegionID not implemented")
 }
-func (UnimplementedRegionServiceServer) Update(context.Context, *UpdateRequest) (*emptypb.Empty, error) {
+func (UnimplementedRegionServer) Update(context.Context, *UpdateRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Update not implemented")
 }
-func (UnimplementedRegionServiceServer) Upsert(context.Context, *UpsertRequest) (*emptypb.Empty, error) {
+func (UnimplementedRegionServer) Upsert(context.Context, *UpsertRequest) (*emptypb.Empty, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Upsert not implemented")
 }
-func (UnimplementedRegionServiceServer) mustEmbedUnimplementedRegionServiceServer() {}
+func (UnimplementedRegionServer) mustEmbedUnimplementedRegionServer() {}
 
-// UnsafeRegionServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to RegionServiceServer will
+// UnsafeRegionServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to RegionServer will
 // result in compilation errors.
-type UnsafeRegionServiceServer interface {
-	mustEmbedUnimplementedRegionServiceServer()
+type UnsafeRegionServer interface {
+	mustEmbedUnimplementedRegionServer()
 }
 
-func RegisterRegionServiceServer(s grpc.ServiceRegistrar, srv RegionServiceServer) {
-	s.RegisterService(&RegionService_ServiceDesc, srv)
+func RegisterRegionServer(s grpc.ServiceRegistrar, srv RegionServer) {
+	s.RegisterService(&Region_ServiceDesc, srv)
 }
 
-func _RegionService_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Region_Delete_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(DeleteRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RegionServiceServer).Delete(ctx, in)
+		return srv.(RegionServer).Delete(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/region.RegionService/Delete",
+		FullMethod: "/region.Region/Delete",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RegionServiceServer).Delete(ctx, req.(*DeleteRequest))
+		return srv.(RegionServer).Delete(ctx, req.(*DeleteRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RegionService_Insert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Region_Insert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(InsertRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RegionServiceServer).Insert(ctx, in)
+		return srv.(RegionServer).Insert(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/region.RegionService/Insert",
+		FullMethod: "/region.Region/Insert",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RegionServiceServer).Insert(ctx, req.(*InsertRequest))
+		return srv.(RegionServer).Insert(ctx, req.(*InsertRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RegionService_RegionByRegionID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Region_RegionByRegionID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(RegionByRegionIDRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RegionServiceServer).RegionByRegionID(ctx, in)
+		return srv.(RegionServer).RegionByRegionID(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/region.RegionService/RegionByRegionID",
+		FullMethod: "/region.Region/RegionByRegionID",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RegionServiceServer).RegionByRegionID(ctx, req.(*RegionByRegionIDRequest))
+		return srv.(RegionServer).RegionByRegionID(ctx, req.(*RegionByRegionIDRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RegionService_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Region_Update_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpdateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RegionServiceServer).Update(ctx, in)
+		return srv.(RegionServer).Update(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/region.RegionService/Update",
+		FullMethod: "/region.Region/Update",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RegionServiceServer).Update(ctx, req.(*UpdateRequest))
+		return srv.(RegionServer).Update(ctx, req.(*UpdateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RegionService_Upsert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Region_Upsert_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(UpsertRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RegionServiceServer).Upsert(ctx, in)
+		return srv.(RegionServer).Upsert(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: "/region.RegionService/Upsert",
+		FullMethod: "/region.Region/Upsert",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RegionServiceServer).Upsert(ctx, req.(*UpsertRequest))
+		return srv.(RegionServer).Upsert(ctx, req.(*UpsertRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-// RegionService_ServiceDesc is the grpc.ServiceDesc for RegionService service.
+// Region_ServiceDesc is the grpc.ServiceDesc for Region service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var RegionService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "region.RegionService",
-	HandlerType: (*RegionServiceServer)(nil),
+var Region_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "region.Region",
+	HandlerType: (*RegionServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Delete",
-			Handler:    _RegionService_Delete_Handler,
+			Handler:    _Region_Delete_Handler,
 		},
 		{
 			MethodName: "Insert",
-			Handler:    _RegionService_Insert_Handler,
+			Handler:    _Region_Insert_Handler,
 		},
 		{
 			MethodName: "RegionByRegionID",
-			Handler:    _RegionService_RegionByRegionID_Handler,
+			Handler:    _Region_RegionByRegionID_Handler,
 		},
 		{
 			MethodName: "Update",
-			Handler:    _RegionService_Update_Handler,
+			Handler:    _Region_Update_Handler,
 		},
 		{
 			MethodName: "Upsert",
-			Handler:    _RegionService_Upsert_Handler,
+			Handler:    _Region_Upsert_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
