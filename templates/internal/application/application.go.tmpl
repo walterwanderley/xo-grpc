@@ -4,11 +4,10 @@ import (
 	"context"
 	"database/sql"
 	"encoding/json"
+	"fmt"
 	"net"
 
 	"github.com/google/uuid"
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/metadata"
 	"google.golang.org/protobuf/types/known/emptypb"
 	"google.golang.org/protobuf/types/known/timestamppb"
 	"google.golang.org/protobuf/types/known/wrapperspb"
@@ -47,19 +46,11 @@ func (s *{{$package | UpperFirst}}Service) {{.Name}}(ctx context.Context, req *{
 	res = new({{.MethodOutputType}})
 	{{ range .OutputGrpc}}{{ .}}		
 	{{end}}
-	{{if and (eq .Name "Insert") (.SimplePK)}}
-	if md, ok := metadata.FromIncomingContext(ctx); ok {
-		uri := md.Get("requestURI")
-		if len(uri) == 1 {
-			err = grpc.SendHeader(ctx, metadata.Pairs(
-				"location", fmt.Sprintf("%s/%v", uri[0], m.{{.SimplePK}}),
-				"x-http-code", "201"),
-			)
-			if err != nil {
-				return
-			}
-		}
-	}	
+	{{if eq .Name "Insert"}}{{if .SimplePK}}
+	err = sendResourceLocation(ctx, fmt.Sprintf("/%v", m.{{.SimplePK}}))
+	{{else}}
+	err = sendResourceLocation(ctx, fmt.Sprintf("?{{ .PKJoin "=%v&"}}=%v", m.{{.PKJoin ", m."}}))
+	{{end -}}
 	{{end}}
 	return
 }
