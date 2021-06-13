@@ -38,13 +38,13 @@ type Server struct {
 	log *zap.Logger
 	grpcServer *grpc.Server
 	healthServer *health.Server
-	{{range .Packages}}{{.Package}}Service pb_{{.Package}}.{{ .Package | UpperFirst}}ServiceServer
+	{{range .Packages}}{{.Package}}Service pb_{{.Package}}.{{ .Package | UpperFirst}}Server
 	{{end}}
 }
 
 // New gRPC server
 func New(cfg Config, log *zap.Logger,
-    {{range .Packages}}{{.Package}}Service pb_{{.Package}}.{{ .Package | UpperFirst}}ServiceServer,
+    {{range .Packages}}{{.Package}}Service pb_{{.Package}}.{{ .Package | UpperFirst}}Server,
 	{{end}}
     ) *Server {
 	return &Server{
@@ -64,7 +64,7 @@ func (srv *Server) ListenAndServe() error {
 	healthpb.RegisterHealthServer(srv.grpcServer, srv.healthServer)
 	srv.healthServer.SetServingStatus("ww", healthpb.HealthCheckResponse_SERVING)
 
-	{{range .Packages}}pb_{{.Package}}.Register{{ .Package | UpperFirst}}ServiceServer(srv.grpcServer, srv.{{.Package}}Service)
+	{{range .Packages}}pb_{{.Package}}.Register{{ .Package | UpperFirst}}Server(srv.grpcServer, srv.{{.Package}}Service)
 	{{end}}
 
 	var listen net.Listener
@@ -141,7 +141,7 @@ func (srv *Server) ListenAndServe() error {
 		runtime.WithForwardResponseOption(forwardResponse),
 		runtime.WithOutgoingHeaderMatcher(outcomingHeaderMatcher),
 	)
-	{{range .Packages}}if err := pb_{{.Package}}.Register{{ .Package | UpperFirst}}ServiceHandler(context.Background(), gwmux, cc); err != nil {
+	{{range .Packages}}if err := pb_{{.Package}}.Register{{ .Package | UpperFirst}}Handler(context.Background(), gwmux, cc); err != nil {
 		return err
 	}
 	{{end}}

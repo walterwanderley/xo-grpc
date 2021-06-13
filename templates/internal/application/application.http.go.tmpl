@@ -1,18 +1,19 @@
 package application
 
 import (
-    "context"
+	"context"
+	"strings"
 
-    "google.golang.org/grpc"
+	"google.golang.org/grpc"
 	"google.golang.org/grpc/metadata"
 )
 
 func sendResourceLocation(ctx context.Context, id string) error {
-    if md, ok := metadata.FromIncomingContext(ctx); ok {
+	if md, ok := metadata.FromIncomingContext(ctx); ok {
 		uri := md.Get("requestURI")
 		if len(uri) == 1 {
 			err := grpc.SendHeader(ctx, metadata.Pairs(
-				"location", uri[0] + id,
+				"location", strings.TrimSuffix(uri[0], "/")+id,
 				"x-http-code", "201"),
 			)
 			if err != nil {
@@ -20,5 +21,5 @@ func sendResourceLocation(ctx context.Context, id string) error {
 			}
 		}
 	}
-    return nil
+	return nil
 }

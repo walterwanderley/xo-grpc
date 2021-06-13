@@ -19,7 +19,7 @@ import (
 )
 	
 type {{.Package | UpperFirst}}Service struct {
-    pb.Unimplemented{{.Package | UpperFirst}}ServiceServer
+    pb.Unimplemented{{.Package | UpperFirst}}Server
 	db *sql.DB
 }
 	
