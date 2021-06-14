@@ -132,7 +132,6 @@ func (s *CustomerCustomerDemoService) Insert(ctx context.Context, req *pb.Insert
 
 	res = new(emptypb.Empty)
 
-	err = sendResourceLocation(ctx, fmt.Sprintf("?CustomerID=%v&CustomerTypeID=%v", m.CustomerID, m.CustomerTypeID))
-
+	err = sendResourceLocation(ctx, fmt.Sprintf("/customer/%v/customer-type/%v", m.CustomerID, m.CustomerTypeID))
 	return
 }

@@ -50,7 +50,6 @@ func (s *RegionService) Insert(ctx context.Context, req *pb.InsertRequest) (res 
 	res = new(emptypb.Empty)
 
 	err = sendResourceLocation(ctx, fmt.Sprintf("/%v", m.RegionID))
-
 	return
 }
 

@@ -75,7 +75,6 @@ func (s *CategoryService) Insert(ctx context.Context, req *pb.InsertRequest) (re
 	res = new(emptypb.Empty)
 
 	err = sendResourceLocation(ctx, fmt.Sprintf("/%v", m.CategoryID))
-
 	return
 }
 

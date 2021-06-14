@@ -71,7 +71,6 @@ func (s *CustomerDemographicService) Insert(ctx context.Context, req *pb.InsertR
 	res = new(emptypb.Empty)
 
 	err = sendResourceLocation(ctx, fmt.Sprintf("/%v", m.CustomerTypeID))
-
 	return
 }
 

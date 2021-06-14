@@ -130,8 +130,7 @@ func (s *EmployeeTerritoryService) Insert(ctx context.Context, req *pb.InsertReq
 
 	res = new(emptypb.Empty)
 
-	err = sendResourceLocation(ctx, fmt.Sprintf("?EmployeeID=%v&TerritoryID=%v", m.EmployeeID, m.TerritoryID))
-
+	err = sendResourceLocation(ctx, fmt.Sprintf("/employee/%v/territory/%v", int16(m.EmployeeID), m.TerritoryID))
 	return
 }
 

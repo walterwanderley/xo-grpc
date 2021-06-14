@@ -54,8 +54,7 @@ func (s *OrderDetailService) Insert(ctx context.Context, req *pb.InsertRequest) 
 
 	res = new(emptypb.Empty)
 
-	err = sendResourceLocation(ctx, fmt.Sprintf("?OrderID=%v&ProductID=%v", m.OrderID, m.ProductID))
-
+	err = sendResourceLocation(ctx, fmt.Sprintf("/order/%v/product/%v", int16(m.OrderID), int16(m.ProductID)))
 	return
 }
 
