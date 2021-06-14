@@ -34,9 +34,9 @@ func toProtoType(typ string) string {
 	case "json.RawMessage", "[]byte":
 		return "bytes"
 	case "sql.NullBool":
-		return ".google.protobuf.BoolValue"
+		return "google.protobuf.BoolValue"
 	case "sql.NullInt32":
-		return ".google.protobuf.Int32Value"
+		return "google.protobuf.Int32Value"
 	case "int":
 		return "int64"
 	case "int16":
@@ -44,17 +44,17 @@ func toProtoType(typ string) string {
 	case "uint16":
 		return "uint32"
 	case "sql.NullInt64":
-		return ".google.protobuf.Int64Value"
+		return "google.protobuf.Int64Value"
 	case "float32":
 		return "float"
 	case "float64":
 		return "double"
 	case "sql.NullFloat64":
-		return ".google.protobuf.DoubleValue"
+		return "google.protobuf.DoubleValue"
 	case "sql.NullString":
-		return ".google.protobuf.StringValue"
+		return "google.protobuf.StringValue"
 	case "sql.NullTime", "time.Time", "pq.NullTime", "mysql.NullTime", "xoutil.SqTime":
-		return ".google.protobuf.Timestamp"
+		return "google.protobuf.Timestamp"
 	case "uuid.UUID", "net.HardwareAddr", "net.IP":
 		return "string"
 	default:
