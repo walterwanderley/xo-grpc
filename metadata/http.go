@@ -71,6 +71,20 @@ func (s *Service) pkURLParams() string {
 
 }
 
+func (s *Service) LocationURIPattern() string {
+	if pk := s.SimplePK(); pk != "" {
+		return `"/%v", m.` + pk
+	}
+	var buf strings.Builder
+	buf.WriteString(`"`)
+	for _, attr := range s.PK() {
+		buf.WriteString(fmt.Sprintf(`/%s/%%v`, strings.TrimSuffix(toKebabCase(attr), "-id")))
+	}
+	buf.WriteString("\", ")
+	buf.WriteString(s.PKParams("m."))
+	return buf.String()
+}
+
 func (s *Service) HttpBody() string {
 	switch s.HttpMethod() {
 	case "get", "delete":
