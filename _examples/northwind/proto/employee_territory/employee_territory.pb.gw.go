@@ -31,19 +31,35 @@ var _ = runtime.String
 var _ = utilities.NewDoubleArray
 var _ = metadata.Join
 
-var (
-	filter_EmployeeTerritory_Delete_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
-)
-
 func request_EmployeeTerritory_Delete_0(ctx context.Context, marshaler runtime.Marshaler, client EmployeeTerritoryClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq DeleteRequest
 	var metadata runtime.ServerMetadata
 
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["employeeID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "employeeID")
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_EmployeeTerritory_Delete_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+
+	protoReq.EmployeeID, err = runtime.Int32(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "employeeID", err)
+	}
+
+	val, ok = pathParams["territoryID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "territoryID")
+	}
+
+	protoReq.TerritoryID, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "territoryID", err)
 	}
 
 	msg, err := client.Delete(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -55,11 +71,31 @@ func local_request_EmployeeTerritory_Delete_0(ctx context.Context, marshaler run
 	var protoReq DeleteRequest
 	var metadata runtime.ServerMetadata
 
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["employeeID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "employeeID")
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_EmployeeTerritory_Delete_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+
+	protoReq.EmployeeID, err = runtime.Int32(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "employeeID", err)
+	}
+
+	val, ok = pathParams["territoryID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "territoryID")
+	}
+
+	protoReq.TerritoryID, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "territoryID", err)
 	}
 
 	msg, err := server.Delete(ctx, &protoReq)
@@ -78,14 +114,24 @@ func request_EmployeeTerritory_Employee_0(ctx context.Context, marshaler runtime
 		_   = err
 	)
 
-	val, ok = pathParams["EmployeeID"]
+	val, ok = pathParams["employeeID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "EmployeeID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "employeeID")
 	}
 
 	protoReq.EmployeeID, err = runtime.Int32(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "EmployeeID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "employeeID", err)
+	}
+
+	val, ok = pathParams["territoryID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "territoryID")
+	}
+
+	protoReq.TerritoryID, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "territoryID", err)
 	}
 
 	msg, err := client.Employee(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -104,14 +150,24 @@ func local_request_EmployeeTerritory_Employee_0(ctx context.Context, marshaler r
 		_   = err
 	)
 
-	val, ok = pathParams["EmployeeID"]
+	val, ok = pathParams["employeeID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "EmployeeID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "employeeID")
 	}
 
 	protoReq.EmployeeID, err = runtime.Int32(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "EmployeeID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "employeeID", err)
+	}
+
+	val, ok = pathParams["territoryID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "territoryID")
+	}
+
+	protoReq.TerritoryID, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "territoryID", err)
 	}
 
 	msg, err := server.Employee(ctx, &protoReq)
@@ -119,19 +175,35 @@ func local_request_EmployeeTerritory_Employee_0(ctx context.Context, marshaler r
 
 }
 
-var (
-	filter_EmployeeTerritory_EmployeeTerritoryByEmployeeIDTerritoryID_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
-)
-
 func request_EmployeeTerritory_EmployeeTerritoryByEmployeeIDTerritoryID_0(ctx context.Context, marshaler runtime.Marshaler, client EmployeeTerritoryClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq EmployeeTerritoryByEmployeeIDTerritoryIDRequest
 	var metadata runtime.ServerMetadata
 
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["employeeID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "employeeID")
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_EmployeeTerritory_EmployeeTerritoryByEmployeeIDTerritoryID_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+
+	protoReq.EmployeeID, err = runtime.Int32(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "employeeID", err)
+	}
+
+	val, ok = pathParams["territoryID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "territoryID")
+	}
+
+	protoReq.TerritoryID, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "territoryID", err)
 	}
 
 	msg, err := client.EmployeeTerritoryByEmployeeIDTerritoryID(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -143,11 +215,31 @@ func local_request_EmployeeTerritory_EmployeeTerritoryByEmployeeIDTerritoryID_0(
 	var protoReq EmployeeTerritoryByEmployeeIDTerritoryIDRequest
 	var metadata runtime.ServerMetadata
 
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["employeeID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "employeeID")
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_EmployeeTerritory_EmployeeTerritoryByEmployeeIDTerritoryID_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+
+	protoReq.EmployeeID, err = runtime.Int32(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "employeeID", err)
+	}
+
+	val, ok = pathParams["territoryID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "territoryID")
+	}
+
+	protoReq.TerritoryID, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "territoryID", err)
 	}
 
 	msg, err := server.EmployeeTerritoryByEmployeeIDTerritoryID(ctx, &protoReq)
@@ -200,14 +292,24 @@ func request_EmployeeTerritory_Territory_0(ctx context.Context, marshaler runtim
 		_   = err
 	)
 
-	val, ok = pathParams["TerritoryID"]
+	val, ok = pathParams["employeeID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "TerritoryID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "employeeID")
+	}
+
+	protoReq.EmployeeID, err = runtime.Int32(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "employeeID", err)
+	}
+
+	val, ok = pathParams["territoryID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "territoryID")
 	}
 
 	protoReq.TerritoryID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "TerritoryID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "territoryID", err)
 	}
 
 	msg, err := client.Territory(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -226,14 +328,24 @@ func local_request_EmployeeTerritory_Territory_0(ctx context.Context, marshaler 
 		_   = err
 	)
 
-	val, ok = pathParams["TerritoryID"]
+	val, ok = pathParams["employeeID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "TerritoryID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "employeeID")
+	}
+
+	protoReq.EmployeeID, err = runtime.Int32(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "employeeID", err)
+	}
+
+	val, ok = pathParams["territoryID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "territoryID")
 	}
 
 	protoReq.TerritoryID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "TerritoryID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "territoryID", err)
 	}
 
 	msg, err := server.Territory(ctx, &protoReq)
@@ -507,15 +619,15 @@ func RegisterEmployeeTerritoryHandlerClient(ctx context.Context, mux *runtime.Se
 }
 
 var (
-	pattern_EmployeeTerritory_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "employee-territory"}, ""))
+	pattern_EmployeeTerritory_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"v1", "employee-territory", "employee", "employeeID", "territory", "territoryID"}, ""))
 
-	pattern_EmployeeTerritory_Employee_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "employee-territory", "employee", "EmployeeID"}, ""))
+	pattern_EmployeeTerritory_Employee_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 2}, []string{"v1", "employee-territory", "employee", "employeeID", "territory", "territoryID"}, ""))
 
-	pattern_EmployeeTerritory_EmployeeTerritoryByEmployeeIDTerritoryID_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "employee-territory"}, ""))
+	pattern_EmployeeTerritory_EmployeeTerritoryByEmployeeIDTerritoryID_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"v1", "employee-territory", "employee", "employeeID", "territory", "territoryID"}, ""))
 
 	pattern_EmployeeTerritory_Insert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "employee-territory"}, ""))
 
-	pattern_EmployeeTerritory_Territory_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "employee-territory", "territory", "TerritoryID"}, ""))
+	pattern_EmployeeTerritory_Territory_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 4}, []string{"v1", "employee-territory", "employee", "employeeID", "territory", "territoryID"}, ""))
 )
 
 var (

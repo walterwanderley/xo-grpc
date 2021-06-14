@@ -56,8 +56,10 @@ func (s *TerritoryService) Insert(ctx context.Context, req *pb.InsertRequest) (r
 }
 
 func (s *TerritoryService) Region(ctx context.Context, req *pb.RegionRequest) (res *typespb.Region, err error) {
-	var m models.Territory
-	m.RegionID = int16(req.GetRegionID())
+	m, err := models.TerritoryByTerritoryID(ctx, s.db, req.TerritoryID)
+	if err != nil {
+		return
+	}
 
 	result, err := m.Region(ctx, s.db)
 	if err != nil {

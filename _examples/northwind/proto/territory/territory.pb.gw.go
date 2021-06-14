@@ -42,14 +42,14 @@ func request_Territory_Delete_0(ctx context.Context, marshaler runtime.Marshaler
 		_   = err
 	)
 
-	val, ok = pathParams["TerritoryID"]
+	val, ok = pathParams["territoryID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "TerritoryID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "territoryID")
 	}
 
 	protoReq.TerritoryID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "TerritoryID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "territoryID", err)
 	}
 
 	msg, err := client.Delete(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -68,14 +68,14 @@ func local_request_Territory_Delete_0(ctx context.Context, marshaler runtime.Mar
 		_   = err
 	)
 
-	val, ok = pathParams["TerritoryID"]
+	val, ok = pathParams["territoryID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "TerritoryID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "territoryID")
 	}
 
 	protoReq.TerritoryID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "TerritoryID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "territoryID", err)
 	}
 
 	msg, err := server.Delete(ctx, &protoReq)
@@ -128,14 +128,14 @@ func request_Territory_Region_0(ctx context.Context, marshaler runtime.Marshaler
 		_   = err
 	)
 
-	val, ok = pathParams["RegionID"]
+	val, ok = pathParams["territoryID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "RegionID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "territoryID")
 	}
 
-	protoReq.RegionID, err = runtime.Int32(val)
+	protoReq.TerritoryID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "RegionID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "territoryID", err)
 	}
 
 	msg, err := client.Region(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -154,14 +154,14 @@ func local_request_Territory_Region_0(ctx context.Context, marshaler runtime.Mar
 		_   = err
 	)
 
-	val, ok = pathParams["RegionID"]
+	val, ok = pathParams["territoryID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "RegionID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "territoryID")
 	}
 
-	protoReq.RegionID, err = runtime.Int32(val)
+	protoReq.TerritoryID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "RegionID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "territoryID", err)
 	}
 
 	msg, err := server.Region(ctx, &protoReq)
@@ -240,14 +240,14 @@ func request_Territory_Update_0(ctx context.Context, marshaler runtime.Marshaler
 		_   = err
 	)
 
-	val, ok = pathParams["TerritoryID"]
+	val, ok = pathParams["territoryID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "TerritoryID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "territoryID")
 	}
 
 	protoReq.TerritoryID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "TerritoryID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "territoryID", err)
 	}
 
 	msg, err := client.Update(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -274,14 +274,14 @@ func local_request_Territory_Update_0(ctx context.Context, marshaler runtime.Mar
 		_   = err
 	)
 
-	val, ok = pathParams["TerritoryID"]
+	val, ok = pathParams["territoryID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "TerritoryID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "territoryID")
 	}
 
 	protoReq.TerritoryID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "TerritoryID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "territoryID", err)
 	}
 
 	msg, err := server.Update(ctx, &protoReq)
@@ -632,15 +632,15 @@ func RegisterTerritoryHandlerClient(ctx context.Context, mux *runtime.ServeMux, 
 }
 
 var (
-	pattern_Territory_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "territory", "TerritoryID"}, ""))
+	pattern_Territory_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "territory", "territoryID"}, ""))
 
 	pattern_Territory_Insert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "territory"}, ""))
 
-	pattern_Territory_Region_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "territory", "region", "RegionID"}, ""))
+	pattern_Territory_Region_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"v1", "territory", "territoryID", "region"}, ""))
 
 	pattern_Territory_TerritoryByTerritoryID_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "territory", "territoryID"}, ""))
 
-	pattern_Territory_Update_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "territory", "TerritoryID"}, ""))
+	pattern_Territory_Update_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "territory", "territoryID"}, ""))
 
 	pattern_Territory_Upsert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "territory", "upsert"}, ""))
 )

@@ -42,14 +42,14 @@ func request_Region_Delete_0(ctx context.Context, marshaler runtime.Marshaler, c
 		_   = err
 	)
 
-	val, ok = pathParams["RegionID"]
+	val, ok = pathParams["regionID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "RegionID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "regionID")
 	}
 
 	protoReq.RegionID, err = runtime.Int32(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "RegionID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "regionID", err)
 	}
 
 	msg, err := client.Delete(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -68,14 +68,14 @@ func local_request_Region_Delete_0(ctx context.Context, marshaler runtime.Marsha
 		_   = err
 	)
 
-	val, ok = pathParams["RegionID"]
+	val, ok = pathParams["regionID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "RegionID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "regionID")
 	}
 
 	protoReq.RegionID, err = runtime.Int32(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "RegionID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "regionID", err)
 	}
 
 	msg, err := server.Delete(ctx, &protoReq)
@@ -188,14 +188,14 @@ func request_Region_Update_0(ctx context.Context, marshaler runtime.Marshaler, c
 		_   = err
 	)
 
-	val, ok = pathParams["RegionID"]
+	val, ok = pathParams["regionID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "RegionID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "regionID")
 	}
 
 	protoReq.RegionID, err = runtime.Int32(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "RegionID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "regionID", err)
 	}
 
 	msg, err := client.Update(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -222,14 +222,14 @@ func local_request_Region_Update_0(ctx context.Context, marshaler runtime.Marsha
 		_   = err
 	)
 
-	val, ok = pathParams["RegionID"]
+	val, ok = pathParams["regionID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "RegionID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "regionID")
 	}
 
 	protoReq.RegionID, err = runtime.Int32(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "RegionID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "regionID", err)
 	}
 
 	msg, err := server.Update(ctx, &protoReq)
@@ -537,13 +537,13 @@ func RegisterRegionHandlerClient(ctx context.Context, mux *runtime.ServeMux, cli
 }
 
 var (
-	pattern_Region_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "region", "RegionID"}, ""))
+	pattern_Region_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "region", "regionID"}, ""))
 
 	pattern_Region_Insert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "region"}, ""))
 
 	pattern_Region_RegionByRegionID_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "region", "regionID"}, ""))
 
-	pattern_Region_Update_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "region", "RegionID"}, ""))
+	pattern_Region_Update_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "region", "regionID"}, ""))
 
 	pattern_Region_Upsert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "region", "upsert"}, ""))
 )

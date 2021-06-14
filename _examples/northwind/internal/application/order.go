@@ -25,9 +25,9 @@ func NewOrderService(db *sql.DB) *OrderService {
 }
 
 func (s *OrderService) Customer(ctx context.Context, req *pb.CustomerRequest) (res *typespb.Customer, err error) {
-	var m models.Order
-	if v := req.GetCustomerID(); v != nil {
-		m.CustomerID = sql.NullString{Valid: true, String: v.Value}
+	m, err := models.OrderByOrderID(ctx, s.db, int16(req.OrderID))
+	if err != nil {
+		return
 	}
 
 	result, err := m.Customer(ctx, s.db)
@@ -86,9 +86,9 @@ func (s *OrderService) Delete(ctx context.Context, req *pb.DeleteRequest) (res *
 }
 
 func (s *OrderService) Employee(ctx context.Context, req *pb.EmployeeRequest) (res *typespb.Employee, err error) {
-	var m models.Order
-	if v := req.GetEmployeeID(); v != nil {
-		m.EmployeeID = sql.NullInt64{Valid: true, Int64: v.Value}
+	m, err := models.OrderByOrderID(ctx, s.db, int16(req.OrderID))
+	if err != nil {
+		return
 	}
 
 	result, err := m.Employee(ctx, s.db)
@@ -278,9 +278,9 @@ func (s *OrderService) OrderByOrderID(ctx context.Context, req *pb.OrderByOrderI
 }
 
 func (s *OrderService) Shipper(ctx context.Context, req *pb.ShipperRequest) (res *typespb.Shipper, err error) {
-	var m models.Order
-	if v := req.GetShipVia(); v != nil {
-		m.ShipVia = sql.NullInt64{Valid: true, Int64: v.Value}
+	m, err := models.OrderByOrderID(ctx, s.db, int16(req.OrderID))
+	if err != nil {
+		return
 	}
 
 	result, err := m.Shipper(ctx, s.db)

@@ -40,8 +40,10 @@ func (s *EmployeeTerritoryService) Delete(ctx context.Context, req *pb.DeleteReq
 }
 
 func (s *EmployeeTerritoryService) Employee(ctx context.Context, req *pb.EmployeeRequest) (res *typespb.Employee, err error) {
-	var m models.EmployeeTerritory
-	m.EmployeeID = int16(req.GetEmployeeID())
+	m, err := models.EmployeeTerritoryByEmployeeIDTerritoryID(ctx, s.db, int16(req.EmployeeID), req.TerritoryID)
+	if err != nil {
+		return
+	}
 
 	result, err := m.Employee(ctx, s.db)
 	if err != nil {
@@ -134,8 +136,10 @@ func (s *EmployeeTerritoryService) Insert(ctx context.Context, req *pb.InsertReq
 }
 
 func (s *EmployeeTerritoryService) Territory(ctx context.Context, req *pb.TerritoryRequest) (res *typespb.Territory, err error) {
-	var m models.EmployeeTerritory
-	m.TerritoryID = req.GetTerritoryID()
+	m, err := models.EmployeeTerritoryByEmployeeIDTerritoryID(ctx, s.db, int16(req.EmployeeID), req.TerritoryID)
+	if err != nil {
+		return
+	}
 
 	result, err := m.Territory(ctx, s.db)
 	if err != nil {

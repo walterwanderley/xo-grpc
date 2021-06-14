@@ -94,14 +94,14 @@ func request_Category_Delete_0(ctx context.Context, marshaler runtime.Marshaler,
 		_   = err
 	)
 
-	val, ok = pathParams["CategoryID"]
+	val, ok = pathParams["categoryID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "CategoryID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "categoryID")
 	}
 
 	protoReq.CategoryID, err = runtime.Int32(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "CategoryID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "categoryID", err)
 	}
 
 	msg, err := client.Delete(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -120,14 +120,14 @@ func local_request_Category_Delete_0(ctx context.Context, marshaler runtime.Mars
 		_   = err
 	)
 
-	val, ok = pathParams["CategoryID"]
+	val, ok = pathParams["categoryID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "CategoryID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "categoryID")
 	}
 
 	protoReq.CategoryID, err = runtime.Int32(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "CategoryID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "categoryID", err)
 	}
 
 	msg, err := server.Delete(ctx, &protoReq)
@@ -188,14 +188,14 @@ func request_Category_Update_0(ctx context.Context, marshaler runtime.Marshaler,
 		_   = err
 	)
 
-	val, ok = pathParams["CategoryID"]
+	val, ok = pathParams["categoryID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "CategoryID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "categoryID")
 	}
 
 	protoReq.CategoryID, err = runtime.Int32(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "CategoryID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "categoryID", err)
 	}
 
 	msg, err := client.Update(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -222,14 +222,14 @@ func local_request_Category_Update_0(ctx context.Context, marshaler runtime.Mars
 		_   = err
 	)
 
-	val, ok = pathParams["CategoryID"]
+	val, ok = pathParams["categoryID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "CategoryID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "categoryID")
 	}
 
 	protoReq.CategoryID, err = runtime.Int32(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "CategoryID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "categoryID", err)
 	}
 
 	msg, err := server.Update(ctx, &protoReq)
@@ -539,11 +539,11 @@ func RegisterCategoryHandlerClient(ctx context.Context, mux *runtime.ServeMux, c
 var (
 	pattern_Category_CategoryByCategoryID_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "category", "categoryID"}, ""))
 
-	pattern_Category_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "category", "CategoryID"}, ""))
+	pattern_Category_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "category", "categoryID"}, ""))
 
 	pattern_Category_Insert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "category"}, ""))
 
-	pattern_Category_Update_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "category", "CategoryID"}, ""))
+	pattern_Category_Update_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "category", "categoryID"}, ""))
 
 	pattern_Category_Upsert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "category", "upsert"}, ""))
 )

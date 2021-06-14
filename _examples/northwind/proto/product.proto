@@ -25,14 +25,14 @@ service Product {
     
     rpc Category(CategoryRequest) returns (typespb.Category) {
         option (google.api.http) = {
-            get: "/v1/product/category/{CategoryID}"
+            get: "/v1/product/{productID}/category"
             
         };
     }
     
     rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
-            delete: "/v1/product/{ProductID}"
+            delete: "/v1/product/{productID}"
             
         };
     }
@@ -54,14 +54,14 @@ service Product {
     
     rpc Supplier(SupplierRequest) returns (typespb.Supplier) {
         option (google.api.http) = {
-            get: "/v1/product/supplier/{SupplierID}"
+            get: "/v1/product/{productID}/supplier"
             
         };
     }
     
     rpc Update(UpdateRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
-            put: "/v1/product/{ProductID}"
+            put: "/v1/product/{productID}"
             body: "*"
             
         };
@@ -78,24 +78,24 @@ service Product {
 }
 
 message CategoryRequest { 
-    .google.protobuf.Int64Value CategoryID = 1;
+    int32 productID = 1;
 }
 
 message DeleteRequest { 
-    int32 ProductID = 1;
+    int32 productID = 1;
 }
 
 message InsertRequest { 
-    .google.protobuf.Int64Value CategoryID = 1;
-    int64 Discontinued = 2;
-    int32 ProductID = 3;
-    string ProductName = 4;
-    .google.protobuf.StringValue QuantityPerUnit = 5;
-    .google.protobuf.Int64Value ReorderLevel = 6;
-    .google.protobuf.Int64Value SupplierID = 7;
-    .google.protobuf.DoubleValue UnitPrice = 8;
-    .google.protobuf.Int64Value UnitsInStock = 9;
-    .google.protobuf.Int64Value UnitsOnOrder = 10;
+    google.protobuf.Int64Value categoryID = 1;
+    int64 discontinued = 2;
+    int32 productID = 3;
+    string productName = 4;
+    google.protobuf.StringValue quantityPerUnit = 5;
+    google.protobuf.Int64Value reorderLevel = 6;
+    google.protobuf.Int64Value supplierID = 7;
+    google.protobuf.DoubleValue unitPrice = 8;
+    google.protobuf.Int64Value unitsInStock = 9;
+    google.protobuf.Int64Value unitsOnOrder = 10;
 }
 
 message ProductByProductIDRequest { 
@@ -103,32 +103,32 @@ message ProductByProductIDRequest {
 }
 
 message SupplierRequest { 
-    .google.protobuf.Int64Value SupplierID = 1;
+    int32 productID = 1;
 }
 
 message UpdateRequest { 
-    .google.protobuf.Int64Value CategoryID = 1;
-    int64 Discontinued = 2;
+    google.protobuf.Int64Value categoryID = 1;
+    int64 discontinued = 2;
     // Output only.
-    int32 ProductID = 3;
-    string ProductName = 4;
-    .google.protobuf.StringValue QuantityPerUnit = 5;
-    .google.protobuf.Int64Value ReorderLevel = 6;
-    .google.protobuf.Int64Value SupplierID = 7;
-    .google.protobuf.DoubleValue UnitPrice = 8;
-    .google.protobuf.Int64Value UnitsInStock = 9;
-    .google.protobuf.Int64Value UnitsOnOrder = 10;
+    int32 productID = 3;
+    string productName = 4;
+    google.protobuf.StringValue quantityPerUnit = 5;
+    google.protobuf.Int64Value reorderLevel = 6;
+    google.protobuf.Int64Value supplierID = 7;
+    google.protobuf.DoubleValue unitPrice = 8;
+    google.protobuf.Int64Value unitsInStock = 9;
+    google.protobuf.Int64Value unitsOnOrder = 10;
 }
 
 message UpsertRequest { 
-    .google.protobuf.Int64Value CategoryID = 1;
-    int64 Discontinued = 2;
-    int32 ProductID = 3;
-    string ProductName = 4;
-    .google.protobuf.StringValue QuantityPerUnit = 5;
-    .google.protobuf.Int64Value ReorderLevel = 6;
-    .google.protobuf.Int64Value SupplierID = 7;
-    .google.protobuf.DoubleValue UnitPrice = 8;
-    .google.protobuf.Int64Value UnitsInStock = 9;
-    .google.protobuf.Int64Value UnitsOnOrder = 10;
+    google.protobuf.Int64Value categoryID = 1;
+    int64 discontinued = 2;
+    int32 productID = 3;
+    string productName = 4;
+    google.protobuf.StringValue quantityPerUnit = 5;
+    google.protobuf.Int64Value reorderLevel = 6;
+    google.protobuf.Int64Value supplierID = 7;
+    google.protobuf.DoubleValue unitPrice = 8;
+    google.protobuf.Int64Value unitsInStock = 9;
+    google.protobuf.Int64Value unitsOnOrder = 10;
 }

@@ -31,19 +31,35 @@ var _ = runtime.String
 var _ = utilities.NewDoubleArray
 var _ = metadata.Join
 
-var (
-	filter_OrderDetail_Delete_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
-)
-
 func request_OrderDetail_Delete_0(ctx context.Context, marshaler runtime.Marshaler, client OrderDetailClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq DeleteRequest
 	var metadata runtime.ServerMetadata
 
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["orderID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "orderID")
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_OrderDetail_Delete_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+
+	protoReq.OrderID, err = runtime.Int32(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "orderID", err)
+	}
+
+	val, ok = pathParams["productID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "productID")
+	}
+
+	protoReq.ProductID, err = runtime.Int32(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "productID", err)
 	}
 
 	msg, err := client.Delete(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -55,11 +71,31 @@ func local_request_OrderDetail_Delete_0(ctx context.Context, marshaler runtime.M
 	var protoReq DeleteRequest
 	var metadata runtime.ServerMetadata
 
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["orderID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "orderID")
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_OrderDetail_Delete_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+
+	protoReq.OrderID, err = runtime.Int32(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "orderID", err)
+	}
+
+	val, ok = pathParams["productID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "productID")
+	}
+
+	protoReq.ProductID, err = runtime.Int32(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "productID", err)
 	}
 
 	msg, err := server.Delete(ctx, &protoReq)
@@ -112,14 +148,24 @@ func request_OrderDetail_Order_0(ctx context.Context, marshaler runtime.Marshale
 		_   = err
 	)
 
-	val, ok = pathParams["OrderID"]
+	val, ok = pathParams["orderID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "OrderID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "orderID")
 	}
 
 	protoReq.OrderID, err = runtime.Int32(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "OrderID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "orderID", err)
+	}
+
+	val, ok = pathParams["productID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "productID")
+	}
+
+	protoReq.ProductID, err = runtime.Int32(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "productID", err)
 	}
 
 	msg, err := client.Order(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -138,14 +184,24 @@ func local_request_OrderDetail_Order_0(ctx context.Context, marshaler runtime.Ma
 		_   = err
 	)
 
-	val, ok = pathParams["OrderID"]
+	val, ok = pathParams["orderID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "OrderID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "orderID")
 	}
 
 	protoReq.OrderID, err = runtime.Int32(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "OrderID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "orderID", err)
+	}
+
+	val, ok = pathParams["productID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "productID")
+	}
+
+	protoReq.ProductID, err = runtime.Int32(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "productID", err)
 	}
 
 	msg, err := server.Order(ctx, &protoReq)
@@ -153,19 +209,35 @@ func local_request_OrderDetail_Order_0(ctx context.Context, marshaler runtime.Ma
 
 }
 
-var (
-	filter_OrderDetail_OrderDetailByOrderIDProductID_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
-)
-
 func request_OrderDetail_OrderDetailByOrderIDProductID_0(ctx context.Context, marshaler runtime.Marshaler, client OrderDetailClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq OrderDetailByOrderIDProductIDRequest
 	var metadata runtime.ServerMetadata
 
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["orderID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "orderID")
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_OrderDetail_OrderDetailByOrderIDProductID_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+
+	protoReq.OrderID, err = runtime.Int32(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "orderID", err)
+	}
+
+	val, ok = pathParams["productID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "productID")
+	}
+
+	protoReq.ProductID, err = runtime.Int32(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "productID", err)
 	}
 
 	msg, err := client.OrderDetailByOrderIDProductID(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -177,11 +249,31 @@ func local_request_OrderDetail_OrderDetailByOrderIDProductID_0(ctx context.Conte
 	var protoReq OrderDetailByOrderIDProductIDRequest
 	var metadata runtime.ServerMetadata
 
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["orderID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "orderID")
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_OrderDetail_OrderDetailByOrderIDProductID_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+
+	protoReq.OrderID, err = runtime.Int32(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "orderID", err)
+	}
+
+	val, ok = pathParams["productID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "productID")
+	}
+
+	protoReq.ProductID, err = runtime.Int32(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "productID", err)
 	}
 
 	msg, err := server.OrderDetailByOrderIDProductID(ctx, &protoReq)
@@ -200,14 +292,24 @@ func request_OrderDetail_Product_0(ctx context.Context, marshaler runtime.Marsha
 		_   = err
 	)
 
-	val, ok = pathParams["ProductID"]
+	val, ok = pathParams["orderID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "ProductID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "orderID")
+	}
+
+	protoReq.OrderID, err = runtime.Int32(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "orderID", err)
+	}
+
+	val, ok = pathParams["productID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "productID")
 	}
 
 	protoReq.ProductID, err = runtime.Int32(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "ProductID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "productID", err)
 	}
 
 	msg, err := client.Product(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -226,14 +328,24 @@ func local_request_OrderDetail_Product_0(ctx context.Context, marshaler runtime.
 		_   = err
 	)
 
-	val, ok = pathParams["ProductID"]
+	val, ok = pathParams["orderID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "ProductID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "orderID")
+	}
+
+	protoReq.OrderID, err = runtime.Int32(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "orderID", err)
+	}
+
+	val, ok = pathParams["productID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "productID")
 	}
 
 	protoReq.ProductID, err = runtime.Int32(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "ProductID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "productID", err)
 	}
 
 	msg, err := server.Product(ctx, &protoReq)
@@ -253,6 +365,33 @@ func request_OrderDetail_Update_0(ctx context.Context, marshaler runtime.Marshal
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["orderID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "orderID")
+	}
+
+	protoReq.OrderID, err = runtime.Int32(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "orderID", err)
+	}
+
+	val, ok = pathParams["productID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "productID")
+	}
+
+	protoReq.ProductID, err = runtime.Int32(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "productID", err)
+	}
+
 	msg, err := client.Update(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
@@ -268,6 +407,33 @@ func local_request_OrderDetail_Update_0(ctx context.Context, marshaler runtime.M
 	}
 	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["orderID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "orderID")
+	}
+
+	protoReq.OrderID, err = runtime.Int32(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "orderID", err)
+	}
+
+	val, ok = pathParams["productID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "productID")
+	}
+
+	protoReq.ProductID, err = runtime.Int32(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "productID", err)
 	}
 
 	msg, err := server.Update(ctx, &protoReq)
@@ -661,17 +827,17 @@ func RegisterOrderDetailHandlerClient(ctx context.Context, mux *runtime.ServeMux
 }
 
 var (
-	pattern_OrderDetail_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "order-detail"}, ""))
+	pattern_OrderDetail_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"v1", "order-detail", "order", "orderID", "product", "productID"}, ""))
 
 	pattern_OrderDetail_Insert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "order-detail"}, ""))
 
-	pattern_OrderDetail_Order_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "order-detail", "order", "OrderID"}, ""))
+	pattern_OrderDetail_Order_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 2}, []string{"v1", "order-detail", "order", "orderID", "product", "productID"}, ""))
 
-	pattern_OrderDetail_OrderDetailByOrderIDProductID_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "order-detail"}, ""))
+	pattern_OrderDetail_OrderDetailByOrderIDProductID_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"v1", "order-detail", "order", "orderID", "product", "productID"}, ""))
 
-	pattern_OrderDetail_Product_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "order-detail", "product", "ProductID"}, ""))
+	pattern_OrderDetail_Product_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 4}, []string{"v1", "order-detail", "order", "orderID", "product", "productID"}, ""))
 
-	pattern_OrderDetail_Update_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "order-detail"}, ""))
+	pattern_OrderDetail_Update_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"v1", "order-detail", "order", "orderID", "product", "productID"}, ""))
 
 	pattern_OrderDetail_Upsert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "order-detail", "upsert"}, ""))
 )

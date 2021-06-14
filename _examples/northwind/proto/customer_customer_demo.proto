@@ -25,28 +25,28 @@ service CustomerCustomerDemo {
     
     rpc Customer(CustomerRequest) returns (typespb.Customer) {
         option (google.api.http) = {
-            get: "/v1/customer-customer-demo/customer/{CustomerID}"
+            get: "/v1/customer-customer-demo/customer/{customerID}/customer-type/{customerTypeID}/customer"
             
         };
     }
     
     rpc CustomerCustomerDemoByCustomerIDCustomerTypeID(CustomerCustomerDemoByCustomerIDCustomerTypeIDRequest) returns (typespb.CustomerCustomerDemo) {
         option (google.api.http) = {
-            get: "/v1/customer-customer-demo"
+            get: "/v1/customer-customer-demo/customer/{customerID}/customer-type/{customerTypeID}"
             
         };
     }
     
     rpc CustomerDemographic(CustomerDemographicRequest) returns (typespb.CustomerDemographic) {
         option (google.api.http) = {
-            get: "/v1/customer-customer-demo/customer-demographic/{CustomerTypeID}"
+            get: "/v1/customer-customer-demo/customer/{customerID}/customer-type/{customerTypeID}/customer-demographic"
             
         };
     }
     
     rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
-            delete: "/v1/customer-customer-demo"
+            delete: "/v1/customer-customer-demo/customer/{customerID}/customer-type/{customerTypeID}"
             
         };
     }
@@ -62,7 +62,8 @@ service CustomerCustomerDemo {
 }
 
 message CustomerRequest { 
-    string CustomerID = 1;
+    string customerID = 1;
+    string customerTypeID = 2;
 }
 
 message CustomerCustomerDemoByCustomerIDCustomerTypeIDRequest { 
@@ -71,15 +72,16 @@ message CustomerCustomerDemoByCustomerIDCustomerTypeIDRequest {
 }
 
 message CustomerDemographicRequest { 
-    string CustomerTypeID = 1;
+    string customerID = 1;
+    string customerTypeID = 2;
 }
 
 message DeleteRequest { 
-    string CustomerID = 1;
-    string CustomerTypeID = 2;
+    string customerID = 1;
+    string customerTypeID = 2;
 }
 
 message InsertRequest { 
-    string CustomerID = 1;
-    string CustomerTypeID = 2;
+    string customerID = 1;
+    string customerTypeID = 2;
 }

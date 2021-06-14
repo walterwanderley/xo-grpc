@@ -23,8 +23,10 @@ func NewCustomerCustomerDemoService(db *sql.DB) *CustomerCustomerDemoService {
 }
 
 func (s *CustomerCustomerDemoService) Customer(ctx context.Context, req *pb.CustomerRequest) (res *typespb.Customer, err error) {
-	var m models.CustomerCustomerDemo
-	m.CustomerID = req.GetCustomerID()
+	m, err := models.CustomerCustomerDemoByCustomerIDCustomerTypeID(ctx, s.db, req.CustomerID, req.CustomerTypeID)
+	if err != nil {
+		return
+	}
 
 	result, err := m.Customer(ctx, s.db)
 	if err != nil {
@@ -83,8 +85,10 @@ func (s *CustomerCustomerDemoService) CustomerCustomerDemoByCustomerIDCustomerTy
 }
 
 func (s *CustomerCustomerDemoService) CustomerDemographic(ctx context.Context, req *pb.CustomerDemographicRequest) (res *typespb.CustomerDemographic, err error) {
-	var m models.CustomerCustomerDemo
-	m.CustomerTypeID = req.GetCustomerTypeID()
+	m, err := models.CustomerCustomerDemoByCustomerIDCustomerTypeID(ctx, s.db, req.CustomerID, req.CustomerTypeID)
+	if err != nil {
+		return
+	}
 
 	result, err := m.CustomerDemographic(ctx, s.db)
 	if err != nil {

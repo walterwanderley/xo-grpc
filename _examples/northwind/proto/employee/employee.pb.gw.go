@@ -42,14 +42,14 @@ func request_Employee_Delete_0(ctx context.Context, marshaler runtime.Marshaler,
 		_   = err
 	)
 
-	val, ok = pathParams["EmployeeID"]
+	val, ok = pathParams["employeeID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "EmployeeID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "employeeID")
 	}
 
 	protoReq.EmployeeID, err = runtime.Int32(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "EmployeeID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "employeeID", err)
 	}
 
 	msg, err := client.Delete(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -68,14 +68,14 @@ func local_request_Employee_Delete_0(ctx context.Context, marshaler runtime.Mars
 		_   = err
 	)
 
-	val, ok = pathParams["EmployeeID"]
+	val, ok = pathParams["employeeID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "EmployeeID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "employeeID")
 	}
 
 	protoReq.EmployeeID, err = runtime.Int32(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "EmployeeID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "employeeID", err)
 	}
 
 	msg, err := server.Delete(ctx, &protoReq)
@@ -94,14 +94,14 @@ func request_Employee_Employee_0(ctx context.Context, marshaler runtime.Marshale
 		_   = err
 	)
 
-	val, ok = pathParams["ReportsTo"]
+	val, ok = pathParams["employeeID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "ReportsTo")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "employeeID")
 	}
 
-	protoReq.ReportsTo, err = runtime.Int64Value(val)
+	protoReq.EmployeeID, err = runtime.Int32(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "ReportsTo", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "employeeID", err)
 	}
 
 	msg, err := client.Employee(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -120,14 +120,14 @@ func local_request_Employee_Employee_0(ctx context.Context, marshaler runtime.Ma
 		_   = err
 	)
 
-	val, ok = pathParams["ReportsTo"]
+	val, ok = pathParams["employeeID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "ReportsTo")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "employeeID")
 	}
 
-	protoReq.ReportsTo, err = runtime.Int64Value(val)
+	protoReq.EmployeeID, err = runtime.Int32(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "ReportsTo", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "employeeID", err)
 	}
 
 	msg, err := server.Employee(ctx, &protoReq)
@@ -240,14 +240,14 @@ func request_Employee_Update_0(ctx context.Context, marshaler runtime.Marshaler,
 		_   = err
 	)
 
-	val, ok = pathParams["EmployeeID"]
+	val, ok = pathParams["employeeID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "EmployeeID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "employeeID")
 	}
 
 	protoReq.EmployeeID, err = runtime.Int32(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "EmployeeID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "employeeID", err)
 	}
 
 	msg, err := client.Update(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -274,14 +274,14 @@ func local_request_Employee_Update_0(ctx context.Context, marshaler runtime.Mars
 		_   = err
 	)
 
-	val, ok = pathParams["EmployeeID"]
+	val, ok = pathParams["employeeID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "EmployeeID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "employeeID")
 	}
 
 	protoReq.EmployeeID, err = runtime.Int32(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "EmployeeID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "employeeID", err)
 	}
 
 	msg, err := server.Update(ctx, &protoReq)
@@ -632,15 +632,15 @@ func RegisterEmployeeHandlerClient(ctx context.Context, mux *runtime.ServeMux, c
 }
 
 var (
-	pattern_Employee_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "employee", "EmployeeID"}, ""))
+	pattern_Employee_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "employee", "employeeID"}, ""))
 
-	pattern_Employee_Employee_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "employee", "ReportsTo"}, ""))
+	pattern_Employee_Employee_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 1}, []string{"v1", "employee", "employeeID"}, ""))
 
 	pattern_Employee_EmployeeByEmployeeID_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "employee", "employeeID"}, ""))
 
 	pattern_Employee_Insert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "employee"}, ""))
 
-	pattern_Employee_Update_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "employee", "EmployeeID"}, ""))
+	pattern_Employee_Update_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "employee", "employeeID"}, ""))
 
 	pattern_Employee_Upsert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "employee", "upsert"}, ""))
 )

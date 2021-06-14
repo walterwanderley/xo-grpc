@@ -26,21 +26,21 @@ service Order {
     
     rpc Customer(CustomerRequest) returns (typespb.Customer) {
         option (google.api.http) = {
-            get: "/v1/order/customer/{CustomerID}"
+            get: "/v1/order/{orderID}/customer"
             
         };
     }
     
     rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
-            delete: "/v1/order/{OrderID}"
+            delete: "/v1/order/{orderID}"
             
         };
     }
     
     rpc Employee(EmployeeRequest) returns (typespb.Employee) {
         option (google.api.http) = {
-            get: "/v1/order/employee/{EmployeeID}"
+            get: "/v1/order/{orderID}/employee"
             
         };
     }
@@ -62,14 +62,14 @@ service Order {
     
     rpc Shipper(ShipperRequest) returns (typespb.Shipper) {
         option (google.api.http) = {
-            get: "/v1/order/shipper/{ShipVia}"
+            get: "/v1/order/{orderID}/shipper"
             
         };
     }
     
     rpc Update(UpdateRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
-            put: "/v1/order/{OrderID}"
+            put: "/v1/order/{orderID}"
             body: "*"
             
         };
@@ -86,32 +86,32 @@ service Order {
 }
 
 message CustomerRequest { 
-    .google.protobuf.StringValue CustomerID = 1;
+    int32 orderID = 1;
 }
 
 message DeleteRequest { 
-    int32 OrderID = 1;
+    int32 orderID = 1;
 }
 
 message EmployeeRequest { 
-    .google.protobuf.Int64Value EmployeeID = 1;
+    int32 orderID = 1;
 }
 
 message InsertRequest { 
-    .google.protobuf.StringValue CustomerID = 1;
-    .google.protobuf.Int64Value EmployeeID = 2;
-    .google.protobuf.DoubleValue Freight = 3;
-    .google.protobuf.Timestamp OrderDate = 4;
-    int32 OrderID = 5;
-    .google.protobuf.Timestamp RequiredDate = 6;
-    .google.protobuf.StringValue ShipAddress = 7;
-    .google.protobuf.StringValue ShipCity = 8;
-    .google.protobuf.StringValue ShipCountry = 9;
-    .google.protobuf.StringValue ShipName = 10;
-    .google.protobuf.StringValue ShipPostalCode = 11;
-    .google.protobuf.StringValue ShipRegion = 12;
-    .google.protobuf.Int64Value ShipVia = 13;
-    .google.protobuf.Timestamp ShippedDate = 14;
+    google.protobuf.StringValue customerID = 1;
+    google.protobuf.Int64Value employeeID = 2;
+    google.protobuf.DoubleValue freight = 3;
+    google.protobuf.Timestamp orderDate = 4;
+    int32 orderID = 5;
+    google.protobuf.Timestamp requiredDate = 6;
+    google.protobuf.StringValue shipAddress = 7;
+    google.protobuf.StringValue shipCity = 8;
+    google.protobuf.StringValue shipCountry = 9;
+    google.protobuf.StringValue shipName = 10;
+    google.protobuf.StringValue shipPostalCode = 11;
+    google.protobuf.StringValue shipRegion = 12;
+    google.protobuf.Int64Value shipVia = 13;
+    google.protobuf.Timestamp shippedDate = 14;
 }
 
 message OrderByOrderIDRequest { 
@@ -119,40 +119,40 @@ message OrderByOrderIDRequest {
 }
 
 message ShipperRequest { 
-    .google.protobuf.Int64Value ShipVia = 1;
+    int32 orderID = 1;
 }
 
 message UpdateRequest { 
-    .google.protobuf.StringValue CustomerID = 1;
-    .google.protobuf.Int64Value EmployeeID = 2;
-    .google.protobuf.DoubleValue Freight = 3;
-    .google.protobuf.Timestamp OrderDate = 4;
+    google.protobuf.StringValue customerID = 1;
+    google.protobuf.Int64Value employeeID = 2;
+    google.protobuf.DoubleValue freight = 3;
+    google.protobuf.Timestamp orderDate = 4;
     // Output only.
-    int32 OrderID = 5;
-    .google.protobuf.Timestamp RequiredDate = 6;
-    .google.protobuf.StringValue ShipAddress = 7;
-    .google.protobuf.StringValue ShipCity = 8;
-    .google.protobuf.StringValue ShipCountry = 9;
-    .google.protobuf.StringValue ShipName = 10;
-    .google.protobuf.StringValue ShipPostalCode = 11;
-    .google.protobuf.StringValue ShipRegion = 12;
-    .google.protobuf.Int64Value ShipVia = 13;
-    .google.protobuf.Timestamp ShippedDate = 14;
+    int32 orderID = 5;
+    google.protobuf.Timestamp requiredDate = 6;
+    google.protobuf.StringValue shipAddress = 7;
+    google.protobuf.StringValue shipCity = 8;
+    google.protobuf.StringValue shipCountry = 9;
+    google.protobuf.StringValue shipName = 10;
+    google.protobuf.StringValue shipPostalCode = 11;
+    google.protobuf.StringValue shipRegion = 12;
+    google.protobuf.Int64Value shipVia = 13;
+    google.protobuf.Timestamp shippedDate = 14;
 }
 
 message UpsertRequest { 
-    .google.protobuf.StringValue CustomerID = 1;
-    .google.protobuf.Int64Value EmployeeID = 2;
-    .google.protobuf.DoubleValue Freight = 3;
-    .google.protobuf.Timestamp OrderDate = 4;
-    int32 OrderID = 5;
-    .google.protobuf.Timestamp RequiredDate = 6;
-    .google.protobuf.StringValue ShipAddress = 7;
-    .google.protobuf.StringValue ShipCity = 8;
-    .google.protobuf.StringValue ShipCountry = 9;
-    .google.protobuf.StringValue ShipName = 10;
-    .google.protobuf.StringValue ShipPostalCode = 11;
-    .google.protobuf.StringValue ShipRegion = 12;
-    .google.protobuf.Int64Value ShipVia = 13;
-    .google.protobuf.Timestamp ShippedDate = 14;
+    google.protobuf.StringValue customerID = 1;
+    google.protobuf.Int64Value employeeID = 2;
+    google.protobuf.DoubleValue freight = 3;
+    google.protobuf.Timestamp orderDate = 4;
+    int32 orderID = 5;
+    google.protobuf.Timestamp requiredDate = 6;
+    google.protobuf.StringValue shipAddress = 7;
+    google.protobuf.StringValue shipCity = 8;
+    google.protobuf.StringValue shipCountry = 9;
+    google.protobuf.StringValue shipName = 10;
+    google.protobuf.StringValue shipPostalCode = 11;
+    google.protobuf.StringValue shipRegion = 12;
+    google.protobuf.Int64Value shipVia = 13;
+    google.protobuf.Timestamp shippedDate = 14;
 }

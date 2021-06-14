@@ -41,9 +41,9 @@ func (s *EmployeeService) Delete(ctx context.Context, req *pb.DeleteRequest) (re
 }
 
 func (s *EmployeeService) Employee(ctx context.Context, req *pb.EmployeeRequest) (res *typespb.Employee, err error) {
-	var m models.Employee
-	if v := req.GetReportsTo(); v != nil {
-		m.ReportsTo = sql.NullInt64{Valid: true, Int64: v.Value}
+	m, err := models.EmployeeByEmployeeID(ctx, s.db, int16(req.EmployeeID))
+	if err != nil {
+		return
 	}
 
 	result, err := m.Employee(ctx, s.db)

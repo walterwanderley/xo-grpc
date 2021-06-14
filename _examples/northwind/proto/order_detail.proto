@@ -26,7 +26,7 @@ service OrderDetail {
     
     rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
-            delete: "/v1/order-detail"
+            delete: "/v1/order-detail/order/{orderID}/product/{productID}"
             
         };
     }
@@ -41,28 +41,28 @@ service OrderDetail {
     
     rpc Order(OrderRequest) returns (typespb.Order) {
         option (google.api.http) = {
-            get: "/v1/order-detail/order/{OrderID}"
+            get: "/v1/order-detail/order/{orderID}/product/{productID}/order"
             
         };
     }
     
     rpc OrderDetailByOrderIDProductID(OrderDetailByOrderIDProductIDRequest) returns (typespb.OrderDetail) {
         option (google.api.http) = {
-            get: "/v1/order-detail"
+            get: "/v1/order-detail/order/{orderID}/product/{productID}"
             
         };
     }
     
     rpc Product(ProductRequest) returns (typespb.Product) {
         option (google.api.http) = {
-            get: "/v1/order-detail/product/{ProductID}"
+            get: "/v1/order-detail/order/{orderID}/product/{productID}/product"
             
         };
     }
     
     rpc Update(UpdateRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
-            put: "/v1/order-detail"
+            put: "/v1/order-detail/order/{orderID}/product/{productID}"
             body: "*"
             
         };
@@ -79,20 +79,21 @@ service OrderDetail {
 }
 
 message DeleteRequest { 
-    int32 OrderID = 1;
-    int32 ProductID = 2;
+    int32 orderID = 1;
+    int32 productID = 2;
 }
 
 message InsertRequest { 
-    float Discount = 1;
-    int32 OrderID = 2;
-    int32 ProductID = 3;
-    int32 Quantity = 4;
-    float UnitPrice = 5;
+    float discount = 1;
+    int32 orderID = 2;
+    int32 productID = 3;
+    int32 quantity = 4;
+    float unitPrice = 5;
 }
 
 message OrderRequest { 
-    int32 OrderID = 1;
+    int32 orderID = 1;
+    int32 productID = 2;
 }
 
 message OrderDetailByOrderIDProductIDRequest { 
@@ -101,21 +102,24 @@ message OrderDetailByOrderIDProductIDRequest {
 }
 
 message ProductRequest { 
-    int32 ProductID = 1;
+    int32 orderID = 1;
+    int32 productID = 2;
 }
 
 message UpdateRequest { 
-    float Discount = 1;
-    int32 OrderID = 2;
-    int32 ProductID = 3;
-    int32 Quantity = 4;
-    float UnitPrice = 5;
+    float discount = 1;
+    // Output only.
+    int32 orderID = 2;
+    // Output only.
+    int32 productID = 3;
+    int32 quantity = 4;
+    float unitPrice = 5;
 }
 
 message UpsertRequest { 
-    float Discount = 1;
-    int32 OrderID = 2;
-    int32 ProductID = 3;
-    int32 Quantity = 4;
-    float UnitPrice = 5;
+    float discount = 1;
+    int32 orderID = 2;
+    int32 productID = 3;
+    int32 quantity = 4;
+    float unitPrice = 5;
 }

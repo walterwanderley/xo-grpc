@@ -26,21 +26,21 @@ service EmployeeTerritory {
     
     rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
-            delete: "/v1/employee-territory"
+            delete: "/v1/employee-territory/employee/{employeeID}/territory/{territoryID}"
             
         };
     }
     
     rpc Employee(EmployeeRequest) returns (typespb.Employee) {
         option (google.api.http) = {
-            get: "/v1/employee-territory/employee/{EmployeeID}"
+            get: "/v1/employee-territory/employee/{employeeID}/territory/{territoryID}/employee"
             
         };
     }
     
     rpc EmployeeTerritoryByEmployeeIDTerritoryID(EmployeeTerritoryByEmployeeIDTerritoryIDRequest) returns (typespb.EmployeeTerritory) {
         option (google.api.http) = {
-            get: "/v1/employee-territory"
+            get: "/v1/employee-territory/employee/{employeeID}/territory/{territoryID}"
             
         };
     }
@@ -55,7 +55,7 @@ service EmployeeTerritory {
     
     rpc Territory(TerritoryRequest) returns (typespb.Territory) {
         option (google.api.http) = {
-            get: "/v1/employee-territory/territory/{TerritoryID}"
+            get: "/v1/employee-territory/employee/{employeeID}/territory/{territoryID}/territory"
             
         };
     }
@@ -63,12 +63,13 @@ service EmployeeTerritory {
 }
 
 message DeleteRequest { 
-    int32 EmployeeID = 1;
-    string TerritoryID = 2;
+    int32 employeeID = 1;
+    string territoryID = 2;
 }
 
 message EmployeeRequest { 
-    int32 EmployeeID = 1;
+    int32 employeeID = 1;
+    string territoryID = 2;
 }
 
 message EmployeeTerritoryByEmployeeIDTerritoryIDRequest { 
@@ -77,10 +78,11 @@ message EmployeeTerritoryByEmployeeIDTerritoryIDRequest {
 }
 
 message InsertRequest { 
-    int32 EmployeeID = 1;
-    string TerritoryID = 2;
+    int32 employeeID = 1;
+    string territoryID = 2;
 }
 
 message TerritoryRequest { 
-    string TerritoryID = 1;
+    int32 employeeID = 1;
+    string territoryID = 2;
 }

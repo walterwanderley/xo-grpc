@@ -94,14 +94,14 @@ func request_CustomerDemographic_Delete_0(ctx context.Context, marshaler runtime
 		_   = err
 	)
 
-	val, ok = pathParams["CustomerTypeID"]
+	val, ok = pathParams["customerTypeID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "CustomerTypeID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "customerTypeID")
 	}
 
 	protoReq.CustomerTypeID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "CustomerTypeID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "customerTypeID", err)
 	}
 
 	msg, err := client.Delete(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -120,14 +120,14 @@ func local_request_CustomerDemographic_Delete_0(ctx context.Context, marshaler r
 		_   = err
 	)
 
-	val, ok = pathParams["CustomerTypeID"]
+	val, ok = pathParams["customerTypeID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "CustomerTypeID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "customerTypeID")
 	}
 
 	protoReq.CustomerTypeID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "CustomerTypeID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "customerTypeID", err)
 	}
 
 	msg, err := server.Delete(ctx, &protoReq)
@@ -188,14 +188,14 @@ func request_CustomerDemographic_Update_0(ctx context.Context, marshaler runtime
 		_   = err
 	)
 
-	val, ok = pathParams["CustomerTypeID"]
+	val, ok = pathParams["customerTypeID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "CustomerTypeID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "customerTypeID")
 	}
 
 	protoReq.CustomerTypeID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "CustomerTypeID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "customerTypeID", err)
 	}
 
 	msg, err := client.Update(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -222,14 +222,14 @@ func local_request_CustomerDemographic_Update_0(ctx context.Context, marshaler r
 		_   = err
 	)
 
-	val, ok = pathParams["CustomerTypeID"]
+	val, ok = pathParams["customerTypeID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "CustomerTypeID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "customerTypeID")
 	}
 
 	protoReq.CustomerTypeID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "CustomerTypeID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "customerTypeID", err)
 	}
 
 	msg, err := server.Update(ctx, &protoReq)
@@ -539,11 +539,11 @@ func RegisterCustomerDemographicHandlerClient(ctx context.Context, mux *runtime.
 var (
 	pattern_CustomerDemographic_CustomerDemographicByCustomerTypeID_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "customer-demographic", "customerTypeID"}, ""))
 
-	pattern_CustomerDemographic_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "customer-demographic", "CustomerTypeID"}, ""))
+	pattern_CustomerDemographic_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "customer-demographic", "customerTypeID"}, ""))
 
 	pattern_CustomerDemographic_Insert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "customer-demographic"}, ""))
 
-	pattern_CustomerDemographic_Update_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "customer-demographic", "CustomerTypeID"}, ""))
+	pattern_CustomerDemographic_Update_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "customer-demographic", "customerTypeID"}, ""))
 
 	pattern_CustomerDemographic_Upsert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "customer-demographic", "upsert"}, ""))
 )

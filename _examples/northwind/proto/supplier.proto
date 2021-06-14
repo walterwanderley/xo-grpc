@@ -25,7 +25,7 @@ service Supplier {
     
     rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
-            delete: "/v1/supplier/{SupplierID}"
+            delete: "/v1/supplier/{supplierID}"
             
         };
     }
@@ -47,7 +47,7 @@ service Supplier {
     
     rpc Update(UpdateRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
-            put: "/v1/supplier/{SupplierID}"
+            put: "/v1/supplier/{supplierID}"
             body: "*"
             
         };
@@ -64,22 +64,22 @@ service Supplier {
 }
 
 message DeleteRequest { 
-    int32 SupplierID = 1;
+    int32 supplierID = 1;
 }
 
 message InsertRequest { 
-    .google.protobuf.StringValue Address = 1;
-    .google.protobuf.StringValue City = 2;
-    string CompanyName = 3;
-    .google.protobuf.StringValue ContactName = 4;
-    .google.protobuf.StringValue ContactTitle = 5;
-    .google.protobuf.StringValue Country = 6;
-    .google.protobuf.StringValue Fax = 7;
-    .google.protobuf.StringValue Homepage = 8;
-    .google.protobuf.StringValue Phone = 9;
-    .google.protobuf.StringValue PostalCode = 10;
-    .google.protobuf.StringValue Region = 11;
-    int32 SupplierID = 12;
+    google.protobuf.StringValue address = 1;
+    google.protobuf.StringValue city = 2;
+    string companyName = 3;
+    google.protobuf.StringValue contactName = 4;
+    google.protobuf.StringValue contactTitle = 5;
+    google.protobuf.StringValue country = 6;
+    google.protobuf.StringValue fax = 7;
+    google.protobuf.StringValue homepage = 8;
+    google.protobuf.StringValue phone = 9;
+    google.protobuf.StringValue postalCode = 10;
+    google.protobuf.StringValue region = 11;
+    int32 supplierID = 12;
 }
 
 message SupplierBySupplierIDRequest { 
@@ -87,32 +87,32 @@ message SupplierBySupplierIDRequest {
 }
 
 message UpdateRequest { 
-    .google.protobuf.StringValue Address = 1;
-    .google.protobuf.StringValue City = 2;
-    string CompanyName = 3;
-    .google.protobuf.StringValue ContactName = 4;
-    .google.protobuf.StringValue ContactTitle = 5;
-    .google.protobuf.StringValue Country = 6;
-    .google.protobuf.StringValue Fax = 7;
-    .google.protobuf.StringValue Homepage = 8;
-    .google.protobuf.StringValue Phone = 9;
-    .google.protobuf.StringValue PostalCode = 10;
-    .google.protobuf.StringValue Region = 11;
+    google.protobuf.StringValue address = 1;
+    google.protobuf.StringValue city = 2;
+    string companyName = 3;
+    google.protobuf.StringValue contactName = 4;
+    google.protobuf.StringValue contactTitle = 5;
+    google.protobuf.StringValue country = 6;
+    google.protobuf.StringValue fax = 7;
+    google.protobuf.StringValue homepage = 8;
+    google.protobuf.StringValue phone = 9;
+    google.protobuf.StringValue postalCode = 10;
+    google.protobuf.StringValue region = 11;
     // Output only.
-    int32 SupplierID = 12;
+    int32 supplierID = 12;
 }
 
 message UpsertRequest { 
-    .google.protobuf.StringValue Address = 1;
-    .google.protobuf.StringValue City = 2;
-    string CompanyName = 3;
-    .google.protobuf.StringValue ContactName = 4;
-    .google.protobuf.StringValue ContactTitle = 5;
-    .google.protobuf.StringValue Country = 6;
-    .google.protobuf.StringValue Fax = 7;
-    .google.protobuf.StringValue Homepage = 8;
-    .google.protobuf.StringValue Phone = 9;
-    .google.protobuf.StringValue PostalCode = 10;
-    .google.protobuf.StringValue Region = 11;
-    int32 SupplierID = 12;
+    google.protobuf.StringValue address = 1;
+    google.protobuf.StringValue city = 2;
+    string companyName = 3;
+    google.protobuf.StringValue contactName = 4;
+    google.protobuf.StringValue contactTitle = 5;
+    google.protobuf.StringValue country = 6;
+    google.protobuf.StringValue fax = 7;
+    google.protobuf.StringValue homepage = 8;
+    google.protobuf.StringValue phone = 9;
+    google.protobuf.StringValue postalCode = 10;
+    google.protobuf.StringValue region = 11;
+    int32 supplierID = 12;
 }

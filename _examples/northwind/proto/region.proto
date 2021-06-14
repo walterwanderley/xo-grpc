@@ -24,7 +24,7 @@ service Region {
     
     rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
-            delete: "/v1/region/{RegionID}"
+            delete: "/v1/region/{regionID}"
             
         };
     }
@@ -46,7 +46,7 @@ service Region {
     
     rpc Update(UpdateRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
-            put: "/v1/region/{RegionID}"
+            put: "/v1/region/{regionID}"
             body: "*"
             
         };
@@ -63,12 +63,12 @@ service Region {
 }
 
 message DeleteRequest { 
-    int32 RegionID = 1;
+    int32 regionID = 1;
 }
 
 message InsertRequest { 
-    string RegionDescription = 1;
-    int32 RegionID = 2;
+    string regionDescription = 1;
+    int32 regionID = 2;
 }
 
 message RegionByRegionIDRequest { 
@@ -76,12 +76,12 @@ message RegionByRegionIDRequest {
 }
 
 message UpdateRequest { 
-    string RegionDescription = 1;
+    string regionDescription = 1;
     // Output only.
-    int32 RegionID = 2;
+    int32 regionID = 2;
 }
 
 message UpsertRequest { 
-    string RegionDescription = 1;
-    int32 RegionID = 2;
+    string regionDescription = 1;
+    int32 regionID = 2;
 }

@@ -42,14 +42,14 @@ func request_Supplier_Delete_0(ctx context.Context, marshaler runtime.Marshaler,
 		_   = err
 	)
 
-	val, ok = pathParams["SupplierID"]
+	val, ok = pathParams["supplierID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "SupplierID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "supplierID")
 	}
 
 	protoReq.SupplierID, err = runtime.Int32(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "SupplierID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "supplierID", err)
 	}
 
 	msg, err := client.Delete(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -68,14 +68,14 @@ func local_request_Supplier_Delete_0(ctx context.Context, marshaler runtime.Mars
 		_   = err
 	)
 
-	val, ok = pathParams["SupplierID"]
+	val, ok = pathParams["supplierID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "SupplierID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "supplierID")
 	}
 
 	protoReq.SupplierID, err = runtime.Int32(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "SupplierID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "supplierID", err)
 	}
 
 	msg, err := server.Delete(ctx, &protoReq)
@@ -188,14 +188,14 @@ func request_Supplier_Update_0(ctx context.Context, marshaler runtime.Marshaler,
 		_   = err
 	)
 
-	val, ok = pathParams["SupplierID"]
+	val, ok = pathParams["supplierID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "SupplierID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "supplierID")
 	}
 
 	protoReq.SupplierID, err = runtime.Int32(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "SupplierID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "supplierID", err)
 	}
 
 	msg, err := client.Update(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -222,14 +222,14 @@ func local_request_Supplier_Update_0(ctx context.Context, marshaler runtime.Mars
 		_   = err
 	)
 
-	val, ok = pathParams["SupplierID"]
+	val, ok = pathParams["supplierID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "SupplierID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "supplierID")
 	}
 
 	protoReq.SupplierID, err = runtime.Int32(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "SupplierID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "supplierID", err)
 	}
 
 	msg, err := server.Update(ctx, &protoReq)
@@ -537,13 +537,13 @@ func RegisterSupplierHandlerClient(ctx context.Context, mux *runtime.ServeMux, c
 }
 
 var (
-	pattern_Supplier_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "supplier", "SupplierID"}, ""))
+	pattern_Supplier_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "supplier", "supplierID"}, ""))
 
 	pattern_Supplier_Insert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "supplier"}, ""))
 
 	pattern_Supplier_SupplierBySupplierID_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "supplier", "supplierID"}, ""))
 
-	pattern_Supplier_Update_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "supplier", "SupplierID"}, ""))
+	pattern_Supplier_Update_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "supplier", "supplierID"}, ""))
 
 	pattern_Supplier_Upsert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "supplier", "upsert"}, ""))
 )

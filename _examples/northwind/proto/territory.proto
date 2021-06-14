@@ -24,7 +24,7 @@ service Territory {
     
     rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
-            delete: "/v1/territory/{TerritoryID}"
+            delete: "/v1/territory/{territoryID}"
             
         };
     }
@@ -39,7 +39,7 @@ service Territory {
     
     rpc Region(RegionRequest) returns (typespb.Region) {
         option (google.api.http) = {
-            get: "/v1/territory/region/{RegionID}"
+            get: "/v1/territory/{territoryID}/region"
             
         };
     }
@@ -53,7 +53,7 @@ service Territory {
     
     rpc Update(UpdateRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
-            put: "/v1/territory/{TerritoryID}"
+            put: "/v1/territory/{territoryID}"
             body: "*"
             
         };
@@ -70,17 +70,17 @@ service Territory {
 }
 
 message DeleteRequest { 
-    string TerritoryID = 1;
+    string territoryID = 1;
 }
 
 message InsertRequest { 
-    int32 RegionID = 1;
-    string TerritoryDescription = 2;
-    string TerritoryID = 3;
+    int32 regionID = 1;
+    string territoryDescription = 2;
+    string territoryID = 3;
 }
 
 message RegionRequest { 
-    int32 RegionID = 1;
+    string territoryID = 1;
 }
 
 message TerritoryByTerritoryIDRequest { 
@@ -88,14 +88,14 @@ message TerritoryByTerritoryIDRequest {
 }
 
 message UpdateRequest { 
-    int32 RegionID = 1;
-    string TerritoryDescription = 2;
+    int32 regionID = 1;
+    string territoryDescription = 2;
     // Output only.
-    string TerritoryID = 3;
+    string territoryID = 3;
 }
 
 message UpsertRequest { 
-    int32 RegionID = 1;
-    string TerritoryDescription = 2;
-    string TerritoryID = 3;
+    int32 regionID = 1;
+    string territoryDescription = 2;
+    string territoryID = 3;
 }

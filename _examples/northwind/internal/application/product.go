@@ -23,9 +23,9 @@ func NewProductService(db *sql.DB) *ProductService {
 }
 
 func (s *ProductService) Category(ctx context.Context, req *pb.CategoryRequest) (res *typespb.Category, err error) {
-	var m models.Product
-	if v := req.GetCategoryID(); v != nil {
-		m.CategoryID = sql.NullInt64{Valid: true, Int64: v.Value}
+	m, err := models.ProductByProductID(ctx, s.db, int16(req.ProductID))
+	if err != nil {
+		return
 	}
 
 	result, err := m.Category(ctx, s.db)
@@ -138,9 +138,9 @@ func (s *ProductService) ProductByProductID(ctx context.Context, req *pb.Product
 }
 
 func (s *ProductService) Supplier(ctx context.Context, req *pb.SupplierRequest) (res *typespb.Supplier, err error) {
-	var m models.Product
-	if v := req.GetSupplierID(); v != nil {
-		m.SupplierID = sql.NullInt64{Valid: true, Int64: v.Value}
+	m, err := models.ProductByProductID(ctx, s.db, int16(req.ProductID))
+	if err != nil {
+		return
 	}
 
 	result, err := m.Supplier(ctx, s.db)

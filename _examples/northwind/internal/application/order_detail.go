@@ -60,8 +60,10 @@ func (s *OrderDetailService) Insert(ctx context.Context, req *pb.InsertRequest) 
 }
 
 func (s *OrderDetailService) Order(ctx context.Context, req *pb.OrderRequest) (res *typespb.Order, err error) {
-	var m models.OrderDetail
-	m.OrderID = int16(req.GetOrderID())
+	m, err := models.OrderDetailByOrderIDProductID(ctx, s.db, int16(req.OrderID), int16(req.ProductID))
+	if err != nil {
+		return
+	}
 
 	result, err := m.Order(ctx, s.db)
 	if err != nil {
@@ -134,8 +136,10 @@ func (s *OrderDetailService) OrderDetailByOrderIDProductID(ctx context.Context, 
 }
 
 func (s *OrderDetailService) Product(ctx context.Context, req *pb.ProductRequest) (res *typespb.Product, err error) {
-	var m models.OrderDetail
-	m.ProductID = int16(req.GetProductID())
+	m, err := models.OrderDetailByOrderIDProductID(ctx, s.db, int16(req.OrderID), int16(req.ProductID))
+	if err != nil {
+		return
+	}
 
 	result, err := m.Product(ctx, s.db)
 	if err != nil {

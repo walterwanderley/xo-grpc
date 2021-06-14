@@ -42,14 +42,14 @@ func request_UsState_Delete_0(ctx context.Context, marshaler runtime.Marshaler, 
 		_   = err
 	)
 
-	val, ok = pathParams["StateID"]
+	val, ok = pathParams["stateID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "StateID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "stateID")
 	}
 
 	protoReq.StateID, err = runtime.Int32(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "StateID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "stateID", err)
 	}
 
 	msg, err := client.Delete(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -68,14 +68,14 @@ func local_request_UsState_Delete_0(ctx context.Context, marshaler runtime.Marsh
 		_   = err
 	)
 
-	val, ok = pathParams["StateID"]
+	val, ok = pathParams["stateID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "StateID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "stateID")
 	}
 
 	protoReq.StateID, err = runtime.Int32(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "StateID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "stateID", err)
 	}
 
 	msg, err := server.Delete(ctx, &protoReq)
@@ -136,14 +136,14 @@ func request_UsState_Update_0(ctx context.Context, marshaler runtime.Marshaler, 
 		_   = err
 	)
 
-	val, ok = pathParams["StateID"]
+	val, ok = pathParams["stateID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "StateID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "stateID")
 	}
 
 	protoReq.StateID, err = runtime.Int32(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "StateID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "stateID", err)
 	}
 
 	msg, err := client.Update(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -170,14 +170,14 @@ func local_request_UsState_Update_0(ctx context.Context, marshaler runtime.Marsh
 		_   = err
 	)
 
-	val, ok = pathParams["StateID"]
+	val, ok = pathParams["stateID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "StateID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "stateID")
 	}
 
 	protoReq.StateID, err = runtime.Int32(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "StateID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "stateID", err)
 	}
 
 	msg, err := server.Update(ctx, &protoReq)
@@ -537,11 +537,11 @@ func RegisterUsStateHandlerClient(ctx context.Context, mux *runtime.ServeMux, cl
 }
 
 var (
-	pattern_UsState_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "us-state", "StateID"}, ""))
+	pattern_UsState_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "us-state", "stateID"}, ""))
 
 	pattern_UsState_Insert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "us-state"}, ""))
 
-	pattern_UsState_Update_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "us-state", "StateID"}, ""))
+	pattern_UsState_Update_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "us-state", "stateID"}, ""))
 
 	pattern_UsState_Upsert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "us-state", "upsert"}, ""))
 

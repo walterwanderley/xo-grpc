@@ -9,137 +9,137 @@ import "google/protobuf/wrappers.proto";
 
 
 message Category {
-    int32 CategoryID = 1;
-    string CategoryName = 2;
-    .google.protobuf.StringValue Description = 3;
-    bytes Picture = 4;
+    int32 categoryID = 1;
+    string categoryName = 2;
+    google.protobuf.StringValue description = 3;
+    bytes picture = 4;
 }
 
 message Customer {
-    string CustomerID = 1;
-    string CompanyName = 2;
-    .google.protobuf.StringValue ContactName = 3;
-    .google.protobuf.StringValue ContactTitle = 4;
-    .google.protobuf.StringValue Address = 5;
-    .google.protobuf.StringValue City = 6;
-    .google.protobuf.StringValue Region = 7;
-    .google.protobuf.StringValue PostalCode = 8;
-    .google.protobuf.StringValue Country = 9;
-    .google.protobuf.StringValue Phone = 10;
-    .google.protobuf.StringValue Fax = 11;
+    string customerID = 1;
+    string companyName = 2;
+    google.protobuf.StringValue contactName = 3;
+    google.protobuf.StringValue contactTitle = 4;
+    google.protobuf.StringValue address = 5;
+    google.protobuf.StringValue city = 6;
+    google.protobuf.StringValue region = 7;
+    google.protobuf.StringValue postalCode = 8;
+    google.protobuf.StringValue country = 9;
+    google.protobuf.StringValue phone = 10;
+    google.protobuf.StringValue fax = 11;
 }
 
 message CustomerCustomerDemo {
-    string CustomerID = 1;
-    string CustomerTypeID = 2;
+    string customerID = 1;
+    string customerTypeID = 2;
 }
 
 message CustomerDemographic {
-    string CustomerTypeID = 1;
-    .google.protobuf.StringValue CustomerDesc = 2;
+    string customerTypeID = 1;
+    google.protobuf.StringValue customerDesc = 2;
 }
 
 message Employee {
-    int32 EmployeeID = 1;
-    string LastName = 2;
-    string FirstName = 3;
-    .google.protobuf.StringValue Title = 4;
-    .google.protobuf.StringValue TitleOfCourtesy = 5;
-    .google.protobuf.Timestamp BirthDate = 6;
-    .google.protobuf.Timestamp HireDate = 7;
-    .google.protobuf.StringValue Address = 8;
-    .google.protobuf.StringValue City = 9;
-    .google.protobuf.StringValue Region = 10;
-    .google.protobuf.StringValue PostalCode = 11;
-    .google.protobuf.StringValue Country = 12;
-    .google.protobuf.StringValue HomePhone = 13;
-    .google.protobuf.StringValue Extension = 14;
-    bytes Photo = 15;
-    .google.protobuf.StringValue Notes = 16;
-    .google.protobuf.Int64Value ReportsTo = 17;
-    .google.protobuf.StringValue PhotoPath = 18;
+    int32 employeeID = 1;
+    string lastName = 2;
+    string firstName = 3;
+    google.protobuf.StringValue title = 4;
+    google.protobuf.StringValue titleOfCourtesy = 5;
+    google.protobuf.Timestamp birthDate = 6;
+    google.protobuf.Timestamp hireDate = 7;
+    google.protobuf.StringValue address = 8;
+    google.protobuf.StringValue city = 9;
+    google.protobuf.StringValue region = 10;
+    google.protobuf.StringValue postalCode = 11;
+    google.protobuf.StringValue country = 12;
+    google.protobuf.StringValue homePhone = 13;
+    google.protobuf.StringValue extension = 14;
+    bytes photo = 15;
+    google.protobuf.StringValue notes = 16;
+    google.protobuf.Int64Value reportsTo = 17;
+    google.protobuf.StringValue photoPath = 18;
 }
 
 message EmployeeTerritory {
-    int32 EmployeeID = 1;
-    string TerritoryID = 2;
+    int32 employeeID = 1;
+    string territoryID = 2;
 }
 
 
 message Order {
-    int32 OrderID = 1;
-    .google.protobuf.StringValue CustomerID = 2;
-    .google.protobuf.Int64Value EmployeeID = 3;
-    .google.protobuf.Timestamp OrderDate = 4;
-    .google.protobuf.Timestamp RequiredDate = 5;
-    .google.protobuf.Timestamp ShippedDate = 6;
-    .google.protobuf.Int64Value ShipVia = 7;
-    .google.protobuf.DoubleValue Freight = 8;
-    .google.protobuf.StringValue ShipName = 9;
-    .google.protobuf.StringValue ShipAddress = 10;
-    .google.protobuf.StringValue ShipCity = 11;
-    .google.protobuf.StringValue ShipRegion = 12;
-    .google.protobuf.StringValue ShipPostalCode = 13;
-    .google.protobuf.StringValue ShipCountry = 14;
+    int32 orderID = 1;
+    google.protobuf.StringValue customerID = 2;
+    google.protobuf.Int64Value employeeID = 3;
+    google.protobuf.Timestamp orderDate = 4;
+    google.protobuf.Timestamp requiredDate = 5;
+    google.protobuf.Timestamp shippedDate = 6;
+    google.protobuf.Int64Value shipVia = 7;
+    google.protobuf.DoubleValue freight = 8;
+    google.protobuf.StringValue shipName = 9;
+    google.protobuf.StringValue shipAddress = 10;
+    google.protobuf.StringValue shipCity = 11;
+    google.protobuf.StringValue shipRegion = 12;
+    google.protobuf.StringValue shipPostalCode = 13;
+    google.protobuf.StringValue shipCountry = 14;
 }
 
 message OrderDetail {
-    int32 OrderID = 1;
-    int32 ProductID = 2;
-    float UnitPrice = 3;
-    int32 Quantity = 4;
-    float Discount = 5;
+    int32 orderID = 1;
+    int32 productID = 2;
+    float unitPrice = 3;
+    int32 quantity = 4;
+    float discount = 5;
 }
 
 message Product {
-    int32 ProductID = 1;
-    string ProductName = 2;
-    .google.protobuf.Int64Value SupplierID = 3;
-    .google.protobuf.Int64Value CategoryID = 4;
-    .google.protobuf.StringValue QuantityPerUnit = 5;
-    .google.protobuf.DoubleValue UnitPrice = 6;
-    .google.protobuf.Int64Value UnitsInStock = 7;
-    .google.protobuf.Int64Value UnitsOnOrder = 8;
-    .google.protobuf.Int64Value ReorderLevel = 9;
-    int64 Discontinued = 10;
+    int32 productID = 1;
+    string productName = 2;
+    google.protobuf.Int64Value supplierID = 3;
+    google.protobuf.Int64Value categoryID = 4;
+    google.protobuf.StringValue quantityPerUnit = 5;
+    google.protobuf.DoubleValue unitPrice = 6;
+    google.protobuf.Int64Value unitsInStock = 7;
+    google.protobuf.Int64Value unitsOnOrder = 8;
+    google.protobuf.Int64Value reorderLevel = 9;
+    int64 discontinued = 10;
 }
 
 message Region {
-    int32 RegionID = 1;
-    string RegionDescription = 2;
+    int32 regionID = 1;
+    string regionDescription = 2;
 }
 
 message Shipper {
-    int32 ShipperID = 1;
-    string CompanyName = 2;
-    .google.protobuf.StringValue Phone = 3;
+    int32 shipperID = 1;
+    string companyName = 2;
+    google.protobuf.StringValue phone = 3;
 }
 
 
 message Supplier {
-    int32 SupplierID = 1;
-    string CompanyName = 2;
-    .google.protobuf.StringValue ContactName = 3;
-    .google.protobuf.StringValue ContactTitle = 4;
-    .google.protobuf.StringValue Address = 5;
-    .google.protobuf.StringValue City = 6;
-    .google.protobuf.StringValue Region = 7;
-    .google.protobuf.StringValue PostalCode = 8;
-    .google.protobuf.StringValue Country = 9;
-    .google.protobuf.StringValue Phone = 10;
-    .google.protobuf.StringValue Fax = 11;
-    .google.protobuf.StringValue Homepage = 12;
+    int32 supplierID = 1;
+    string companyName = 2;
+    google.protobuf.StringValue contactName = 3;
+    google.protobuf.StringValue contactTitle = 4;
+    google.protobuf.StringValue address = 5;
+    google.protobuf.StringValue city = 6;
+    google.protobuf.StringValue region = 7;
+    google.protobuf.StringValue postalCode = 8;
+    google.protobuf.StringValue country = 9;
+    google.protobuf.StringValue phone = 10;
+    google.protobuf.StringValue fax = 11;
+    google.protobuf.StringValue homepage = 12;
 }
 
 message Territory {
-    string TerritoryID = 1;
-    string TerritoryDescription = 2;
-    int32 RegionID = 3;
+    string territoryID = 1;
+    string territoryDescription = 2;
+    int32 regionID = 3;
 }
 
 message UsState {
-    int32 StateID = 1;
-    .google.protobuf.StringValue StateName = 2;
-    .google.protobuf.StringValue StateAbbr = 3;
-    .google.protobuf.StringValue StateRegion = 4;
+    int32 stateID = 1;
+    google.protobuf.StringValue stateName = 2;
+    google.protobuf.StringValue stateAbbr = 3;
+    google.protobuf.StringValue stateRegion = 4;
 }

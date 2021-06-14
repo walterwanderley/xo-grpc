@@ -42,14 +42,24 @@ func request_CustomerCustomerDemo_Customer_0(ctx context.Context, marshaler runt
 		_   = err
 	)
 
-	val, ok = pathParams["CustomerID"]
+	val, ok = pathParams["customerID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "CustomerID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "customerID")
 	}
 
 	protoReq.CustomerID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "CustomerID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "customerID", err)
+	}
+
+	val, ok = pathParams["customerTypeID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "customerTypeID")
+	}
+
+	protoReq.CustomerTypeID, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "customerTypeID", err)
 	}
 
 	msg, err := client.Customer(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -68,14 +78,24 @@ func local_request_CustomerCustomerDemo_Customer_0(ctx context.Context, marshale
 		_   = err
 	)
 
-	val, ok = pathParams["CustomerID"]
+	val, ok = pathParams["customerID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "CustomerID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "customerID")
 	}
 
 	protoReq.CustomerID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "CustomerID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "customerID", err)
+	}
+
+	val, ok = pathParams["customerTypeID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "customerTypeID")
+	}
+
+	protoReq.CustomerTypeID, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "customerTypeID", err)
 	}
 
 	msg, err := server.Customer(ctx, &protoReq)
@@ -83,19 +103,35 @@ func local_request_CustomerCustomerDemo_Customer_0(ctx context.Context, marshale
 
 }
 
-var (
-	filter_CustomerCustomerDemo_CustomerCustomerDemoByCustomerIDCustomerTypeID_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
-)
-
 func request_CustomerCustomerDemo_CustomerCustomerDemoByCustomerIDCustomerTypeID_0(ctx context.Context, marshaler runtime.Marshaler, client CustomerCustomerDemoClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq CustomerCustomerDemoByCustomerIDCustomerTypeIDRequest
 	var metadata runtime.ServerMetadata
 
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["customerID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "customerID")
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_CustomerCustomerDemo_CustomerCustomerDemoByCustomerIDCustomerTypeID_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+
+	protoReq.CustomerID, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "customerID", err)
+	}
+
+	val, ok = pathParams["customerTypeID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "customerTypeID")
+	}
+
+	protoReq.CustomerTypeID, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "customerTypeID", err)
 	}
 
 	msg, err := client.CustomerCustomerDemoByCustomerIDCustomerTypeID(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -107,11 +143,31 @@ func local_request_CustomerCustomerDemo_CustomerCustomerDemoByCustomerIDCustomer
 	var protoReq CustomerCustomerDemoByCustomerIDCustomerTypeIDRequest
 	var metadata runtime.ServerMetadata
 
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["customerID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "customerID")
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_CustomerCustomerDemo_CustomerCustomerDemoByCustomerIDCustomerTypeID_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+
+	protoReq.CustomerID, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "customerID", err)
+	}
+
+	val, ok = pathParams["customerTypeID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "customerTypeID")
+	}
+
+	protoReq.CustomerTypeID, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "customerTypeID", err)
 	}
 
 	msg, err := server.CustomerCustomerDemoByCustomerIDCustomerTypeID(ctx, &protoReq)
@@ -130,14 +186,24 @@ func request_CustomerCustomerDemo_CustomerDemographic_0(ctx context.Context, mar
 		_   = err
 	)
 
-	val, ok = pathParams["CustomerTypeID"]
+	val, ok = pathParams["customerID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "CustomerTypeID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "customerID")
+	}
+
+	protoReq.CustomerID, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "customerID", err)
+	}
+
+	val, ok = pathParams["customerTypeID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "customerTypeID")
 	}
 
 	protoReq.CustomerTypeID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "CustomerTypeID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "customerTypeID", err)
 	}
 
 	msg, err := client.CustomerDemographic(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -156,14 +222,24 @@ func local_request_CustomerCustomerDemo_CustomerDemographic_0(ctx context.Contex
 		_   = err
 	)
 
-	val, ok = pathParams["CustomerTypeID"]
+	val, ok = pathParams["customerID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "CustomerTypeID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "customerID")
+	}
+
+	protoReq.CustomerID, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "customerID", err)
+	}
+
+	val, ok = pathParams["customerTypeID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "customerTypeID")
 	}
 
 	protoReq.CustomerTypeID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "CustomerTypeID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "customerTypeID", err)
 	}
 
 	msg, err := server.CustomerDemographic(ctx, &protoReq)
@@ -171,19 +247,35 @@ func local_request_CustomerCustomerDemo_CustomerDemographic_0(ctx context.Contex
 
 }
 
-var (
-	filter_CustomerCustomerDemo_Delete_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
-)
-
 func request_CustomerCustomerDemo_Delete_0(ctx context.Context, marshaler runtime.Marshaler, client CustomerCustomerDemoClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var protoReq DeleteRequest
 	var metadata runtime.ServerMetadata
 
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["customerID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "customerID")
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_CustomerCustomerDemo_Delete_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+
+	protoReq.CustomerID, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "customerID", err)
+	}
+
+	val, ok = pathParams["customerTypeID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "customerTypeID")
+	}
+
+	protoReq.CustomerTypeID, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "customerTypeID", err)
 	}
 
 	msg, err := client.Delete(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -195,11 +287,31 @@ func local_request_CustomerCustomerDemo_Delete_0(ctx context.Context, marshaler 
 	var protoReq DeleteRequest
 	var metadata runtime.ServerMetadata
 
-	if err := req.ParseForm(); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["customerID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "customerID")
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_CustomerCustomerDemo_Delete_0); err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+
+	protoReq.CustomerID, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "customerID", err)
+	}
+
+	val, ok = pathParams["customerTypeID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "customerTypeID")
+	}
+
+	protoReq.CustomerTypeID, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "customerTypeID", err)
 	}
 
 	msg, err := server.Delete(ctx, &protoReq)
@@ -507,13 +619,13 @@ func RegisterCustomerCustomerDemoHandlerClient(ctx context.Context, mux *runtime
 }
 
 var (
-	pattern_CustomerCustomerDemo_Customer_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "customer-customer-demo", "customer", "CustomerID"}, ""))
+	pattern_CustomerCustomerDemo_Customer_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 2}, []string{"v1", "customer-customer-demo", "customer", "customerID", "customer-type", "customerTypeID"}, ""))
 
-	pattern_CustomerCustomerDemo_CustomerCustomerDemoByCustomerIDCustomerTypeID_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "customer-customer-demo"}, ""))
+	pattern_CustomerCustomerDemo_CustomerCustomerDemoByCustomerIDCustomerTypeID_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"v1", "customer-customer-demo", "customer", "customerID", "customer-type", "customerTypeID"}, ""))
 
-	pattern_CustomerCustomerDemo_CustomerDemographic_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "customer-customer-demo", "customer-demographic", "CustomerTypeID"}, ""))
+	pattern_CustomerCustomerDemo_CustomerDemographic_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"v1", "customer-customer-demo", "customer", "customerID", "customer-type", "customerTypeID", "customer-demographic"}, ""))
 
-	pattern_CustomerCustomerDemo_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "customer-customer-demo"}, ""))
+	pattern_CustomerCustomerDemo_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"v1", "customer-customer-demo", "customer", "customerID", "customer-type", "customerTypeID"}, ""))
 
 	pattern_CustomerCustomerDemo_Insert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "customer-customer-demo"}, ""))
 )

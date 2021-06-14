@@ -32,7 +32,7 @@ service CustomerDemographic {
     
     rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
-            delete: "/v1/customer-demographic/{CustomerTypeID}"
+            delete: "/v1/customer-demographic/{customerTypeID}"
             
         };
     }
@@ -47,7 +47,7 @@ service CustomerDemographic {
     
     rpc Update(UpdateRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
-            put: "/v1/customer-demographic/{CustomerTypeID}"
+            put: "/v1/customer-demographic/{customerTypeID}"
             body: "*"
             
         };
@@ -68,21 +68,21 @@ message CustomerDemographicByCustomerTypeIDRequest {
 }
 
 message DeleteRequest { 
-    string CustomerTypeID = 1;
+    string customerTypeID = 1;
 }
 
 message InsertRequest { 
-    .google.protobuf.StringValue CustomerDesc = 1;
-    string CustomerTypeID = 2;
+    google.protobuf.StringValue customerDesc = 1;
+    string customerTypeID = 2;
 }
 
 message UpdateRequest { 
-    .google.protobuf.StringValue CustomerDesc = 1;
+    google.protobuf.StringValue customerDesc = 1;
     // Output only.
-    string CustomerTypeID = 2;
+    string customerTypeID = 2;
 }
 
 message UpsertRequest { 
-    .google.protobuf.StringValue CustomerDesc = 1;
-    string CustomerTypeID = 2;
+    google.protobuf.StringValue customerDesc = 1;
+    string customerTypeID = 2;
 }

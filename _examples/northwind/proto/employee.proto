@@ -26,14 +26,14 @@ service Employee {
     
     rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
-            delete: "/v1/employee/{EmployeeID}"
+            delete: "/v1/employee/{employeeID}"
             
         };
     }
     
     rpc Employee(EmployeeRequest) returns (typespb.Employee) {
         option (google.api.http) = {
-            get: "/v1/employee/{ReportsTo}"
+            get: "/v1/employee/{employeeID}/employee"
             
         };
     }
@@ -55,7 +55,7 @@ service Employee {
     
     rpc Update(UpdateRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
-            put: "/v1/employee/{EmployeeID}"
+            put: "/v1/employee/{employeeID}"
             body: "*"
             
         };
@@ -72,11 +72,11 @@ service Employee {
 }
 
 message DeleteRequest { 
-    int32 EmployeeID = 1;
+    int32 employeeID = 1;
 }
 
 message EmployeeRequest { 
-    .google.protobuf.Int64Value ReportsTo = 1;
+    int32 employeeID = 1;
 }
 
 message EmployeeByEmployeeIDRequest { 
@@ -84,65 +84,65 @@ message EmployeeByEmployeeIDRequest {
 }
 
 message InsertRequest { 
-    .google.protobuf.StringValue Address = 1;
-    .google.protobuf.Timestamp BirthDate = 2;
-    .google.protobuf.StringValue City = 3;
-    .google.protobuf.StringValue Country = 4;
-    int32 EmployeeID = 5;
-    .google.protobuf.StringValue Extension = 6;
-    string FirstName = 7;
-    .google.protobuf.Timestamp HireDate = 8;
-    .google.protobuf.StringValue HomePhone = 9;
-    string LastName = 10;
-    .google.protobuf.StringValue Notes = 11;
-    bytes Photo = 12;
-    .google.protobuf.StringValue PhotoPath = 13;
-    .google.protobuf.StringValue PostalCode = 14;
-    .google.protobuf.StringValue Region = 15;
-    .google.protobuf.Int64Value ReportsTo = 16;
-    .google.protobuf.StringValue Title = 17;
-    .google.protobuf.StringValue TitleOfCourtesy = 18;
+    google.protobuf.StringValue address = 1;
+    google.protobuf.Timestamp birthDate = 2;
+    google.protobuf.StringValue city = 3;
+    google.protobuf.StringValue country = 4;
+    int32 employeeID = 5;
+    google.protobuf.StringValue extension = 6;
+    string firstName = 7;
+    google.protobuf.Timestamp hireDate = 8;
+    google.protobuf.StringValue homePhone = 9;
+    string lastName = 10;
+    google.protobuf.StringValue notes = 11;
+    bytes photo = 12;
+    google.protobuf.StringValue photoPath = 13;
+    google.protobuf.StringValue postalCode = 14;
+    google.protobuf.StringValue region = 15;
+    google.protobuf.Int64Value reportsTo = 16;
+    google.protobuf.StringValue title = 17;
+    google.protobuf.StringValue titleOfCourtesy = 18;
 }
 
 message UpdateRequest { 
-    .google.protobuf.StringValue Address = 1;
-    .google.protobuf.Timestamp BirthDate = 2;
-    .google.protobuf.StringValue City = 3;
-    .google.protobuf.StringValue Country = 4;
+    google.protobuf.StringValue address = 1;
+    google.protobuf.Timestamp birthDate = 2;
+    google.protobuf.StringValue city = 3;
+    google.protobuf.StringValue country = 4;
     // Output only.
-    int32 EmployeeID = 5;
-    .google.protobuf.StringValue Extension = 6;
-    string FirstName = 7;
-    .google.protobuf.Timestamp HireDate = 8;
-    .google.protobuf.StringValue HomePhone = 9;
-    string LastName = 10;
-    .google.protobuf.StringValue Notes = 11;
-    bytes Photo = 12;
-    .google.protobuf.StringValue PhotoPath = 13;
-    .google.protobuf.StringValue PostalCode = 14;
-    .google.protobuf.StringValue Region = 15;
-    .google.protobuf.Int64Value ReportsTo = 16;
-    .google.protobuf.StringValue Title = 17;
-    .google.protobuf.StringValue TitleOfCourtesy = 18;
+    int32 employeeID = 5;
+    google.protobuf.StringValue extension = 6;
+    string firstName = 7;
+    google.protobuf.Timestamp hireDate = 8;
+    google.protobuf.StringValue homePhone = 9;
+    string lastName = 10;
+    google.protobuf.StringValue notes = 11;
+    bytes photo = 12;
+    google.protobuf.StringValue photoPath = 13;
+    google.protobuf.StringValue postalCode = 14;
+    google.protobuf.StringValue region = 15;
+    google.protobuf.Int64Value reportsTo = 16;
+    google.protobuf.StringValue title = 17;
+    google.protobuf.StringValue titleOfCourtesy = 18;
 }
 
 message UpsertRequest { 
-    .google.protobuf.StringValue Address = 1;
-    .google.protobuf.Timestamp BirthDate = 2;
-    .google.protobuf.StringValue City = 3;
-    .google.protobuf.StringValue Country = 4;
-    int32 EmployeeID = 5;
-    .google.protobuf.StringValue Extension = 6;
-    string FirstName = 7;
-    .google.protobuf.Timestamp HireDate = 8;
-    .google.protobuf.StringValue HomePhone = 9;
-    string LastName = 10;
-    .google.protobuf.StringValue Notes = 11;
-    bytes Photo = 12;
-    .google.protobuf.StringValue PhotoPath = 13;
-    .google.protobuf.StringValue PostalCode = 14;
-    .google.protobuf.StringValue Region = 15;
-    .google.protobuf.Int64Value ReportsTo = 16;
-    .google.protobuf.StringValue Title = 17;
-    .google.protobuf.StringValue TitleOfCourtesy = 18;
+    google.protobuf.StringValue address = 1;
+    google.protobuf.Timestamp birthDate = 2;
+    google.protobuf.StringValue city = 3;
+    google.protobuf.StringValue country = 4;
+    int32 employeeID = 5;
+    google.protobuf.StringValue extension = 6;
+    string firstName = 7;
+    google.protobuf.Timestamp hireDate = 8;
+    google.protobuf.StringValue homePhone = 9;
+    string lastName = 10;
+    google.protobuf.StringValue notes = 11;
+    bytes photo = 12;
+    google.protobuf.StringValue photoPath = 13;
+    google.protobuf.StringValue postalCode = 14;
+    google.protobuf.StringValue region = 15;
+    google.protobuf.Int64Value reportsTo = 16;
+    google.protobuf.StringValue title = 17;
+    google.protobuf.StringValue titleOfCourtesy = 18;
 }

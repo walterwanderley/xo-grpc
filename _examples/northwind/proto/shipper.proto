@@ -25,7 +25,7 @@ service Shipper {
     
     rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
-            delete: "/v1/shipper/{ShipperID}"
+            delete: "/v1/shipper/{shipperID}"
             
         };
     }
@@ -47,7 +47,7 @@ service Shipper {
     
     rpc Update(UpdateRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
-            put: "/v1/shipper/{ShipperID}"
+            put: "/v1/shipper/{shipperID}"
             body: "*"
             
         };
@@ -64,13 +64,13 @@ service Shipper {
 }
 
 message DeleteRequest { 
-    int32 ShipperID = 1;
+    int32 shipperID = 1;
 }
 
 message InsertRequest { 
-    string CompanyName = 1;
-    .google.protobuf.StringValue Phone = 2;
-    int32 ShipperID = 3;
+    string companyName = 1;
+    google.protobuf.StringValue phone = 2;
+    int32 shipperID = 3;
 }
 
 message ShipperByShipperIDRequest { 
@@ -78,14 +78,14 @@ message ShipperByShipperIDRequest {
 }
 
 message UpdateRequest { 
-    string CompanyName = 1;
-    .google.protobuf.StringValue Phone = 2;
+    string companyName = 1;
+    google.protobuf.StringValue phone = 2;
     // Output only.
-    int32 ShipperID = 3;
+    int32 shipperID = 3;
 }
 
 message UpsertRequest { 
-    string CompanyName = 1;
-    .google.protobuf.StringValue Phone = 2;
-    int32 ShipperID = 3;
+    string companyName = 1;
+    google.protobuf.StringValue phone = 2;
+    int32 shipperID = 3;
 }

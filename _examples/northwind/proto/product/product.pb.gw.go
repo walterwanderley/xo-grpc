@@ -42,14 +42,14 @@ func request_Product_Category_0(ctx context.Context, marshaler runtime.Marshaler
 		_   = err
 	)
 
-	val, ok = pathParams["CategoryID"]
+	val, ok = pathParams["productID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "CategoryID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "productID")
 	}
 
-	protoReq.CategoryID, err = runtime.Int64Value(val)
+	protoReq.ProductID, err = runtime.Int32(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "CategoryID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "productID", err)
 	}
 
 	msg, err := client.Category(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -68,14 +68,14 @@ func local_request_Product_Category_0(ctx context.Context, marshaler runtime.Mar
 		_   = err
 	)
 
-	val, ok = pathParams["CategoryID"]
+	val, ok = pathParams["productID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "CategoryID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "productID")
 	}
 
-	protoReq.CategoryID, err = runtime.Int64Value(val)
+	protoReq.ProductID, err = runtime.Int32(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "CategoryID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "productID", err)
 	}
 
 	msg, err := server.Category(ctx, &protoReq)
@@ -94,14 +94,14 @@ func request_Product_Delete_0(ctx context.Context, marshaler runtime.Marshaler, 
 		_   = err
 	)
 
-	val, ok = pathParams["ProductID"]
+	val, ok = pathParams["productID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "ProductID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "productID")
 	}
 
 	protoReq.ProductID, err = runtime.Int32(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "ProductID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "productID", err)
 	}
 
 	msg, err := client.Delete(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -120,14 +120,14 @@ func local_request_Product_Delete_0(ctx context.Context, marshaler runtime.Marsh
 		_   = err
 	)
 
-	val, ok = pathParams["ProductID"]
+	val, ok = pathParams["productID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "ProductID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "productID")
 	}
 
 	protoReq.ProductID, err = runtime.Int32(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "ProductID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "productID", err)
 	}
 
 	msg, err := server.Delete(ctx, &protoReq)
@@ -232,14 +232,14 @@ func request_Product_Supplier_0(ctx context.Context, marshaler runtime.Marshaler
 		_   = err
 	)
 
-	val, ok = pathParams["SupplierID"]
+	val, ok = pathParams["productID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "SupplierID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "productID")
 	}
 
-	protoReq.SupplierID, err = runtime.Int64Value(val)
+	protoReq.ProductID, err = runtime.Int32(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "SupplierID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "productID", err)
 	}
 
 	msg, err := client.Supplier(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -258,14 +258,14 @@ func local_request_Product_Supplier_0(ctx context.Context, marshaler runtime.Mar
 		_   = err
 	)
 
-	val, ok = pathParams["SupplierID"]
+	val, ok = pathParams["productID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "SupplierID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "productID")
 	}
 
-	protoReq.SupplierID, err = runtime.Int64Value(val)
+	protoReq.ProductID, err = runtime.Int32(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "SupplierID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "productID", err)
 	}
 
 	msg, err := server.Supplier(ctx, &protoReq)
@@ -292,14 +292,14 @@ func request_Product_Update_0(ctx context.Context, marshaler runtime.Marshaler, 
 		_   = err
 	)
 
-	val, ok = pathParams["ProductID"]
+	val, ok = pathParams["productID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "ProductID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "productID")
 	}
 
 	protoReq.ProductID, err = runtime.Int32(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "ProductID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "productID", err)
 	}
 
 	msg, err := client.Update(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -326,14 +326,14 @@ func local_request_Product_Update_0(ctx context.Context, marshaler runtime.Marsh
 		_   = err
 	)
 
-	val, ok = pathParams["ProductID"]
+	val, ok = pathParams["productID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "ProductID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "productID")
 	}
 
 	protoReq.ProductID, err = runtime.Int32(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "ProductID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "productID", err)
 	}
 
 	msg, err := server.Update(ctx, &protoReq)
@@ -727,17 +727,17 @@ func RegisterProductHandlerClient(ctx context.Context, mux *runtime.ServeMux, cl
 }
 
 var (
-	pattern_Product_Category_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "product", "category", "CategoryID"}, ""))
+	pattern_Product_Category_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"v1", "product", "productID", "category"}, ""))
 
-	pattern_Product_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "product", "ProductID"}, ""))
+	pattern_Product_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "product", "productID"}, ""))
 
 	pattern_Product_Insert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "product"}, ""))
 
 	pattern_Product_ProductByProductID_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "product", "productID"}, ""))
 
-	pattern_Product_Supplier_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "product", "supplier", "SupplierID"}, ""))
+	pattern_Product_Supplier_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"v1", "product", "productID", "supplier"}, ""))
 
-	pattern_Product_Update_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "product", "ProductID"}, ""))
+	pattern_Product_Update_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "product", "productID"}, ""))
 
 	pattern_Product_Upsert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "product", "upsert"}, ""))
 )
