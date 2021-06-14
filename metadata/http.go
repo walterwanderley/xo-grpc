@@ -33,7 +33,7 @@ func (s *Service) HttpPath() string {
 	default:
 		if s.RelationshipMethod() {
 			if pk := s.SimplePK(); pk != "" {
-				return fmt.Sprintf("%s/{%s}/%s", path, pk, toKebabCase(s.Name))
+				return fmt.Sprintf("%s/{%s}/%s", path, lowerFirstCharacter(pk), toKebabCase(s.Name))
 			}
 			return path + s.pkURLParams() + "/" + toKebabCase(s.Name)
 
@@ -50,9 +50,9 @@ func (s *Service) HttpPath() string {
 
 	if method == "get" && !s.HasCustomParams() && !s.HasArrayParams() {
 		if len(s.InputNames) == 1 {
-			path = fmt.Sprintf("%s/{%s}", strings.TrimSuffix(path, "/"), UpperFirstCharacter(s.InputNames[0]))
+			path = fmt.Sprintf("%s/{%s}", strings.TrimSuffix(path, "/"), lowerFirstCharacter(s.InputNames[0]))
 		} else if len(s.InputMethodNames) == 1 {
-			path = fmt.Sprintf("%s/{%s}", strings.TrimSuffix(path, "/"), UpperFirstCharacter(s.InputMethodNames[0]))
+			path = fmt.Sprintf("%s/{%s}", strings.TrimSuffix(path, "/"), lowerFirstCharacter(s.InputMethodNames[0]))
 
 		}
 	}
@@ -61,11 +61,11 @@ func (s *Service) HttpPath() string {
 
 func (s *Service) pkURLParams() string {
 	if pk := s.SimplePK(); pk != "" {
-		return fmt.Sprintf("/{%s}", pk)
+		return fmt.Sprintf("/{%s}", lowerFirstCharacter(pk))
 	}
 	var buf strings.Builder
 	for _, attr := range s.PK() {
-		buf.WriteString(fmt.Sprintf("/%s/{%s}", strings.TrimSuffix(toKebabCase(attr), "-id"), attr))
+		buf.WriteString(fmt.Sprintf("/%s/{%s}", strings.TrimSuffix(toKebabCase(attr), "-id"), lowerFirstCharacter(attr)))
 	}
 	return buf.String()
 

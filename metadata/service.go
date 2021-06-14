@@ -239,13 +239,13 @@ func (s *Service) ProtoInputs() string {
 		owner := s.Messages[s.Owner]
 		for _, name := range owner.PkNames {
 			count = count + 1
-			fmt.Fprintf(&b, "\n    %s %s = %d;", toProtoType(owner.AttributeTypeByName(name)), UpperFirstCharacter(name), count)
+			fmt.Fprintf(&b, "\n    %s %s = %d;", toProtoType(owner.AttributeTypeByName(name)), lowerFirstCharacter(name), count)
 		}
 		return b.String()
 	}
 	for i, name := range s.InputNames {
 		count = count + 1
-		fmt.Fprintf(&b, "\n    %s %s = %d;", toProtoType(s.InputTypes[i]), UpperFirstCharacter(name), count)
+		fmt.Fprintf(&b, "\n    %s %s = %d;", toProtoType(s.InputTypes[i]), lowerFirstCharacter(name), count)
 	}
 	for i, name := range s.InputMethodNames {
 		count = count + 1
@@ -257,7 +257,7 @@ func (s *Service) ProtoInputs() string {
 				}
 			}
 		}
-		fmt.Fprintf(&b, "\n    %s %s = %d;", toProtoType(s.InputMethodTypes[i]), UpperFirstCharacter(name), count)
+		fmt.Fprintf(&b, "\n    %s %s = %d;", toProtoType(s.InputMethodTypes[i]), lowerFirstCharacter(name), count)
 	}
 	return b.String()
 }
@@ -276,7 +276,7 @@ func (s *Service) EmptyOutput() bool {
 func (s *Service) ProtoOutputs() string {
 	var b strings.Builder
 	for i, name := range s.Output {
-		fmt.Fprintf(&b, "    %s Value = %d;\n", toProtoType(name), i+1)
+		fmt.Fprintf(&b, "    %s value = %d;\n", toProtoType(name), i+1)
 
 	}
 	return b.String()

@@ -327,6 +327,13 @@ func UpperFirstCharacter(str string) string {
 	return str
 }
 
+func lowerFirstCharacter(str string) string {
+	for i, v := range str {
+		return string(unicode.ToLower(v)) + str[i+1:]
+	}
+	return str
+}
+
 var matchFirstCap = regexp.MustCompile("(.)([A-Z][a-z]+)")
 var matchAllCap = regexp.MustCompile("([a-z0-9])([A-Z])")
 
