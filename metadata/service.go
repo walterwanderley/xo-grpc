@@ -2,6 +2,7 @@ package metadata
 
 import (
 	"fmt"
+	"regexp"
 	"strings"
 )
 
@@ -22,6 +23,13 @@ type Service struct {
 	HasContext       bool
 
 	Messages map[string]*Message
+}
+
+func (s *Service) PK() []string {
+	if m, ok := s.Messages[s.Owner]; ok {
+		return m.PkNames
+	}
+	return []string{}
 }
 
 func (s *Service) SimplePK() string {
@@ -47,6 +55,8 @@ func (s *Service) PKParams(prefix string) string {
 				params[i] = "int(" + prefix + n + ")"
 			case "int16":
 				params[i] = "int16(" + prefix + n + ")"
+			case "uint16":
+				params[i] = "uint16(" + prefix + n + ")"
 			default:
 				params[i] = prefix + n
 			}
@@ -54,6 +64,19 @@ func (s *Service) PKParams(prefix string) string {
 		return strings.Join(params, ", ")
 	}
 	return ""
+}
+
+func (s *Service) RelationshipMethod() bool {
+	if !s.IsMethod {
+		return false
+	}
+
+	switch s.Name {
+	case "Insert", "Update", "Upsert", "Delete":
+		return false
+	default:
+		return true
+	}
 }
 
 func (s *Service) MethodInputType() string {
@@ -210,22 +233,31 @@ func (s *Service) HasArrayOutput() bool {
 }
 
 func (s *Service) ProtoInputs() string {
-	var pk string
-	if s.IsMethod && s.Name == "Update" {
-		pk = s.SimplePK()
-	}
 	var b strings.Builder
 	var count int
+	if s.RelationshipMethod() {
+		owner := s.Messages[s.Owner]
+		for _, name := range owner.PkNames {
+			count = count + 1
+			fmt.Fprintf(&b, "\n    %s %s = %d;", toProtoType(owner.AttributeTypeByName(name)), UpperFirstCharacter(name), count)
+		}
+		return b.String()
+	}
 	for i, name := range s.InputNames {
 		count = count + 1
-		fmt.Fprintf(&b, "\n    %s %s = %d;", toProtoType(s.InputTypes[i]), name, count)
+		fmt.Fprintf(&b, "\n    %s %s = %d;", toProtoType(s.InputTypes[i]), UpperFirstCharacter(name), count)
 	}
 	for i, name := range s.InputMethodNames {
 		count = count + 1
-		if pk == name {
-			fmt.Fprint(&b, "\n    // Output only.")
+		if s.IsMethod && s.Name == "Update" {
+			for _, pk := range s.PK() {
+				if pk == name {
+					fmt.Fprint(&b, "\n    // Output only.")
+					break
+				}
+			}
 		}
-		fmt.Fprintf(&b, "\n    %s %s = %d;", toProtoType(s.InputMethodTypes[i]), name, count)
+		fmt.Fprintf(&b, "\n    %s %s = %d;", toProtoType(s.InputMethodTypes[i]), UpperFirstCharacter(name), count)
 	}
 	return b.String()
 }
@@ -244,8 +276,13 @@ func (s *Service) EmptyOutput() bool {
 func (s *Service) ProtoOutputs() string {
 	var b strings.Builder
 	for i, name := range s.Output {
-		fmt.Fprintf(&b, "    %s value = %d;\n", toProtoType(name), i+1)
+		fmt.Fprintf(&b, "    %s Value = %d;\n", toProtoType(name), i+1)
 
 	}
 	return b.String()
+}
+
+func (s *Service) IsReadEntity() bool {
+	r := regexp.MustCompile(fmt.Sprintf("^%sBy%s$", s.Owner, s.PKJoin("")))
+	return r.MatchString(s.Name)
 }

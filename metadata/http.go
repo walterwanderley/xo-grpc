@@ -28,32 +28,47 @@ func (s *Service) HttpPath() string {
 		return path
 	case "Delete", "Update":
 		if s.IsMethod {
-			if pk := s.SimplePK(); pk != "" {
-				return fmt.Sprintf("%s/{%s}", path, pk)
-			}
+			return path + s.pkURLParams()
 		}
 	default:
-		name := strings.TrimPrefix(s.Name, s.Owner+"s")
-		name = strings.TrimPrefix(name, s.Owner)
-		name = strings.TrimPrefix(name, "By")
-		if pk := s.PKJoin(""); name == pk && !s.IsMethod {
-			name = ""
+		if s.RelationshipMethod() {
+			if pk := s.SimplePK(); pk != "" {
+				return fmt.Sprintf("%s/{%s}/%s", path, pk, toKebabCase(s.Name))
+			}
+			return path + s.pkURLParams() + "/" + toKebabCase(s.Name)
+
 		}
-		if name != "" {
-			path = path + "/" + toKebabCase(name)
+		if s.IsReadEntity() {
+			return path + s.pkURLParams()
 		}
+
+		name := strings.TrimPrefix(s.Name, s.Owner+"sBy")
+		name = strings.TrimPrefix(name, s.Owner+"By")
+		path = path + "/" + toKebabCase(name)
 	}
 	method := s.HttpMethod()
 
-	if method == "get" && !s.HasCustomParams() {
-		if len(s.InputNames) == 1 && !s.HasArrayParams() {
-			path = fmt.Sprintf("%s/{%s}", strings.TrimSuffix(path, "/"), s.InputNames[0])
+	if method == "get" && !s.HasCustomParams() && !s.HasArrayParams() {
+		if len(s.InputNames) == 1 {
+			path = fmt.Sprintf("%s/{%s}", strings.TrimSuffix(path, "/"), UpperFirstCharacter(s.InputNames[0]))
 		} else if len(s.InputMethodNames) == 1 {
-			path = fmt.Sprintf("%s/{%s}", strings.TrimSuffix(path, "/"), s.InputMethodNames[0])
+			path = fmt.Sprintf("%s/{%s}", strings.TrimSuffix(path, "/"), UpperFirstCharacter(s.InputMethodNames[0]))
 
 		}
 	}
 	return path
+}
+
+func (s *Service) pkURLParams() string {
+	if pk := s.SimplePK(); pk != "" {
+		return fmt.Sprintf("/{%s}", pk)
+	}
+	var buf strings.Builder
+	for _, attr := range s.PK() {
+		buf.WriteString(fmt.Sprintf("/%s/{%s}", strings.TrimSuffix(toKebabCase(attr), "-id"), attr))
+	}
+	return buf.String()
+
 }
 
 func (s *Service) HttpBody() string {
