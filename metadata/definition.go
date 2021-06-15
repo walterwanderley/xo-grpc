@@ -94,14 +94,14 @@ func (p *Package) importTimestamp() bool {
 				return true
 			}
 		}
-		for _, n := range s.Output {
+		for _, n := range s.InputMethodTypes {
 			if n == "time.Time" || strings.HasSuffix(n, ".NullTime") {
 				return true
 			}
-			if m, ok := p.Messages[strings.TrimPrefix(strings.TrimPrefix(n, "[]"), "*")]; ok {
-				if m.importTimestamp() {
-					return true
-				}
+		}
+		for _, n := range s.Output {
+			if n == "time.Time" || strings.HasSuffix(n, ".NullTime") {
+				return true
 			}
 		}
 	}
@@ -115,14 +115,14 @@ func (p *Package) importWrappers() bool {
 				return true
 			}
 		}
-		for _, n := range s.Output {
+		for _, n := range s.InputMethodTypes {
 			if strings.HasPrefix(n, "sql.Null") && !strings.HasSuffix(n, ".NullTime") {
 				return true
 			}
-			if m, ok := p.Messages[strings.TrimPrefix(strings.TrimPrefix(n, "[]"), "*")]; ok {
-				if m.importWrappers() {
-					return true
-				}
+		}
+		for _, n := range s.Output {
+			if strings.HasPrefix(n, "sql.Null") && !strings.HasSuffix(n, ".NullTime") {
+				return true
 			}
 		}
 	}
