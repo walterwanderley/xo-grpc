@@ -43,7 +43,10 @@ import (
 	pb_UsState "northwind/proto/us_state"
 )
 
-const readTimeout = 15 * time.Second
+const (
+	readTimeout    = 15 * time.Second
+	startupTimeout = 2 * time.Minute
+)
 
 // Server represents a gRPC server
 type Server struct {
@@ -184,7 +187,7 @@ func (srv *Server) ListenAndServe() error {
 		}
 	}()
 
-	ctx, cancel := context.WithTimeout(context.Background(), 45*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), startupTimeout)
 	defer cancel()
 
 	sAddr := fmt.Sprintf("dns:///localhost:%d", srv.cfg.Port)
