@@ -42,14 +42,19 @@ func analyseFunc(fun *ast.FuncDecl, messages map[string]*Message) (owner string,
 		srv.Output = append(srv.Output, adjustType(exprToStr(p.Type), messages))
 	}
 
-	owner = strings.TrimPrefix(strings.TrimPrefix(getOwner(fun), "[]"), "*")
+	owner = canonicalType(getOwner(fun))
 	if srv.IsMethod {
 		receiverName := fun.Recv.List[0].Names[0].Name
-		methodInputRequirements := make(map[string]struct{})
+		methodAttributes := make([]string, 0)
+		dedup := make(map[string]struct{})
 		for _, stmt := range fun.Body.List {
 			ast.Inspect(stmt, func(n ast.Node) bool {
 				if selector, ok := n.(*ast.SelectorExpr); ok && fmt.Sprintf("%s", selector.X) == receiverName && firstIsUpper(selector.Sel.Name) {
-					methodInputRequirements[selector.Sel.Name] = struct{}{}
+					name := selector.Sel.Name
+					if _, ok := dedup[name]; !ok {
+						methodAttributes = append(methodAttributes, name)
+						dedup[name] = struct{}{}
+					}
 					return false
 				}
 				// Ignore passing by reference
@@ -59,23 +64,25 @@ func analyseFunc(fun *ast.FuncDecl, messages map[string]*Message) (owner string,
 				return true
 			})
 		}
-		methodAttributes := make([]string, 0)
-		for name := range methodInputRequirements {
-			methodAttributes = append(methodAttributes, name)
-		}
+
 		receiverType := strings.TrimPrefix(exprToStr(fun.Recv.List[0].Type), "*")
 		receiver := messages[receiverType]
-		sort.Strings(methodAttributes)
-		methodTypes := make([]string, 0)
-		for _, n := range methodAttributes {
-			methodTypes = append(methodTypes, receiver.AttributeTypeByName(n))
-		}
-
 		if srv.Name == "Delete" {
 			receiver.PkNames = make([]string, 0)
 			receiver.PkNames = append(receiver.PkNames, methodAttributes...)
-
 		}
+		sort.Strings(methodAttributes)
+		methodTypes := make([]string, 0)
+		for _, n := range methodAttributes {
+			methodTypes = append(methodTypes, receiver.attributeTypeByName(n))
+		}
+
+		if srv.RelationshipMethod() {
+			for _, attr := range methodAttributes {
+				receiver.IndexNames[attr] = struct{}{}
+			}
+		}
+
 		srv.InputMethodNames = methodAttributes
 		srv.InputMethodTypes = methodTypes
 	}
@@ -123,7 +130,8 @@ func parseMessages(pkg *ast.Package) map[string]*Message {
 		}
 	}
 	for _, m := range messages {
-		m.AdjustType(messages)
+		m.IndexNames = make(map[string]struct{})
+		m.adjustType(messages)
 	}
 	return messages
 }
@@ -220,4 +228,8 @@ func isParseFromString(fun *ast.FuncDecl) (receiver string, ok bool) {
 	}
 
 	return receiver, true
+}
+
+func canonicalType(typ string) string {
+	return strings.TrimPrefix(strings.TrimPrefix(typ, "[]"), "*")
 }

@@ -2,7 +2,6 @@ package metadata
 
 import (
 	"fmt"
-	"regexp"
 	"strings"
 )
 
@@ -21,15 +20,23 @@ type Service struct {
 	InputMethodNames []string
 	InputMethodTypes []string
 	HasContext       bool
+	ReadEntityFunc   string
 
 	Messages map[string]*Message
 }
 
-func (s *Service) PK() []string {
+func (s *Service) pk() []string {
 	if m, ok := s.Messages[s.Owner]; ok {
 		return m.PkNames
 	}
 	return []string{}
+}
+
+func (s *Service) entityPKParentPK() (entity []string, parent []string) {
+	if m, ok := s.Messages[s.Owner]; ok {
+		entity, parent = m.entityParentPK()
+	}
+	return
 }
 
 func (s *Service) SimplePK() string {
@@ -50,7 +57,28 @@ func (s *Service) PKParams(prefix string) string {
 	if m, ok := s.Messages[s.Owner]; ok {
 		params := make([]string, len(m.PkNames))
 		for i, n := range m.PkNames {
-			switch m.AttributeTypeByName(n) {
+			switch m.attributeTypeByName(n) {
+			case "int":
+				params[i] = "int(" + prefix + n + ")"
+			case "int16":
+				params[i] = "int16(" + prefix + n + ")"
+			case "uint16":
+				params[i] = "uint16(" + prefix + n + ")"
+			default:
+				params[i] = prefix + n
+			}
+		}
+		return strings.Join(params, ", ")
+	}
+	return ""
+}
+
+func (s *Service) PKEntityParams(prefix string) string {
+	if m, ok := s.Messages[s.Owner]; ok {
+		entityPKs, _ := m.entityParentPK()
+		params := make([]string, len(entityPKs))
+		for i, n := range entityPKs {
+			switch m.attributeTypeByName(n) {
 			case "int":
 				params[i] = "int(" + prefix + n + ")"
 			case "int16":
@@ -148,9 +176,9 @@ func (s *Service) OutputGrpc() []string {
 		return res
 	}
 
-	if s.HasArrayOutput() {
+	if s.hasArrayOutput() {
 		res = append(res, "for _, r := range result {")
-		typ := strings.TrimPrefix(strings.TrimPrefix(s.Output[0], "[]"), "*")
+		typ := canonicalType(s.Output[0])
 		res = append(res, fmt.Sprintf("var item typespb.%s", typ))
 		m := s.Messages[typ]
 		for i, attr := range m.AttrNames {
@@ -171,7 +199,13 @@ func (s *Service) OutputGrpc() []string {
 		return res
 	}
 	if !s.EmptyOutput() {
-		res = append(res, "res.Value = result")
+		switch s.Output[0] {
+		case "int":
+			res = append(res, "res.Value = int64(result)")
+		default:
+			res = append(res, "res.Value = result")
+		}
+
 		return res
 	}
 
@@ -209,7 +243,7 @@ func (s *Service) HasCustomParams() bool {
 	return customType(s.InputTypes[0])
 }
 
-func (s *Service) HasArrayParams() bool {
+func (s *Service) hasArrayParams() bool {
 	if s.EmptyInput() || len(s.InputTypes) == 0 {
 		return false
 	}
@@ -225,7 +259,7 @@ func (s *Service) HasCustomOutput() bool {
 	return customType(s.Output[0])
 }
 
-func (s *Service) HasArrayOutput() bool {
+func (s *Service) hasArrayOutput() bool {
 	if s.EmptyOutput() {
 		return false
 	}
@@ -239,9 +273,11 @@ func (s *Service) ProtoInputs() string {
 		owner := s.Messages[s.Owner]
 		for _, name := range owner.PkNames {
 			count = count + 1
-			fmt.Fprintf(&b, "\n    %s %s = %d;", toProtoType(owner.AttributeTypeByName(name)), lowerFirstCharacter(name), count)
+			fmt.Fprintf(&b, "\n    %s %s = %d;", toProtoType(owner.attributeTypeByName(name)), lowerFirstCharacter(name), count)
 		}
-		return b.String()
+		if count > 0 {
+			return b.String()
+		}
 	}
 	for i, name := range s.InputNames {
 		count = count + 1
@@ -250,7 +286,7 @@ func (s *Service) ProtoInputs() string {
 	for i, name := range s.InputMethodNames {
 		count = count + 1
 		if s.IsMethod && s.Name == "Update" {
-			for _, pk := range s.PK() {
+			for _, pk := range s.pk() {
 				if pk == name {
 					fmt.Fprint(&b, "\n    // Output only.")
 					break
@@ -280,9 +316,4 @@ func (s *Service) ProtoOutputs() string {
 
 	}
 	return b.String()
-}
-
-func (s *Service) IsReadEntity() bool {
-	r := regexp.MustCompile(fmt.Sprintf("^%sBy%s$", s.Owner, s.PKJoin("")))
-	return r.MatchString(s.Name)
 }

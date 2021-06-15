@@ -34,7 +34,7 @@ func (s *{{$package | UpperFirst}}Service) {{.Name}}(ctx context.Context, req *{
 		return
 	}
 	{{else}}
-    {{if and .IsMethod (not .RelationshipMethod)}}var m {{$srcPackage}}.{{$package}}{{end}}
+    {{if .IsMethod}}var m {{$srcPackage}}.{{$package}}{{end}}
 	{{ range .InputGrpc}}{{ .}}
 	{{end}}{{end}}{{if and (eq .Name "Update") (.PKJoin "") (.IsMethod)}}{{range .InputGrpc}}{{ .}}
 	{{end}}{{end}}
@@ -47,8 +47,8 @@ func (s *{{$package | UpperFirst}}Service) {{.Name}}(ctx context.Context, req *{
 	{{ range .OutputGrpc}}{{ .}}		
 	{{end}}
 	{{if eq .Name "Insert"}}
-	err = sendResourceLocation(ctx, fmt.Sprintf({{.LocationURIPattern}}))
-	{{end -}}
+	err = sendResourceLocation(ctx, {{.LocationURIPattern}})
+	{{end}}
 	return
 }
 {{ end }}

@@ -11,6 +11,7 @@ import (
 type Message struct {
 	Name               string
 	PkNames            []string
+	IndexNames         map[string]struct{}
 	AttrNames          []string
 	AttrTypes          []string
 	IsArray            bool
@@ -27,7 +28,25 @@ func (m *Message) ProtoAttributes() string {
 	return s.String()
 }
 
-func (m *Message) AttributeTypeByName(attrName string) string {
+func (m *Message) entityParentPK() (entity []string, parent []string) {
+	for _, pk := range m.PkNames {
+		found := false
+		for idx := range m.IndexNames {
+			if idx == pk {
+				found = true
+				break
+			}
+		}
+		if found {
+			parent = append(parent, pk)
+			continue
+		}
+		entity = append(entity, pk)
+	}
+	return
+}
+
+func (m *Message) attributeTypeByName(attrName string) string {
 	for i, n := range m.AttrNames {
 		if n == attrName {
 			return m.AttrTypes[i]
@@ -36,7 +55,7 @@ func (m *Message) AttributeTypeByName(attrName string) string {
 	return ""
 }
 
-func (m *Message) AdjustType(messages map[string]*Message) {
+func (m *Message) adjustType(messages map[string]*Message) {
 	for i, t := range m.AttrTypes {
 		m.AttrTypes[i] = adjustType(t, messages)
 	}

@@ -71,7 +71,7 @@ func toProtoType(typ string) string {
 
 func bindToProto(src, dst, attrName, attrType string) []string {
 	isArray := strings.HasPrefix(attrType, "[]")
-	attrType = strings.TrimPrefix(strings.TrimPrefix(attrType, "[]"), "*")
+	attrType = canonicalType(attrType)
 	res := make([]string, 0)
 	switch attrType {
 	case "sql.NullBool":
@@ -156,7 +156,7 @@ func bindToProtoWrappersArray(src, dst, attrName, typ string) []string {
 
 func bindToGo(src, dst, attrName, attrType string, newVar bool) []string {
 	isArray := strings.HasPrefix(attrType, "[]")
-	attrType = strings.TrimPrefix(strings.TrimPrefix(attrType, "[]"), "*")
+	attrType = canonicalType(attrType)
 	res := make([]string, 0)
 	switch attrType {
 	case "sql.NullBool":
