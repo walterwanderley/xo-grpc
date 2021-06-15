@@ -6,6 +6,8 @@ import (
 	"regexp"
 	"strings"
 	"unicode"
+
+	"github.com/gogo/protobuf/protoc-gen-gogo/generator"
 )
 
 func exprToStr(e ast.Expr) string {
@@ -80,62 +82,62 @@ func bindToProto(src, dst, attrName, attrType string) []string {
 			break
 		}
 		res = append(res, fmt.Sprintf("if %s.%s.Valid {", src, attrName))
-		res = append(res, fmt.Sprintf("%s.%s = wrapperspb.Bool(%s.%s.Bool) }", dst, attrName, src, attrName))
+		res = append(res, fmt.Sprintf("%s.%s = wrapperspb.Bool(%s.%s.Bool) }", dst, camelCaseProto(attrName), src, attrName))
 	case "sql.NullInt32":
 		if isArray {
 			res = append(res, bindToProtoWrappersArray(src, dst, attrName, "Int32")...)
 			break
 		}
 		res = append(res, fmt.Sprintf("if %s.%s.Valid {", src, attrName))
-		res = append(res, fmt.Sprintf("%s.%s = wrapperspb.Int32(%s.%s.Int32) }", dst, attrName, src, attrName))
+		res = append(res, fmt.Sprintf("%s.%s = wrapperspb.Int32(%s.%s.Int32) }", dst, camelCaseProto(attrName), src, attrName))
 	case "sql.NullInt64":
 		if isArray {
 			res = append(res, bindToProtoWrappersArray(src, dst, attrName, "Int64")...)
 			break
 		}
 		res = append(res, fmt.Sprintf("if %s.%s.Valid {", src, attrName))
-		res = append(res, fmt.Sprintf("%s.%s = wrapperspb.Int64(%s.%s.Int64) }", dst, attrName, src, attrName))
+		res = append(res, fmt.Sprintf("%s.%s = wrapperspb.Int64(%s.%s.Int64) }", dst, camelCaseProto(attrName), src, attrName))
 	case "sql.NullFloat64":
 		if isArray {
-			res = append(res, fmt.Sprintf("%s.%s = make([]*wrapperspb.DoubleValue, 0)", dst, attrName))
+			res = append(res, fmt.Sprintf("%s.%s = make([]*wrapperspb.DoubleValue, 0)", dst, camelCaseProto(attrName)))
 			res = append(res, fmt.Sprintf("for _, item := range %s.%s {", src, attrName))
 			res = append(res, "if item.Valid {")
-			res = append(res, fmt.Sprintf("%s.%s = append(%s.%s, &wrapperspb.DoubleValue{Value: item.Float64})", dst, attrName, dst, attrName))
+			res = append(res, fmt.Sprintf("%s.%s = append(%s.%s, &wrapperspb.DoubleValue{Value: item.Float64})", dst, camelCaseProto(attrName), dst, attrName))
 			res = append(res, "} else {")
-			res = append(res, fmt.Sprintf("%s.%s = append(%s.%s, nil)", dst, attrName, dst, attrName))
+			res = append(res, fmt.Sprintf("%s.%s = append(%s.%s, nil)", dst, camelCaseProto(attrName), dst, attrName))
 			res = append(res, "}")
 			res = append(res, "}")
 			break
 		}
 		res = append(res, fmt.Sprintf("if %s.%s.Valid {", src, attrName))
-		res = append(res, fmt.Sprintf("%s.%s = wrapperspb.Double(%s.%s.Float64) }", dst, attrName, src, attrName))
+		res = append(res, fmt.Sprintf("%s.%s = wrapperspb.Double(%s.%s.Float64) }", dst, camelCaseProto(attrName), src, attrName))
 	case "sql.NullString":
 		if isArray {
 			res = append(res, bindToProtoWrappersArray(src, dst, attrName, "String")...)
 			break
 		}
 		res = append(res, fmt.Sprintf("if %s.%s.Valid {", src, attrName))
-		res = append(res, fmt.Sprintf("%s.%s = wrapperspb.String(%s.%s.String) }", dst, attrName, src, attrName))
+		res = append(res, fmt.Sprintf("%s.%s = wrapperspb.String(%s.%s.String) }", dst, camelCaseProto(attrName), src, attrName))
 	case "sql.NullTime", "pq.NullTime", "mysql.NullTime":
 		res = append(res, fmt.Sprintf("if %s.%s.Valid {", src, attrName))
-		res = append(res, fmt.Sprintf("%s.%s = timestamppb.New(%s.%s.Time) }", dst, attrName, src, attrName))
+		res = append(res, fmt.Sprintf("%s.%s = timestamppb.New(%s.%s.Time) }", dst, camelCaseProto(attrName), src, attrName))
 	case "time.Time":
-		res = append(res, fmt.Sprintf("%s.%s = timestamppb.New(%s.%s)", dst, attrName, src, attrName))
+		res = append(res, fmt.Sprintf("%s.%s = timestamppb.New(%s.%s)", dst, camelCaseProto(attrName), src, attrName))
 	case "xoutil.SqTime":
-		res = append(res, fmt.Sprintf("%s.%s = timestamppb.New(%s.%s.Timr)", dst, attrName, src, attrName))
+		res = append(res, fmt.Sprintf("%s.%s = timestamppb.New(%s.%s.Timr)", dst, camelCaseProto(attrName), src, attrName))
 	case "uuid.UUID", "net.HardwareAddr", "net.IP":
-		res = append(res, fmt.Sprintf("%s.%s = %s.%s.String()", dst, attrName, src, attrName))
+		res = append(res, fmt.Sprintf("%s.%s = %s.%s.String()", dst, camelCaseProto(attrName), src, attrName))
 	case "int16":
-		res = append(res, fmt.Sprintf("%s.%s = int32(%s.%s)", dst, attrName, src, attrName))
+		res = append(res, fmt.Sprintf("%s.%s = int32(%s.%s)", dst, camelCaseProto(attrName), src, attrName))
 	case "int":
-		res = append(res, fmt.Sprintf("%s.%s = int64(%s.%s)", dst, attrName, src, attrName))
+		res = append(res, fmt.Sprintf("%s.%s = int64(%s.%s)", dst, camelCaseProto(attrName), src, attrName))
 	case "uint16":
-		res = append(res, fmt.Sprintf("%s.%s = uint32(%s.%s)", dst, attrName, src, attrName))
+		res = append(res, fmt.Sprintf("%s.%s = uint32(%s.%s)", dst, camelCaseProto(attrName), src, attrName))
 	default:
 		if strings.Contains(attrType, textUnmarshalerTypePrefix) || strings.Contains(attrType, parserTypePrefix) {
-			res = append(res, fmt.Sprintf("%s.%s = %s.%s.String()", dst, attrName, src, attrName))
+			res = append(res, fmt.Sprintf("%s.%s = %s.%s.String()", dst, camelCaseProto(attrName), src, attrName))
 		} else {
-			res = append(res, fmt.Sprintf("%s.%s = %s.%s", dst, attrName, src, attrName))
+			res = append(res, fmt.Sprintf("%s.%s = %s.%s", dst, camelCaseProto(attrName), src, attrName))
 		}
 	}
 	return res
@@ -143,12 +145,12 @@ func bindToProto(src, dst, attrName, attrType string) []string {
 
 func bindToProtoWrappersArray(src, dst, attrName, typ string) []string {
 	res := make([]string, 0)
-	res = append(res, fmt.Sprintf("%s.%s = make([]*wrapperspb.%sValue, 0)", dst, attrName, typ))
+	res = append(res, fmt.Sprintf("%s.%s = make([]*wrapperspb.%sValue, 0)", dst, camelCaseProto(attrName), typ))
 	res = append(res, fmt.Sprintf("for _, item := range %s.%s {", src, attrName))
 	res = append(res, "if item.Valid {")
-	res = append(res, fmt.Sprintf("%s.%s = append(%s.%s, &wrapperspb.%sValue{Value: item.%s})", dst, attrName, dst, attrName, typ, typ))
+	res = append(res, fmt.Sprintf("%s.%s = append(%s.%s, &wrapperspb.%sValue{Value: item.%s})", dst, camelCaseProto(attrName), dst, camelCaseProto(attrName), typ, typ))
 	res = append(res, "} else {")
-	res = append(res, fmt.Sprintf("%s.%s = append(%s.%s, nil)", dst, attrName, dst, attrName))
+	res = append(res, fmt.Sprintf("%s.%s = append(%s.%s, nil)", dst, camelCaseProto(attrName), dst, camelCaseProto(attrName)))
 	res = append(res, "}")
 	res = append(res, "}")
 	return res
@@ -167,7 +169,7 @@ func bindToGo(src, dst, attrName, attrType string, newVar bool) []string {
 			res = append(res, bindToGoWrappersArray(src, dst, attrName, attrType, "Bool")...)
 			break
 		}
-		res = append(res, fmt.Sprintf("if v := %s.Get%s(); v != nil {", src, attrName))
+		res = append(res, fmt.Sprintf("if v := %s.Get%s(); v != nil {", src, camelCaseProto(attrName)))
 		res = append(res, fmt.Sprintf("%s = sql.NullBool{Valid: true, Bool: v.Value}", dst))
 		res = append(res, "}")
 	case "sql.NullInt32":
@@ -178,7 +180,7 @@ func bindToGo(src, dst, attrName, attrType string, newVar bool) []string {
 			res = append(res, bindToGoWrappersArray(src, dst, attrName, attrType, "Int32")...)
 			break
 		}
-		res = append(res, fmt.Sprintf("if v := %s.Get%s(); v != nil {", src, attrName))
+		res = append(res, fmt.Sprintf("if v := %s.Get%s(); v != nil {", src, camelCaseProto(attrName)))
 		res = append(res, fmt.Sprintf("%s = sql.NullInt32{Valid: true, Int32: v.Value}", dst))
 		res = append(res, "}")
 	case "sql.NullInt64":
@@ -189,7 +191,7 @@ func bindToGo(src, dst, attrName, attrType string, newVar bool) []string {
 			res = append(res, bindToGoWrappersArray(src, dst, attrName, attrType, "Int64")...)
 			break
 		}
-		res = append(res, fmt.Sprintf("if v := %s.Get%s(); v != nil {", src, attrName))
+		res = append(res, fmt.Sprintf("if v := %s.Get%s(); v != nil {", src, camelCaseProto(attrName)))
 		res = append(res, fmt.Sprintf("%s = sql.NullInt64{Valid: true, Int64: v.Value}", dst))
 		res = append(res, "}")
 	case "sql.NullFloat64":
@@ -200,7 +202,7 @@ func bindToGo(src, dst, attrName, attrType string, newVar bool) []string {
 			res = append(res, bindToGoWrappersArray(src, dst, attrName, attrType, "Float64")...)
 			break
 		}
-		res = append(res, fmt.Sprintf("if v := %s.Get%s(); v != nil {", src, attrName))
+		res = append(res, fmt.Sprintf("if v := %s.Get%s(); v != nil {", src, camelCaseProto(attrName)))
 		res = append(res, fmt.Sprintf("%s = sql.NullFloat64{Valid: true, Float64: v.Value}", dst))
 		res = append(res, "}")
 	case "sql.NullString":
@@ -211,7 +213,7 @@ func bindToGo(src, dst, attrName, attrType string, newVar bool) []string {
 			res = append(res, bindToGoWrappersArray(src, dst, attrName, attrType, "String")...)
 			break
 		}
-		res = append(res, fmt.Sprintf("if v := %s.Get%s(); v != nil {", src, attrName))
+		res = append(res, fmt.Sprintf("if v := %s.Get%s(); v != nil {", src, camelCaseProto(attrName)))
 		res = append(res, fmt.Sprintf("%s = sql.NullString{Valid: true, String: v.Value}", dst))
 		res = append(res, "}")
 
@@ -219,7 +221,7 @@ func bindToGo(src, dst, attrName, attrType string, newVar bool) []string {
 		if newVar {
 			res = append(res, fmt.Sprintf("var %s %s", dst, attrType))
 		}
-		res = append(res, fmt.Sprintf("if v := %s.Get%s(); v != nil {", src, attrName))
+		res = append(res, fmt.Sprintf("if v := %s.Get%s(); v != nil {", src, camelCaseProto(attrName)))
 		res = append(res, fmt.Sprintf("if err = v.CheckValid(); err != nil { err = fmt.Errorf(\"invalid %s: %%s%%w\", err.Error(), validation.ErrUserInput)", attrName))
 		res = append(res, "return }")
 		res = append(res, "if t := v.AsTime(); !t.IsZero() {")
@@ -229,7 +231,7 @@ func bindToGo(src, dst, attrName, attrType string, newVar bool) []string {
 		if newVar {
 			res = append(res, fmt.Sprintf("var %s %s", dst, attrType))
 		}
-		res = append(res, fmt.Sprintf("if v := %s.Get%s(); v != nil {", src, attrName))
+		res = append(res, fmt.Sprintf("if v := %s.Get%s(); v != nil {", src, camelCaseProto(attrName)))
 		res = append(res, fmt.Sprintf("if err = v.CheckValid(); err != nil { err = fmt.Errorf(\"invalid %s: %%s%%w\", err.Error(), validation.ErrUserInput)", attrName))
 		res = append(res, "return }")
 		res = append(res, fmt.Sprintf("%s = v.AsTime()", dst))
@@ -239,7 +241,7 @@ func bindToGo(src, dst, attrName, attrType string, newVar bool) []string {
 		if newVar {
 			res = append(res, fmt.Sprintf("var %s %s", dst, attrType))
 		}
-		res = append(res, fmt.Sprintf("if v := %s.Get%s(); v != nil {", src, attrName))
+		res = append(res, fmt.Sprintf("if v := %s.Get%s(); v != nil {", src, camelCaseProto(attrName)))
 		res = append(res, fmt.Sprintf("if err = v.CheckValid(); err != nil { err = fmt.Errorf(\"invalid %s: %%s%%w\", err.Error(), validation.ErrUserInput)", attrName))
 		res = append(res, "return }")
 		res = append(res, fmt.Sprintf("%s.Time = v.AsTime()", dst))
@@ -248,39 +250,39 @@ func bindToGo(src, dst, attrName, attrType string, newVar bool) []string {
 		if newVar {
 			res = append(res, fmt.Sprintf("var %s %s", dst, attrType))
 		}
-		res = append(res, fmt.Sprintf("if %s, err = uuid.Parse(%s.Get%s()); err != nil {", dst, src, attrName))
+		res = append(res, fmt.Sprintf("if %s, err = uuid.Parse(%s.Get%s()); err != nil {", dst, src, camelCaseProto(attrName)))
 		res = append(res, fmt.Sprintf("err = fmt.Errorf(\"invalid %s: %%s%%w\", err.Error(), validation.ErrUserInput)", attrName))
 		res = append(res, "return }")
 	case "net.HardwareAddr":
 		if newVar {
 			res = append(res, fmt.Sprintf("var %s %s", dst, attrType))
 		}
-		res = append(res, fmt.Sprintf("if %s, err = net.ParseMAC(%s.Get%s()); err != nil {", dst, src, attrName))
+		res = append(res, fmt.Sprintf("if %s, err = net.ParseMAC(%s.Get%s()); err != nil {", dst, src, camelCaseProto(attrName)))
 		res = append(res, fmt.Sprintf("err = fmt.Errorf(\"invalid %s: %%s%%w\", err.Error(), validation.ErrUserInput)", attrName))
 		res = append(res, "return }")
 	case "net.IP":
 		if newVar {
-			res = append(res, fmt.Sprintf("%s := net.ParseIP(%s.Get%s())", dst, src, attrName))
+			res = append(res, fmt.Sprintf("%s := net.ParseIP(%s.Get%s())", dst, src, camelCaseProto(attrName)))
 		} else {
-			res = append(res, fmt.Sprintf("%s = net.ParseIP(%s.Get%s())", dst, src, attrName))
+			res = append(res, fmt.Sprintf("%s = net.ParseIP(%s.Get%s())", dst, src, camelCaseProto(attrName)))
 		}
 	case "int16":
 		if newVar {
-			res = append(res, fmt.Sprintf("%s := int16(%s.Get%s())", dst, src, attrName))
+			res = append(res, fmt.Sprintf("%s := int16(%s.Get%s())", dst, src, camelCaseProto(attrName)))
 		} else {
-			res = append(res, fmt.Sprintf("%s = int16(%s.Get%s())", dst, src, attrName))
+			res = append(res, fmt.Sprintf("%s = int16(%s.Get%s())", dst, src, camelCaseProto(attrName)))
 		}
 	case "int":
 		if newVar {
-			res = append(res, fmt.Sprintf("%s := int(%s.Get%s())", dst, src, attrName))
+			res = append(res, fmt.Sprintf("%s := int(%s.Get%s())", dst, src, camelCaseProto(attrName)))
 		} else {
-			res = append(res, fmt.Sprintf("%s = int(%s.Get%s())", dst, src, attrName))
+			res = append(res, fmt.Sprintf("%s = int(%s.Get%s())", dst, src, camelCaseProto(attrName)))
 		}
 	case "uint16":
 		if newVar {
-			res = append(res, fmt.Sprintf("%s := uint16(%s.Get%s())", dst, src, attrName))
+			res = append(res, fmt.Sprintf("%s := uint16(%s.Get%s())", dst, src, camelCaseProto(attrName)))
 		} else {
-			res = append(res, fmt.Sprintf("%s = uint16(%s.Get%s())", dst, src, attrName))
+			res = append(res, fmt.Sprintf("%s = uint16(%s.Get%s())", dst, src, camelCaseProto(attrName)))
 		}
 	default:
 		switch {
@@ -289,7 +291,7 @@ func bindToGo(src, dst, attrName, attrType string, newVar bool) []string {
 			if newVar {
 				res = append(res, fmt.Sprintf("%s := new(%s)", dst, attrType))
 			}
-			res = append(res, fmt.Sprintf("if err = %s.UnmarshalText([]byte(%s.Get%s())); err != nil {", dst, src, attrName))
+			res = append(res, fmt.Sprintf("if err = %s.UnmarshalText([]byte(%s.Get%s())); err != nil {", dst, src, camelCaseProto(attrName)))
 			res = append(res, fmt.Sprintf("err = fmt.Errorf(\"invalid %s: %%s%%w\", err.Error(), validation.ErrUserInput)", attrName))
 			res = append(res, "return }")
 		case strings.Contains(attrType, parserTypePrefix):
@@ -297,14 +299,14 @@ func bindToGo(src, dst, attrName, attrType string, newVar bool) []string {
 			if newVar {
 				res = append(res, fmt.Sprintf("%s := new(%s)", dst, attrType))
 			}
-			res = append(res, fmt.Sprintf("if err = %s.Parse(%s.Get%s()); err != nil {", dst, src, attrName))
+			res = append(res, fmt.Sprintf("if err = %s.Parse(%s.Get%s()); err != nil {", dst, src, camelCaseProto(attrName)))
 			res = append(res, fmt.Sprintf("err = fmt.Errorf(\"invalid %s: %%s%%w\", err.Error(), validation.ErrUserInput)", attrName))
 			res = append(res, "return }")
 		default:
 			if newVar {
-				res = append(res, fmt.Sprintf("%s := %s.Get%s()", dst, src, attrName))
+				res = append(res, fmt.Sprintf("%s := %s.Get%s()", dst, src, camelCaseProto(attrName)))
 			} else {
-				res = append(res, fmt.Sprintf("%s = %s.Get%s()", dst, src, attrName))
+				res = append(res, fmt.Sprintf("%s = %s.Get%s()", dst, src, camelCaseProto(attrName)))
 			}
 		}
 	}
@@ -314,7 +316,7 @@ func bindToGo(src, dst, attrName, attrType string, newVar bool) []string {
 func bindToGoWrappersArray(src, dst, attrName, attrType, valueType string) []string {
 	res := make([]string, 0)
 	res = append(res, fmt.Sprintf("%s = make([]%s, 0)", dst, attrType))
-	res = append(res, fmt.Sprintf("for _, item := range %s.Get%s() {", src, attrName))
+	res = append(res, fmt.Sprintf("for _, item := range %s.Get%s() {", src, camelCaseProto(attrName)))
 	res = append(res, fmt.Sprintf("%s = append(%s, %s{Valid: item != nil, %s: item.GetValue()})", dst, dst, attrType, valueType))
 	res = append(res, "}")
 	return res
@@ -328,6 +330,9 @@ func UpperFirstCharacter(str string) string {
 }
 
 func lowerFirstCharacter(str string) string {
+	if strings.ToLower(str) == "id" {
+		return "id"
+	}
 	for i, v := range str {
 		return string(unicode.ToLower(v)) + str[i+1:]
 	}
@@ -347,4 +352,8 @@ func toKebabCase(str string) string {
 	snake := matchFirstCap.ReplaceAllString(str, "${1}-${2}")
 	snake = matchAllCap.ReplaceAllString(snake, "${1}-${2}")
 	return strings.ToLower(snake)
+}
+
+func camelCaseProto(str string) string {
+	return generator.CamelCase(lowerFirstCharacter(str))
 }

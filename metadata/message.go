@@ -18,6 +18,7 @@ type Message struct {
 	ElementType        string
 	HasTextUnmarshaler bool
 	HasParser          bool
+	ReaderService      *Service
 }
 
 func (m *Message) ProtoAttributes() string {

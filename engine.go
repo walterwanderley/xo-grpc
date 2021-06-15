@@ -34,7 +34,7 @@ func process(def *metadata.Definition, outPath string) error {
 
 		if d.IsDir() {
 			if _, err := os.Stat(newPath); os.IsNotExist(err) {
-				err := os.MkdirAll(newPath, 0777)
+				err := os.MkdirAll(newPath, 0750)
 				if err != nil {
 					return err
 				}
@@ -61,13 +61,7 @@ func process(def *metadata.Definition, outPath string) error {
 				if verbose {
 					fmt.Println(path)
 				}
-				out, err := os.Create(path)
-				if err != nil {
-					return err
-				}
-				defer out.Close()
-
-				err = genFromTemplate(path, string(tpl), pkg, false, out)
+				err = genFromTemplate(path, string(tpl), pkg, false, path)
 				if err != nil {
 					return err
 				}
@@ -86,31 +80,13 @@ func process(def *metadata.Definition, outPath string) error {
 				if verbose {
 					fmt.Println(path)
 				}
-				out, err := os.Create(path)
-				if err != nil {
-					return err
-				}
-				defer out.Close()
 
-				err = genFromTemplate(path, string(tpl), pkg, true, out)
+				err = genFromTemplate(path, string(tpl), pkg, true, path)
 				if err != nil {
 					return err
 				}
 			}
 			return nil
-		}
-
-		out, err := os.Create(newPath)
-		if err != nil {
-			return err
-		}
-		defer out.Close()
-
-		if strings.HasSuffix(newPath, ".sh") {
-			err = out.Chmod(os.ModePerm)
-			if err != nil {
-				return err
-			}
 		}
 
 		if strings.HasSuffix(path, ".tmpl") {
@@ -119,7 +95,18 @@ func process(def *metadata.Definition, outPath string) error {
 				return err
 			}
 			goCode := strings.HasSuffix(newPath, ".go")
-			return genFromTemplate(path, string(tpl), def, goCode, out)
+			return genFromTemplate(path, string(tpl), def, goCode, newPath)
+		}
+
+		out, err := os.Create(newPath)
+		if err != nil {
+			return err
+		}
+		defer out.Close()
+
+		err = chmodFile(out)
+		if err != nil {
+			return err
 		}
 
 		_, err = io.Copy(out, in)
@@ -127,7 +114,18 @@ func process(def *metadata.Definition, outPath string) error {
 	})
 }
 
-func genFromTemplate(name, tmp string, data interface{}, goSource bool, w io.Writer) error {
+func genFromTemplate(name, tmp string, data interface{}, goSource bool, outPath string) error {
+
+	w, err := os.Create(outPath)
+	if err != nil {
+		return err
+	}
+	defer w.Close()
+
+	err = chmodFile(w)
+	if err != nil {
+		return err
+	}
 
 	var b bytes.Buffer
 
@@ -163,4 +161,14 @@ func genFromTemplate(name, tmp string, data interface{}, goSource bool, w io.Wri
 	fmt.Fprintf(w, "%s", string(src))
 	return nil
 
+}
+
+func chmodFile(f *os.File) error {
+	if strings.HasSuffix(f.Name(), ".sh") {
+		err := f.Chmod(os.ModePerm)
+		if err != nil {
+			return err
+		}
+	}
+	return nil
 }

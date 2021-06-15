@@ -2,7 +2,6 @@ package metadata
 
 import (
 	"fmt"
-	"regexp"
 	"strings"
 )
 
@@ -45,13 +44,13 @@ func (s *Service) httpPath() string {
 		if s.RelationshipMethod() {
 			return path + s.pkURLParams() + "/" + toKebabCase(s.Name)
 		}
-		if s.isReadEntity() {
+		if s.isReaderEntity() {
 			return path + s.pkURLParams()
 		}
 
 		name := strings.TrimPrefix(s.Name, s.Owner+"sBy")
 		name = strings.TrimPrefix(name, s.Owner+"By")
-		path = path + "/" + toKebabCase(s.Owner) + "/" + toKebabCase(name)
+		path = path + "/" + toKebabCase(s.Owner) + "/" + trimParentPath(toKebabCase(name))
 	}
 	method := s.httpMethod()
 
@@ -142,9 +141,12 @@ func (s *Service) httpResponseBody() string {
 	return ""
 }
 
-func (s *Service) isReadEntity() bool {
-	r := regexp.MustCompile(fmt.Sprintf("^%sBy%s$", s.Owner, s.PKJoin("")))
-	return r.MatchString(s.Name)
+func (s *Service) isReaderEntity() bool {
+	reader := s.ReaderEntity()
+	if reader == nil {
+		return false
+	}
+	return s.Name == reader.Name
 }
 
 func trimParentPath(s string) string {

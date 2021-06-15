@@ -20,7 +20,6 @@ type Service struct {
 	InputMethodNames []string
 	InputMethodTypes []string
 	HasContext       bool
-	ReadEntityFunc   string
 
 	Messages map[string]*Message
 }
@@ -59,18 +58,35 @@ func (s *Service) PKParams(prefix string) string {
 		for i, n := range m.PkNames {
 			switch m.attributeTypeByName(n) {
 			case "int":
-				params[i] = "int(" + prefix + n + ")"
+				params[i] = "int(" + prefix + camelCaseProto(n) + ")"
 			case "int16":
-				params[i] = "int16(" + prefix + n + ")"
+				params[i] = "int16(" + prefix + camelCaseProto(n) + ")"
 			case "uint16":
-				params[i] = "uint16(" + prefix + n + ")"
+				params[i] = "uint16(" + prefix + camelCaseProto(n) + ")"
 			default:
-				params[i] = prefix + n
+				params[i] = prefix + camelCaseProto(n)
 			}
 		}
 		return strings.Join(params, ", ")
 	}
 	return ""
+}
+
+func (s *Service) InputParams(prefix string) string {
+	params := make([]string, len(s.InputNames))
+	for i, n := range s.InputNames {
+		switch s.InputTypes[i] {
+		case "int":
+			params[i] = "int(" + prefix + camelCaseProto(n) + ")"
+		case "int16":
+			params[i] = "int16(" + prefix + camelCaseProto(n) + ")"
+		case "uint16":
+			params[i] = "uint16(" + prefix + camelCaseProto(n) + ")"
+		default:
+			params[i] = prefix + camelCaseProto(n)
+		}
+	}
+	return strings.Join(params, ", ")
 }
 
 func (s *Service) PKEntityParams(prefix string) string {
@@ -180,9 +196,13 @@ func (s *Service) OutputGrpc() []string {
 		res = append(res, "for _, r := range result {")
 		typ := canonicalType(s.Output[0])
 		res = append(res, fmt.Sprintf("var item typespb.%s", typ))
-		m := s.Messages[typ]
-		for i, attr := range m.AttrNames {
-			res = append(res, bindToProto("r", "item", UpperFirstCharacter(attr), m.AttrTypes[i])...)
+		m, ok := s.Messages[typ]
+		if ok {
+			for i, attr := range m.AttrNames {
+				res = append(res, bindToProto("r", "item", UpperFirstCharacter(attr), m.AttrTypes[i])...)
+			}
+		} else {
+			res = append(res, "// unknown type")
 		}
 		res = append(res, "res.Value = append(res.Value, &item)")
 		res = append(res, "}")
@@ -316,4 +336,12 @@ func (s *Service) ProtoOutputs() string {
 
 	}
 	return b.String()
+}
+
+func (s *Service) ReaderEntity() *Service {
+	m, ok := s.Messages[s.Owner]
+	if !ok {
+		return nil
+	}
+	return m.ReaderService
 }

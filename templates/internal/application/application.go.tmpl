@@ -28,8 +28,8 @@ func New{{.Package | UpperFirst}}Service(db *sql.DB) *{{.Package | UpperFirst}}S
 }
 {{$package := .Package}}{{$srcPackage := .SrcPackage}}{{ range .Services }}
 func (s *{{$package | UpperFirst}}Service) {{.Name}}(ctx context.Context, req *{{.MethodInputType}}) (res *{{.MethodOutputType}}, err error) {
-    {{- if and (or (eq .Name "Delete") (eq .Name "Update") (.RelationshipMethod)) (.PKJoin "") (.IsMethod) -}}
-	m, err := {{$srcPackage}}.{{$package | UpperFirst}}By{{.PKJoin ""}}(ctx, s.db, {{.PKParams "req."}})
+    {{- if and (or (eq .Name "Delete") (eq .Name "Update") (.RelationshipMethod)) (.PKJoin "") (.IsMethod) (.ReaderEntity) -}}
+	m, err := {{$srcPackage}}.{{.ReaderEntity.Name}}({{if .ReaderEntity.HasContext}}ctx, {{end}}s.db, {{.ReaderEntity.InputParams "req."}})
 	if err != nil {
 		return
 	}

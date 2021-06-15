@@ -167,17 +167,61 @@ func ParsePackages(src, module string) ([]*Package, error) {
 		sort.SliceStable(services, func(i, j int) bool {
 			return strings.Compare(services[i].Name, services[j].Name) < 0
 		})
-		result = append(result, &Package{
+		p := Package{
 			Package:    owner,
 			SrcPath:    src,
 			SrcPackage: pkgName,
 			GoModule:   module,
 			Messages:   messages,
 			Services:   services,
-		})
+		}
+		configReadEntity(&p)
+		result = append(result, &p)
 	}
 	sort.SliceStable(result, func(i, j int) bool {
 		return strings.Compare(result[i].Package, result[j].Package) < 0
 	})
 	return result, nil
+}
+
+func configReadEntity(p *Package) {
+	m, ok := p.Messages[p.Package]
+	if !ok {
+		return
+	}
+
+	for _, s := range p.Services {
+		if len(s.Output) != 1 {
+			continue
+		}
+		if m.Name != strings.TrimPrefix(s.Output[0], "*") {
+			continue
+		}
+		if !strings.HasPrefix(s.Name, p.Package+"By") {
+			continue
+		}
+		if len(m.PkNames) != len(s.InputNames) {
+			continue
+		}
+		var incompatibleInterface bool
+		for _, pk := range m.PkNames {
+			pkLower := strings.ToLower(pk)
+			var found bool
+			for _, in := range s.InputNames {
+				if strings.ToLower(in) == pkLower {
+					found = true
+					break
+				}
+			}
+			if !found {
+				incompatibleInterface = true
+				break
+			}
+		}
+		if incompatibleInterface {
+			continue
+		}
+		m.ReaderService = s
+		return
+	}
 }
