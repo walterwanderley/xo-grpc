@@ -57,7 +57,11 @@ func process(def *metadata.Definition, outPath string) error {
 				return err
 			}
 			for _, pkg := range def.Packages {
-				out, err := os.Create(filepath.Join(dir, (metadata.ToSnakeCase(pkg.Package) + ".proto")))
+				path := filepath.Join(dir, (metadata.ToSnakeCase(pkg.Package) + ".proto"))
+				if verbose {
+					fmt.Println(path)
+				}
+				out, err := os.Create(path)
 				if err != nil {
 					return err
 				}
@@ -78,7 +82,11 @@ func process(def *metadata.Definition, outPath string) error {
 				return err
 			}
 			for _, pkg := range def.Packages {
-				out, err := os.Create(filepath.Join(dir, (metadata.ToSnakeCase(pkg.Package) + ".go")))
+				path := filepath.Join(dir, (metadata.ToSnakeCase(pkg.Package) + ".go"))
+				if verbose {
+					fmt.Println(path)
+				}
+				out, err := os.Create(path)
 				if err != nil {
 					return err
 				}

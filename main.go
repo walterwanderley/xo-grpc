@@ -21,11 +21,13 @@ var (
 	module               string
 	showVersion          bool
 	help                 bool
+	verbose              bool
 )
 
 func main() {
 	flag.BoolVar(&help, "h", false, "Help for this program")
 	flag.BoolVar(&showVersion, "v", false, "Show version")
+	flag.BoolVar(&verbose, "verbose", false, "Verbose")
 	flag.StringVar(&module, "m", "my-project", "Go module name if there are no go.mod")
 	flag.StringVar(&databaseDriverModule, "db-module", "github.com/jackc/pgx/v4/stdlib", "Database driver module")
 	flag.StringVar(&databaseDriverName, "db-driver", "pgx", "Database driver name")
