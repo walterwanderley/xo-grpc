@@ -81,6 +81,7 @@ func (s *SupplierService) Insert(ctx context.Context, req *pb.InsertRequest) (re
 	res = new(emptypb.Empty)
 
 	err = sendResourceLocation(ctx, fmt.Sprintf("/%v", m.SupplierID))
+
 	return
 }
 

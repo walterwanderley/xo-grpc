@@ -3,7 +3,6 @@ package application
 import (
 	"context"
 	"database/sql"
-	"fmt"
 
 	"google.golang.org/protobuf/types/known/emptypb"
 	"google.golang.org/protobuf/types/known/timestamppb"
@@ -130,7 +129,8 @@ func (s *EmployeeTerritoryService) Insert(ctx context.Context, req *pb.InsertReq
 
 	res = new(emptypb.Empty)
 
-	err = sendResourceLocation(ctx, fmt.Sprintf("/employee/%v/territory/%v", int16(m.EmployeeID), m.TerritoryID))
+	err = sendResourceLocation(ctx, "")
+
 	return
 }
 

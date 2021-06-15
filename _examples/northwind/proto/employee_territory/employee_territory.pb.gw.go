@@ -251,12 +251,31 @@ func request_EmployeeTerritory_Insert_0(ctx context.Context, marshaler runtime.M
 	var protoReq InsertRequest
 	var metadata runtime.ServerMetadata
 
-	newReader, berr := utilities.IOReaderFactory(req.Body)
-	if berr != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["employeeID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "employeeID")
 	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+
+	protoReq.EmployeeID, err = runtime.Int32(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "employeeID", err)
+	}
+
+	val, ok = pathParams["territoryID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "territoryID")
+	}
+
+	protoReq.TerritoryID, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "territoryID", err)
 	}
 
 	msg, err := client.Insert(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -268,12 +287,31 @@ func local_request_EmployeeTerritory_Insert_0(ctx context.Context, marshaler run
 	var protoReq InsertRequest
 	var metadata runtime.ServerMetadata
 
-	newReader, berr := utilities.IOReaderFactory(req.Body)
-	if berr != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["employeeID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "employeeID")
 	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+
+	protoReq.EmployeeID, err = runtime.Int32(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "employeeID", err)
+	}
+
+	val, ok = pathParams["territoryID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "territoryID")
+	}
+
+	protoReq.TerritoryID, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "territoryID", err)
 	}
 
 	msg, err := server.Insert(ctx, &protoReq)
@@ -619,15 +657,15 @@ func RegisterEmployeeTerritoryHandlerClient(ctx context.Context, mux *runtime.Se
 }
 
 var (
-	pattern_EmployeeTerritory_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"v1", "employee-territory", "employee", "employeeID", "territory", "territoryID"}, ""))
+	pattern_EmployeeTerritory_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "employee", "employeeID", "territory", "territoryID", "employee-territory"}, ""))
 
-	pattern_EmployeeTerritory_Employee_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 2}, []string{"v1", "employee-territory", "employee", "employeeID", "territory", "territoryID"}, ""))
+	pattern_EmployeeTerritory_Employee_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 2, 1}, []string{"v1", "employee", "employeeID", "territory", "territoryID", "employee-territory"}, ""))
 
-	pattern_EmployeeTerritory_EmployeeTerritoryByEmployeeIDTerritoryID_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"v1", "employee-territory", "employee", "employeeID", "territory", "territoryID"}, ""))
+	pattern_EmployeeTerritory_EmployeeTerritoryByEmployeeIDTerritoryID_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "employee", "employeeID", "territory", "territoryID", "employee-territory"}, ""))
 
-	pattern_EmployeeTerritory_Insert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "employee-territory"}, ""))
+	pattern_EmployeeTerritory_Insert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "employee", "employeeID", "territory", "territoryID", "employee-territory"}, ""))
 
-	pattern_EmployeeTerritory_Territory_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 4}, []string{"v1", "employee-territory", "employee", "employeeID", "territory", "territoryID"}, ""))
+	pattern_EmployeeTerritory_Territory_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 2, 3}, []string{"v1", "employee", "employeeID", "territory", "territoryID", "employee-territory"}, ""))
 )
 
 var (

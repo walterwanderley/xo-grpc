@@ -6,7 +6,6 @@ option go_package = "northwind/proto/customer_customer_demo";
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
-import "google/protobuf/wrappers.proto";
 import "typespb.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 
@@ -25,36 +24,35 @@ service CustomerCustomerDemo {
     
     rpc Customer(CustomerRequest) returns (typespb.Customer) {
         option (google.api.http) = {
-            get: "/v1/customer-customer-demo/customer/{customerID}/customer-type/{customerTypeID}/customer"
+            get: "/v1/customer/{customerID}/customer-type/{customerTypeID}/customer-customer-demo/customer"
             
         };
     }
     
     rpc CustomerCustomerDemoByCustomerIDCustomerTypeID(CustomerCustomerDemoByCustomerIDCustomerTypeIDRequest) returns (typespb.CustomerCustomerDemo) {
         option (google.api.http) = {
-            get: "/v1/customer-customer-demo/customer/{customerID}/customer-type/{customerTypeID}"
+            get: "/v1/customer/{customerID}/customer-type/{customerTypeID}/customer-customer-demo"
             
         };
     }
     
     rpc CustomerDemographic(CustomerDemographicRequest) returns (typespb.CustomerDemographic) {
         option (google.api.http) = {
-            get: "/v1/customer-customer-demo/customer/{customerID}/customer-type/{customerTypeID}/customer-demographic"
+            get: "/v1/customer/{customerID}/customer-type/{customerTypeID}/customer-customer-demo/customer-demographic"
             
         };
     }
     
     rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
-            delete: "/v1/customer-customer-demo/customer/{customerID}/customer-type/{customerTypeID}"
+            delete: "/v1/customer/{customerID}/customer-type/{customerTypeID}/customer-customer-demo"
             
         };
     }
     
     rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
-            post: "/v1/customer-customer-demo"
-            body: "*"
+            post: "/v1/customer/{customerID}/customer-type/{customerTypeID}/customer-customer-demo"
             
         };
     }

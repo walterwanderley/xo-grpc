@@ -323,12 +323,31 @@ func request_CustomerCustomerDemo_Insert_0(ctx context.Context, marshaler runtim
 	var protoReq InsertRequest
 	var metadata runtime.ServerMetadata
 
-	newReader, berr := utilities.IOReaderFactory(req.Body)
-	if berr != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["customerID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "customerID")
 	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+
+	protoReq.CustomerID, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "customerID", err)
+	}
+
+	val, ok = pathParams["customerTypeID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "customerTypeID")
+	}
+
+	protoReq.CustomerTypeID, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "customerTypeID", err)
 	}
 
 	msg, err := client.Insert(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -340,12 +359,31 @@ func local_request_CustomerCustomerDemo_Insert_0(ctx context.Context, marshaler 
 	var protoReq InsertRequest
 	var metadata runtime.ServerMetadata
 
-	newReader, berr := utilities.IOReaderFactory(req.Body)
-	if berr != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", berr)
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["customerID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "customerID")
 	}
-	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+
+	protoReq.CustomerID, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "customerID", err)
+	}
+
+	val, ok = pathParams["customerTypeID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "customerTypeID")
+	}
+
+	protoReq.CustomerTypeID, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "customerTypeID", err)
 	}
 
 	msg, err := server.Insert(ctx, &protoReq)
@@ -619,15 +657,15 @@ func RegisterCustomerCustomerDemoHandlerClient(ctx context.Context, mux *runtime
 }
 
 var (
-	pattern_CustomerCustomerDemo_Customer_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 2}, []string{"v1", "customer-customer-demo", "customer", "customerID", "customer-type", "customerTypeID"}, ""))
+	pattern_CustomerCustomerDemo_Customer_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 2, 1}, []string{"v1", "customer", "customerID", "customer-type", "customerTypeID", "customer-customer-demo"}, ""))
 
-	pattern_CustomerCustomerDemo_CustomerCustomerDemoByCustomerIDCustomerTypeID_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"v1", "customer-customer-demo", "customer", "customerID", "customer-type", "customerTypeID"}, ""))
+	pattern_CustomerCustomerDemo_CustomerCustomerDemoByCustomerIDCustomerTypeID_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "customer", "customerID", "customer-type", "customerTypeID", "customer-customer-demo"}, ""))
 
-	pattern_CustomerCustomerDemo_CustomerDemographic_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 6}, []string{"v1", "customer-customer-demo", "customer", "customerID", "customer-type", "customerTypeID", "customer-demographic"}, ""))
+	pattern_CustomerCustomerDemo_CustomerDemographic_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 2, 6}, []string{"v1", "customer", "customerID", "customer-type", "customerTypeID", "customer-customer-demo", "customer-demographic"}, ""))
 
-	pattern_CustomerCustomerDemo_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"v1", "customer-customer-demo", "customer", "customerID", "customer-type", "customerTypeID"}, ""))
+	pattern_CustomerCustomerDemo_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "customer", "customerID", "customer-type", "customerTypeID", "customer-customer-demo"}, ""))
 
-	pattern_CustomerCustomerDemo_Insert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "customer-customer-demo"}, ""))
+	pattern_CustomerCustomerDemo_Insert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "customer", "customerID", "customer-type", "customerTypeID", "customer-customer-demo"}, ""))
 )
 
 var (

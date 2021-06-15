@@ -6,8 +6,6 @@ option go_package = "northwind/proto/employee_territory";
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
-import "google/protobuf/timestamp.proto";
-import "google/protobuf/wrappers.proto";
 import "typespb.proto";
 import "protoc-gen-openapiv2/options/annotations.proto";
 
@@ -26,36 +24,35 @@ service EmployeeTerritory {
     
     rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
-            delete: "/v1/employee-territory/employee/{employeeID}/territory/{territoryID}"
+            delete: "/v1/employee/{employeeID}/territory/{territoryID}/employee-territory"
             
         };
     }
     
     rpc Employee(EmployeeRequest) returns (typespb.Employee) {
         option (google.api.http) = {
-            get: "/v1/employee-territory/employee/{employeeID}/territory/{territoryID}/employee"
+            get: "/v1/employee/{employeeID}/territory/{territoryID}/employee-territory/employee"
             
         };
     }
     
     rpc EmployeeTerritoryByEmployeeIDTerritoryID(EmployeeTerritoryByEmployeeIDTerritoryIDRequest) returns (typespb.EmployeeTerritory) {
         option (google.api.http) = {
-            get: "/v1/employee-territory/employee/{employeeID}/territory/{territoryID}"
+            get: "/v1/employee/{employeeID}/territory/{territoryID}/employee-territory"
             
         };
     }
     
     rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
-            post: "/v1/employee-territory"
-            body: "*"
+            post: "/v1/employee/{employeeID}/territory/{territoryID}/employee-territory"
             
         };
     }
     
     rpc Territory(TerritoryRequest) returns (typespb.Territory) {
         option (google.api.http) = {
-            get: "/v1/employee-territory/employee/{employeeID}/territory/{territoryID}/territory"
+            get: "/v1/employee/{employeeID}/territory/{territoryID}/employee-territory/territory"
             
         };
     }

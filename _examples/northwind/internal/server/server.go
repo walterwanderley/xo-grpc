@@ -184,7 +184,7 @@ func (srv *Server) ListenAndServe() error {
 		}
 	}()
 
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 45*time.Second)
 	defer cancel()
 
 	sAddr := fmt.Sprintf("dns:///localhost:%d", srv.cfg.Port)

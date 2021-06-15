@@ -115,6 +115,33 @@ func request_OrderDetail_Insert_0(ctx context.Context, marshaler runtime.Marshal
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["orderID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "orderID")
+	}
+
+	protoReq.OrderID, err = runtime.Int32(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "orderID", err)
+	}
+
+	val, ok = pathParams["productID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "productID")
+	}
+
+	protoReq.ProductID, err = runtime.Int32(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "productID", err)
+	}
+
 	msg, err := client.Insert(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
@@ -130,6 +157,33 @@ func local_request_OrderDetail_Insert_0(ctx context.Context, marshaler runtime.M
 	}
 	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+
+	var (
+		val string
+		ok  bool
+		err error
+		_   = err
+	)
+
+	val, ok = pathParams["orderID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "orderID")
+	}
+
+	protoReq.OrderID, err = runtime.Int32(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "orderID", err)
+	}
+
+	val, ok = pathParams["productID"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "productID")
+	}
+
+	protoReq.ProductID, err = runtime.Int32(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "productID", err)
 	}
 
 	msg, err := server.Insert(ctx, &protoReq)
@@ -827,17 +881,17 @@ func RegisterOrderDetailHandlerClient(ctx context.Context, mux *runtime.ServeMux
 }
 
 var (
-	pattern_OrderDetail_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"v1", "order-detail", "order", "orderID", "product", "productID"}, ""))
+	pattern_OrderDetail_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "order", "orderID", "product", "productID", "order-detail"}, ""))
 
-	pattern_OrderDetail_Insert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "order-detail"}, ""))
+	pattern_OrderDetail_Insert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "order", "orderID", "product", "productID", "order-detail"}, ""))
 
-	pattern_OrderDetail_Order_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 2}, []string{"v1", "order-detail", "order", "orderID", "product", "productID"}, ""))
+	pattern_OrderDetail_Order_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 2, 1}, []string{"v1", "order", "orderID", "product", "productID", "order-detail"}, ""))
 
-	pattern_OrderDetail_OrderDetailByOrderIDProductID_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"v1", "order-detail", "order", "orderID", "product", "productID"}, ""))
+	pattern_OrderDetail_OrderDetailByOrderIDProductID_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "order", "orderID", "product", "productID", "order-detail"}, ""))
 
-	pattern_OrderDetail_Product_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5, 2, 4}, []string{"v1", "order-detail", "order", "orderID", "product", "productID"}, ""))
+	pattern_OrderDetail_Product_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 2, 3}, []string{"v1", "order", "orderID", "product", "productID", "order-detail"}, ""))
 
-	pattern_OrderDetail_Update_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"v1", "order-detail", "order", "orderID", "product", "productID"}, ""))
+	pattern_OrderDetail_Update_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "order", "orderID", "product", "productID", "order-detail"}, ""))
 
 	pattern_OrderDetail_Upsert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "order-detail", "upsert"}, ""))
 )
