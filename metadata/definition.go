@@ -75,6 +75,9 @@ func (p *Package) ProtoImports() []string {
 	if p.importWrappers() {
 		r = append(r, `import "google/protobuf/wrappers.proto";`)
 	}
+	if p.importTypes() {
+		r = append(r, `import "typespb.proto";`)
+	}
 	return r
 }
 
@@ -124,6 +127,15 @@ func (p *Package) importWrappers() bool {
 			if strings.HasPrefix(n, "sql.Null") && !strings.HasSuffix(n, ".NullTime") {
 				return true
 			}
+		}
+	}
+	return false
+}
+
+func (p *Package) importTypes() bool {
+	for _, s := range p.Services {
+		if s.HasCustomParams() || s.HasCustomOutput() {
+			return true
 		}
 	}
 	return false
