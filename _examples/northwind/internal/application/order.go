@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"fmt"
 
+	"go.uber.org/zap"
 	"google.golang.org/protobuf/types/known/emptypb"
 	"google.golang.org/protobuf/types/known/timestamppb"
 	"google.golang.org/protobuf/types/known/wrapperspb"
@@ -17,11 +18,12 @@ import (
 
 type OrderService struct {
 	pb.UnimplementedOrderServer
-	db *sql.DB
+	db     *sql.DB
+	logger *zap.Logger
 }
 
-func NewOrderService(db *sql.DB) *OrderService {
-	return &OrderService{db: db}
+func NewOrderService(logger *zap.Logger, db *sql.DB) *OrderService {
+	return &OrderService{logger: logger, db: db}
 }
 
 func (s *OrderService) Customer(ctx context.Context, req *pb.CustomerRequest) (res *typespb.Customer, err error) {

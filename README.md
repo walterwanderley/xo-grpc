@@ -40,7 +40,7 @@ xo-grpc models
 3. Run the generated server:
 
 ```sh
-go run . -db [Database Connection URL] -dev
+go run . -db [Database Connection URL] -dev -grpcui
 ```
 
 4. Enjoy!

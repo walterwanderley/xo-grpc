@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"fmt"
 
+	"go.uber.org/zap"
 	"google.golang.org/protobuf/types/known/emptypb"
 	"google.golang.org/protobuf/types/known/wrapperspb"
 
@@ -15,11 +16,12 @@ import (
 
 type CategoryService struct {
 	pb.UnimplementedCategoryServer
-	db *sql.DB
+	db     *sql.DB
+	logger *zap.Logger
 }
 
-func NewCategoryService(db *sql.DB) *CategoryService {
-	return &CategoryService{db: db}
+func NewCategoryService(logger *zap.Logger, db *sql.DB) *CategoryService {
+	return &CategoryService{logger: logger, db: db}
 }
 
 func (s *CategoryService) CategoryByCategoryID(ctx context.Context, req *pb.CategoryByCategoryIDRequest) (res *typespb.Category, err error) {

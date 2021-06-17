@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"fmt"
 
+	"go.uber.org/zap"
 	"google.golang.org/protobuf/types/known/emptypb"
 	"google.golang.org/protobuf/types/known/wrapperspb"
 
@@ -15,11 +16,12 @@ import (
 
 type UsStateService struct {
 	pb.UnimplementedUsStateServer
-	db *sql.DB
+	db     *sql.DB
+	logger *zap.Logger
 }
 
-func NewUsStateService(db *sql.DB) *UsStateService {
-	return &UsStateService{db: db}
+func NewUsStateService(logger *zap.Logger, db *sql.DB) *UsStateService {
+	return &UsStateService{logger: logger, db: db}
 }
 
 func (s *UsStateService) Delete(ctx context.Context, req *pb.DeleteRequest) (res *emptypb.Empty, err error) {

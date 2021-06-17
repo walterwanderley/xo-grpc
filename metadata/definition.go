@@ -187,7 +187,7 @@ func ParsePackages(src, module string) ([]*Package, error) {
 			Messages:   messages,
 			Services:   services,
 		}
-		configReadEntity(&p)
+		setReaderEntity(&p)
 		result = append(result, &p)
 	}
 	sort.SliceStable(result, func(i, j int) bool {
@@ -196,7 +196,7 @@ func ParsePackages(src, module string) ([]*Package, error) {
 	return result, nil
 }
 
-func configReadEntity(p *Package) {
+func setReaderEntity(p *Package) {
 	m, ok := p.Messages[p.Package]
 	if !ok {
 		return

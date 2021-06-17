@@ -24,23 +24,7 @@ import (
 	healthpb "google.golang.org/grpc/health/grpc_health_v1"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/reflection"
-	protobuf "google.golang.org/protobuf/proto"
-
-	"northwind/proto"
-	pb_Category "northwind/proto/category"
-	pb_Customer "northwind/proto/customer"
-	pb_CustomerCustomerDemo "northwind/proto/customer_customer_demo"
-	pb_CustomerDemographic "northwind/proto/customer_demographic"
-	pb_Employee "northwind/proto/employee"
-	pb_EmployeeTerritory "northwind/proto/employee_territory"
-	pb_Order "northwind/proto/order"
-	pb_OrderDetail "northwind/proto/order_detail"
-	pb_Product "northwind/proto/product"
-	pb_Region "northwind/proto/region"
-	pb_Shipper "northwind/proto/shipper"
-	pb_Supplier "northwind/proto/supplier"
-	pb_Territory "northwind/proto/territory"
-	pb_UsState "northwind/proto/us_state"
+	"google.golang.org/protobuf/proto"
 )
 
 const (
@@ -48,63 +32,31 @@ const (
 	startupTimeout = 2 * time.Minute
 )
 
+type RegisterServer func(srv *grpc.Server)
+
+type RegisterHandler func(ctx context.Context, mux *runtime.ServeMux, cc *grpc.ClientConn) error
+
 // Server represents a gRPC server
 type Server struct {
-	cfg                         Config
-	log                         *zap.Logger
-	grpcServer                  *grpc.Server
-	healthServer                *health.Server
-	CategoryService             pb_Category.CategoryServer
-	CustomerService             pb_Customer.CustomerServer
-	CustomerCustomerDemoService pb_CustomerCustomerDemo.CustomerCustomerDemoServer
-	CustomerDemographicService  pb_CustomerDemographic.CustomerDemographicServer
-	EmployeeService             pb_Employee.EmployeeServer
-	EmployeeTerritoryService    pb_EmployeeTerritory.EmployeeTerritoryServer
-	OrderService                pb_Order.OrderServer
-	OrderDetailService          pb_OrderDetail.OrderDetailServer
-	ProductService              pb_Product.ProductServer
-	RegionService               pb_Region.RegionServer
-	ShipperService              pb_Shipper.ShipperServer
-	SupplierService             pb_Supplier.SupplierServer
-	TerritoryService            pb_Territory.TerritoryServer
-	UsStateService              pb_UsState.UsStateServer
+	cfg Config
+	log *zap.Logger
+
+	grpcServer   *grpc.Server
+	healthServer *health.Server
+
+	register         RegisterServer
+	registerHandlers []RegisterHandler
+	openAPISpec      []byte
 }
 
 // New gRPC server
-func New(cfg Config, log *zap.Logger,
-	CategoryService pb_Category.CategoryServer,
-	CustomerService pb_Customer.CustomerServer,
-	CustomerCustomerDemoService pb_CustomerCustomerDemo.CustomerCustomerDemoServer,
-	CustomerDemographicService pb_CustomerDemographic.CustomerDemographicServer,
-	EmployeeService pb_Employee.EmployeeServer,
-	EmployeeTerritoryService pb_EmployeeTerritory.EmployeeTerritoryServer,
-	OrderService pb_Order.OrderServer,
-	OrderDetailService pb_OrderDetail.OrderDetailServer,
-	ProductService pb_Product.ProductServer,
-	RegionService pb_Region.RegionServer,
-	ShipperService pb_Shipper.ShipperServer,
-	SupplierService pb_Supplier.SupplierServer,
-	TerritoryService pb_Territory.TerritoryServer,
-	UsStateService pb_UsState.UsStateServer,
-
-) *Server {
+func New(cfg Config, log *zap.Logger, register RegisterServer, registerHandlers []RegisterHandler, openAPISpec []byte) *Server {
 	return &Server{
-		cfg:                         cfg,
-		log:                         log,
-		CategoryService:             CategoryService,
-		CustomerService:             CustomerService,
-		CustomerCustomerDemoService: CustomerCustomerDemoService,
-		CustomerDemographicService:  CustomerDemographicService,
-		EmployeeService:             EmployeeService,
-		EmployeeTerritoryService:    EmployeeTerritoryService,
-		OrderService:                OrderService,
-		OrderDetailService:          OrderDetailService,
-		ProductService:              ProductService,
-		RegionService:               RegionService,
-		ShipperService:              ShipperService,
-		SupplierService:             SupplierService,
-		TerritoryService:            TerritoryService,
-		UsStateService:              UsStateService,
+		cfg:              cfg,
+		log:              log,
+		register:         register,
+		registerHandlers: registerHandlers,
+		openAPISpec:      openAPISpec,
 	}
 }
 
@@ -113,24 +65,11 @@ func (srv *Server) ListenAndServe() error {
 	grpc_zap.ReplaceGrpcLoggerV2(srv.log)
 	srv.grpcServer = grpc.NewServer(srv.cfg.grpcOpts(srv.log)...)
 	reflection.Register(srv.grpcServer)
+	srv.register(srv.grpcServer)
+
 	srv.healthServer = health.NewServer()
 	healthpb.RegisterHealthServer(srv.grpcServer, srv.healthServer)
 	srv.healthServer.SetServingStatus("ww", healthpb.HealthCheckResponse_SERVING)
-
-	pb_Category.RegisterCategoryServer(srv.grpcServer, srv.CategoryService)
-	pb_Customer.RegisterCustomerServer(srv.grpcServer, srv.CustomerService)
-	pb_CustomerCustomerDemo.RegisterCustomerCustomerDemoServer(srv.grpcServer, srv.CustomerCustomerDemoService)
-	pb_CustomerDemographic.RegisterCustomerDemographicServer(srv.grpcServer, srv.CustomerDemographicService)
-	pb_Employee.RegisterEmployeeServer(srv.grpcServer, srv.EmployeeService)
-	pb_EmployeeTerritory.RegisterEmployeeTerritoryServer(srv.grpcServer, srv.EmployeeTerritoryService)
-	pb_Order.RegisterOrderServer(srv.grpcServer, srv.OrderService)
-	pb_OrderDetail.RegisterOrderDetailServer(srv.grpcServer, srv.OrderDetailService)
-	pb_Product.RegisterProductServer(srv.grpcServer, srv.ProductService)
-	pb_Region.RegisterRegionServer(srv.grpcServer, srv.RegionService)
-	pb_Shipper.RegisterShipperServer(srv.grpcServer, srv.ShipperService)
-	pb_Supplier.RegisterSupplierServer(srv.grpcServer, srv.SupplierService)
-	pb_Territory.RegisterTerritoryServer(srv.grpcServer, srv.TerritoryService)
-	pb_UsState.RegisterUsStateServer(srv.grpcServer, srv.UsStateService)
 
 	var listen net.Listener
 	dialOptions := []grpc.DialOption{grpc.WithBlock()}
@@ -171,7 +110,7 @@ func (srv *Server) ListenAndServe() error {
 
 	go func() {
 		if err := mux.Serve(); err != nil {
-			srv.log.Error("Failed to serve cmux", zap.String("error", err.Error()))
+			srv.log.Error("failed to serve cmux", zap.Error(err))
 		}
 	}()
 
@@ -183,7 +122,7 @@ func (srv *Server) ListenAndServe() error {
 	go func() {
 		srv.log.Info("Server running", zap.String("addr", grpcListener.Addr().String()))
 		if err := srv.grpcServer.Serve(grpcListener); err != nil {
-			srv.log.Fatal("Failed to start gRPC Server", zap.String("error", err.Error()))
+			srv.log.Fatal("Failed to start gRPC Server", zap.Error(err))
 		}
 	}()
 
@@ -206,66 +145,34 @@ func (srv *Server) ListenAndServe() error {
 		runtime.WithForwardResponseOption(forwardResponse),
 		runtime.WithOutgoingHeaderMatcher(outcomingHeaderMatcher),
 	)
-	if err := pb_Category.RegisterCategoryHandler(context.Background(), gwmux, cc); err != nil {
-		return err
-	}
-	if err := pb_Customer.RegisterCustomerHandler(context.Background(), gwmux, cc); err != nil {
-		return err
-	}
-	if err := pb_CustomerCustomerDemo.RegisterCustomerCustomerDemoHandler(context.Background(), gwmux, cc); err != nil {
-		return err
-	}
-	if err := pb_CustomerDemographic.RegisterCustomerDemographicHandler(context.Background(), gwmux, cc); err != nil {
-		return err
-	}
-	if err := pb_Employee.RegisterEmployeeHandler(context.Background(), gwmux, cc); err != nil {
-		return err
-	}
-	if err := pb_EmployeeTerritory.RegisterEmployeeTerritoryHandler(context.Background(), gwmux, cc); err != nil {
-		return err
-	}
-	if err := pb_Order.RegisterOrderHandler(context.Background(), gwmux, cc); err != nil {
-		return err
-	}
-	if err := pb_OrderDetail.RegisterOrderDetailHandler(context.Background(), gwmux, cc); err != nil {
-		return err
-	}
-	if err := pb_Product.RegisterProductHandler(context.Background(), gwmux, cc); err != nil {
-		return err
-	}
-	if err := pb_Region.RegisterRegionHandler(context.Background(), gwmux, cc); err != nil {
-		return err
-	}
-	if err := pb_Shipper.RegisterShipperHandler(context.Background(), gwmux, cc); err != nil {
-		return err
-	}
-	if err := pb_Supplier.RegisterSupplierHandler(context.Background(), gwmux, cc); err != nil {
-		return err
-	}
-	if err := pb_Territory.RegisterTerritoryHandler(context.Background(), gwmux, cc); err != nil {
-		return err
-	}
-	if err := pb_UsState.RegisterUsStateHandler(context.Background(), gwmux, cc); err != nil {
-		return err
+
+	for _, h := range srv.registerHandlers {
+		if err := h(context.Background(), gwmux, cc); err != nil {
+			return err
+		}
 	}
 
 	httpMux := http.NewServeMux()
 
-	grpcui, err := standalone.HandlerViaReflection(ctx, cc, sAddr)
-	if err != nil {
-		return err
+	if srv.cfg.EnableGrpcUI {
+		grpcui, err := standalone.HandlerViaReflection(ctx, cc, sAddr)
+		if err != nil {
+			return err
+		}
+
+		httpMux.Handle("/grpcui/", http.StripPrefix("/grpcui", grpcui))
+		srv.log.Info(fmt.Sprintf("Serving gRPC UI on %s://localhost:%d/grpcui", schema, srv.cfg.Port))
 	}
 
-	httpMux.Handle("/grpcui/", http.StripPrefix("/grpcui", grpcui))
-	httpMux.Handle("/swagger/", http.StripPrefix("/swagger", swaggerui.Handler(proto.OpenAPIv2)))
+	httpMux.Handle("/swagger/", http.StripPrefix("/swagger", swaggerui.Handler(srv.openAPISpec)))
+	srv.log.Info(fmt.Sprintf("Serving Swagger UI on %s://localhost:%d/swagger", schema, srv.cfg.Port))
+
 	httpMux.Handle("/", gwmux)
 
 	httpServer := &http.Server{
 		Handler: httpMux,
 	}
 
-	srv.log.Info(fmt.Sprintf("Serving gRPC UI on %s://localhost:%d/grpcui", schema, srv.cfg.Port))
-	srv.log.Info(fmt.Sprintf("Serving Swagger UI on %s://localhost:%d/swagger", schema, srv.cfg.Port))
 	return httpServer.Serve(httpListener)
 }
 
@@ -281,7 +188,7 @@ func prometheusServer(log *zap.Logger, port int) {
 	}
 	log.Info("Metrics server running", zap.Int("port", port))
 	if err := httpServer.ListenAndServe(); err != nil {
-		log.Fatal("unable to start metrics server", zap.String("error", err.Error()), zap.Int("port", port))
+		log.Fatal("unable to start metrics server", zap.Error(err), zap.Int("port", port))
 	}
 }
 
@@ -296,7 +203,7 @@ func annotator(ctx context.Context, req *http.Request) metadata.MD {
 	return metadata.New(map[string]string{"requestURI": req.Host + req.URL.RequestURI()})
 }
 
-func forwardResponse(ctx context.Context, w http.ResponseWriter, message protobuf.Message) error {
+func forwardResponse(ctx context.Context, w http.ResponseWriter, message proto.Message) error {
 	md, ok := runtime.ServerMetadataFromContext(ctx)
 	if !ok {
 		return nil

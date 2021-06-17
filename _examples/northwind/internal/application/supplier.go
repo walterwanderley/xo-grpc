@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"fmt"
 
+	"go.uber.org/zap"
 	"google.golang.org/protobuf/types/known/emptypb"
 	"google.golang.org/protobuf/types/known/wrapperspb"
 
@@ -15,11 +16,12 @@ import (
 
 type SupplierService struct {
 	pb.UnimplementedSupplierServer
-	db *sql.DB
+	db     *sql.DB
+	logger *zap.Logger
 }
 
-func NewSupplierService(db *sql.DB) *SupplierService {
-	return &SupplierService{db: db}
+func NewSupplierService(logger *zap.Logger, db *sql.DB) *SupplierService {
+	return &SupplierService{logger: logger, db: db}
 }
 
 func (s *SupplierService) Delete(ctx context.Context, req *pb.DeleteRequest) (res *emptypb.Empty, err error) {

@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"fmt"
 
+	"go.uber.org/zap"
 	"google.golang.org/protobuf/types/known/emptypb"
 
 	models "northwind/internal/models"
@@ -14,11 +15,12 @@ import (
 
 type RegionService struct {
 	pb.UnimplementedRegionServer
-	db *sql.DB
+	db     *sql.DB
+	logger *zap.Logger
 }
 
-func NewRegionService(db *sql.DB) *RegionService {
-	return &RegionService{db: db}
+func NewRegionService(logger *zap.Logger, db *sql.DB) *RegionService {
+	return &RegionService{logger: logger, db: db}
 }
 
 func (s *RegionService) Delete(ctx context.Context, req *pb.DeleteRequest) (res *emptypb.Empty, err error) {

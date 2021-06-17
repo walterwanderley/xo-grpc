@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"fmt"
 
+	"go.uber.org/zap"
 	"google.golang.org/protobuf/types/known/emptypb"
 	"google.golang.org/protobuf/types/known/wrapperspb"
 
@@ -15,11 +16,12 @@ import (
 
 type CustomerDemographicService struct {
 	pb.UnimplementedCustomerDemographicServer
-	db *sql.DB
+	db     *sql.DB
+	logger *zap.Logger
 }
 
-func NewCustomerDemographicService(db *sql.DB) *CustomerDemographicService {
-	return &CustomerDemographicService{db: db}
+func NewCustomerDemographicService(logger *zap.Logger, db *sql.DB) *CustomerDemographicService {
+	return &CustomerDemographicService{logger: logger, db: db}
 }
 
 func (s *CustomerDemographicService) CustomerDemographicByCustomerTypeID(ctx context.Context, req *pb.CustomerDemographicByCustomerTypeIDRequest) (res *typespb.CustomerDemographic, err error) {

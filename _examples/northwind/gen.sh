@@ -11,5 +11,5 @@ go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2@latest
 
 go install github.com/walterwanderley/xo-grpc@latest
 
-rm -rf internal/application internal/validation internal/server proto go.mod go.sum main.go
+rm -rf internal/application internal/validation internal/server proto go.mod go.sum main.go registry.go
 xo-grpc -m northwind internal/models

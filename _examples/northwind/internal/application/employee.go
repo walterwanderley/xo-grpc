@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"fmt"
 
+	"go.uber.org/zap"
 	"google.golang.org/protobuf/types/known/emptypb"
 	"google.golang.org/protobuf/types/known/timestamppb"
 	"google.golang.org/protobuf/types/known/wrapperspb"
@@ -17,11 +18,12 @@ import (
 
 type EmployeeService struct {
 	pb.UnimplementedEmployeeServer
-	db *sql.DB
+	db     *sql.DB
+	logger *zap.Logger
 }
 
-func NewEmployeeService(db *sql.DB) *EmployeeService {
-	return &EmployeeService{db: db}
+func NewEmployeeService(logger *zap.Logger, db *sql.DB) *EmployeeService {
+	return &EmployeeService{logger: logger, db: db}
 }
 
 func (s *EmployeeService) Delete(ctx context.Context, req *pb.DeleteRequest) (res *emptypb.Empty, err error) {

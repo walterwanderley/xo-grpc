@@ -2,6 +2,7 @@ package main
 
 import (
 	"database/sql"
+	_ "embed"
 	"flag"
 	"fmt"
 	"os"
@@ -17,12 +18,14 @@ import (
 	// database driver
 	_ "github.com/jackc/pgx/v4/stdlib"
 
-	"northwind/internal/application"
 	"northwind/internal/models"
 	"northwind/internal/server"
 )
 
 const serviceName = "northwind"
+
+//go:embed proto/apidocs.swagger.json
+var openAPISpec []byte
 
 func main() {
 	cfg := server.Config{
@@ -36,6 +39,7 @@ func main() {
 	flag.StringVar(&cfg.JaegerAgent, "jaegerAgent", "", "The Jaeger Tracing agent URL")
 	flag.StringVar(&cfg.Cert, "cert", "", "The path to the server certificate file in PEM format")
 	flag.StringVar(&cfg.Key, "key", "", "The path to the server private key in PEM format")
+	flag.BoolVar(&cfg.EnableGrpcUI, "grpcui", false, "Serve gRPC Web UI")
 	flag.BoolVar(&dev, "dev", false, "Set logger to development mode")
 	flag.Parse()
 
@@ -50,25 +54,10 @@ func main() {
 
 	db, err := sql.Open("pgx", dbURL)
 	if err != nil {
-		log.Fatal("Failed to open DB", zap.String("error", err.Error()))
+		log.Fatal("failed to open DB", zap.Error(err))
 	}
 
-	srv := server.New(cfg, log,
-		application.NewCategoryService(db),
-		application.NewCustomerService(db),
-		application.NewCustomerCustomerDemoService(db),
-		application.NewCustomerDemographicService(db),
-		application.NewEmployeeService(db),
-		application.NewEmployeeTerritoryService(db),
-		application.NewOrderService(db),
-		application.NewOrderDetailService(db),
-		application.NewProductService(db),
-		application.NewRegionService(db),
-		application.NewShipperService(db),
-		application.NewSupplierService(db),
-		application.NewTerritoryService(db),
-		application.NewUsStateService(db),
-	)
+	srv := server.New(cfg, log, registerServer(log, db), registerHandlers(), openAPISpec)
 
 	done := make(chan os.Signal, 1)
 	signal.Notify(done, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)

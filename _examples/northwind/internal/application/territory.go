@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"fmt"
 
+	"go.uber.org/zap"
 	"google.golang.org/protobuf/types/known/emptypb"
 
 	models "northwind/internal/models"
@@ -14,11 +15,12 @@ import (
 
 type TerritoryService struct {
 	pb.UnimplementedTerritoryServer
-	db *sql.DB
+	db     *sql.DB
+	logger *zap.Logger
 }
 
-func NewTerritoryService(db *sql.DB) *TerritoryService {
-	return &TerritoryService{db: db}
+func NewTerritoryService(logger *zap.Logger, db *sql.DB) *TerritoryService {
+	return &TerritoryService{logger: logger, db: db}
 }
 
 func (s *TerritoryService) Delete(ctx context.Context, req *pb.DeleteRequest) (res *emptypb.Empty, err error) {

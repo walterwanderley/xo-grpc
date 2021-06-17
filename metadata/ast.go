@@ -42,7 +42,7 @@ func analyseFunc(fun *ast.FuncDecl, messages map[string]*Message) (owner string,
 		srv.Output = append(srv.Output, adjustType(exprToStr(p.Type), messages))
 	}
 
-	owner = canonicalType(getOwner(fun))
+	owner = getOwner(fun)
 	if srv.IsMethod {
 		receiverName := fun.Recv.List[0].Names[0].Name
 		methodAttributes := make([]string, 0)
@@ -138,13 +138,16 @@ func parseMessages(pkg *ast.Package) map[string]*Message {
 
 func getOwner(fun *ast.FuncDecl) string {
 	if fun.Recv != nil && len(fun.Recv.List) > 0 {
-		return exprToStr(fun.Recv.List[0].Type)
+		return canonicalType(exprToStr(fun.Recv.List[0].Type))
 	}
 
 	if len(fun.Type.Results.List) > 1 {
-		return exprToStr(fun.Type.Results.List[0].Type)
+		typ := canonicalType(exprToStr(fun.Type.Results.List[0].Type))
+		if firstIsUpper(canonicalType(typ)) {
+			return typ
+		}
 	}
-	return ""
+	return "Services"
 }
 
 func isMethodValid(fun *ast.FuncDecl) bool {

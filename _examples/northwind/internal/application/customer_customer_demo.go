@@ -4,6 +4,7 @@ import (
 	"context"
 	"database/sql"
 
+	"go.uber.org/zap"
 	"google.golang.org/protobuf/types/known/emptypb"
 	"google.golang.org/protobuf/types/known/wrapperspb"
 
@@ -14,11 +15,12 @@ import (
 
 type CustomerCustomerDemoService struct {
 	pb.UnimplementedCustomerCustomerDemoServer
-	db *sql.DB
+	db     *sql.DB
+	logger *zap.Logger
 }
 
-func NewCustomerCustomerDemoService(db *sql.DB) *CustomerCustomerDemoService {
-	return &CustomerCustomerDemoService{db: db}
+func NewCustomerCustomerDemoService(logger *zap.Logger, db *sql.DB) *CustomerCustomerDemoService {
+	return &CustomerCustomerDemoService{logger: logger, db: db}
 }
 
 func (s *CustomerCustomerDemoService) Customer(ctx context.Context, req *pb.CustomerRequest) (res *typespb.Customer, err error) {
