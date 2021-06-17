@@ -149,7 +149,7 @@ func postProcess(def *metadata.Definition, workingDirectory string) {
 	wg.Wait()
 
 	fmt.Println("Generating OpenAPIv2 specs...")
-	execCommand("protoc -I. -Ithird-party --openapiv2_out . --openapiv2_opt logtostderr=true,allow_repeated_fields_in_body=true,generate_unbound_methods=true,allow_merge=true " + strings.Join(protos, ".proto ") + ".proto")
+	execCommand("protoc -I. -I3rd-party --openapiv2_out . --openapiv2_opt logtostderr=true,allow_repeated_fields_in_body=true,generate_unbound_methods=true,allow_merge=true " + strings.Join(protos, ".proto ") + ".proto")
 
 	if err := os.Chdir(workingDirectory); err != nil {
 		panic(err)
@@ -166,12 +166,12 @@ func compileProto(pkgs <-chan string, wd string, wg *sync.WaitGroup) {
 	defer wg.Done()
 	for pkg := range pkgs {
 		fmt.Printf("Compiling %s.proto...\n", pkg)
-		err := execCommand(fmt.Sprintf("protoc -I. -Ithird-party --go_out %s --go_opt paths=source_relative --go-grpc_out %s --go-grpc_opt paths=source_relative %s.proto", pkg, pkg, pkg))
+		err := execCommand(fmt.Sprintf("protoc -I. -I3rd-party --go_out %s --go_opt paths=source_relative --go-grpc_out %s --go-grpc_opt paths=source_relative %s.proto", pkg, pkg, pkg))
 		if err != nil {
 			return
 		}
 		fmt.Printf("Generating reverse proxy (grpc-gateway) %s.proto...\n", pkg)
-		execCommand(fmt.Sprintf("protoc -I. -Ithird-party --grpc-gateway_out %s --grpc-gateway_opt logtostderr=true,paths=source_relative,allow_repeated_fields_in_body=true,generate_unbound_methods=true %s.proto", pkg, pkg))
+		execCommand(fmt.Sprintf("protoc -I. -I3rd-party --grpc-gateway_out %s --grpc-gateway_opt logtostderr=true,paths=source_relative,allow_repeated_fields_in_body=true,generate_unbound_methods=true %s.proto", pkg, pkg))
 	}
 }
 
