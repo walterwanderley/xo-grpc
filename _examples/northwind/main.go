@@ -39,6 +39,7 @@ func main() {
 	flag.StringVar(&cfg.JaegerAgent, "jaegerAgent", "", "The Jaeger Tracing agent URL")
 	flag.StringVar(&cfg.Cert, "cert", "", "The path to the server certificate file in PEM format")
 	flag.StringVar(&cfg.Key, "key", "", "The path to the server private key in PEM format")
+	flag.BoolVar(&cfg.EnableCors, "cors", false, "Enable CORS middleware")
 	flag.BoolVar(&cfg.EnableGrpcUI, "grpcui", false, "Serve gRPC Web UI")
 	flag.BoolVar(&dev, "dev", false, "Set logger to development mode")
 	flag.Parse()

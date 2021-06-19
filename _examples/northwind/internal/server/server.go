@@ -25,10 +25,15 @@ import (
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/reflection"
 	"google.golang.org/protobuf/proto"
+
+	"northwind/internal/server/middleware"
 )
 
 const (
-	readTimeout    = 15 * time.Second
+	httpReadTimeout  = 15 * time.Second
+	httpWriteTimeout = 15 * time.Second
+	httpIdleTimeout  = 60 * time.Second
+
 	startupTimeout = 2 * time.Minute
 )
 
@@ -104,7 +109,6 @@ func (srv *Server) ListenAndServe() error {
 	}
 
 	mux := cmux.New(listen)
-	mux.SetReadTimeout(readTimeout)
 	grpcListener := mux.MatchWithWriters(cmux.HTTP2MatchHeaderFieldSendSettings("content-type", "application/grpc"))
 	httpListener := mux.Match(cmux.Any())
 
@@ -170,7 +174,15 @@ func (srv *Server) ListenAndServe() error {
 	httpMux.Handle("/", gwmux)
 
 	httpServer := &http.Server{
-		Handler: httpMux,
+		ReadTimeout:  httpReadTimeout,
+		WriteTimeout: httpWriteTimeout,
+		IdleTimeout:  httpIdleTimeout,
+		Handler:      httpMux,
+	}
+
+	if srv.cfg.EnableCors {
+		srv.log.Info("Enable Cross-Origin Resource Sharing")
+		httpServer.Handler = middleware.CORS(httpMux)
 	}
 
 	return httpServer.Serve(httpListener)
@@ -181,9 +193,9 @@ func prometheusServer(log *zap.Logger, port int) {
 	mux.Handle("/metrics", promhttp.Handler())
 	httpServer := &http.Server{
 		Addr:         fmt.Sprintf(":%d", port),
-		ReadTimeout:  readTimeout,
-		WriteTimeout: time.Second * 15,
-		IdleTimeout:  time.Second * 60,
+		ReadTimeout:  httpReadTimeout,
+		WriteTimeout: httpWriteTimeout,
+		IdleTimeout:  httpIdleTimeout,
 		Handler:      mux,
 	}
 	log.Info("Metrics server running", zap.Int("port", port))
