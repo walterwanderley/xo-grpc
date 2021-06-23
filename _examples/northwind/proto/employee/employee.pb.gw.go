@@ -335,7 +335,7 @@ func RegisterEmployeeHandlerServer(ctx context.Context, mux *runtime.ServeMux, s
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/employee.Employee/Delete")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/employee.Employee/Delete", runtime.WithHTTPPathPattern("/v1/employee/{employeeID}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -358,7 +358,7 @@ func RegisterEmployeeHandlerServer(ctx context.Context, mux *runtime.ServeMux, s
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/employee.Employee/Employee")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/employee.Employee/Employee", runtime.WithHTTPPathPattern("/v1/employee/{employeeID}/employee"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -381,7 +381,7 @@ func RegisterEmployeeHandlerServer(ctx context.Context, mux *runtime.ServeMux, s
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/employee.Employee/EmployeeByEmployeeID")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/employee.Employee/EmployeeByEmployeeID", runtime.WithHTTPPathPattern("/v1/employee/{employeeID}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -404,7 +404,7 @@ func RegisterEmployeeHandlerServer(ctx context.Context, mux *runtime.ServeMux, s
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/employee.Employee/Insert")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/employee.Employee/Insert", runtime.WithHTTPPathPattern("/v1/employee"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -427,7 +427,7 @@ func RegisterEmployeeHandlerServer(ctx context.Context, mux *runtime.ServeMux, s
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/employee.Employee/Update")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/employee.Employee/Update", runtime.WithHTTPPathPattern("/v1/employee/{employeeID}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -450,7 +450,7 @@ func RegisterEmployeeHandlerServer(ctx context.Context, mux *runtime.ServeMux, s
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/employee.Employee/Upsert")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/employee.Employee/Upsert", runtime.WithHTTPPathPattern("/v1/employee/upsert"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -512,7 +512,7 @@ func RegisterEmployeeHandlerClient(ctx context.Context, mux *runtime.ServeMux, c
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/employee.Employee/Delete")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/employee.Employee/Delete", runtime.WithHTTPPathPattern("/v1/employee/{employeeID}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -532,7 +532,7 @@ func RegisterEmployeeHandlerClient(ctx context.Context, mux *runtime.ServeMux, c
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/employee.Employee/Employee")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/employee.Employee/Employee", runtime.WithHTTPPathPattern("/v1/employee/{employeeID}/employee"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -552,7 +552,7 @@ func RegisterEmployeeHandlerClient(ctx context.Context, mux *runtime.ServeMux, c
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/employee.Employee/EmployeeByEmployeeID")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/employee.Employee/EmployeeByEmployeeID", runtime.WithHTTPPathPattern("/v1/employee/{employeeID}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -572,7 +572,7 @@ func RegisterEmployeeHandlerClient(ctx context.Context, mux *runtime.ServeMux, c
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/employee.Employee/Insert")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/employee.Employee/Insert", runtime.WithHTTPPathPattern("/v1/employee"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -592,7 +592,7 @@ func RegisterEmployeeHandlerClient(ctx context.Context, mux *runtime.ServeMux, c
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/employee.Employee/Update")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/employee.Employee/Update", runtime.WithHTTPPathPattern("/v1/employee/{employeeID}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -612,7 +612,7 @@ func RegisterEmployeeHandlerClient(ctx context.Context, mux *runtime.ServeMux, c
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/employee.Employee/Upsert")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/employee.Employee/Upsert", runtime.WithHTTPPathPattern("/v1/employee/upsert"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return

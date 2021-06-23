@@ -403,7 +403,7 @@ func RegisterCustomerCustomerDemoHandlerServer(ctx context.Context, mux *runtime
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/customer_customer_demo.CustomerCustomerDemo/Customer")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/customer_customer_demo.CustomerCustomerDemo/Customer", runtime.WithHTTPPathPattern("/v1/customer/{customerID}/customer-type/{customerTypeID}/customer-customer-demo/customer"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -426,7 +426,7 @@ func RegisterCustomerCustomerDemoHandlerServer(ctx context.Context, mux *runtime
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/customer_customer_demo.CustomerCustomerDemo/CustomerCustomerDemoByCustomerIDCustomerTypeID")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/customer_customer_demo.CustomerCustomerDemo/CustomerCustomerDemoByCustomerIDCustomerTypeID", runtime.WithHTTPPathPattern("/v1/customer/{customerID}/customer-type/{customerTypeID}/customer-customer-demo"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -449,7 +449,7 @@ func RegisterCustomerCustomerDemoHandlerServer(ctx context.Context, mux *runtime
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/customer_customer_demo.CustomerCustomerDemo/CustomerDemographic")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/customer_customer_demo.CustomerCustomerDemo/CustomerDemographic", runtime.WithHTTPPathPattern("/v1/customer/{customerID}/customer-type/{customerTypeID}/customer-customer-demo/customer-demographic"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -472,7 +472,7 @@ func RegisterCustomerCustomerDemoHandlerServer(ctx context.Context, mux *runtime
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/customer_customer_demo.CustomerCustomerDemo/Delete")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/customer_customer_demo.CustomerCustomerDemo/Delete", runtime.WithHTTPPathPattern("/v1/customer/{customerID}/customer-type/{customerTypeID}/customer-customer-demo"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -495,7 +495,7 @@ func RegisterCustomerCustomerDemoHandlerServer(ctx context.Context, mux *runtime
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/customer_customer_demo.CustomerCustomerDemo/Insert")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/customer_customer_demo.CustomerCustomerDemo/Insert", runtime.WithHTTPPathPattern("/v1/customer/{customerID}/customer-type/{customerTypeID}/customer-customer-demo"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -557,7 +557,7 @@ func RegisterCustomerCustomerDemoHandlerClient(ctx context.Context, mux *runtime
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/customer_customer_demo.CustomerCustomerDemo/Customer")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/customer_customer_demo.CustomerCustomerDemo/Customer", runtime.WithHTTPPathPattern("/v1/customer/{customerID}/customer-type/{customerTypeID}/customer-customer-demo/customer"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -577,7 +577,7 @@ func RegisterCustomerCustomerDemoHandlerClient(ctx context.Context, mux *runtime
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/customer_customer_demo.CustomerCustomerDemo/CustomerCustomerDemoByCustomerIDCustomerTypeID")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/customer_customer_demo.CustomerCustomerDemo/CustomerCustomerDemoByCustomerIDCustomerTypeID", runtime.WithHTTPPathPattern("/v1/customer/{customerID}/customer-type/{customerTypeID}/customer-customer-demo"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -597,7 +597,7 @@ func RegisterCustomerCustomerDemoHandlerClient(ctx context.Context, mux *runtime
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/customer_customer_demo.CustomerCustomerDemo/CustomerDemographic")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/customer_customer_demo.CustomerCustomerDemo/CustomerDemographic", runtime.WithHTTPPathPattern("/v1/customer/{customerID}/customer-type/{customerTypeID}/customer-customer-demo/customer-demographic"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -617,7 +617,7 @@ func RegisterCustomerCustomerDemoHandlerClient(ctx context.Context, mux *runtime
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/customer_customer_demo.CustomerCustomerDemo/Delete")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/customer_customer_demo.CustomerCustomerDemo/Delete", runtime.WithHTTPPathPattern("/v1/customer/{customerID}/customer-type/{customerTypeID}/customer-customer-demo"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -637,7 +637,7 @@ func RegisterCustomerCustomerDemoHandlerClient(ctx context.Context, mux *runtime
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/customer_customer_demo.CustomerCustomerDemo/Insert")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/customer_customer_demo.CustomerCustomerDemo/Insert", runtime.WithHTTPPathPattern("/v1/customer/{customerID}/customer-type/{customerTypeID}/customer-customer-demo"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return

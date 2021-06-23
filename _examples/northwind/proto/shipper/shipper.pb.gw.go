@@ -283,7 +283,7 @@ func RegisterShipperHandlerServer(ctx context.Context, mux *runtime.ServeMux, se
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/shipper.Shipper/Delete")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/shipper.Shipper/Delete", runtime.WithHTTPPathPattern("/v1/shipper/{shipperID}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -306,7 +306,7 @@ func RegisterShipperHandlerServer(ctx context.Context, mux *runtime.ServeMux, se
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/shipper.Shipper/Insert")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/shipper.Shipper/Insert", runtime.WithHTTPPathPattern("/v1/shipper"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -329,7 +329,7 @@ func RegisterShipperHandlerServer(ctx context.Context, mux *runtime.ServeMux, se
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/shipper.Shipper/ShipperByShipperID")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/shipper.Shipper/ShipperByShipperID", runtime.WithHTTPPathPattern("/v1/shipper/{shipperID}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -352,7 +352,7 @@ func RegisterShipperHandlerServer(ctx context.Context, mux *runtime.ServeMux, se
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/shipper.Shipper/Update")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/shipper.Shipper/Update", runtime.WithHTTPPathPattern("/v1/shipper/{shipperID}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -375,7 +375,7 @@ func RegisterShipperHandlerServer(ctx context.Context, mux *runtime.ServeMux, se
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/shipper.Shipper/Upsert")
+		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/shipper.Shipper/Upsert", runtime.WithHTTPPathPattern("/v1/shipper/upsert"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -437,7 +437,7 @@ func RegisterShipperHandlerClient(ctx context.Context, mux *runtime.ServeMux, cl
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/shipper.Shipper/Delete")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/shipper.Shipper/Delete", runtime.WithHTTPPathPattern("/v1/shipper/{shipperID}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -457,7 +457,7 @@ func RegisterShipperHandlerClient(ctx context.Context, mux *runtime.ServeMux, cl
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/shipper.Shipper/Insert")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/shipper.Shipper/Insert", runtime.WithHTTPPathPattern("/v1/shipper"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -477,7 +477,7 @@ func RegisterShipperHandlerClient(ctx context.Context, mux *runtime.ServeMux, cl
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/shipper.Shipper/ShipperByShipperID")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/shipper.Shipper/ShipperByShipperID", runtime.WithHTTPPathPattern("/v1/shipper/{shipperID}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -497,7 +497,7 @@ func RegisterShipperHandlerClient(ctx context.Context, mux *runtime.ServeMux, cl
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/shipper.Shipper/Update")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/shipper.Shipper/Update", runtime.WithHTTPPathPattern("/v1/shipper/{shipperID}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -517,7 +517,7 @@ func RegisterShipperHandlerClient(ctx context.Context, mux *runtime.ServeMux, cl
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/shipper.Shipper/Upsert")
+		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/shipper.Shipper/Upsert", runtime.WithHTTPPathPattern("/v1/shipper/upsert"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
