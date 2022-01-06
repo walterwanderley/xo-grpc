@@ -24,7 +24,7 @@ type Message struct {
 func (m *Message) ProtoAttributes() string {
 	var s strings.Builder
 	for i, name := range m.AttrNames {
-		s.WriteString(fmt.Sprintf("    %s %s = %d;\n", toProtoType(m.AttrTypes[i]), lowerFirstCharacter(name), i+1))
+		s.WriteString(fmt.Sprintf("    %s %s = %d;\n", toProtoType(m.AttrTypes[i]), ToSnakeCase(name), i+1))
 	}
 	return s.String()
 }

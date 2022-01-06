@@ -76,7 +76,7 @@ func (p *Package) ProtoImports() []string {
 		r = append(r, `import "google/protobuf/wrappers.proto";`)
 	}
 	if p.importTypes() {
-		r = append(r, `import "typespb.proto";`)
+		r = append(r, `import "typespb/v1/typespb.proto";`)
 	}
 	return r
 }

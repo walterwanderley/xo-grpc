@@ -56,9 +56,9 @@ func (s *Service) httpPath() string {
 
 	if method == "get" && !s.HasCustomParams() && !s.hasArrayParams() {
 		if len(s.InputNames) == 1 {
-			path = fmt.Sprintf("%s/{%s}", strings.TrimSuffix(path, "/"), lowerFirstCharacter(s.InputNames[0]))
+			path = fmt.Sprintf("%s/{%s}", strings.TrimSuffix(path, "/"), ToSnakeCase(s.InputNames[0]))
 		} else if len(s.InputMethodNames) == 1 {
-			path = fmt.Sprintf("%s/{%s}", strings.TrimSuffix(path, "/"), lowerFirstCharacter(s.InputMethodNames[0]))
+			path = fmt.Sprintf("%s/{%s}", strings.TrimSuffix(path, "/"), ToSnakeCase(s.InputMethodNames[0]))
 
 		}
 	}
@@ -67,21 +67,21 @@ func (s *Service) httpPath() string {
 
 func (s *Service) pkURLParams() string {
 	if pk := s.SimplePK(); pk != "" && s.Name != "Insert" {
-		return fmt.Sprintf("/%s/{%s}", toKebabCase(s.Owner), lowerFirstCharacter(s.inputCase(pk)))
+		return fmt.Sprintf("/%s/{%s}", toKebabCase(s.Owner), ToSnakeCase(s.inputCase(pk)))
 	}
 	var buf strings.Builder
 	entity, parent := s.entityPKParentPK()
 	for _, attr := range parent {
-		buf.WriteString(fmt.Sprintf("/%s/{%s}", trimParentPath(toKebabCase(attr)), lowerFirstCharacter(s.inputCase(attr))))
+		buf.WriteString(fmt.Sprintf("/%s/{%s}", trimParentPath(toKebabCase(attr)), ToSnakeCase(s.inputCase(attr))))
 	}
 	buf.WriteString("/")
 	buf.WriteString(toKebabCase(s.Owner))
 	if s.Name != "Insert" {
 		if len(entity) == 1 {
-			buf.WriteString(fmt.Sprintf("/{%s}", lowerFirstCharacter(s.inputCase(entity[0]))))
+			buf.WriteString(fmt.Sprintf("/{%s}", ToSnakeCase(s.inputCase(entity[0]))))
 		} else {
 			for _, attr := range entity {
-				buf.WriteString(fmt.Sprintf("/%s/{%s}", trimParentPath(toKebabCase(attr)), lowerFirstCharacter(s.inputCase(attr))))
+				buf.WriteString(fmt.Sprintf("/%s/{%s}", trimParentPath(toKebabCase(attr)), ToSnakeCase(s.inputCase(attr))))
 			}
 		}
 	}

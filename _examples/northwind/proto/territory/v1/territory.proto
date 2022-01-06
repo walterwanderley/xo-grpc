@@ -1,0 +1,84 @@
+syntax = "proto3";
+
+package territory.v1;
+
+option go_package = "northwind/proto/territory/v1";
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "typespb/v1/typespb.proto";
+
+
+service TerritoryService {
+    
+    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete: "/v1/territory/{territory_id}"
+        };
+    }
+    
+    rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            post: "/v1/territory"
+        body: "*"
+        };
+    }
+    
+    rpc Region(RegionRequest) returns (typespb.v1.Region) {
+        option (google.api.http) = {
+            get: "/v1/territory/{territory_id}/region"
+        };
+    }
+    
+    rpc TerritoryByTerritoryID(TerritoryByTerritoryIDRequest) returns (typespb.v1.Territory) {
+        option (google.api.http) = {
+            get: "/v1/territory/{territory_id}"
+        };
+    }
+    
+    rpc Update(UpdateRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            put: "/v1/territory/{territory_id}"
+        body: "*"
+        };
+    }
+    
+    rpc Upsert(UpsertRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            post: "/v1/territory/upsert"
+        body: "*"
+        };
+    }
+    
+}
+
+message DeleteRequest { 
+    string territory_id = 1;
+}
+
+message InsertRequest { 
+    int32 region_id = 1;
+    string territory_description = 2;
+    string territory_id = 3;
+}
+
+message RegionRequest { 
+    string territory_id = 1;
+}
+
+message TerritoryByTerritoryIDRequest { 
+    string territory_id = 1;
+}
+
+message UpdateRequest { 
+    int32 region_id = 1;
+    string territory_description = 2;
+    // Output only.
+    string territory_id = 3;
+}
+
+message UpsertRequest { 
+    int32 region_id = 1;
+    string territory_description = 2;
+    string territory_id = 3;
+}

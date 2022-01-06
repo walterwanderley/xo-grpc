@@ -151,7 +151,7 @@ func (s *Service) ReturnCallDatabase() string {
 }
 
 func (s *Service) ParamsCallDatabase() string {
-	if s.EmptyInput() {
+	if len(s.InputNames) == 0 {
 		return ""
 	}
 	return ", " + strings.Join(s.InputNames, ", ")
@@ -247,7 +247,7 @@ func (s *Service) RpcSignature() string {
 	case s.EmptyOutput():
 		b.WriteString("google.protobuf.Empty")
 	case s.HasCustomOutput():
-		b.WriteString("typespb." + strings.TrimPrefix(s.Output[0], "*"))
+		b.WriteString("typespb.v1." + strings.TrimPrefix(s.Output[0], "*"))
 	default:
 		b.WriteString(fmt.Sprintf("%sResponse", s.Name))
 	}
@@ -293,7 +293,7 @@ func (s *Service) ProtoInputs() string {
 		owner := s.Messages[s.Owner]
 		for _, name := range owner.PkNames {
 			count = count + 1
-			fmt.Fprintf(&b, "\n    %s %s = %d;", toProtoType(owner.attributeTypeByName(name)), lowerFirstCharacter(name), count)
+			fmt.Fprintf(&b, "\n    %s %s = %d;", toProtoType(owner.attributeTypeByName(name)), ToSnakeCase(name), count)
 		}
 		if count > 0 {
 			return b.String()
@@ -301,7 +301,7 @@ func (s *Service) ProtoInputs() string {
 	}
 	for i, name := range s.InputNames {
 		count = count + 1
-		fmt.Fprintf(&b, "\n    %s %s = %d;", toProtoType(s.InputTypes[i]), lowerFirstCharacter(name), count)
+		fmt.Fprintf(&b, "\n    %s %s = %d;", toProtoType(s.InputTypes[i]), ToSnakeCase(name), count)
 	}
 	for i, name := range s.InputMethodNames {
 		count = count + 1
@@ -313,7 +313,7 @@ func (s *Service) ProtoInputs() string {
 				}
 			}
 		}
-		fmt.Fprintf(&b, "\n    %s %s = %d;", toProtoType(s.InputMethodTypes[i]), lowerFirstCharacter(name), count)
+		fmt.Fprintf(&b, "\n    %s %s = %d;", toProtoType(s.InputMethodTypes[i]), ToSnakeCase(name), count)
 	}
 	return b.String()
 }

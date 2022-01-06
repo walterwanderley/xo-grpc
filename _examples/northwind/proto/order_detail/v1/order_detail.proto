@@ -1,0 +1,105 @@
+syntax = "proto3";
+
+package order_detail.v1;
+
+option go_package = "northwind/proto/order_detail/v1";
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "typespb/v1/typespb.proto";
+
+
+service OrderDetailService {
+    
+    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete: "/v1/order/{order_id}/product/{product_id}/order-detail"
+        };
+    }
+    
+    rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            post: "/v1/order/{order_id}/product/{product_id}/order-detail"
+        body: "*"
+        };
+    }
+    
+    rpc Order(OrderRequest) returns (typespb.v1.Order) {
+        option (google.api.http) = {
+            get: "/v1/order/{order_id}/product/{product_id}/order-detail/order"
+        };
+    }
+    
+    rpc OrderDetailByOrderIDProductID(OrderDetailByOrderIDProductIDRequest) returns (typespb.v1.OrderDetail) {
+        option (google.api.http) = {
+            get: "/v1/order/{order_id}/product/{product_id}/order-detail"
+        };
+    }
+    
+    rpc Product(ProductRequest) returns (typespb.v1.Product) {
+        option (google.api.http) = {
+            get: "/v1/order/{order_id}/product/{product_id}/order-detail/product"
+        };
+    }
+    
+    rpc Update(UpdateRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            put: "/v1/order/{order_id}/product/{product_id}/order-detail"
+        body: "*"
+        };
+    }
+    
+    rpc Upsert(UpsertRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            post: "/v1/order-detail/upsert"
+        body: "*"
+        };
+    }
+    
+}
+
+message DeleteRequest { 
+    int32 order_id = 1;
+    int32 product_id = 2;
+}
+
+message InsertRequest { 
+    float discount = 1;
+    int32 order_id = 2;
+    int32 product_id = 3;
+    int32 quantity = 4;
+    float unit_price = 5;
+}
+
+message OrderRequest { 
+    int32 order_id = 1;
+    int32 product_id = 2;
+}
+
+message OrderDetailByOrderIDProductIDRequest { 
+    int32 order_id = 1;
+    int32 product_id = 2;
+}
+
+message ProductRequest { 
+    int32 order_id = 1;
+    int32 product_id = 2;
+}
+
+message UpdateRequest { 
+    float discount = 1;
+    // Output only.
+    int32 order_id = 2;
+    // Output only.
+    int32 product_id = 3;
+    int32 quantity = 4;
+    float unit_price = 5;
+}
+
+message UpsertRequest { 
+    float discount = 1;
+    int32 order_id = 2;
+    int32 product_id = 3;
+    int32 quantity = 4;
+    float unit_price = 5;
+}

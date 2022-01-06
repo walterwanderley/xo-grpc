@@ -51,17 +51,20 @@ func process(def *metadata.Definition, outPath string) error {
 		defer in.Close()
 
 		if strings.HasSuffix(newPath, "service.proto") {
-			dir := strings.TrimSuffix(newPath, "service.proto")
 			tpl, err := ioutil.ReadAll(in)
 			if err != nil {
 				return err
 			}
+			dir := strings.TrimSuffix(newPath, "service.proto")
 			for _, pkg := range def.Packages {
-				path := filepath.Join(dir, (metadata.ToSnakeCase(pkg.Package) + ".proto"))
-				if verbose {
-					fmt.Println(path)
+				dest := filepath.Join(dir, metadata.ToSnakeCase(pkg.Package), "v1")
+				if _, err := os.Stat(dest); os.IsNotExist(err) {
+					err := os.MkdirAll(dest, 0750)
+					if err != nil {
+						return err
+					}
 				}
-				err = genFromTemplate(path, string(tpl), pkg, false, path)
+				err = genFromTemplate(path, string(tpl), pkg, false, filepath.Join(dest, (metadata.ToSnakeCase(pkg.Package)+".proto")))
 				if err != nil {
 					return err
 				}

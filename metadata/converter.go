@@ -329,16 +329,6 @@ func UpperFirstCharacter(str string) string {
 	return str
 }
 
-func lowerFirstCharacter(str string) string {
-	if strings.ToLower(str) == "id" {
-		return "id"
-	}
-	for i, v := range str {
-		return string(unicode.ToLower(v)) + str[i+1:]
-	}
-	return str
-}
-
 var matchFirstCap = regexp.MustCompile("(.)([A-Z][a-z]+)")
 var matchAllCap = regexp.MustCompile("([a-z0-9])([A-Z])")
 
@@ -355,5 +345,5 @@ func toKebabCase(str string) string {
 }
 
 func camelCaseProto(str string) string {
-	return generator.CamelCase(lowerFirstCharacter(str))
+	return generator.CamelCase(ToSnakeCase(str))
 }

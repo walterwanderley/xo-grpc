@@ -7,9 +7,7 @@ import (
 	"log"
 	"os"
 	"os/exec"
-	"path/filepath"
 	"strings"
-	"sync"
 
 	"golang.org/x/mod/modfile"
 
@@ -20,7 +18,6 @@ var (
 	databaseDriverModule string
 	databaseDriverName   string
 	module               string
-	workers              int
 	showVersion          bool
 	help                 bool
 	verbose              bool
@@ -30,7 +27,6 @@ func main() {
 	flag.BoolVar(&help, "h", false, "Help for this program")
 	flag.BoolVar(&showVersion, "v", false, "Show version")
 	flag.BoolVar(&verbose, "verbose", false, "Verbose")
-	flag.IntVar(&workers, "w", 8, "Number of go routines to call protoc")
 	flag.StringVar(&module, "m", "my-project", "Go module name if there are no go.mod")
 	flag.StringVar(&databaseDriverModule, "db-module", "github.com/jackc/pgx/v4/stdlib", "Database driver module")
 	flag.StringVar(&databaseDriverName, "db-driver", "pgx", "Database driver name")
@@ -49,11 +45,6 @@ func main() {
 	if len(flag.Args()) < 1 {
 		fmt.Printf("\nmodelsPath is required\n\n")
 		printHelp()
-		os.Exit(1)
-	}
-
-	if workers <= 0 {
-		fmt.Println("\n-w must be a positive number")
 		os.Exit(1)
 	}
 
@@ -107,72 +98,25 @@ func moduleFromGoMod() string {
 }
 
 func postProcess(def *metadata.Definition, workingDirectory string) {
-	fmt.Println("Running compile.sh...")
-	protos := make([]string, 0)
-	protos = append(protos, "typespb")
-	for _, pkg := range def.Packages {
-		pkgName := metadata.ToSnakeCase(pkg.Package)
-		protos = append(protos, pkgName)
-	}
-
-	newDir := filepath.Join(workingDirectory, "proto")
-	if _, err := os.Stat(newDir); os.IsNotExist(err) {
-		err := os.MkdirAll(newDir, 0750)
-		if err != nil {
-			panic(err)
-		}
-	}
-
-	if err := os.Chdir(newDir); err != nil {
-		panic(err)
-	}
-
-	pkgs := make(chan string, workers)
-	var wg sync.WaitGroup
-	for i := 0; i < workers; i++ {
-		wg.Add(1)
-		go compileProto(pkgs, workingDirectory, &wg)
-	}
-
-	for _, p := range protos {
-		newDir := filepath.Join(workingDirectory, "proto", p)
-		if _, err := os.Stat(newDir); os.IsNotExist(err) {
-			err := os.MkdirAll(newDir, 0750)
-			if err != nil {
-				panic(err)
-			}
-		}
-		pkgs <- p
-	}
-
-	close(pkgs)
-	wg.Wait()
-
-	fmt.Println("Generating OpenAPIv2 specs...")
-	execCommand("protoc -I. -I3rd-party --openapiv2_out . --openapiv2_opt logtostderr=true,allow_repeated_fields_in_body=true,generate_unbound_methods=true,allow_merge=true " + strings.Join(protos, ".proto ") + ".proto")
-
-	if err := os.Chdir(workingDirectory); err != nil {
-		panic(err)
-	}
-
 	fmt.Printf("Configuring project %s...\n", def.GoModule)
 	execCommand("go mod init " + def.GoModule)
 	execCommand("go mod tidy")
-
-	fmt.Println("Finished!")
-}
-
-func compileProto(pkgs <-chan string, wd string, wg *sync.WaitGroup) {
-	defer wg.Done()
-	for pkg := range pkgs {
-		fmt.Printf("Compiling %s.proto...\n", pkg)
-		err := execCommand(fmt.Sprintf("protoc -I. -I3rd-party --go_out %s --go_opt paths=source_relative --go-grpc_out %s --go-grpc_opt paths=source_relative %s.proto", pkg, pkg, pkg))
-		if err != nil {
-			return
-		}
-		fmt.Printf("Generating reverse proxy (grpc-gateway) %s.proto...\n", pkg)
-		execCommand(fmt.Sprintf("protoc -I. -I3rd-party --grpc-gateway_out %s --grpc-gateway_opt logtostderr=true,paths=source_relative,allow_repeated_fields_in_body=true,generate_unbound_methods=true %s.proto", pkg, pkg))
+	execCommand("go install github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-grpc-gateway " +
+		"github.com/grpc-ecosystem/grpc-gateway/v2/protoc-gen-openapiv2 " +
+		"google.golang.org/protobuf/cmd/protoc-gen-go " +
+		"google.golang.org/grpc/cmd/protoc-gen-go-grpc " +
+		"github.com/bufbuild/buf/cmd/buf")
+	fmt.Println("Compiling protocol buffers...")
+	if err := os.Chdir("proto"); err != nil {
+		panic(err)
 	}
+	execCommand("buf mod update")
+	if err := os.Chdir(workingDirectory); err != nil {
+		panic(err)
+	}
+	execCommand("buf generate")
+	execCommand("go mod tidy")
+	fmt.Println("Finished!")
 }
 
 func execCommand(command string) error {

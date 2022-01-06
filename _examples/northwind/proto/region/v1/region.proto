@@ -1,0 +1,71 @@
+syntax = "proto3";
+
+package region.v1;
+
+option go_package = "northwind/proto/region/v1";
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "typespb/v1/typespb.proto";
+
+
+service RegionService {
+    
+    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete: "/v1/region/{region_id}"
+        };
+    }
+    
+    rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            post: "/v1/region"
+        body: "*"
+        };
+    }
+    
+    rpc RegionByRegionID(RegionByRegionIDRequest) returns (typespb.v1.Region) {
+        option (google.api.http) = {
+            get: "/v1/region/{region_id}"
+        };
+    }
+    
+    rpc Update(UpdateRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            put: "/v1/region/{region_id}"
+        body: "*"
+        };
+    }
+    
+    rpc Upsert(UpsertRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            post: "/v1/region/upsert"
+        body: "*"
+        };
+    }
+    
+}
+
+message DeleteRequest { 
+    int32 region_id = 1;
+}
+
+message InsertRequest { 
+    string region_description = 1;
+    int32 region_id = 2;
+}
+
+message RegionByRegionIDRequest { 
+    int32 region_id = 1;
+}
+
+message UpdateRequest { 
+    string region_description = 1;
+    // Output only.
+    int32 region_id = 2;
+}
+
+message UpsertRequest { 
+    string region_description = 1;
+    int32 region_id = 2;
+}
