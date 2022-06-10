@@ -283,12 +283,13 @@ func RegisterCustomerDemographicServiceHandlerServer(ctx context.Context, mux *r
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/customer_demographic.v1.CustomerDemographicService/CustomerDemographicByCustomerTypeID", runtime.WithHTTPPathPattern("/v1/customer-demographic/{customer_type_id}"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/customer_demographic.v1.CustomerDemographicService/CustomerDemographicByCustomerTypeID", runtime.WithHTTPPathPattern("/v1/customer-demographic/{customer_type_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_CustomerDemographicService_CustomerDemographicByCustomerTypeID_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_CustomerDemographicService_CustomerDemographicByCustomerTypeID_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -306,12 +307,13 @@ func RegisterCustomerDemographicServiceHandlerServer(ctx context.Context, mux *r
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/customer_demographic.v1.CustomerDemographicService/Delete", runtime.WithHTTPPathPattern("/v1/customer-demographic/{customer_type_id}"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/customer_demographic.v1.CustomerDemographicService/Delete", runtime.WithHTTPPathPattern("/v1/customer-demographic/{customer_type_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_CustomerDemographicService_Delete_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_CustomerDemographicService_Delete_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -329,12 +331,13 @@ func RegisterCustomerDemographicServiceHandlerServer(ctx context.Context, mux *r
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/customer_demographic.v1.CustomerDemographicService/Insert", runtime.WithHTTPPathPattern("/v1/customer-demographic"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/customer_demographic.v1.CustomerDemographicService/Insert", runtime.WithHTTPPathPattern("/v1/customer-demographic"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_CustomerDemographicService_Insert_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_CustomerDemographicService_Insert_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -352,12 +355,13 @@ func RegisterCustomerDemographicServiceHandlerServer(ctx context.Context, mux *r
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/customer_demographic.v1.CustomerDemographicService/Update", runtime.WithHTTPPathPattern("/v1/customer-demographic/{customer_type_id}"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/customer_demographic.v1.CustomerDemographicService/Update", runtime.WithHTTPPathPattern("/v1/customer-demographic/{customer_type_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_CustomerDemographicService_Update_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_CustomerDemographicService_Update_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -375,12 +379,13 @@ func RegisterCustomerDemographicServiceHandlerServer(ctx context.Context, mux *r
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/customer_demographic.v1.CustomerDemographicService/Upsert", runtime.WithHTTPPathPattern("/v1/customer-demographic/upsert"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/customer_demographic.v1.CustomerDemographicService/Upsert", runtime.WithHTTPPathPattern("/v1/customer-demographic/upsert"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_CustomerDemographicService_Upsert_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_CustomerDemographicService_Upsert_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -437,12 +442,13 @@ func RegisterCustomerDemographicServiceHandlerClient(ctx context.Context, mux *r
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/customer_demographic.v1.CustomerDemographicService/CustomerDemographicByCustomerTypeID", runtime.WithHTTPPathPattern("/v1/customer-demographic/{customer_type_id}"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/customer_demographic.v1.CustomerDemographicService/CustomerDemographicByCustomerTypeID", runtime.WithHTTPPathPattern("/v1/customer-demographic/{customer_type_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_CustomerDemographicService_CustomerDemographicByCustomerTypeID_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_CustomerDemographicService_CustomerDemographicByCustomerTypeID_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -457,12 +463,13 @@ func RegisterCustomerDemographicServiceHandlerClient(ctx context.Context, mux *r
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/customer_demographic.v1.CustomerDemographicService/Delete", runtime.WithHTTPPathPattern("/v1/customer-demographic/{customer_type_id}"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/customer_demographic.v1.CustomerDemographicService/Delete", runtime.WithHTTPPathPattern("/v1/customer-demographic/{customer_type_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_CustomerDemographicService_Delete_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_CustomerDemographicService_Delete_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -477,12 +484,13 @@ func RegisterCustomerDemographicServiceHandlerClient(ctx context.Context, mux *r
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/customer_demographic.v1.CustomerDemographicService/Insert", runtime.WithHTTPPathPattern("/v1/customer-demographic"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/customer_demographic.v1.CustomerDemographicService/Insert", runtime.WithHTTPPathPattern("/v1/customer-demographic"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_CustomerDemographicService_Insert_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_CustomerDemographicService_Insert_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -497,12 +505,13 @@ func RegisterCustomerDemographicServiceHandlerClient(ctx context.Context, mux *r
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/customer_demographic.v1.CustomerDemographicService/Update", runtime.WithHTTPPathPattern("/v1/customer-demographic/{customer_type_id}"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/customer_demographic.v1.CustomerDemographicService/Update", runtime.WithHTTPPathPattern("/v1/customer-demographic/{customer_type_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_CustomerDemographicService_Update_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_CustomerDemographicService_Update_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -517,12 +526,13 @@ func RegisterCustomerDemographicServiceHandlerClient(ctx context.Context, mux *r
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/customer_demographic.v1.CustomerDemographicService/Upsert", runtime.WithHTTPPathPattern("/v1/customer-demographic/upsert"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/customer_demographic.v1.CustomerDemographicService/Upsert", runtime.WithHTTPPathPattern("/v1/customer-demographic/upsert"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_CustomerDemographicService_Upsert_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_CustomerDemographicService_Upsert_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)

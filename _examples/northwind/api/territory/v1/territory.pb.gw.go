@@ -335,12 +335,13 @@ func RegisterTerritoryServiceHandlerServer(ctx context.Context, mux *runtime.Ser
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/territory.v1.TerritoryService/Delete", runtime.WithHTTPPathPattern("/v1/territory/{territory_id}"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/territory.v1.TerritoryService/Delete", runtime.WithHTTPPathPattern("/v1/territory/{territory_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_TerritoryService_Delete_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_TerritoryService_Delete_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -358,12 +359,13 @@ func RegisterTerritoryServiceHandlerServer(ctx context.Context, mux *runtime.Ser
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/territory.v1.TerritoryService/Insert", runtime.WithHTTPPathPattern("/v1/territory"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/territory.v1.TerritoryService/Insert", runtime.WithHTTPPathPattern("/v1/territory"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_TerritoryService_Insert_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_TerritoryService_Insert_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -381,12 +383,13 @@ func RegisterTerritoryServiceHandlerServer(ctx context.Context, mux *runtime.Ser
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/territory.v1.TerritoryService/Region", runtime.WithHTTPPathPattern("/v1/territory/{territory_id}/region"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/territory.v1.TerritoryService/Region", runtime.WithHTTPPathPattern("/v1/territory/{territory_id}/region"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_TerritoryService_Region_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_TerritoryService_Region_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -404,12 +407,13 @@ func RegisterTerritoryServiceHandlerServer(ctx context.Context, mux *runtime.Ser
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/territory.v1.TerritoryService/TerritoryByTerritoryID", runtime.WithHTTPPathPattern("/v1/territory/{territory_id}"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/territory.v1.TerritoryService/TerritoryByTerritoryID", runtime.WithHTTPPathPattern("/v1/territory/{territory_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_TerritoryService_TerritoryByTerritoryID_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_TerritoryService_TerritoryByTerritoryID_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -427,12 +431,13 @@ func RegisterTerritoryServiceHandlerServer(ctx context.Context, mux *runtime.Ser
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/territory.v1.TerritoryService/Update", runtime.WithHTTPPathPattern("/v1/territory/{territory_id}"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/territory.v1.TerritoryService/Update", runtime.WithHTTPPathPattern("/v1/territory/{territory_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_TerritoryService_Update_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_TerritoryService_Update_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -450,12 +455,13 @@ func RegisterTerritoryServiceHandlerServer(ctx context.Context, mux *runtime.Ser
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/territory.v1.TerritoryService/Upsert", runtime.WithHTTPPathPattern("/v1/territory/upsert"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/territory.v1.TerritoryService/Upsert", runtime.WithHTTPPathPattern("/v1/territory/upsert"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_TerritoryService_Upsert_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_TerritoryService_Upsert_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -512,12 +518,13 @@ func RegisterTerritoryServiceHandlerClient(ctx context.Context, mux *runtime.Ser
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/territory.v1.TerritoryService/Delete", runtime.WithHTTPPathPattern("/v1/territory/{territory_id}"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/territory.v1.TerritoryService/Delete", runtime.WithHTTPPathPattern("/v1/territory/{territory_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_TerritoryService_Delete_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_TerritoryService_Delete_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -532,12 +539,13 @@ func RegisterTerritoryServiceHandlerClient(ctx context.Context, mux *runtime.Ser
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/territory.v1.TerritoryService/Insert", runtime.WithHTTPPathPattern("/v1/territory"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/territory.v1.TerritoryService/Insert", runtime.WithHTTPPathPattern("/v1/territory"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_TerritoryService_Insert_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_TerritoryService_Insert_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -552,12 +560,13 @@ func RegisterTerritoryServiceHandlerClient(ctx context.Context, mux *runtime.Ser
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/territory.v1.TerritoryService/Region", runtime.WithHTTPPathPattern("/v1/territory/{territory_id}/region"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/territory.v1.TerritoryService/Region", runtime.WithHTTPPathPattern("/v1/territory/{territory_id}/region"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_TerritoryService_Region_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_TerritoryService_Region_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -572,12 +581,13 @@ func RegisterTerritoryServiceHandlerClient(ctx context.Context, mux *runtime.Ser
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/territory.v1.TerritoryService/TerritoryByTerritoryID", runtime.WithHTTPPathPattern("/v1/territory/{territory_id}"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/territory.v1.TerritoryService/TerritoryByTerritoryID", runtime.WithHTTPPathPattern("/v1/territory/{territory_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_TerritoryService_TerritoryByTerritoryID_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_TerritoryService_TerritoryByTerritoryID_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -592,12 +602,13 @@ func RegisterTerritoryServiceHandlerClient(ctx context.Context, mux *runtime.Ser
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/territory.v1.TerritoryService/Update", runtime.WithHTTPPathPattern("/v1/territory/{territory_id}"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/territory.v1.TerritoryService/Update", runtime.WithHTTPPathPattern("/v1/territory/{territory_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_TerritoryService_Update_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_TerritoryService_Update_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -612,12 +623,13 @@ func RegisterTerritoryServiceHandlerClient(ctx context.Context, mux *runtime.Ser
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/territory.v1.TerritoryService/Upsert", runtime.WithHTTPPathPattern("/v1/territory/upsert"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/territory.v1.TerritoryService/Upsert", runtime.WithHTTPPathPattern("/v1/territory/upsert"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_TerritoryService_Upsert_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_TerritoryService_Upsert_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)

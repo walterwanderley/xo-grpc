@@ -283,12 +283,13 @@ func RegisterCategoryServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/category.v1.CategoryService/CategoryByCategoryID", runtime.WithHTTPPathPattern("/v1/category/{category_id}"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/category.v1.CategoryService/CategoryByCategoryID", runtime.WithHTTPPathPattern("/v1/category/{category_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_CategoryService_CategoryByCategoryID_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_CategoryService_CategoryByCategoryID_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -306,12 +307,13 @@ func RegisterCategoryServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/category.v1.CategoryService/Delete", runtime.WithHTTPPathPattern("/v1/category/{category_id}"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/category.v1.CategoryService/Delete", runtime.WithHTTPPathPattern("/v1/category/{category_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_CategoryService_Delete_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_CategoryService_Delete_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -329,12 +331,13 @@ func RegisterCategoryServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/category.v1.CategoryService/Insert", runtime.WithHTTPPathPattern("/v1/category"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/category.v1.CategoryService/Insert", runtime.WithHTTPPathPattern("/v1/category"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_CategoryService_Insert_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_CategoryService_Insert_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -352,12 +355,13 @@ func RegisterCategoryServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/category.v1.CategoryService/Update", runtime.WithHTTPPathPattern("/v1/category/{category_id}"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/category.v1.CategoryService/Update", runtime.WithHTTPPathPattern("/v1/category/{category_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_CategoryService_Update_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_CategoryService_Update_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -375,12 +379,13 @@ func RegisterCategoryServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/category.v1.CategoryService/Upsert", runtime.WithHTTPPathPattern("/v1/category/upsert"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/category.v1.CategoryService/Upsert", runtime.WithHTTPPathPattern("/v1/category/upsert"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_CategoryService_Upsert_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_CategoryService_Upsert_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -437,12 +442,13 @@ func RegisterCategoryServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/category.v1.CategoryService/CategoryByCategoryID", runtime.WithHTTPPathPattern("/v1/category/{category_id}"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/category.v1.CategoryService/CategoryByCategoryID", runtime.WithHTTPPathPattern("/v1/category/{category_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_CategoryService_CategoryByCategoryID_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_CategoryService_CategoryByCategoryID_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -457,12 +463,13 @@ func RegisterCategoryServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/category.v1.CategoryService/Delete", runtime.WithHTTPPathPattern("/v1/category/{category_id}"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/category.v1.CategoryService/Delete", runtime.WithHTTPPathPattern("/v1/category/{category_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_CategoryService_Delete_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_CategoryService_Delete_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -477,12 +484,13 @@ func RegisterCategoryServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/category.v1.CategoryService/Insert", runtime.WithHTTPPathPattern("/v1/category"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/category.v1.CategoryService/Insert", runtime.WithHTTPPathPattern("/v1/category"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_CategoryService_Insert_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_CategoryService_Insert_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -497,12 +505,13 @@ func RegisterCategoryServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/category.v1.CategoryService/Update", runtime.WithHTTPPathPattern("/v1/category/{category_id}"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/category.v1.CategoryService/Update", runtime.WithHTTPPathPattern("/v1/category/{category_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_CategoryService_Update_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_CategoryService_Update_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -517,12 +526,13 @@ func RegisterCategoryServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/category.v1.CategoryService/Upsert", runtime.WithHTTPPathPattern("/v1/category/upsert"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/category.v1.CategoryService/Upsert", runtime.WithHTTPPathPattern("/v1/category/upsert"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_CategoryService_Upsert_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_CategoryService_Upsert_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)

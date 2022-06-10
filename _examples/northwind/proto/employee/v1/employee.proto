@@ -16,39 +16,45 @@ service EmployeeService {
     rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             delete: "/v1/employee/{employee_id}"
+            
         };
     }
     
     rpc Employee(EmployeeRequest) returns (typespb.v1.Employee) {
         option (google.api.http) = {
             get: "/v1/employee/{employee_id}/employee"
+            
         };
     }
     
     rpc EmployeeByEmployeeID(EmployeeByEmployeeIDRequest) returns (typespb.v1.Employee) {
         option (google.api.http) = {
             get: "/v1/employee/{employee_id}"
+            
         };
     }
     
     rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/employee"
-        body: "*"
+            body: "*"
+            
         };
     }
     
     rpc Update(UpdateRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             put: "/v1/employee/{employee_id}"
-        body: "*"
+            body: "*"
+            
         };
     }
     
     rpc Upsert(UpsertRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/employee/upsert"
-        body: "*"
+            body: "*"
+            
         };
     }
     

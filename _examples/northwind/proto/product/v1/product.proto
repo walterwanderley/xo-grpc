@@ -15,45 +15,52 @@ service ProductService {
     rpc Category(CategoryRequest) returns (typespb.v1.Category) {
         option (google.api.http) = {
             get: "/v1/product/{product_id}/category"
+            
         };
     }
     
     rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             delete: "/v1/product/{product_id}"
+            
         };
     }
     
     rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/product"
-        body: "*"
+            body: "*"
+            
         };
     }
     
     rpc ProductByProductID(ProductByProductIDRequest) returns (typespb.v1.Product) {
         option (google.api.http) = {
             get: "/v1/product/{product_id}"
+            
         };
     }
     
     rpc Supplier(SupplierRequest) returns (typespb.v1.Supplier) {
         option (google.api.http) = {
             get: "/v1/product/{product_id}/supplier"
+            
         };
     }
     
     rpc Update(UpdateRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             put: "/v1/product/{product_id}"
-        body: "*"
+            body: "*"
+            
         };
     }
     
     rpc Upsert(UpsertRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/product/upsert"
-        body: "*"
+            body: "*"
+            
         };
     }
     

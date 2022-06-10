@@ -14,33 +14,38 @@ service RegionService {
     rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             delete: "/v1/region/{region_id}"
+            
         };
     }
     
     rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/region"
-        body: "*"
+            body: "*"
+            
         };
     }
     
     rpc RegionByRegionID(RegionByRegionIDRequest) returns (typespb.v1.Region) {
         option (google.api.http) = {
             get: "/v1/region/{region_id}"
+            
         };
     }
     
     rpc Update(UpdateRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             put: "/v1/region/{region_id}"
-        body: "*"
+            body: "*"
+            
         };
     }
     
     rpc Upsert(UpsertRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/region/upsert"
-        body: "*"
+            body: "*"
+            
         };
     }
     

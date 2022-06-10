@@ -403,12 +403,13 @@ func RegisterEmployeeTerritoryServiceHandlerServer(ctx context.Context, mux *run
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/employee_territory.v1.EmployeeTerritoryService/Delete", runtime.WithHTTPPathPattern("/v1/employee/{employee_id}/territory/{territory_id}/employee-territory"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/employee_territory.v1.EmployeeTerritoryService/Delete", runtime.WithHTTPPathPattern("/v1/employee/{employee_id}/territory/{territory_id}/employee-territory"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_EmployeeTerritoryService_Delete_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_EmployeeTerritoryService_Delete_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -426,12 +427,13 @@ func RegisterEmployeeTerritoryServiceHandlerServer(ctx context.Context, mux *run
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/employee_territory.v1.EmployeeTerritoryService/Employee", runtime.WithHTTPPathPattern("/v1/employee/{employee_id}/territory/{territory_id}/employee-territory/employee"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/employee_territory.v1.EmployeeTerritoryService/Employee", runtime.WithHTTPPathPattern("/v1/employee/{employee_id}/territory/{territory_id}/employee-territory/employee"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_EmployeeTerritoryService_Employee_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_EmployeeTerritoryService_Employee_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -449,12 +451,13 @@ func RegisterEmployeeTerritoryServiceHandlerServer(ctx context.Context, mux *run
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/employee_territory.v1.EmployeeTerritoryService/EmployeeTerritoryByEmployeeIDTerritoryID", runtime.WithHTTPPathPattern("/v1/employee/{employee_id}/territory/{territory_id}/employee-territory"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/employee_territory.v1.EmployeeTerritoryService/EmployeeTerritoryByEmployeeIDTerritoryID", runtime.WithHTTPPathPattern("/v1/employee/{employee_id}/territory/{territory_id}/employee-territory"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_EmployeeTerritoryService_EmployeeTerritoryByEmployeeIDTerritoryID_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_EmployeeTerritoryService_EmployeeTerritoryByEmployeeIDTerritoryID_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -472,12 +475,13 @@ func RegisterEmployeeTerritoryServiceHandlerServer(ctx context.Context, mux *run
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/employee_territory.v1.EmployeeTerritoryService/Insert", runtime.WithHTTPPathPattern("/v1/employee/{employee_id}/territory/{territory_id}/employee-territory"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/employee_territory.v1.EmployeeTerritoryService/Insert", runtime.WithHTTPPathPattern("/v1/employee/{employee_id}/territory/{territory_id}/employee-territory"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_EmployeeTerritoryService_Insert_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_EmployeeTerritoryService_Insert_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -495,12 +499,13 @@ func RegisterEmployeeTerritoryServiceHandlerServer(ctx context.Context, mux *run
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/employee_territory.v1.EmployeeTerritoryService/Territory", runtime.WithHTTPPathPattern("/v1/employee/{employee_id}/territory/{territory_id}/employee-territory/territory"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/employee_territory.v1.EmployeeTerritoryService/Territory", runtime.WithHTTPPathPattern("/v1/employee/{employee_id}/territory/{territory_id}/employee-territory/territory"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_EmployeeTerritoryService_Territory_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_EmployeeTerritoryService_Territory_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -557,12 +562,13 @@ func RegisterEmployeeTerritoryServiceHandlerClient(ctx context.Context, mux *run
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/employee_territory.v1.EmployeeTerritoryService/Delete", runtime.WithHTTPPathPattern("/v1/employee/{employee_id}/territory/{territory_id}/employee-territory"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/employee_territory.v1.EmployeeTerritoryService/Delete", runtime.WithHTTPPathPattern("/v1/employee/{employee_id}/territory/{territory_id}/employee-territory"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_EmployeeTerritoryService_Delete_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_EmployeeTerritoryService_Delete_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -577,12 +583,13 @@ func RegisterEmployeeTerritoryServiceHandlerClient(ctx context.Context, mux *run
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/employee_territory.v1.EmployeeTerritoryService/Employee", runtime.WithHTTPPathPattern("/v1/employee/{employee_id}/territory/{territory_id}/employee-territory/employee"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/employee_territory.v1.EmployeeTerritoryService/Employee", runtime.WithHTTPPathPattern("/v1/employee/{employee_id}/territory/{territory_id}/employee-territory/employee"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_EmployeeTerritoryService_Employee_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_EmployeeTerritoryService_Employee_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -597,12 +604,13 @@ func RegisterEmployeeTerritoryServiceHandlerClient(ctx context.Context, mux *run
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/employee_territory.v1.EmployeeTerritoryService/EmployeeTerritoryByEmployeeIDTerritoryID", runtime.WithHTTPPathPattern("/v1/employee/{employee_id}/territory/{territory_id}/employee-territory"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/employee_territory.v1.EmployeeTerritoryService/EmployeeTerritoryByEmployeeIDTerritoryID", runtime.WithHTTPPathPattern("/v1/employee/{employee_id}/territory/{territory_id}/employee-territory"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_EmployeeTerritoryService_EmployeeTerritoryByEmployeeIDTerritoryID_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_EmployeeTerritoryService_EmployeeTerritoryByEmployeeIDTerritoryID_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -617,12 +625,13 @@ func RegisterEmployeeTerritoryServiceHandlerClient(ctx context.Context, mux *run
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/employee_territory.v1.EmployeeTerritoryService/Insert", runtime.WithHTTPPathPattern("/v1/employee/{employee_id}/territory/{territory_id}/employee-territory"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/employee_territory.v1.EmployeeTerritoryService/Insert", runtime.WithHTTPPathPattern("/v1/employee/{employee_id}/territory/{territory_id}/employee-territory"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_EmployeeTerritoryService_Insert_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_EmployeeTerritoryService_Insert_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -637,12 +646,13 @@ func RegisterEmployeeTerritoryServiceHandlerClient(ctx context.Context, mux *run
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/employee_territory.v1.EmployeeTerritoryService/Territory", runtime.WithHTTPPathPattern("/v1/employee/{employee_id}/territory/{territory_id}/employee-territory/territory"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/employee_territory.v1.EmployeeTerritoryService/Territory", runtime.WithHTTPPathPattern("/v1/employee/{employee_id}/territory/{territory_id}/employee-territory/territory"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_EmployeeTerritoryService_Territory_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_EmployeeTerritoryService_Territory_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)

@@ -16,51 +16,59 @@ service OrderService {
     rpc Customer(CustomerRequest) returns (typespb.v1.Customer) {
         option (google.api.http) = {
             get: "/v1/order/{order_id}/customer"
+            
         };
     }
     
     rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             delete: "/v1/order/{order_id}"
+            
         };
     }
     
     rpc Employee(EmployeeRequest) returns (typespb.v1.Employee) {
         option (google.api.http) = {
             get: "/v1/order/{order_id}/employee"
+            
         };
     }
     
     rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/order"
-        body: "*"
+            body: "*"
+            
         };
     }
     
     rpc OrderByOrderID(OrderByOrderIDRequest) returns (typespb.v1.Order) {
         option (google.api.http) = {
             get: "/v1/order/{order_id}"
+            
         };
     }
     
     rpc Shipper(ShipperRequest) returns (typespb.v1.Shipper) {
         option (google.api.http) = {
             get: "/v1/order/{order_id}/shipper"
+            
         };
     }
     
     rpc Update(UpdateRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             put: "/v1/order/{order_id}"
-        body: "*"
+            body: "*"
+            
         };
     }
     
     rpc Upsert(UpsertRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/order/upsert"
-        body: "*"
+            body: "*"
+            
         };
     }
     

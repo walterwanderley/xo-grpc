@@ -283,12 +283,13 @@ func RegisterShipperServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/shipper.v1.ShipperService/Delete", runtime.WithHTTPPathPattern("/v1/shipper/{shipper_id}"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/shipper.v1.ShipperService/Delete", runtime.WithHTTPPathPattern("/v1/shipper/{shipper_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_ShipperService_Delete_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ShipperService_Delete_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -306,12 +307,13 @@ func RegisterShipperServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/shipper.v1.ShipperService/Insert", runtime.WithHTTPPathPattern("/v1/shipper"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/shipper.v1.ShipperService/Insert", runtime.WithHTTPPathPattern("/v1/shipper"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_ShipperService_Insert_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ShipperService_Insert_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -329,12 +331,13 @@ func RegisterShipperServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/shipper.v1.ShipperService/ShipperByShipperID", runtime.WithHTTPPathPattern("/v1/shipper/{shipper_id}"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/shipper.v1.ShipperService/ShipperByShipperID", runtime.WithHTTPPathPattern("/v1/shipper/{shipper_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_ShipperService_ShipperByShipperID_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ShipperService_ShipperByShipperID_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -352,12 +355,13 @@ func RegisterShipperServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/shipper.v1.ShipperService/Update", runtime.WithHTTPPathPattern("/v1/shipper/{shipper_id}"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/shipper.v1.ShipperService/Update", runtime.WithHTTPPathPattern("/v1/shipper/{shipper_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_ShipperService_Update_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ShipperService_Update_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -375,12 +379,13 @@ func RegisterShipperServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/shipper.v1.ShipperService/Upsert", runtime.WithHTTPPathPattern("/v1/shipper/upsert"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/shipper.v1.ShipperService/Upsert", runtime.WithHTTPPathPattern("/v1/shipper/upsert"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_ShipperService_Upsert_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_ShipperService_Upsert_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -437,12 +442,13 @@ func RegisterShipperServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/shipper.v1.ShipperService/Delete", runtime.WithHTTPPathPattern("/v1/shipper/{shipper_id}"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/shipper.v1.ShipperService/Delete", runtime.WithHTTPPathPattern("/v1/shipper/{shipper_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_ShipperService_Delete_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ShipperService_Delete_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -457,12 +463,13 @@ func RegisterShipperServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/shipper.v1.ShipperService/Insert", runtime.WithHTTPPathPattern("/v1/shipper"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/shipper.v1.ShipperService/Insert", runtime.WithHTTPPathPattern("/v1/shipper"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_ShipperService_Insert_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ShipperService_Insert_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -477,12 +484,13 @@ func RegisterShipperServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/shipper.v1.ShipperService/ShipperByShipperID", runtime.WithHTTPPathPattern("/v1/shipper/{shipper_id}"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/shipper.v1.ShipperService/ShipperByShipperID", runtime.WithHTTPPathPattern("/v1/shipper/{shipper_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_ShipperService_ShipperByShipperID_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ShipperService_ShipperByShipperID_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -497,12 +505,13 @@ func RegisterShipperServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/shipper.v1.ShipperService/Update", runtime.WithHTTPPathPattern("/v1/shipper/{shipper_id}"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/shipper.v1.ShipperService/Update", runtime.WithHTTPPathPattern("/v1/shipper/{shipper_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_ShipperService_Update_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ShipperService_Update_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -517,12 +526,13 @@ func RegisterShipperServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/shipper.v1.ShipperService/Upsert", runtime.WithHTTPPathPattern("/v1/shipper/upsert"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/shipper.v1.ShipperService/Upsert", runtime.WithHTTPPathPattern("/v1/shipper/upsert"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_ShipperService_Upsert_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_ShipperService_Upsert_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)

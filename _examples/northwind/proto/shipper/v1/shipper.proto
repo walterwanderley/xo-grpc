@@ -15,33 +15,38 @@ service ShipperService {
     rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             delete: "/v1/shipper/{shipper_id}"
+            
         };
     }
     
     rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/shipper"
-        body: "*"
+            body: "*"
+            
         };
     }
     
     rpc ShipperByShipperID(ShipperByShipperIDRequest) returns (typespb.v1.Shipper) {
         option (google.api.http) = {
             get: "/v1/shipper/{shipper_id}"
+            
         };
     }
     
     rpc Update(UpdateRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             put: "/v1/shipper/{shipper_id}"
-        body: "*"
+            body: "*"
+            
         };
     }
     
     rpc Upsert(UpsertRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/shipper/upsert"
-        body: "*"
+            body: "*"
+            
         };
     }
     

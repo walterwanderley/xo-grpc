@@ -283,12 +283,13 @@ func RegisterUsStateServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/us_state.v1.UsStateService/Delete", runtime.WithHTTPPathPattern("/v1/us-state/{state_id}"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/us_state.v1.UsStateService/Delete", runtime.WithHTTPPathPattern("/v1/us-state/{state_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_UsStateService_Delete_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_UsStateService_Delete_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -306,12 +307,13 @@ func RegisterUsStateServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/us_state.v1.UsStateService/Insert", runtime.WithHTTPPathPattern("/v1/us-state"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/us_state.v1.UsStateService/Insert", runtime.WithHTTPPathPattern("/v1/us-state"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_UsStateService_Insert_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_UsStateService_Insert_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -329,12 +331,13 @@ func RegisterUsStateServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/us_state.v1.UsStateService/Update", runtime.WithHTTPPathPattern("/v1/us-state/{state_id}"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/us_state.v1.UsStateService/Update", runtime.WithHTTPPathPattern("/v1/us-state/{state_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_UsStateService_Update_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_UsStateService_Update_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -352,12 +355,13 @@ func RegisterUsStateServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/us_state.v1.UsStateService/Upsert", runtime.WithHTTPPathPattern("/v1/us-state/upsert"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/us_state.v1.UsStateService/Upsert", runtime.WithHTTPPathPattern("/v1/us-state/upsert"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_UsStateService_Upsert_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_UsStateService_Upsert_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -375,12 +379,13 @@ func RegisterUsStateServiceHandlerServer(ctx context.Context, mux *runtime.Serve
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/us_state.v1.UsStateService/UsStateByStateID", runtime.WithHTTPPathPattern("/v1/us-state/{state_id}"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/us_state.v1.UsStateService/UsStateByStateID", runtime.WithHTTPPathPattern("/v1/us-state/{state_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_UsStateService_UsStateByStateID_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_UsStateService_UsStateByStateID_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -437,12 +442,13 @@ func RegisterUsStateServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/us_state.v1.UsStateService/Delete", runtime.WithHTTPPathPattern("/v1/us-state/{state_id}"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/us_state.v1.UsStateService/Delete", runtime.WithHTTPPathPattern("/v1/us-state/{state_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_UsStateService_Delete_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_UsStateService_Delete_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -457,12 +463,13 @@ func RegisterUsStateServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/us_state.v1.UsStateService/Insert", runtime.WithHTTPPathPattern("/v1/us-state"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/us_state.v1.UsStateService/Insert", runtime.WithHTTPPathPattern("/v1/us-state"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_UsStateService_Insert_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_UsStateService_Insert_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -477,12 +484,13 @@ func RegisterUsStateServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/us_state.v1.UsStateService/Update", runtime.WithHTTPPathPattern("/v1/us-state/{state_id}"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/us_state.v1.UsStateService/Update", runtime.WithHTTPPathPattern("/v1/us-state/{state_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_UsStateService_Update_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_UsStateService_Update_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -497,12 +505,13 @@ func RegisterUsStateServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/us_state.v1.UsStateService/Upsert", runtime.WithHTTPPathPattern("/v1/us-state/upsert"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/us_state.v1.UsStateService/Upsert", runtime.WithHTTPPathPattern("/v1/us-state/upsert"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_UsStateService_Upsert_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_UsStateService_Upsert_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -517,12 +526,13 @@ func RegisterUsStateServiceHandlerClient(ctx context.Context, mux *runtime.Serve
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/us_state.v1.UsStateService/UsStateByStateID", runtime.WithHTTPPathPattern("/v1/us-state/{state_id}"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/us_state.v1.UsStateService/UsStateByStateID", runtime.WithHTTPPathPattern("/v1/us-state/{state_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_UsStateService_UsStateByStateID_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_UsStateService_UsStateByStateID_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)

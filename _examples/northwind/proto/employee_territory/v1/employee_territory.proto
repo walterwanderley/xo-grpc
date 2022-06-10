@@ -14,30 +14,35 @@ service EmployeeTerritoryService {
     rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             delete: "/v1/employee/{employee_id}/territory/{territory_id}/employee-territory"
+            
         };
     }
     
     rpc Employee(EmployeeRequest) returns (typespb.v1.Employee) {
         option (google.api.http) = {
             get: "/v1/employee/{employee_id}/territory/{territory_id}/employee-territory/employee"
+            
         };
     }
     
     rpc EmployeeTerritoryByEmployeeIDTerritoryID(EmployeeTerritoryByEmployeeIDTerritoryIDRequest) returns (typespb.v1.EmployeeTerritory) {
         option (google.api.http) = {
             get: "/v1/employee/{employee_id}/territory/{territory_id}/employee-territory"
+            
         };
     }
     
     rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/employee/{employee_id}/territory/{territory_id}/employee-territory"
+            
         };
     }
     
     rpc Territory(TerritoryRequest) returns (typespb.v1.Territory) {
         option (google.api.http) = {
             get: "/v1/employee/{employee_id}/territory/{territory_id}/employee-territory/territory"
+            
         };
     }
     

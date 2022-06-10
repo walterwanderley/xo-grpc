@@ -15,33 +15,38 @@ service UsStateService {
     rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             delete: "/v1/us-state/{state_id}"
+            
         };
     }
     
     rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/us-state"
-        body: "*"
+            body: "*"
+            
         };
     }
     
     rpc Update(UpdateRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             put: "/v1/us-state/{state_id}"
-        body: "*"
+            body: "*"
+            
         };
     }
     
     rpc Upsert(UpsertRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/us-state/upsert"
-        body: "*"
+            body: "*"
+            
         };
     }
     
     rpc UsStateByStateID(UsStateByStateIDRequest) returns (typespb.v1.UsState) {
         option (google.api.http) = {
             get: "/v1/us-state/{state_id}"
+            
         };
     }
     

@@ -15,33 +15,38 @@ service CategoryService {
     rpc CategoryByCategoryID(CategoryByCategoryIDRequest) returns (typespb.v1.Category) {
         option (google.api.http) = {
             get: "/v1/category/{category_id}"
+            
         };
     }
     
     rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             delete: "/v1/category/{category_id}"
+            
         };
     }
     
     rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/category"
-        body: "*"
+            body: "*"
+            
         };
     }
     
     rpc Update(UpdateRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             put: "/v1/category/{category_id}"
-        body: "*"
+            body: "*"
+            
         };
     }
     
     rpc Upsert(UpsertRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/category/upsert"
-        body: "*"
+            body: "*"
+            
         };
     }
     

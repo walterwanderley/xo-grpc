@@ -14,45 +14,52 @@ service OrderDetailService {
     rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             delete: "/v1/order/{order_id}/product/{product_id}/order-detail"
+            
         };
     }
     
     rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/order/{order_id}/product/{product_id}/order-detail"
-        body: "*"
+            body: "*"
+            
         };
     }
     
     rpc Order(OrderRequest) returns (typespb.v1.Order) {
         option (google.api.http) = {
             get: "/v1/order/{order_id}/product/{product_id}/order-detail/order"
+            
         };
     }
     
     rpc OrderDetailByOrderIDProductID(OrderDetailByOrderIDProductIDRequest) returns (typespb.v1.OrderDetail) {
         option (google.api.http) = {
             get: "/v1/order/{order_id}/product/{product_id}/order-detail"
+            
         };
     }
     
     rpc Product(ProductRequest) returns (typespb.v1.Product) {
         option (google.api.http) = {
             get: "/v1/order/{order_id}/product/{product_id}/order-detail/product"
+            
         };
     }
     
     rpc Update(UpdateRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             put: "/v1/order/{order_id}/product/{product_id}/order-detail"
-        body: "*"
+            body: "*"
+            
         };
     }
     
     rpc Upsert(UpsertRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/order-detail/upsert"
-        body: "*"
+            body: "*"
+            
         };
     }
     

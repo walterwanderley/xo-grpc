@@ -14,39 +14,45 @@ service TerritoryService {
     rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             delete: "/v1/territory/{territory_id}"
+            
         };
     }
     
     rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/territory"
-        body: "*"
+            body: "*"
+            
         };
     }
     
     rpc Region(RegionRequest) returns (typespb.v1.Region) {
         option (google.api.http) = {
             get: "/v1/territory/{territory_id}/region"
+            
         };
     }
     
     rpc TerritoryByTerritoryID(TerritoryByTerritoryIDRequest) returns (typespb.v1.Territory) {
         option (google.api.http) = {
             get: "/v1/territory/{territory_id}"
+            
         };
     }
     
     rpc Update(UpdateRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             put: "/v1/territory/{territory_id}"
-        body: "*"
+            body: "*"
+            
         };
     }
     
     rpc Upsert(UpsertRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/territory/upsert"
-        body: "*"
+            body: "*"
+            
         };
     }
     

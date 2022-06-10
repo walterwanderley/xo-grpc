@@ -15,33 +15,38 @@ service CustomerDemographicService {
     rpc CustomerDemographicByCustomerTypeID(CustomerDemographicByCustomerTypeIDRequest) returns (typespb.v1.CustomerDemographic) {
         option (google.api.http) = {
             get: "/v1/customer-demographic/{customer_type_id}"
+            
         };
     }
     
     rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             delete: "/v1/customer-demographic/{customer_type_id}"
+            
         };
     }
     
     rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/customer-demographic"
-        body: "*"
+            body: "*"
+            
         };
     }
     
     rpc Update(UpdateRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             put: "/v1/customer-demographic/{customer_type_id}"
-        body: "*"
+            body: "*"
+            
         };
     }
     
     rpc Upsert(UpsertRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/customer-demographic/upsert"
-        body: "*"
+            body: "*"
+            
         };
     }
     

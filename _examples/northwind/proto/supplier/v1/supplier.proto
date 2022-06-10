@@ -15,33 +15,38 @@ service SupplierService {
     rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             delete: "/v1/supplier/{supplier_id}"
+            
         };
     }
     
     rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/supplier"
-        body: "*"
+            body: "*"
+            
         };
     }
     
     rpc SupplierBySupplierID(SupplierBySupplierIDRequest) returns (typespb.v1.Supplier) {
         option (google.api.http) = {
             get: "/v1/supplier/{supplier_id}"
+            
         };
     }
     
     rpc Update(UpdateRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             put: "/v1/supplier/{supplier_id}"
-        body: "*"
+            body: "*"
+            
         };
     }
     
     rpc Upsert(UpsertRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/supplier/upsert"
-        body: "*"
+            body: "*"
+            
         };
     }
     

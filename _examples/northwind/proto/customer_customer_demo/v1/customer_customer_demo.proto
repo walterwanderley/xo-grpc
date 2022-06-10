@@ -14,30 +14,35 @@ service CustomerCustomerDemoService {
     rpc Customer(CustomerRequest) returns (typespb.v1.Customer) {
         option (google.api.http) = {
             get: "/v1/customer/{customer_id}/customer-type/{customer_type_id}/customer-customer-demo/customer"
+            
         };
     }
     
     rpc CustomerCustomerDemoByCustomerIDCustomerTypeID(CustomerCustomerDemoByCustomerIDCustomerTypeIDRequest) returns (typespb.v1.CustomerCustomerDemo) {
         option (google.api.http) = {
             get: "/v1/customer/{customer_id}/customer-type/{customer_type_id}/customer-customer-demo"
+            
         };
     }
     
     rpc CustomerDemographic(CustomerDemographicRequest) returns (typespb.v1.CustomerDemographic) {
         option (google.api.http) = {
             get: "/v1/customer/{customer_id}/customer-type/{customer_type_id}/customer-customer-demo/customer-demographic"
+            
         };
     }
     
     rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             delete: "/v1/customer/{customer_id}/customer-type/{customer_type_id}/customer-customer-demo"
+            
         };
     }
     
     rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             post: "/v1/customer/{customer_id}/customer-type/{customer_type_id}/customer-customer-demo"
+            
         };
     }
     

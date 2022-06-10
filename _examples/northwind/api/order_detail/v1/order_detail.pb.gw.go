@@ -541,12 +541,13 @@ func RegisterOrderDetailServiceHandlerServer(ctx context.Context, mux *runtime.S
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Delete", runtime.WithHTTPPathPattern("/v1/order/{order_id}/product/{product_id}/order-detail"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Delete", runtime.WithHTTPPathPattern("/v1/order/{order_id}/product/{product_id}/order-detail"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_OrderDetailService_Delete_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_OrderDetailService_Delete_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -564,12 +565,13 @@ func RegisterOrderDetailServiceHandlerServer(ctx context.Context, mux *runtime.S
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Insert", runtime.WithHTTPPathPattern("/v1/order/{order_id}/product/{product_id}/order-detail"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Insert", runtime.WithHTTPPathPattern("/v1/order/{order_id}/product/{product_id}/order-detail"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_OrderDetailService_Insert_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_OrderDetailService_Insert_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -587,12 +589,13 @@ func RegisterOrderDetailServiceHandlerServer(ctx context.Context, mux *runtime.S
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Order", runtime.WithHTTPPathPattern("/v1/order/{order_id}/product/{product_id}/order-detail/order"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Order", runtime.WithHTTPPathPattern("/v1/order/{order_id}/product/{product_id}/order-detail/order"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_OrderDetailService_Order_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_OrderDetailService_Order_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -610,12 +613,13 @@ func RegisterOrderDetailServiceHandlerServer(ctx context.Context, mux *runtime.S
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/OrderDetailByOrderIDProductID", runtime.WithHTTPPathPattern("/v1/order/{order_id}/product/{product_id}/order-detail"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/OrderDetailByOrderIDProductID", runtime.WithHTTPPathPattern("/v1/order/{order_id}/product/{product_id}/order-detail"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_OrderDetailService_OrderDetailByOrderIDProductID_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_OrderDetailService_OrderDetailByOrderIDProductID_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -633,12 +637,13 @@ func RegisterOrderDetailServiceHandlerServer(ctx context.Context, mux *runtime.S
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Product", runtime.WithHTTPPathPattern("/v1/order/{order_id}/product/{product_id}/order-detail/product"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Product", runtime.WithHTTPPathPattern("/v1/order/{order_id}/product/{product_id}/order-detail/product"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_OrderDetailService_Product_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_OrderDetailService_Product_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -656,12 +661,13 @@ func RegisterOrderDetailServiceHandlerServer(ctx context.Context, mux *runtime.S
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Update", runtime.WithHTTPPathPattern("/v1/order/{order_id}/product/{product_id}/order-detail"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Update", runtime.WithHTTPPathPattern("/v1/order/{order_id}/product/{product_id}/order-detail"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_OrderDetailService_Update_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_OrderDetailService_Update_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -679,12 +685,13 @@ func RegisterOrderDetailServiceHandlerServer(ctx context.Context, mux *runtime.S
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Upsert", runtime.WithHTTPPathPattern("/v1/order-detail/upsert"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Upsert", runtime.WithHTTPPathPattern("/v1/order-detail/upsert"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_OrderDetailService_Upsert_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_OrderDetailService_Upsert_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -741,12 +748,13 @@ func RegisterOrderDetailServiceHandlerClient(ctx context.Context, mux *runtime.S
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Delete", runtime.WithHTTPPathPattern("/v1/order/{order_id}/product/{product_id}/order-detail"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Delete", runtime.WithHTTPPathPattern("/v1/order/{order_id}/product/{product_id}/order-detail"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_OrderDetailService_Delete_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_OrderDetailService_Delete_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -761,12 +769,13 @@ func RegisterOrderDetailServiceHandlerClient(ctx context.Context, mux *runtime.S
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Insert", runtime.WithHTTPPathPattern("/v1/order/{order_id}/product/{product_id}/order-detail"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Insert", runtime.WithHTTPPathPattern("/v1/order/{order_id}/product/{product_id}/order-detail"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_OrderDetailService_Insert_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_OrderDetailService_Insert_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -781,12 +790,13 @@ func RegisterOrderDetailServiceHandlerClient(ctx context.Context, mux *runtime.S
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Order", runtime.WithHTTPPathPattern("/v1/order/{order_id}/product/{product_id}/order-detail/order"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Order", runtime.WithHTTPPathPattern("/v1/order/{order_id}/product/{product_id}/order-detail/order"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_OrderDetailService_Order_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_OrderDetailService_Order_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -801,12 +811,13 @@ func RegisterOrderDetailServiceHandlerClient(ctx context.Context, mux *runtime.S
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/OrderDetailByOrderIDProductID", runtime.WithHTTPPathPattern("/v1/order/{order_id}/product/{product_id}/order-detail"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/OrderDetailByOrderIDProductID", runtime.WithHTTPPathPattern("/v1/order/{order_id}/product/{product_id}/order-detail"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_OrderDetailService_OrderDetailByOrderIDProductID_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_OrderDetailService_OrderDetailByOrderIDProductID_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -821,12 +832,13 @@ func RegisterOrderDetailServiceHandlerClient(ctx context.Context, mux *runtime.S
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Product", runtime.WithHTTPPathPattern("/v1/order/{order_id}/product/{product_id}/order-detail/product"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Product", runtime.WithHTTPPathPattern("/v1/order/{order_id}/product/{product_id}/order-detail/product"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_OrderDetailService_Product_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_OrderDetailService_Product_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -841,12 +853,13 @@ func RegisterOrderDetailServiceHandlerClient(ctx context.Context, mux *runtime.S
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Update", runtime.WithHTTPPathPattern("/v1/order/{order_id}/product/{product_id}/order-detail"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Update", runtime.WithHTTPPathPattern("/v1/order/{order_id}/product/{product_id}/order-detail"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_OrderDetailService_Update_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_OrderDetailService_Update_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -861,12 +874,13 @@ func RegisterOrderDetailServiceHandlerClient(ctx context.Context, mux *runtime.S
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Upsert", runtime.WithHTTPPathPattern("/v1/order-detail/upsert"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Upsert", runtime.WithHTTPPathPattern("/v1/order-detail/upsert"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_OrderDetailService_Upsert_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_OrderDetailService_Upsert_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)

@@ -403,12 +403,13 @@ func RegisterCustomerCustomerDemoServiceHandlerServer(ctx context.Context, mux *
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/customer_customer_demo.v1.CustomerCustomerDemoService/Customer", runtime.WithHTTPPathPattern("/v1/customer/{customer_id}/customer-type/{customer_type_id}/customer-customer-demo/customer"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/customer_customer_demo.v1.CustomerCustomerDemoService/Customer", runtime.WithHTTPPathPattern("/v1/customer/{customer_id}/customer-type/{customer_type_id}/customer-customer-demo/customer"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_CustomerCustomerDemoService_Customer_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_CustomerCustomerDemoService_Customer_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -426,12 +427,13 @@ func RegisterCustomerCustomerDemoServiceHandlerServer(ctx context.Context, mux *
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/customer_customer_demo.v1.CustomerCustomerDemoService/CustomerCustomerDemoByCustomerIDCustomerTypeID", runtime.WithHTTPPathPattern("/v1/customer/{customer_id}/customer-type/{customer_type_id}/customer-customer-demo"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/customer_customer_demo.v1.CustomerCustomerDemoService/CustomerCustomerDemoByCustomerIDCustomerTypeID", runtime.WithHTTPPathPattern("/v1/customer/{customer_id}/customer-type/{customer_type_id}/customer-customer-demo"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_CustomerCustomerDemoService_CustomerCustomerDemoByCustomerIDCustomerTypeID_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_CustomerCustomerDemoService_CustomerCustomerDemoByCustomerIDCustomerTypeID_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -449,12 +451,13 @@ func RegisterCustomerCustomerDemoServiceHandlerServer(ctx context.Context, mux *
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/customer_customer_demo.v1.CustomerCustomerDemoService/CustomerDemographic", runtime.WithHTTPPathPattern("/v1/customer/{customer_id}/customer-type/{customer_type_id}/customer-customer-demo/customer-demographic"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/customer_customer_demo.v1.CustomerCustomerDemoService/CustomerDemographic", runtime.WithHTTPPathPattern("/v1/customer/{customer_id}/customer-type/{customer_type_id}/customer-customer-demo/customer-demographic"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_CustomerCustomerDemoService_CustomerDemographic_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_CustomerCustomerDemoService_CustomerDemographic_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -472,12 +475,13 @@ func RegisterCustomerCustomerDemoServiceHandlerServer(ctx context.Context, mux *
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/customer_customer_demo.v1.CustomerCustomerDemoService/Delete", runtime.WithHTTPPathPattern("/v1/customer/{customer_id}/customer-type/{customer_type_id}/customer-customer-demo"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/customer_customer_demo.v1.CustomerCustomerDemoService/Delete", runtime.WithHTTPPathPattern("/v1/customer/{customer_id}/customer-type/{customer_type_id}/customer-customer-demo"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_CustomerCustomerDemoService_Delete_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_CustomerCustomerDemoService_Delete_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -495,12 +499,13 @@ func RegisterCustomerCustomerDemoServiceHandlerServer(ctx context.Context, mux *
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/customer_customer_demo.v1.CustomerCustomerDemoService/Insert", runtime.WithHTTPPathPattern("/v1/customer/{customer_id}/customer-type/{customer_type_id}/customer-customer-demo"))
+		var err error
+		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/customer_customer_demo.v1.CustomerCustomerDemoService/Insert", runtime.WithHTTPPathPattern("/v1/customer/{customer_id}/customer-type/{customer_type_id}/customer-customer-demo"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_CustomerCustomerDemoService_Insert_0(rctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_CustomerCustomerDemoService_Insert_0(ctx, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
@@ -557,12 +562,13 @@ func RegisterCustomerCustomerDemoServiceHandlerClient(ctx context.Context, mux *
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/customer_customer_demo.v1.CustomerCustomerDemoService/Customer", runtime.WithHTTPPathPattern("/v1/customer/{customer_id}/customer-type/{customer_type_id}/customer-customer-demo/customer"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/customer_customer_demo.v1.CustomerCustomerDemoService/Customer", runtime.WithHTTPPathPattern("/v1/customer/{customer_id}/customer-type/{customer_type_id}/customer-customer-demo/customer"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_CustomerCustomerDemoService_Customer_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_CustomerCustomerDemoService_Customer_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -577,12 +583,13 @@ func RegisterCustomerCustomerDemoServiceHandlerClient(ctx context.Context, mux *
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/customer_customer_demo.v1.CustomerCustomerDemoService/CustomerCustomerDemoByCustomerIDCustomerTypeID", runtime.WithHTTPPathPattern("/v1/customer/{customer_id}/customer-type/{customer_type_id}/customer-customer-demo"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/customer_customer_demo.v1.CustomerCustomerDemoService/CustomerCustomerDemoByCustomerIDCustomerTypeID", runtime.WithHTTPPathPattern("/v1/customer/{customer_id}/customer-type/{customer_type_id}/customer-customer-demo"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_CustomerCustomerDemoService_CustomerCustomerDemoByCustomerIDCustomerTypeID_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_CustomerCustomerDemoService_CustomerCustomerDemoByCustomerIDCustomerTypeID_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -597,12 +604,13 @@ func RegisterCustomerCustomerDemoServiceHandlerClient(ctx context.Context, mux *
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/customer_customer_demo.v1.CustomerCustomerDemoService/CustomerDemographic", runtime.WithHTTPPathPattern("/v1/customer/{customer_id}/customer-type/{customer_type_id}/customer-customer-demo/customer-demographic"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/customer_customer_demo.v1.CustomerCustomerDemoService/CustomerDemographic", runtime.WithHTTPPathPattern("/v1/customer/{customer_id}/customer-type/{customer_type_id}/customer-customer-demo/customer-demographic"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_CustomerCustomerDemoService_CustomerDemographic_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_CustomerCustomerDemoService_CustomerDemographic_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -617,12 +625,13 @@ func RegisterCustomerCustomerDemoServiceHandlerClient(ctx context.Context, mux *
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/customer_customer_demo.v1.CustomerCustomerDemoService/Delete", runtime.WithHTTPPathPattern("/v1/customer/{customer_id}/customer-type/{customer_type_id}/customer-customer-demo"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/customer_customer_demo.v1.CustomerCustomerDemoService/Delete", runtime.WithHTTPPathPattern("/v1/customer/{customer_id}/customer-type/{customer_type_id}/customer-customer-demo"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_CustomerCustomerDemoService_Delete_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_CustomerCustomerDemoService_Delete_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
@@ -637,12 +646,13 @@ func RegisterCustomerCustomerDemoServiceHandlerClient(ctx context.Context, mux *
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		rctx, err := runtime.AnnotateContext(ctx, mux, req, "/customer_customer_demo.v1.CustomerCustomerDemoService/Insert", runtime.WithHTTPPathPattern("/v1/customer/{customer_id}/customer-type/{customer_type_id}/customer-customer-demo"))
+		var err error
+		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/customer_customer_demo.v1.CustomerCustomerDemoService/Insert", runtime.WithHTTPPathPattern("/v1/customer/{customer_id}/customer-type/{customer_type_id}/customer-customer-demo"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_CustomerCustomerDemoService_Insert_0(rctx, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_CustomerCustomerDemoService_Insert_0(ctx, inboundMarshaler, client, req, pathParams)
 		ctx = runtime.NewServerMetadataContext(ctx, md)
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
