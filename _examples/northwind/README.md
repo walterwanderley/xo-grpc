@@ -1,10 +1,8 @@
 # About
 
-Northwind data taken from [Yugabyte database's][yugabyte] Git repository [data samples][yugabyte-git].
+Northwind data taken from [WikiVersity][wikiversity].
 
-[yugabyte]: https://www.yugabyte.com
-[yugabyte-git]: https://github.com/yugabyte/yugabyte-db/tree/master/sample
-[xo]: https://github.com/xo/xo
+[wikiversity]: https://en.wikiversity.org/wiki/Database_Examples/Northwind/SQLite
 
 ## Running
 
