@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package {{.Package | SnakeCase}}.v1;
 
-option go_package = "{{.GoModule}}/proto/{{.Package | SnakeCase}}/v1";
+option go_package = "{{.GoModule}}/api/{{.Package | SnakeCase}}/v1";
 
 import "google/api/annotations.proto";
 {{range .ProtoImports}}{{ .}}
