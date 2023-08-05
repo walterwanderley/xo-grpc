@@ -7,42 +7,30 @@ import (
 	"database/sql"
 )
 
-// Employee represents a row from 'public.employees'.
+// Employee represents a row from 'Employees'.
 type Employee struct {
-	EmployeeID      int16          `json:"employee_id"`       // employee_id
-	LastName        string         `json:"last_name"`         // last_name
-	FirstName       string         `json:"first_name"`        // first_name
-	Title           sql.NullString `json:"title"`             // title
-	TitleOfCourtesy sql.NullString `json:"title_of_courtesy"` // title_of_courtesy
-	BirthDate       sql.NullTime   `json:"birth_date"`        // birth_date
-	HireDate        sql.NullTime   `json:"hire_date"`         // hire_date
-	Address         sql.NullString `json:"address"`           // address
-	City            sql.NullString `json:"city"`              // city
-	Region          sql.NullString `json:"region"`            // region
-	PostalCode      sql.NullString `json:"postal_code"`       // postal_code
-	Country         sql.NullString `json:"country"`           // country
-	HomePhone       sql.NullString `json:"home_phone"`        // home_phone
-	Extension       sql.NullString `json:"extension"`         // extension
-	Photo           []byte         `json:"photo"`             // photo
-	Notes           sql.NullString `json:"notes"`             // notes
-	ReportsTo       sql.NullInt64  `json:"reports_to"`        // reports_to
-	PhotoPath       sql.NullString `json:"photo_path"`        // photo_path
+	EmployeeID sql.NullInt64  `json:"EmployeeID"` // EmployeeID
+	LastName   sql.NullString `json:"LastName"`   // LastName
+	FirstName  sql.NullString `json:"FirstName"`  // FirstName
+	BirthDate  *Time          `json:"BirthDate"`  // BirthDate
+	Photo      sql.NullString `json:"Photo"`      // Photo
+	Notes      sql.NullString `json:"Notes"`      // Notes
 	// xo fields
 	_exists, _deleted bool
 }
 
-// Exists returns true when the Employee exists in the database.
+// Exists returns true when the [Employee] exists in the database.
 func (e *Employee) Exists() bool {
 	return e._exists
 }
 
-// Deleted returns true when the Employee has been marked for deletion from
-// the database.
+// Deleted returns true when the [Employee] has been marked for deletion
+// from the database.
 func (e *Employee) Deleted() bool {
 	return e._deleted
 }
 
-// Insert inserts the Employee to the database.
+// Insert inserts the [Employee] to the database.
 func (e *Employee) Insert(ctx context.Context, db DB) error {
 	switch {
 	case e._exists: // already exists
@@ -50,23 +38,30 @@ func (e *Employee) Insert(ctx context.Context, db DB) error {
 	case e._deleted: // deleted
 		return logerror(&ErrInsertFailed{ErrMarkedForDeletion})
 	}
-	// insert (basic)
-	const sqlstr = `INSERT INTO public.employees (` +
-		`employee_id, last_name, first_name, title, title_of_courtesy, birth_date, hire_date, address, city, region, postal_code, country, home_phone, extension, photo, notes, reports_to, photo_path` +
+	// insert (primary key generated and returned by database)
+	const sqlstr = `INSERT INTO Employees (` +
+		`EmployeeID, LastName, FirstName, BirthDate, Photo, Notes` +
 		`) VALUES (` +
-		`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18` +
+		`$1, $2, $3, $4, $5, $6` +
 		`)`
 	// run
-	logf(sqlstr, e.EmployeeID, e.LastName, e.FirstName, e.Title, e.TitleOfCourtesy, e.BirthDate, e.HireDate, e.Address, e.City, e.Region, e.PostalCode, e.Country, e.HomePhone, e.Extension, e.Photo, e.Notes, e.ReportsTo, e.PhotoPath)
-	if _, err := db.ExecContext(ctx, sqlstr, e.EmployeeID, e.LastName, e.FirstName, e.Title, e.TitleOfCourtesy, e.BirthDate, e.HireDate, e.Address, e.City, e.Region, e.PostalCode, e.Country, e.HomePhone, e.Extension, e.Photo, e.Notes, e.ReportsTo, e.PhotoPath); err != nil {
+	logf(sqlstr, e.LastName, e.FirstName, e.BirthDate, e.Photo, e.Notes)
+	res, err := db.ExecContext(ctx, sqlstr, e.EmployeeID, e.LastName, e.FirstName, e.BirthDate, e.Photo, e.Notes)
+	if err != nil {
 		return logerror(err)
 	}
+	// retrieve id
+	id, err := res.LastInsertId()
+	if err != nil {
+		return logerror(err)
+	} // set primary key
+	e.EmployeeID = sql.NullInt64{Valid: true, Int64: id}
 	// set exists
 	e._exists = true
 	return nil
 }
 
-// Update updates a Employee in the database.
+// Update updates a [Employee] in the database.
 func (e *Employee) Update(ctx context.Context, db DB) error {
 	switch {
 	case !e._exists: // doesn't exist
@@ -74,21 +69,19 @@ func (e *Employee) Update(ctx context.Context, db DB) error {
 	case e._deleted: // deleted
 		return logerror(&ErrUpdateFailed{ErrMarkedForDeletion})
 	}
-	// update with composite primary key
-	const sqlstr = `UPDATE public.employees SET (` +
-		`last_name, first_name, title, title_of_courtesy, birth_date, hire_date, address, city, region, postal_code, country, home_phone, extension, photo, notes, reports_to, photo_path` +
-		`) = ( ` +
-		`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17` +
-		`) WHERE employee_id = $18`
+	// update with primary key
+	const sqlstr = `UPDATE Employees SET ` +
+		`LastName = $1, FirstName = $2, BirthDate = $3, Photo = $4, Notes = $5 ` +
+		`WHERE EmployeeID = $6`
 	// run
-	logf(sqlstr, e.LastName, e.FirstName, e.Title, e.TitleOfCourtesy, e.BirthDate, e.HireDate, e.Address, e.City, e.Region, e.PostalCode, e.Country, e.HomePhone, e.Extension, e.Photo, e.Notes, e.ReportsTo, e.PhotoPath, e.EmployeeID)
-	if _, err := db.ExecContext(ctx, sqlstr, e.LastName, e.FirstName, e.Title, e.TitleOfCourtesy, e.BirthDate, e.HireDate, e.Address, e.City, e.Region, e.PostalCode, e.Country, e.HomePhone, e.Extension, e.Photo, e.Notes, e.ReportsTo, e.PhotoPath, e.EmployeeID); err != nil {
+	logf(sqlstr, e.LastName, e.FirstName, e.BirthDate, e.Photo, e.Notes, e.EmployeeID)
+	if _, err := db.ExecContext(ctx, sqlstr, e.LastName, e.FirstName, e.BirthDate, e.Photo, e.Notes, e.EmployeeID); err != nil {
 		return logerror(err)
 	}
 	return nil
 }
 
-// Save saves the Employee to the database.
+// Save saves the [Employee] to the database.
 func (e *Employee) Save(ctx context.Context, db DB) error {
 	if e.Exists() {
 		return e.Update(ctx, db)
@@ -96,35 +89,32 @@ func (e *Employee) Save(ctx context.Context, db DB) error {
 	return e.Insert(ctx, db)
 }
 
-// Upsert performs an upsert for Employee.
-//
-// NOTE: PostgreSQL 9.5+ only
+// Upsert performs an upsert for [Employee].
 func (e *Employee) Upsert(ctx context.Context, db DB) error {
 	switch {
 	case e._deleted: // deleted
 		return logerror(&ErrUpsertFailed{ErrMarkedForDeletion})
 	}
 	// upsert
-	const sqlstr = `INSERT INTO public.employees (` +
-		`employee_id, last_name, first_name, title, title_of_courtesy, birth_date, hire_date, address, city, region, postal_code, country, home_phone, extension, photo, notes, reports_to, photo_path` +
+	const sqlstr = `INSERT INTO Employees (` +
+		`EmployeeID, LastName, FirstName, BirthDate, Photo, Notes` +
 		`) VALUES (` +
-		`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18` +
-		`) ON CONFLICT (employee_id) DO UPDATE SET (` +
-		`employee_id, last_name, first_name, title, title_of_courtesy, birth_date, hire_date, address, city, region, postal_code, country, home_phone, extension, photo, notes, reports_to, photo_path` +
-		`) = (` +
-		`EXCLUDED.employee_id, EXCLUDED.last_name, EXCLUDED.first_name, EXCLUDED.title, EXCLUDED.title_of_courtesy, EXCLUDED.birth_date, EXCLUDED.hire_date, EXCLUDED.address, EXCLUDED.city, EXCLUDED.region, EXCLUDED.postal_code, EXCLUDED.country, EXCLUDED.home_phone, EXCLUDED.extension, EXCLUDED.photo, EXCLUDED.notes, EXCLUDED.reports_to, EXCLUDED.photo_path` +
-		`)`
+		`$1, $2, $3, $4, $5, $6` +
+		`)` +
+		` ON CONFLICT (EmployeeID) DO ` +
+		`UPDATE SET ` +
+		`LastName = EXCLUDED.LastName, FirstName = EXCLUDED.FirstName, BirthDate = EXCLUDED.BirthDate, Photo = EXCLUDED.Photo, Notes = EXCLUDED.Notes `
 	// run
-	logf(sqlstr, e.EmployeeID, e.LastName, e.FirstName, e.Title, e.TitleOfCourtesy, e.BirthDate, e.HireDate, e.Address, e.City, e.Region, e.PostalCode, e.Country, e.HomePhone, e.Extension, e.Photo, e.Notes, e.ReportsTo, e.PhotoPath)
-	if _, err := db.ExecContext(ctx, sqlstr, e.EmployeeID, e.LastName, e.FirstName, e.Title, e.TitleOfCourtesy, e.BirthDate, e.HireDate, e.Address, e.City, e.Region, e.PostalCode, e.Country, e.HomePhone, e.Extension, e.Photo, e.Notes, e.ReportsTo, e.PhotoPath); err != nil {
-		return err
+	logf(sqlstr, e.EmployeeID, e.LastName, e.FirstName, e.BirthDate, e.Photo, e.Notes)
+	if _, err := db.ExecContext(ctx, sqlstr, e.EmployeeID, e.LastName, e.FirstName, e.BirthDate, e.Photo, e.Notes); err != nil {
+		return logerror(err)
 	}
 	// set exists
 	e._exists = true
 	return nil
 }
 
-// Delete deletes the Employee from the database.
+// Delete deletes the [Employee] from the database.
 func (e *Employee) Delete(ctx context.Context, db DB) error {
 	switch {
 	case !e._exists: // doesn't exist
@@ -133,7 +123,8 @@ func (e *Employee) Delete(ctx context.Context, db DB) error {
 		return nil
 	}
 	// delete with single primary key
-	const sqlstr = `DELETE FROM public.employees WHERE employee_id = $1`
+	const sqlstr = `DELETE FROM Employees ` +
+		`WHERE EmployeeID = $1`
 	// run
 	logf(sqlstr, e.EmployeeID)
 	if _, err := db.ExecContext(ctx, sqlstr, e.EmployeeID); err != nil {
@@ -144,29 +135,22 @@ func (e *Employee) Delete(ctx context.Context, db DB) error {
 	return nil
 }
 
-// EmployeeByEmployeeID retrieves a row from 'public.employees' as a Employee.
+// EmployeeByEmployeeID retrieves a row from 'Employees' as a [Employee].
 //
-// Generated from index 'employees_pkey'.
-func EmployeeByEmployeeID(ctx context.Context, db DB, employeeID int16) (*Employee, error) {
+// Generated from index 'Employees_EmployeeID_pkey'.
+func EmployeeByEmployeeID(ctx context.Context, db DB, employeeID sql.NullInt64) (*Employee, error) {
 	// query
 	const sqlstr = `SELECT ` +
-		`employee_id, last_name, first_name, title, title_of_courtesy, birth_date, hire_date, address, city, region, postal_code, country, home_phone, extension, photo, notes, reports_to, photo_path ` +
-		`FROM public.employees ` +
-		`WHERE employee_id = $1`
+		`EmployeeID, LastName, FirstName, BirthDate, Photo, Notes ` +
+		`FROM Employees ` +
+		`WHERE EmployeeID = $1`
 	// run
 	logf(sqlstr, employeeID)
 	e := Employee{
 		_exists: true,
 	}
-	if err := db.QueryRowContext(ctx, sqlstr, employeeID).Scan(&e.EmployeeID, &e.LastName, &e.FirstName, &e.Title, &e.TitleOfCourtesy, &e.BirthDate, &e.HireDate, &e.Address, &e.City, &e.Region, &e.PostalCode, &e.Country, &e.HomePhone, &e.Extension, &e.Photo, &e.Notes, &e.ReportsTo, &e.PhotoPath); err != nil {
+	if err := db.QueryRowContext(ctx, sqlstr, employeeID).Scan(&e.EmployeeID, &e.LastName, &e.FirstName, &e.BirthDate, &e.Photo, &e.Notes); err != nil {
 		return nil, logerror(err)
 	}
 	return &e, nil
-}
-
-// Employee returns the Employee associated with the Employee's ReportsTo (reports_to).
-//
-// Generated from foreign key 'employees_reports_to_fkey'.
-func (e *Employee) Employee(ctx context.Context, db DB) (*Employee, error) {
-	return EmployeeByEmployeeID(ctx, db, int16(e.ReportsTo.Int64))
 }

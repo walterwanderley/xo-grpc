@@ -2,10 +2,11 @@ syntax = "proto3";
 
 package order_detail.v1;
 
-option go_package = "northwind/proto/order_detail/v1";
+option go_package = "northwind/api/order_detail/v1";
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
+import "google/protobuf/wrappers.proto";
 import "typespb/v1/typespb.proto";
 
 
@@ -13,14 +14,14 @@ service OrderDetailService {
     
     rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
-            delete: "/v1/order/{order_id}/product/{product_id}/order-detail"
+            delete: "/v1/order-detail/{order_detail_id}"
             
         };
     }
     
     rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
-            post: "/v1/order/{order_id}/product/{product_id}/order-detail"
+            post: "/v1/order-detail"
             body: "*"
             
         };
@@ -28,28 +29,28 @@ service OrderDetailService {
     
     rpc Order(OrderRequest) returns (typespb.v1.Order) {
         option (google.api.http) = {
-            get: "/v1/order/{order_id}/product/{product_id}/order-detail/order"
+            get: "/v1/order-detail/{order_detail_id}/order"
             
         };
     }
     
-    rpc OrderDetailByOrderIDProductID(OrderDetailByOrderIDProductIDRequest) returns (typespb.v1.OrderDetail) {
+    rpc OrderDetailByOrderDetailID(OrderDetailByOrderDetailIDRequest) returns (typespb.v1.OrderDetail) {
         option (google.api.http) = {
-            get: "/v1/order/{order_id}/product/{product_id}/order-detail"
+            get: "/v1/order-detail/{order_detail_id}"
             
         };
     }
     
     rpc Product(ProductRequest) returns (typespb.v1.Product) {
         option (google.api.http) = {
-            get: "/v1/order/{order_id}/product/{product_id}/order-detail/product"
+            get: "/v1/order-detail/{order_detail_id}/product"
             
         };
     }
     
     rpc Update(UpdateRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
-            put: "/v1/order/{order_id}/product/{product_id}/order-detail"
+            put: "/v1/order-detail/{order_detail_id}"
             body: "*"
             
         };
@@ -66,47 +67,39 @@ service OrderDetailService {
 }
 
 message DeleteRequest { 
-    int32 order_id = 1;
-    int32 product_id = 2;
+    google.protobuf.Int64Value order_detail_id = 1;
 }
 
 message InsertRequest { 
-    float discount = 1;
-    int32 order_id = 2;
-    int32 product_id = 3;
-    int32 quantity = 4;
-    float unit_price = 5;
+    google.protobuf.Int64Value order_detail_id = 1;
+    google.protobuf.Int64Value order_id = 2;
+    google.protobuf.Int64Value product_id = 3;
+    google.protobuf.Int64Value quantity = 4;
 }
 
 message OrderRequest { 
-    int32 order_id = 1;
-    int32 product_id = 2;
+    google.protobuf.Int64Value order_detail_id = 1;
 }
 
-message OrderDetailByOrderIDProductIDRequest { 
-    int32 order_id = 1;
-    int32 product_id = 2;
+message OrderDetailByOrderDetailIDRequest { 
+    google.protobuf.Int64Value order_detail_id = 1;
 }
 
 message ProductRequest { 
-    int32 order_id = 1;
-    int32 product_id = 2;
+    google.protobuf.Int64Value order_detail_id = 1;
 }
 
 message UpdateRequest { 
-    float discount = 1;
     // Output only.
-    int32 order_id = 2;
-    // Output only.
-    int32 product_id = 3;
-    int32 quantity = 4;
-    float unit_price = 5;
+    google.protobuf.Int64Value order_detail_id = 1;
+    google.protobuf.Int64Value order_id = 2;
+    google.protobuf.Int64Value product_id = 3;
+    google.protobuf.Int64Value quantity = 4;
 }
 
 message UpsertRequest { 
-    float discount = 1;
-    int32 order_id = 2;
-    int32 product_id = 3;
-    int32 quantity = 4;
-    float unit_price = 5;
+    google.protobuf.Int64Value order_detail_id = 1;
+    google.protobuf.Int64Value order_id = 2;
+    google.protobuf.Int64Value product_id = 3;
+    google.protobuf.Int64Value quantity = 4;
 }

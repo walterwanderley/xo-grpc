@@ -27,7 +27,7 @@ func NewShipperService(logger *zap.Logger, db *sql.DB) pb.ShipperServiceServer {
 }
 
 func (s *ShipperService) Delete(ctx context.Context, req *pb.DeleteRequest) (res *emptypb.Empty, err error) {
-	m, err := models.ShipperByShipperID(ctx, s.db, int16(req.ShipperId))
+	m, err := models.ShipperByShipperID(ctx, s.db, sql.NullInt64{Valid: true, Int64: req.ShipperId.Value})
 	if err != nil {
 		return
 	}
@@ -44,11 +44,15 @@ func (s *ShipperService) Delete(ctx context.Context, req *pb.DeleteRequest) (res
 
 func (s *ShipperService) Insert(ctx context.Context, req *pb.InsertRequest) (res *emptypb.Empty, err error) {
 	var m models.Shipper
-	m.CompanyName = req.GetCompanyName()
 	if v := req.GetPhone(); v != nil {
 		m.Phone = sql.NullString{Valid: true, String: v.Value}
 	}
-	m.ShipperID = int16(req.GetShipperId())
+	if v := req.GetShipperId(); v != nil {
+		m.ShipperID = sql.NullInt64{Valid: true, Int64: v.Value}
+	}
+	if v := req.GetShipperName(); v != nil {
+		m.ShipperName = sql.NullString{Valid: true, String: v.Value}
+	}
 
 	err = m.Insert(ctx, s.db)
 	if err != nil {
@@ -64,7 +68,10 @@ func (s *ShipperService) Insert(ctx context.Context, req *pb.InsertRequest) (res
 
 func (s *ShipperService) ShipperByShipperID(ctx context.Context, req *pb.ShipperByShipperIDRequest) (res *typespb.Shipper, err error) {
 
-	shipperID := int16(req.GetShipperId())
+	var shipperID sql.NullInt64
+	if v := req.GetShipperId(); v != nil {
+		shipperID = sql.NullInt64{Valid: true, Int64: v.Value}
+	}
 
 	result, err := models.ShipperByShipperID(ctx, s.db, shipperID)
 	if err != nil {
@@ -72,8 +79,12 @@ func (s *ShipperService) ShipperByShipperID(ctx context.Context, req *pb.Shipper
 	}
 
 	res = new(typespb.Shipper)
-	res.ShipperId = int32(result.ShipperID)
-	res.CompanyName = result.CompanyName
+	if result.ShipperID.Valid {
+		res.ShipperId = wrapperspb.Int64(result.ShipperID.Int64)
+	}
+	if result.ShipperName.Valid {
+		res.ShipperName = wrapperspb.String(result.ShipperName.String)
+	}
 	if result.Phone.Valid {
 		res.Phone = wrapperspb.String(result.Phone.String)
 	}
@@ -82,15 +93,19 @@ func (s *ShipperService) ShipperByShipperID(ctx context.Context, req *pb.Shipper
 }
 
 func (s *ShipperService) Update(ctx context.Context, req *pb.UpdateRequest) (res *emptypb.Empty, err error) {
-	m, err := models.ShipperByShipperID(ctx, s.db, int16(req.ShipperId))
+	m, err := models.ShipperByShipperID(ctx, s.db, sql.NullInt64{Valid: true, Int64: req.ShipperId.Value})
 	if err != nil {
 		return
 	}
-	m.CompanyName = req.GetCompanyName()
 	if v := req.GetPhone(); v != nil {
 		m.Phone = sql.NullString{Valid: true, String: v.Value}
 	}
-	m.ShipperID = int16(req.GetShipperId())
+	if v := req.GetShipperId(); v != nil {
+		m.ShipperID = sql.NullInt64{Valid: true, Int64: v.Value}
+	}
+	if v := req.GetShipperName(); v != nil {
+		m.ShipperName = sql.NullString{Valid: true, String: v.Value}
+	}
 
 	err = m.Update(ctx, s.db)
 	if err != nil {
@@ -104,11 +119,15 @@ func (s *ShipperService) Update(ctx context.Context, req *pb.UpdateRequest) (res
 
 func (s *ShipperService) Upsert(ctx context.Context, req *pb.UpsertRequest) (res *emptypb.Empty, err error) {
 	var m models.Shipper
-	m.CompanyName = req.GetCompanyName()
 	if v := req.GetPhone(); v != nil {
 		m.Phone = sql.NullString{Valid: true, String: v.Value}
 	}
-	m.ShipperID = int16(req.GetShipperId())
+	if v := req.GetShipperId(); v != nil {
+		m.ShipperID = sql.NullInt64{Valid: true, Int64: v.Value}
+	}
+	if v := req.GetShipperName(); v != nil {
+		m.ShipperName = sql.NullString{Valid: true, String: v.Value}
+	}
 
 	err = m.Upsert(ctx, s.db)
 	if err != nil {

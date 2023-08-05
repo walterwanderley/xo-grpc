@@ -7,34 +7,30 @@ import (
 	"database/sql"
 )
 
-// Product represents a row from 'public.products'.
+// Product represents a row from 'Products'.
 type Product struct {
-	ProductID       int16           `json:"product_id"`        // product_id
-	ProductName     string          `json:"product_name"`      // product_name
-	SupplierID      sql.NullInt64   `json:"supplier_id"`       // supplier_id
-	CategoryID      sql.NullInt64   `json:"category_id"`       // category_id
-	QuantityPerUnit sql.NullString  `json:"quantity_per_unit"` // quantity_per_unit
-	UnitPrice       sql.NullFloat64 `json:"unit_price"`        // unit_price
-	UnitsInStock    sql.NullInt64   `json:"units_in_stock"`    // units_in_stock
-	UnitsOnOrder    sql.NullInt64   `json:"units_on_order"`    // units_on_order
-	ReorderLevel    sql.NullInt64   `json:"reorder_level"`     // reorder_level
-	Discontinued    int             `json:"discontinued"`      // discontinued
+	ProductID   sql.NullInt64   `json:"ProductID"`   // ProductID
+	ProductName sql.NullString  `json:"ProductName"` // ProductName
+	SupplierID  sql.NullInt64   `json:"SupplierID"`  // SupplierID
+	CategoryID  sql.NullInt64   `json:"CategoryID"`  // CategoryID
+	Unit        sql.NullString  `json:"Unit"`        // Unit
+	Price       sql.NullFloat64 `json:"Price"`       // Price
 	// xo fields
 	_exists, _deleted bool
 }
 
-// Exists returns true when the Product exists in the database.
+// Exists returns true when the [Product] exists in the database.
 func (p *Product) Exists() bool {
 	return p._exists
 }
 
-// Deleted returns true when the Product has been marked for deletion from
-// the database.
+// Deleted returns true when the [Product] has been marked for deletion
+// from the database.
 func (p *Product) Deleted() bool {
 	return p._deleted
 }
 
-// Insert inserts the Product to the database.
+// Insert inserts the [Product] to the database.
 func (p *Product) Insert(ctx context.Context, db DB) error {
 	switch {
 	case p._exists: // already exists
@@ -42,23 +38,30 @@ func (p *Product) Insert(ctx context.Context, db DB) error {
 	case p._deleted: // deleted
 		return logerror(&ErrInsertFailed{ErrMarkedForDeletion})
 	}
-	// insert (basic)
-	const sqlstr = `INSERT INTO public.products (` +
-		`product_id, product_name, supplier_id, category_id, quantity_per_unit, unit_price, units_in_stock, units_on_order, reorder_level, discontinued` +
+	// insert (primary key generated and returned by database)
+	const sqlstr = `INSERT INTO Products (` +
+		`ProductID, ProductName, SupplierID, CategoryID, Unit, Price` +
 		`) VALUES (` +
-		`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10` +
+		`$1, $2, $3, $4, $5, $6` +
 		`)`
 	// run
-	logf(sqlstr, p.ProductID, p.ProductName, p.SupplierID, p.CategoryID, p.QuantityPerUnit, p.UnitPrice, p.UnitsInStock, p.UnitsOnOrder, p.ReorderLevel, p.Discontinued)
-	if _, err := db.ExecContext(ctx, sqlstr, p.ProductID, p.ProductName, p.SupplierID, p.CategoryID, p.QuantityPerUnit, p.UnitPrice, p.UnitsInStock, p.UnitsOnOrder, p.ReorderLevel, p.Discontinued); err != nil {
+	logf(sqlstr, p.ProductName, p.SupplierID, p.CategoryID, p.Unit, p.Price)
+	res, err := db.ExecContext(ctx, sqlstr, p.ProductID, p.ProductName, p.SupplierID, p.CategoryID, p.Unit, p.Price)
+	if err != nil {
 		return logerror(err)
 	}
+	// retrieve id
+	id, err := res.LastInsertId()
+	if err != nil {
+		return logerror(err)
+	} // set primary key
+	p.ProductID = sql.NullInt64{Valid: true, Int64: id}
 	// set exists
 	p._exists = true
 	return nil
 }
 
-// Update updates a Product in the database.
+// Update updates a [Product] in the database.
 func (p *Product) Update(ctx context.Context, db DB) error {
 	switch {
 	case !p._exists: // doesn't exist
@@ -66,21 +69,19 @@ func (p *Product) Update(ctx context.Context, db DB) error {
 	case p._deleted: // deleted
 		return logerror(&ErrUpdateFailed{ErrMarkedForDeletion})
 	}
-	// update with composite primary key
-	const sqlstr = `UPDATE public.products SET (` +
-		`product_name, supplier_id, category_id, quantity_per_unit, unit_price, units_in_stock, units_on_order, reorder_level, discontinued` +
-		`) = ( ` +
-		`$1, $2, $3, $4, $5, $6, $7, $8, $9` +
-		`) WHERE product_id = $10`
+	// update with primary key
+	const sqlstr = `UPDATE Products SET ` +
+		`ProductName = $1, SupplierID = $2, CategoryID = $3, Unit = $4, Price = $5 ` +
+		`WHERE ProductID = $6`
 	// run
-	logf(sqlstr, p.ProductName, p.SupplierID, p.CategoryID, p.QuantityPerUnit, p.UnitPrice, p.UnitsInStock, p.UnitsOnOrder, p.ReorderLevel, p.Discontinued, p.ProductID)
-	if _, err := db.ExecContext(ctx, sqlstr, p.ProductName, p.SupplierID, p.CategoryID, p.QuantityPerUnit, p.UnitPrice, p.UnitsInStock, p.UnitsOnOrder, p.ReorderLevel, p.Discontinued, p.ProductID); err != nil {
+	logf(sqlstr, p.ProductName, p.SupplierID, p.CategoryID, p.Unit, p.Price, p.ProductID)
+	if _, err := db.ExecContext(ctx, sqlstr, p.ProductName, p.SupplierID, p.CategoryID, p.Unit, p.Price, p.ProductID); err != nil {
 		return logerror(err)
 	}
 	return nil
 }
 
-// Save saves the Product to the database.
+// Save saves the [Product] to the database.
 func (p *Product) Save(ctx context.Context, db DB) error {
 	if p.Exists() {
 		return p.Update(ctx, db)
@@ -88,35 +89,32 @@ func (p *Product) Save(ctx context.Context, db DB) error {
 	return p.Insert(ctx, db)
 }
 
-// Upsert performs an upsert for Product.
-//
-// NOTE: PostgreSQL 9.5+ only
+// Upsert performs an upsert for [Product].
 func (p *Product) Upsert(ctx context.Context, db DB) error {
 	switch {
 	case p._deleted: // deleted
 		return logerror(&ErrUpsertFailed{ErrMarkedForDeletion})
 	}
 	// upsert
-	const sqlstr = `INSERT INTO public.products (` +
-		`product_id, product_name, supplier_id, category_id, quantity_per_unit, unit_price, units_in_stock, units_on_order, reorder_level, discontinued` +
+	const sqlstr = `INSERT INTO Products (` +
+		`ProductID, ProductName, SupplierID, CategoryID, Unit, Price` +
 		`) VALUES (` +
-		`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10` +
-		`) ON CONFLICT (product_id) DO UPDATE SET (` +
-		`product_id, product_name, supplier_id, category_id, quantity_per_unit, unit_price, units_in_stock, units_on_order, reorder_level, discontinued` +
-		`) = (` +
-		`EXCLUDED.product_id, EXCLUDED.product_name, EXCLUDED.supplier_id, EXCLUDED.category_id, EXCLUDED.quantity_per_unit, EXCLUDED.unit_price, EXCLUDED.units_in_stock, EXCLUDED.units_on_order, EXCLUDED.reorder_level, EXCLUDED.discontinued` +
-		`)`
+		`$1, $2, $3, $4, $5, $6` +
+		`)` +
+		` ON CONFLICT (ProductID) DO ` +
+		`UPDATE SET ` +
+		`ProductName = EXCLUDED.ProductName, SupplierID = EXCLUDED.SupplierID, CategoryID = EXCLUDED.CategoryID, Unit = EXCLUDED.Unit, Price = EXCLUDED.Price `
 	// run
-	logf(sqlstr, p.ProductID, p.ProductName, p.SupplierID, p.CategoryID, p.QuantityPerUnit, p.UnitPrice, p.UnitsInStock, p.UnitsOnOrder, p.ReorderLevel, p.Discontinued)
-	if _, err := db.ExecContext(ctx, sqlstr, p.ProductID, p.ProductName, p.SupplierID, p.CategoryID, p.QuantityPerUnit, p.UnitPrice, p.UnitsInStock, p.UnitsOnOrder, p.ReorderLevel, p.Discontinued); err != nil {
-		return err
+	logf(sqlstr, p.ProductID, p.ProductName, p.SupplierID, p.CategoryID, p.Unit, p.Price)
+	if _, err := db.ExecContext(ctx, sqlstr, p.ProductID, p.ProductName, p.SupplierID, p.CategoryID, p.Unit, p.Price); err != nil {
+		return logerror(err)
 	}
 	// set exists
 	p._exists = true
 	return nil
 }
 
-// Delete deletes the Product from the database.
+// Delete deletes the [Product] from the database.
 func (p *Product) Delete(ctx context.Context, db DB) error {
 	switch {
 	case !p._exists: // doesn't exist
@@ -125,7 +123,8 @@ func (p *Product) Delete(ctx context.Context, db DB) error {
 		return nil
 	}
 	// delete with single primary key
-	const sqlstr = `DELETE FROM public.products WHERE product_id = $1`
+	const sqlstr = `DELETE FROM Products ` +
+		`WHERE ProductID = $1`
 	// run
 	logf(sqlstr, p.ProductID)
 	if _, err := db.ExecContext(ctx, sqlstr, p.ProductID); err != nil {
@@ -136,36 +135,36 @@ func (p *Product) Delete(ctx context.Context, db DB) error {
 	return nil
 }
 
-// ProductByProductID retrieves a row from 'public.products' as a Product.
+// ProductByProductID retrieves a row from 'Products' as a [Product].
 //
-// Generated from index 'products_pkey'.
-func ProductByProductID(ctx context.Context, db DB, productID int16) (*Product, error) {
+// Generated from index 'Products_ProductID_pkey'.
+func ProductByProductID(ctx context.Context, db DB, productID sql.NullInt64) (*Product, error) {
 	// query
 	const sqlstr = `SELECT ` +
-		`product_id, product_name, supplier_id, category_id, quantity_per_unit, unit_price, units_in_stock, units_on_order, reorder_level, discontinued ` +
-		`FROM public.products ` +
-		`WHERE product_id = $1`
+		`ProductID, ProductName, SupplierID, CategoryID, Unit, Price ` +
+		`FROM Products ` +
+		`WHERE ProductID = $1`
 	// run
 	logf(sqlstr, productID)
 	p := Product{
 		_exists: true,
 	}
-	if err := db.QueryRowContext(ctx, sqlstr, productID).Scan(&p.ProductID, &p.ProductName, &p.SupplierID, &p.CategoryID, &p.QuantityPerUnit, &p.UnitPrice, &p.UnitsInStock, &p.UnitsOnOrder, &p.ReorderLevel, &p.Discontinued); err != nil {
+	if err := db.QueryRowContext(ctx, sqlstr, productID).Scan(&p.ProductID, &p.ProductName, &p.SupplierID, &p.CategoryID, &p.Unit, &p.Price); err != nil {
 		return nil, logerror(err)
 	}
 	return &p, nil
 }
 
-// Category returns the Category associated with the Product's CategoryID (category_id).
+// Category returns the Category associated with the [Product]'s (CategoryID).
 //
-// Generated from foreign key 'products_category_id_fkey'.
+// Generated from foreign key 'Products_CategoryID_fkey'.
 func (p *Product) Category(ctx context.Context, db DB) (*Category, error) {
-	return CategoryByCategoryID(ctx, db, int16(p.CategoryID.Int64))
+	return CategoryByCategoryID(ctx, db, p.CategoryID)
 }
 
-// Supplier returns the Supplier associated with the Product's SupplierID (supplier_id).
+// Supplier returns the Supplier associated with the [Product]'s (SupplierID).
 //
-// Generated from foreign key 'products_supplier_id_fkey'.
+// Generated from foreign key 'Products_SupplierID_fkey'.
 func (p *Product) Supplier(ctx context.Context, db DB) (*Supplier, error) {
-	return SupplierBySupplierID(ctx, db, int16(p.SupplierID.Int64))
+	return SupplierBySupplierID(ctx, db, p.SupplierID)
 }

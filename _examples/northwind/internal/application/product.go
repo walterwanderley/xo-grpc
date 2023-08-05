@@ -27,7 +27,7 @@ func NewProductService(logger *zap.Logger, db *sql.DB) pb.ProductServiceServer {
 }
 
 func (s *ProductService) Category(ctx context.Context, req *pb.CategoryRequest) (res *typespb.Category, err error) {
-	m, err := models.ProductByProductID(ctx, s.db, int16(req.ProductId))
+	m, err := models.ProductByProductID(ctx, s.db, sql.NullInt64{Valid: true, Int64: req.ProductId.Value})
 	if err != nil {
 		return
 	}
@@ -38,18 +38,21 @@ func (s *ProductService) Category(ctx context.Context, req *pb.CategoryRequest) 
 	}
 
 	res = new(typespb.Category)
-	res.CategoryId = int32(result.CategoryID)
-	res.CategoryName = result.CategoryName
+	if result.CategoryID.Valid {
+		res.CategoryId = wrapperspb.Int64(result.CategoryID.Int64)
+	}
+	if result.CategoryName.Valid {
+		res.CategoryName = wrapperspb.String(result.CategoryName.String)
+	}
 	if result.Description.Valid {
 		res.Description = wrapperspb.String(result.Description.String)
 	}
-	res.Picture = result.Picture
 
 	return
 }
 
 func (s *ProductService) Delete(ctx context.Context, req *pb.DeleteRequest) (res *emptypb.Empty, err error) {
-	m, err := models.ProductByProductID(ctx, s.db, int16(req.ProductId))
+	m, err := models.ProductByProductID(ctx, s.db, sql.NullInt64{Valid: true, Int64: req.ProductId.Value})
 	if err != nil {
 		return
 	}
@@ -69,26 +72,20 @@ func (s *ProductService) Insert(ctx context.Context, req *pb.InsertRequest) (res
 	if v := req.GetCategoryId(); v != nil {
 		m.CategoryID = sql.NullInt64{Valid: true, Int64: v.Value}
 	}
-	m.Discontinued = int(req.GetDiscontinued())
-	m.ProductID = int16(req.GetProductId())
-	m.ProductName = req.GetProductName()
-	if v := req.GetQuantityPerUnit(); v != nil {
-		m.QuantityPerUnit = sql.NullString{Valid: true, String: v.Value}
+	if v := req.GetPrice(); v != nil {
+		m.Price = sql.NullFloat64{Valid: true, Float64: v.Value}
 	}
-	if v := req.GetReorderLevel(); v != nil {
-		m.ReorderLevel = sql.NullInt64{Valid: true, Int64: v.Value}
+	if v := req.GetProductId(); v != nil {
+		m.ProductID = sql.NullInt64{Valid: true, Int64: v.Value}
+	}
+	if v := req.GetProductName(); v != nil {
+		m.ProductName = sql.NullString{Valid: true, String: v.Value}
 	}
 	if v := req.GetSupplierId(); v != nil {
 		m.SupplierID = sql.NullInt64{Valid: true, Int64: v.Value}
 	}
-	if v := req.GetUnitPrice(); v != nil {
-		m.UnitPrice = sql.NullFloat64{Valid: true, Float64: v.Value}
-	}
-	if v := req.GetUnitsInStock(); v != nil {
-		m.UnitsInStock = sql.NullInt64{Valid: true, Int64: v.Value}
-	}
-	if v := req.GetUnitsOnOrder(); v != nil {
-		m.UnitsOnOrder = sql.NullInt64{Valid: true, Int64: v.Value}
+	if v := req.GetUnit(); v != nil {
+		m.Unit = sql.NullString{Valid: true, String: v.Value}
 	}
 
 	err = m.Insert(ctx, s.db)
@@ -105,7 +102,10 @@ func (s *ProductService) Insert(ctx context.Context, req *pb.InsertRequest) (res
 
 func (s *ProductService) ProductByProductID(ctx context.Context, req *pb.ProductByProductIDRequest) (res *typespb.Product, err error) {
 
-	productID := int16(req.GetProductId())
+	var productID sql.NullInt64
+	if v := req.GetProductId(); v != nil {
+		productID = sql.NullInt64{Valid: true, Int64: v.Value}
+	}
 
 	result, err := models.ProductByProductID(ctx, s.db, productID)
 	if err != nil {
@@ -113,36 +113,30 @@ func (s *ProductService) ProductByProductID(ctx context.Context, req *pb.Product
 	}
 
 	res = new(typespb.Product)
-	res.ProductId = int32(result.ProductID)
-	res.ProductName = result.ProductName
+	if result.ProductID.Valid {
+		res.ProductId = wrapperspb.Int64(result.ProductID.Int64)
+	}
+	if result.ProductName.Valid {
+		res.ProductName = wrapperspb.String(result.ProductName.String)
+	}
 	if result.SupplierID.Valid {
 		res.SupplierId = wrapperspb.Int64(result.SupplierID.Int64)
 	}
 	if result.CategoryID.Valid {
 		res.CategoryId = wrapperspb.Int64(result.CategoryID.Int64)
 	}
-	if result.QuantityPerUnit.Valid {
-		res.QuantityPerUnit = wrapperspb.String(result.QuantityPerUnit.String)
+	if result.Unit.Valid {
+		res.Unit = wrapperspb.String(result.Unit.String)
 	}
-	if result.UnitPrice.Valid {
-		res.UnitPrice = wrapperspb.Double(result.UnitPrice.Float64)
+	if result.Price.Valid {
+		res.Price = wrapperspb.Double(result.Price.Float64)
 	}
-	if result.UnitsInStock.Valid {
-		res.UnitsInStock = wrapperspb.Int64(result.UnitsInStock.Int64)
-	}
-	if result.UnitsOnOrder.Valid {
-		res.UnitsOnOrder = wrapperspb.Int64(result.UnitsOnOrder.Int64)
-	}
-	if result.ReorderLevel.Valid {
-		res.ReorderLevel = wrapperspb.Int64(result.ReorderLevel.Int64)
-	}
-	res.Discontinued = int64(result.Discontinued)
 
 	return
 }
 
 func (s *ProductService) Supplier(ctx context.Context, req *pb.SupplierRequest) (res *typespb.Supplier, err error) {
-	m, err := models.ProductByProductID(ctx, s.db, int16(req.ProductId))
+	m, err := models.ProductByProductID(ctx, s.db, sql.NullInt64{Valid: true, Int64: req.ProductId.Value})
 	if err != nil {
 		return
 	}
@@ -153,22 +147,20 @@ func (s *ProductService) Supplier(ctx context.Context, req *pb.SupplierRequest) 
 	}
 
 	res = new(typespb.Supplier)
-	res.SupplierId = int32(result.SupplierID)
-	res.CompanyName = result.CompanyName
+	if result.SupplierID.Valid {
+		res.SupplierId = wrapperspb.Int64(result.SupplierID.Int64)
+	}
+	if result.SupplierName.Valid {
+		res.SupplierName = wrapperspb.String(result.SupplierName.String)
+	}
 	if result.ContactName.Valid {
 		res.ContactName = wrapperspb.String(result.ContactName.String)
-	}
-	if result.ContactTitle.Valid {
-		res.ContactTitle = wrapperspb.String(result.ContactTitle.String)
 	}
 	if result.Address.Valid {
 		res.Address = wrapperspb.String(result.Address.String)
 	}
 	if result.City.Valid {
 		res.City = wrapperspb.String(result.City.String)
-	}
-	if result.Region.Valid {
-		res.Region = wrapperspb.String(result.Region.String)
 	}
 	if result.PostalCode.Valid {
 		res.PostalCode = wrapperspb.String(result.PostalCode.String)
@@ -179,44 +171,32 @@ func (s *ProductService) Supplier(ctx context.Context, req *pb.SupplierRequest) 
 	if result.Phone.Valid {
 		res.Phone = wrapperspb.String(result.Phone.String)
 	}
-	if result.Fax.Valid {
-		res.Fax = wrapperspb.String(result.Fax.String)
-	}
-	if result.Homepage.Valid {
-		res.Homepage = wrapperspb.String(result.Homepage.String)
-	}
 
 	return
 }
 
 func (s *ProductService) Update(ctx context.Context, req *pb.UpdateRequest) (res *emptypb.Empty, err error) {
-	m, err := models.ProductByProductID(ctx, s.db, int16(req.ProductId))
+	m, err := models.ProductByProductID(ctx, s.db, sql.NullInt64{Valid: true, Int64: req.ProductId.Value})
 	if err != nil {
 		return
 	}
 	if v := req.GetCategoryId(); v != nil {
 		m.CategoryID = sql.NullInt64{Valid: true, Int64: v.Value}
 	}
-	m.Discontinued = int(req.GetDiscontinued())
-	m.ProductID = int16(req.GetProductId())
-	m.ProductName = req.GetProductName()
-	if v := req.GetQuantityPerUnit(); v != nil {
-		m.QuantityPerUnit = sql.NullString{Valid: true, String: v.Value}
+	if v := req.GetPrice(); v != nil {
+		m.Price = sql.NullFloat64{Valid: true, Float64: v.Value}
 	}
-	if v := req.GetReorderLevel(); v != nil {
-		m.ReorderLevel = sql.NullInt64{Valid: true, Int64: v.Value}
+	if v := req.GetProductId(); v != nil {
+		m.ProductID = sql.NullInt64{Valid: true, Int64: v.Value}
+	}
+	if v := req.GetProductName(); v != nil {
+		m.ProductName = sql.NullString{Valid: true, String: v.Value}
 	}
 	if v := req.GetSupplierId(); v != nil {
 		m.SupplierID = sql.NullInt64{Valid: true, Int64: v.Value}
 	}
-	if v := req.GetUnitPrice(); v != nil {
-		m.UnitPrice = sql.NullFloat64{Valid: true, Float64: v.Value}
-	}
-	if v := req.GetUnitsInStock(); v != nil {
-		m.UnitsInStock = sql.NullInt64{Valid: true, Int64: v.Value}
-	}
-	if v := req.GetUnitsOnOrder(); v != nil {
-		m.UnitsOnOrder = sql.NullInt64{Valid: true, Int64: v.Value}
+	if v := req.GetUnit(); v != nil {
+		m.Unit = sql.NullString{Valid: true, String: v.Value}
 	}
 
 	err = m.Update(ctx, s.db)
@@ -234,26 +214,20 @@ func (s *ProductService) Upsert(ctx context.Context, req *pb.UpsertRequest) (res
 	if v := req.GetCategoryId(); v != nil {
 		m.CategoryID = sql.NullInt64{Valid: true, Int64: v.Value}
 	}
-	m.Discontinued = int(req.GetDiscontinued())
-	m.ProductID = int16(req.GetProductId())
-	m.ProductName = req.GetProductName()
-	if v := req.GetQuantityPerUnit(); v != nil {
-		m.QuantityPerUnit = sql.NullString{Valid: true, String: v.Value}
+	if v := req.GetPrice(); v != nil {
+		m.Price = sql.NullFloat64{Valid: true, Float64: v.Value}
 	}
-	if v := req.GetReorderLevel(); v != nil {
-		m.ReorderLevel = sql.NullInt64{Valid: true, Int64: v.Value}
+	if v := req.GetProductId(); v != nil {
+		m.ProductID = sql.NullInt64{Valid: true, Int64: v.Value}
+	}
+	if v := req.GetProductName(); v != nil {
+		m.ProductName = sql.NullString{Valid: true, String: v.Value}
 	}
 	if v := req.GetSupplierId(); v != nil {
 		m.SupplierID = sql.NullInt64{Valid: true, Int64: v.Value}
 	}
-	if v := req.GetUnitPrice(); v != nil {
-		m.UnitPrice = sql.NullFloat64{Valid: true, Float64: v.Value}
-	}
-	if v := req.GetUnitsInStock(); v != nil {
-		m.UnitsInStock = sql.NullInt64{Valid: true, Int64: v.Value}
-	}
-	if v := req.GetUnitsOnOrder(); v != nil {
-		m.UnitsOnOrder = sql.NullInt64{Valid: true, Int64: v.Value}
+	if v := req.GetUnit(); v != nil {
+		m.Unit = sql.NullString{Valid: true, String: v.Value}
 	}
 
 	err = m.Upsert(ctx, s.db)

@@ -28,7 +28,10 @@ func NewCustomerService(logger *zap.Logger, db *sql.DB) pb.CustomerServiceServer
 
 func (s *CustomerService) CustomerByCustomerID(ctx context.Context, req *pb.CustomerByCustomerIDRequest) (res *typespb.Customer, err error) {
 
-	customerID := req.GetCustomerId()
+	var customerID sql.NullInt64
+	if v := req.GetCustomerId(); v != nil {
+		customerID = sql.NullInt64{Valid: true, Int64: v.Value}
+	}
 
 	result, err := models.CustomerByCustomerID(ctx, s.db, customerID)
 	if err != nil {
@@ -36,13 +39,14 @@ func (s *CustomerService) CustomerByCustomerID(ctx context.Context, req *pb.Cust
 	}
 
 	res = new(typespb.Customer)
-	res.CustomerId = result.CustomerID
-	res.CompanyName = result.CompanyName
+	if result.CustomerID.Valid {
+		res.CustomerId = wrapperspb.Int64(result.CustomerID.Int64)
+	}
+	if result.CustomerName.Valid {
+		res.CustomerName = wrapperspb.String(result.CustomerName.String)
+	}
 	if result.ContactName.Valid {
 		res.ContactName = wrapperspb.String(result.ContactName.String)
-	}
-	if result.ContactTitle.Valid {
-		res.ContactTitle = wrapperspb.String(result.ContactTitle.String)
 	}
 	if result.Address.Valid {
 		res.Address = wrapperspb.String(result.Address.String)
@@ -50,27 +54,18 @@ func (s *CustomerService) CustomerByCustomerID(ctx context.Context, req *pb.Cust
 	if result.City.Valid {
 		res.City = wrapperspb.String(result.City.String)
 	}
-	if result.Region.Valid {
-		res.Region = wrapperspb.String(result.Region.String)
-	}
 	if result.PostalCode.Valid {
 		res.PostalCode = wrapperspb.String(result.PostalCode.String)
 	}
 	if result.Country.Valid {
 		res.Country = wrapperspb.String(result.Country.String)
 	}
-	if result.Phone.Valid {
-		res.Phone = wrapperspb.String(result.Phone.String)
-	}
-	if result.Fax.Valid {
-		res.Fax = wrapperspb.String(result.Fax.String)
-	}
 
 	return
 }
 
 func (s *CustomerService) Delete(ctx context.Context, req *pb.DeleteRequest) (res *emptypb.Empty, err error) {
-	m, err := models.CustomerByCustomerID(ctx, s.db, req.CustomerId)
+	m, err := models.CustomerByCustomerID(ctx, s.db, sql.NullInt64{Valid: true, Int64: req.CustomerId.Value})
 	if err != nil {
 		return
 	}
@@ -93,28 +88,20 @@ func (s *CustomerService) Insert(ctx context.Context, req *pb.InsertRequest) (re
 	if v := req.GetCity(); v != nil {
 		m.City = sql.NullString{Valid: true, String: v.Value}
 	}
-	m.CompanyName = req.GetCompanyName()
 	if v := req.GetContactName(); v != nil {
 		m.ContactName = sql.NullString{Valid: true, String: v.Value}
-	}
-	if v := req.GetContactTitle(); v != nil {
-		m.ContactTitle = sql.NullString{Valid: true, String: v.Value}
 	}
 	if v := req.GetCountry(); v != nil {
 		m.Country = sql.NullString{Valid: true, String: v.Value}
 	}
-	m.CustomerID = req.GetCustomerId()
-	if v := req.GetFax(); v != nil {
-		m.Fax = sql.NullString{Valid: true, String: v.Value}
+	if v := req.GetCustomerId(); v != nil {
+		m.CustomerID = sql.NullInt64{Valid: true, Int64: v.Value}
 	}
-	if v := req.GetPhone(); v != nil {
-		m.Phone = sql.NullString{Valid: true, String: v.Value}
+	if v := req.GetCustomerName(); v != nil {
+		m.CustomerName = sql.NullString{Valid: true, String: v.Value}
 	}
 	if v := req.GetPostalCode(); v != nil {
 		m.PostalCode = sql.NullString{Valid: true, String: v.Value}
-	}
-	if v := req.GetRegion(); v != nil {
-		m.Region = sql.NullString{Valid: true, String: v.Value}
 	}
 
 	err = m.Insert(ctx, s.db)
@@ -130,7 +117,7 @@ func (s *CustomerService) Insert(ctx context.Context, req *pb.InsertRequest) (re
 }
 
 func (s *CustomerService) Update(ctx context.Context, req *pb.UpdateRequest) (res *emptypb.Empty, err error) {
-	m, err := models.CustomerByCustomerID(ctx, s.db, req.CustomerId)
+	m, err := models.CustomerByCustomerID(ctx, s.db, sql.NullInt64{Valid: true, Int64: req.CustomerId.Value})
 	if err != nil {
 		return
 	}
@@ -140,28 +127,20 @@ func (s *CustomerService) Update(ctx context.Context, req *pb.UpdateRequest) (re
 	if v := req.GetCity(); v != nil {
 		m.City = sql.NullString{Valid: true, String: v.Value}
 	}
-	m.CompanyName = req.GetCompanyName()
 	if v := req.GetContactName(); v != nil {
 		m.ContactName = sql.NullString{Valid: true, String: v.Value}
-	}
-	if v := req.GetContactTitle(); v != nil {
-		m.ContactTitle = sql.NullString{Valid: true, String: v.Value}
 	}
 	if v := req.GetCountry(); v != nil {
 		m.Country = sql.NullString{Valid: true, String: v.Value}
 	}
-	m.CustomerID = req.GetCustomerId()
-	if v := req.GetFax(); v != nil {
-		m.Fax = sql.NullString{Valid: true, String: v.Value}
+	if v := req.GetCustomerId(); v != nil {
+		m.CustomerID = sql.NullInt64{Valid: true, Int64: v.Value}
 	}
-	if v := req.GetPhone(); v != nil {
-		m.Phone = sql.NullString{Valid: true, String: v.Value}
+	if v := req.GetCustomerName(); v != nil {
+		m.CustomerName = sql.NullString{Valid: true, String: v.Value}
 	}
 	if v := req.GetPostalCode(); v != nil {
 		m.PostalCode = sql.NullString{Valid: true, String: v.Value}
-	}
-	if v := req.GetRegion(); v != nil {
-		m.Region = sql.NullString{Valid: true, String: v.Value}
 	}
 
 	err = m.Update(ctx, s.db)
@@ -182,28 +161,20 @@ func (s *CustomerService) Upsert(ctx context.Context, req *pb.UpsertRequest) (re
 	if v := req.GetCity(); v != nil {
 		m.City = sql.NullString{Valid: true, String: v.Value}
 	}
-	m.CompanyName = req.GetCompanyName()
 	if v := req.GetContactName(); v != nil {
 		m.ContactName = sql.NullString{Valid: true, String: v.Value}
-	}
-	if v := req.GetContactTitle(); v != nil {
-		m.ContactTitle = sql.NullString{Valid: true, String: v.Value}
 	}
 	if v := req.GetCountry(); v != nil {
 		m.Country = sql.NullString{Valid: true, String: v.Value}
 	}
-	m.CustomerID = req.GetCustomerId()
-	if v := req.GetFax(); v != nil {
-		m.Fax = sql.NullString{Valid: true, String: v.Value}
+	if v := req.GetCustomerId(); v != nil {
+		m.CustomerID = sql.NullInt64{Valid: true, Int64: v.Value}
 	}
-	if v := req.GetPhone(); v != nil {
-		m.Phone = sql.NullString{Valid: true, String: v.Value}
+	if v := req.GetCustomerName(); v != nil {
+		m.CustomerName = sql.NullString{Valid: true, String: v.Value}
 	}
 	if v := req.GetPostalCode(); v != nil {
 		m.PostalCode = sql.NullString{Valid: true, String: v.Value}
-	}
-	if v := req.GetRegion(); v != nil {
-		m.Region = sql.NullString{Valid: true, String: v.Value}
 	}
 
 	err = m.Upsert(ctx, s.db)

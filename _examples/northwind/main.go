@@ -19,7 +19,7 @@ import (
 	"go.uber.org/zap/zapcore"
 
 	// database driver
-	_ "github.com/jackc/pgx/v4/stdlib"
+	_ "github.com/mattn/go-sqlite3"
 
 	"northwind/internal/models"
 	"northwind/internal/server"
@@ -66,7 +66,7 @@ func run(cfg server.Config, log *zap.Logger) error {
 	}
 	log.Info("startup", zap.Int("GOMAXPROCS", runtime.GOMAXPROCS(0)))
 
-	db, err := sql.Open("pgx", dbURL)
+	db, err := sql.Open("sqlite3", dbURL)
 	if err != nil {
 		log.Fatal("failed to open DB", zap.Error(err))
 	}

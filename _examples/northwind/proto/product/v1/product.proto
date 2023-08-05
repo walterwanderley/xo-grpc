@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package product.v1;
 
-option go_package = "northwind/proto/product/v1";
+option go_package = "northwind/api/product/v1";
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
@@ -67,57 +67,45 @@ service ProductService {
 }
 
 message CategoryRequest { 
-    int32 product_id = 1;
+    google.protobuf.Int64Value product_id = 1;
 }
 
 message DeleteRequest { 
-    int32 product_id = 1;
+    google.protobuf.Int64Value product_id = 1;
 }
 
 message InsertRequest { 
     google.protobuf.Int64Value category_id = 1;
-    int64 discontinued = 2;
-    int32 product_id = 3;
-    string product_name = 4;
-    google.protobuf.StringValue quantity_per_unit = 5;
-    google.protobuf.Int64Value reorder_level = 6;
-    google.protobuf.Int64Value supplier_id = 7;
-    google.protobuf.DoubleValue unit_price = 8;
-    google.protobuf.Int64Value units_in_stock = 9;
-    google.protobuf.Int64Value units_on_order = 10;
+    google.protobuf.DoubleValue price = 2;
+    google.protobuf.Int64Value product_id = 3;
+    google.protobuf.StringValue product_name = 4;
+    google.protobuf.Int64Value supplier_id = 5;
+    google.protobuf.StringValue unit = 6;
 }
 
 message ProductByProductIDRequest { 
-    int32 product_id = 1;
+    google.protobuf.Int64Value product_id = 1;
 }
 
 message SupplierRequest { 
-    int32 product_id = 1;
+    google.protobuf.Int64Value product_id = 1;
 }
 
 message UpdateRequest { 
     google.protobuf.Int64Value category_id = 1;
-    int64 discontinued = 2;
+    google.protobuf.DoubleValue price = 2;
     // Output only.
-    int32 product_id = 3;
-    string product_name = 4;
-    google.protobuf.StringValue quantity_per_unit = 5;
-    google.protobuf.Int64Value reorder_level = 6;
-    google.protobuf.Int64Value supplier_id = 7;
-    google.protobuf.DoubleValue unit_price = 8;
-    google.protobuf.Int64Value units_in_stock = 9;
-    google.protobuf.Int64Value units_on_order = 10;
+    google.protobuf.Int64Value product_id = 3;
+    google.protobuf.StringValue product_name = 4;
+    google.protobuf.Int64Value supplier_id = 5;
+    google.protobuf.StringValue unit = 6;
 }
 
 message UpsertRequest { 
     google.protobuf.Int64Value category_id = 1;
-    int64 discontinued = 2;
-    int32 product_id = 3;
-    string product_name = 4;
-    google.protobuf.StringValue quantity_per_unit = 5;
-    google.protobuf.Int64Value reorder_level = 6;
-    google.protobuf.Int64Value supplier_id = 7;
-    google.protobuf.DoubleValue unit_price = 8;
-    google.protobuf.Int64Value units_in_stock = 9;
-    google.protobuf.Int64Value units_on_order = 10;
+    google.protobuf.DoubleValue price = 2;
+    google.protobuf.Int64Value product_id = 3;
+    google.protobuf.StringValue product_name = 4;
+    google.protobuf.Int64Value supplier_id = 5;
+    google.protobuf.StringValue unit = 6;
 }

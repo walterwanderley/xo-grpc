@@ -42,24 +42,14 @@ func request_OrderDetailService_Delete_0(ctx context.Context, marshaler runtime.
 		_   = err
 	)
 
-	val, ok = pathParams["order_id"]
+	val, ok = pathParams["order_detail_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "order_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "order_detail_id")
 	}
 
-	protoReq.OrderId, err = runtime.Int32(val)
+	protoReq.OrderDetailId, err = runtime.Int64Value(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "order_id", err)
-	}
-
-	val, ok = pathParams["product_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "product_id")
-	}
-
-	protoReq.ProductId, err = runtime.Int32(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "product_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "order_detail_id", err)
 	}
 
 	msg, err := client.Delete(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -78,24 +68,14 @@ func local_request_OrderDetailService_Delete_0(ctx context.Context, marshaler ru
 		_   = err
 	)
 
-	val, ok = pathParams["order_id"]
+	val, ok = pathParams["order_detail_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "order_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "order_detail_id")
 	}
 
-	protoReq.OrderId, err = runtime.Int32(val)
+	protoReq.OrderDetailId, err = runtime.Int64Value(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "order_id", err)
-	}
-
-	val, ok = pathParams["product_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "product_id")
-	}
-
-	protoReq.ProductId, err = runtime.Int32(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "product_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "order_detail_id", err)
 	}
 
 	msg, err := server.Delete(ctx, &protoReq)
@@ -115,33 +95,6 @@ func request_OrderDetailService_Insert_0(ctx context.Context, marshaler runtime.
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["order_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "order_id")
-	}
-
-	protoReq.OrderId, err = runtime.Int32(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "order_id", err)
-	}
-
-	val, ok = pathParams["product_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "product_id")
-	}
-
-	protoReq.ProductId, err = runtime.Int32(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "product_id", err)
-	}
-
 	msg, err := client.Insert(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
@@ -157,33 +110,6 @@ func local_request_OrderDetailService_Insert_0(ctx context.Context, marshaler ru
 	}
 	if err := marshaler.NewDecoder(newReader()).Decode(&protoReq); err != nil && err != io.EOF {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
-	}
-
-	var (
-		val string
-		ok  bool
-		err error
-		_   = err
-	)
-
-	val, ok = pathParams["order_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "order_id")
-	}
-
-	protoReq.OrderId, err = runtime.Int32(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "order_id", err)
-	}
-
-	val, ok = pathParams["product_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "product_id")
-	}
-
-	protoReq.ProductId, err = runtime.Int32(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "product_id", err)
 	}
 
 	msg, err := server.Insert(ctx, &protoReq)
@@ -202,24 +128,14 @@ func request_OrderDetailService_Order_0(ctx context.Context, marshaler runtime.M
 		_   = err
 	)
 
-	val, ok = pathParams["order_id"]
+	val, ok = pathParams["order_detail_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "order_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "order_detail_id")
 	}
 
-	protoReq.OrderId, err = runtime.Int32(val)
+	protoReq.OrderDetailId, err = runtime.Int64Value(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "order_id", err)
-	}
-
-	val, ok = pathParams["product_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "product_id")
-	}
-
-	protoReq.ProductId, err = runtime.Int32(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "product_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "order_detail_id", err)
 	}
 
 	msg, err := client.Order(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -238,24 +154,14 @@ func local_request_OrderDetailService_Order_0(ctx context.Context, marshaler run
 		_   = err
 	)
 
-	val, ok = pathParams["order_id"]
+	val, ok = pathParams["order_detail_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "order_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "order_detail_id")
 	}
 
-	protoReq.OrderId, err = runtime.Int32(val)
+	protoReq.OrderDetailId, err = runtime.Int64Value(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "order_id", err)
-	}
-
-	val, ok = pathParams["product_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "product_id")
-	}
-
-	protoReq.ProductId, err = runtime.Int32(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "product_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "order_detail_id", err)
 	}
 
 	msg, err := server.Order(ctx, &protoReq)
@@ -263,8 +169,8 @@ func local_request_OrderDetailService_Order_0(ctx context.Context, marshaler run
 
 }
 
-func request_OrderDetailService_OrderDetailByOrderIDProductID_0(ctx context.Context, marshaler runtime.Marshaler, client OrderDetailServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OrderDetailByOrderIDProductIDRequest
+func request_OrderDetailService_OrderDetailByOrderDetailID_0(ctx context.Context, marshaler runtime.Marshaler, client OrderDetailServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq OrderDetailByOrderDetailIDRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -274,33 +180,23 @@ func request_OrderDetailService_OrderDetailByOrderIDProductID_0(ctx context.Cont
 		_   = err
 	)
 
-	val, ok = pathParams["order_id"]
+	val, ok = pathParams["order_detail_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "order_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "order_detail_id")
 	}
 
-	protoReq.OrderId, err = runtime.Int32(val)
+	protoReq.OrderDetailId, err = runtime.Int64Value(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "order_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "order_detail_id", err)
 	}
 
-	val, ok = pathParams["product_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "product_id")
-	}
-
-	protoReq.ProductId, err = runtime.Int32(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "product_id", err)
-	}
-
-	msg, err := client.OrderDetailByOrderIDProductID(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.OrderDetailByOrderDetailID(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 
 }
 
-func local_request_OrderDetailService_OrderDetailByOrderIDProductID_0(ctx context.Context, marshaler runtime.Marshaler, server OrderDetailServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
-	var protoReq OrderDetailByOrderIDProductIDRequest
+func local_request_OrderDetailService_OrderDetailByOrderDetailID_0(ctx context.Context, marshaler runtime.Marshaler, server OrderDetailServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var protoReq OrderDetailByOrderDetailIDRequest
 	var metadata runtime.ServerMetadata
 
 	var (
@@ -310,27 +206,17 @@ func local_request_OrderDetailService_OrderDetailByOrderIDProductID_0(ctx contex
 		_   = err
 	)
 
-	val, ok = pathParams["order_id"]
+	val, ok = pathParams["order_detail_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "order_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "order_detail_id")
 	}
 
-	protoReq.OrderId, err = runtime.Int32(val)
+	protoReq.OrderDetailId, err = runtime.Int64Value(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "order_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "order_detail_id", err)
 	}
 
-	val, ok = pathParams["product_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "product_id")
-	}
-
-	protoReq.ProductId, err = runtime.Int32(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "product_id", err)
-	}
-
-	msg, err := server.OrderDetailByOrderIDProductID(ctx, &protoReq)
+	msg, err := server.OrderDetailByOrderDetailID(ctx, &protoReq)
 	return msg, metadata, err
 
 }
@@ -346,24 +232,14 @@ func request_OrderDetailService_Product_0(ctx context.Context, marshaler runtime
 		_   = err
 	)
 
-	val, ok = pathParams["order_id"]
+	val, ok = pathParams["order_detail_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "order_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "order_detail_id")
 	}
 
-	protoReq.OrderId, err = runtime.Int32(val)
+	protoReq.OrderDetailId, err = runtime.Int64Value(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "order_id", err)
-	}
-
-	val, ok = pathParams["product_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "product_id")
-	}
-
-	protoReq.ProductId, err = runtime.Int32(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "product_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "order_detail_id", err)
 	}
 
 	msg, err := client.Product(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -382,24 +258,14 @@ func local_request_OrderDetailService_Product_0(ctx context.Context, marshaler r
 		_   = err
 	)
 
-	val, ok = pathParams["order_id"]
+	val, ok = pathParams["order_detail_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "order_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "order_detail_id")
 	}
 
-	protoReq.OrderId, err = runtime.Int32(val)
+	protoReq.OrderDetailId, err = runtime.Int64Value(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "order_id", err)
-	}
-
-	val, ok = pathParams["product_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "product_id")
-	}
-
-	protoReq.ProductId, err = runtime.Int32(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "product_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "order_detail_id", err)
 	}
 
 	msg, err := server.Product(ctx, &protoReq)
@@ -426,24 +292,14 @@ func request_OrderDetailService_Update_0(ctx context.Context, marshaler runtime.
 		_   = err
 	)
 
-	val, ok = pathParams["order_id"]
+	val, ok = pathParams["order_detail_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "order_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "order_detail_id")
 	}
 
-	protoReq.OrderId, err = runtime.Int32(val)
+	protoReq.OrderDetailId, err = runtime.Int64Value(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "order_id", err)
-	}
-
-	val, ok = pathParams["product_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "product_id")
-	}
-
-	protoReq.ProductId, err = runtime.Int32(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "product_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "order_detail_id", err)
 	}
 
 	msg, err := client.Update(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
@@ -470,24 +326,14 @@ func local_request_OrderDetailService_Update_0(ctx context.Context, marshaler ru
 		_   = err
 	)
 
-	val, ok = pathParams["order_id"]
+	val, ok = pathParams["order_detail_id"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "order_id")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "order_detail_id")
 	}
 
-	protoReq.OrderId, err = runtime.Int32(val)
+	protoReq.OrderDetailId, err = runtime.Int64Value(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "order_id", err)
-	}
-
-	val, ok = pathParams["product_id"]
-	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "product_id")
-	}
-
-	protoReq.ProductId, err = runtime.Int32(val)
-	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "product_id", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "order_detail_id", err)
 	}
 
 	msg, err := server.Update(ctx, &protoReq)
@@ -542,20 +388,21 @@ func RegisterOrderDetailServiceHandlerServer(ctx context.Context, mux *runtime.S
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
-		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Delete", runtime.WithHTTPPathPattern("/v1/order/{order_id}/product/{product_id}/order-detail"))
+		var annotatedContext context.Context
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Delete", runtime.WithHTTPPathPattern("/v1/order-detail/{order_detail_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_OrderDetailService_Delete_0(ctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_OrderDetailService_Delete_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
-		ctx = runtime.NewServerMetadataContext(ctx, md)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_OrderDetailService_Delete_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_OrderDetailService_Delete_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -566,20 +413,21 @@ func RegisterOrderDetailServiceHandlerServer(ctx context.Context, mux *runtime.S
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
-		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Insert", runtime.WithHTTPPathPattern("/v1/order/{order_id}/product/{product_id}/order-detail"))
+		var annotatedContext context.Context
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Insert", runtime.WithHTTPPathPattern("/v1/order-detail"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_OrderDetailService_Insert_0(ctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_OrderDetailService_Insert_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
-		ctx = runtime.NewServerMetadataContext(ctx, md)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_OrderDetailService_Insert_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_OrderDetailService_Insert_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -590,44 +438,46 @@ func RegisterOrderDetailServiceHandlerServer(ctx context.Context, mux *runtime.S
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
-		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Order", runtime.WithHTTPPathPattern("/v1/order/{order_id}/product/{product_id}/order-detail/order"))
+		var annotatedContext context.Context
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Order", runtime.WithHTTPPathPattern("/v1/order-detail/{order_detail_id}/order"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_OrderDetailService_Order_0(ctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_OrderDetailService_Order_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
-		ctx = runtime.NewServerMetadataContext(ctx, md)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_OrderDetailService_Order_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_OrderDetailService_Order_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_OrderDetailService_OrderDetailByOrderIDProductID_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_OrderDetailService_OrderDetailByOrderDetailID_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
-		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/OrderDetailByOrderIDProductID", runtime.WithHTTPPathPattern("/v1/order/{order_id}/product/{product_id}/order-detail"))
+		var annotatedContext context.Context
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/OrderDetailByOrderDetailID", runtime.WithHTTPPathPattern("/v1/order-detail/{order_detail_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_OrderDetailService_OrderDetailByOrderIDProductID_0(ctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_OrderDetailService_OrderDetailByOrderDetailID_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
-		ctx = runtime.NewServerMetadataContext(ctx, md)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_OrderDetailService_OrderDetailByOrderIDProductID_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_OrderDetailService_OrderDetailByOrderDetailID_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -638,20 +488,21 @@ func RegisterOrderDetailServiceHandlerServer(ctx context.Context, mux *runtime.S
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
-		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Product", runtime.WithHTTPPathPattern("/v1/order/{order_id}/product/{product_id}/order-detail/product"))
+		var annotatedContext context.Context
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Product", runtime.WithHTTPPathPattern("/v1/order-detail/{order_detail_id}/product"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_OrderDetailService_Product_0(ctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_OrderDetailService_Product_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
-		ctx = runtime.NewServerMetadataContext(ctx, md)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_OrderDetailService_Product_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_OrderDetailService_Product_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -662,20 +513,21 @@ func RegisterOrderDetailServiceHandlerServer(ctx context.Context, mux *runtime.S
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
-		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Update", runtime.WithHTTPPathPattern("/v1/order/{order_id}/product/{product_id}/order-detail"))
+		var annotatedContext context.Context
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Update", runtime.WithHTTPPathPattern("/v1/order-detail/{order_detail_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_OrderDetailService_Update_0(ctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_OrderDetailService_Update_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
-		ctx = runtime.NewServerMetadataContext(ctx, md)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_OrderDetailService_Update_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_OrderDetailService_Update_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -686,20 +538,21 @@ func RegisterOrderDetailServiceHandlerServer(ctx context.Context, mux *runtime.S
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
-		ctx, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Upsert", runtime.WithHTTPPathPattern("/v1/order-detail/upsert"))
+		var annotatedContext context.Context
+		annotatedContext, err = runtime.AnnotateIncomingContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Upsert", runtime.WithHTTPPathPattern("/v1/order-detail/upsert"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_OrderDetailService_Upsert_0(ctx, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_OrderDetailService_Upsert_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
-		ctx = runtime.NewServerMetadataContext(ctx, md)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_OrderDetailService_Upsert_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_OrderDetailService_Upsert_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -709,7 +562,7 @@ func RegisterOrderDetailServiceHandlerServer(ctx context.Context, mux *runtime.S
 // RegisterOrderDetailServiceHandlerFromEndpoint is same as RegisterOrderDetailServiceHandler but
 // automatically dials to "endpoint" and closes the connection when "ctx" gets done.
 func RegisterOrderDetailServiceHandlerFromEndpoint(ctx context.Context, mux *runtime.ServeMux, endpoint string, opts []grpc.DialOption) (err error) {
-	conn, err := grpc.Dial(endpoint, opts...)
+	conn, err := grpc.DialContext(ctx, endpoint, opts...)
 	if err != nil {
 		return err
 	}
@@ -749,19 +602,20 @@ func RegisterOrderDetailServiceHandlerClient(ctx context.Context, mux *runtime.S
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
-		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Delete", runtime.WithHTTPPathPattern("/v1/order/{order_id}/product/{product_id}/order-detail"))
+		var annotatedContext context.Context
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Delete", runtime.WithHTTPPathPattern("/v1/order-detail/{order_detail_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_OrderDetailService_Delete_0(ctx, inboundMarshaler, client, req, pathParams)
-		ctx = runtime.NewServerMetadataContext(ctx, md)
+		resp, md, err := request_OrderDetailService_Delete_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_OrderDetailService_Delete_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_OrderDetailService_Delete_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -770,19 +624,20 @@ func RegisterOrderDetailServiceHandlerClient(ctx context.Context, mux *runtime.S
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
-		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Insert", runtime.WithHTTPPathPattern("/v1/order/{order_id}/product/{product_id}/order-detail"))
+		var annotatedContext context.Context
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Insert", runtime.WithHTTPPathPattern("/v1/order-detail"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_OrderDetailService_Insert_0(ctx, inboundMarshaler, client, req, pathParams)
-		ctx = runtime.NewServerMetadataContext(ctx, md)
+		resp, md, err := request_OrderDetailService_Insert_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_OrderDetailService_Insert_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_OrderDetailService_Insert_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -791,40 +646,42 @@ func RegisterOrderDetailServiceHandlerClient(ctx context.Context, mux *runtime.S
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
-		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Order", runtime.WithHTTPPathPattern("/v1/order/{order_id}/product/{product_id}/order-detail/order"))
+		var annotatedContext context.Context
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Order", runtime.WithHTTPPathPattern("/v1/order-detail/{order_detail_id}/order"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_OrderDetailService_Order_0(ctx, inboundMarshaler, client, req, pathParams)
-		ctx = runtime.NewServerMetadataContext(ctx, md)
+		resp, md, err := request_OrderDetailService_Order_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_OrderDetailService_Order_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_OrderDetailService_Order_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
-	mux.Handle("GET", pattern_OrderDetailService_OrderDetailByOrderIDProductID_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle("GET", pattern_OrderDetailService_OrderDetailByOrderDetailID_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
-		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/OrderDetailByOrderIDProductID", runtime.WithHTTPPathPattern("/v1/order/{order_id}/product/{product_id}/order-detail"))
+		var annotatedContext context.Context
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/OrderDetailByOrderDetailID", runtime.WithHTTPPathPattern("/v1/order-detail/{order_detail_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_OrderDetailService_OrderDetailByOrderIDProductID_0(ctx, inboundMarshaler, client, req, pathParams)
-		ctx = runtime.NewServerMetadataContext(ctx, md)
+		resp, md, err := request_OrderDetailService_OrderDetailByOrderDetailID_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_OrderDetailService_OrderDetailByOrderIDProductID_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_OrderDetailService_OrderDetailByOrderDetailID_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -833,19 +690,20 @@ func RegisterOrderDetailServiceHandlerClient(ctx context.Context, mux *runtime.S
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
-		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Product", runtime.WithHTTPPathPattern("/v1/order/{order_id}/product/{product_id}/order-detail/product"))
+		var annotatedContext context.Context
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Product", runtime.WithHTTPPathPattern("/v1/order-detail/{order_detail_id}/product"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_OrderDetailService_Product_0(ctx, inboundMarshaler, client, req, pathParams)
-		ctx = runtime.NewServerMetadataContext(ctx, md)
+		resp, md, err := request_OrderDetailService_Product_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_OrderDetailService_Product_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_OrderDetailService_Product_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -854,19 +712,20 @@ func RegisterOrderDetailServiceHandlerClient(ctx context.Context, mux *runtime.S
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
-		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Update", runtime.WithHTTPPathPattern("/v1/order/{order_id}/product/{product_id}/order-detail"))
+		var annotatedContext context.Context
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Update", runtime.WithHTTPPathPattern("/v1/order-detail/{order_detail_id}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_OrderDetailService_Update_0(ctx, inboundMarshaler, client, req, pathParams)
-		ctx = runtime.NewServerMetadataContext(ctx, md)
+		resp, md, err := request_OrderDetailService_Update_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_OrderDetailService_Update_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_OrderDetailService_Update_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -875,19 +734,20 @@ func RegisterOrderDetailServiceHandlerClient(ctx context.Context, mux *runtime.S
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
 		var err error
-		ctx, err = runtime.AnnotateContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Upsert", runtime.WithHTTPPathPattern("/v1/order-detail/upsert"))
+		var annotatedContext context.Context
+		annotatedContext, err = runtime.AnnotateContext(ctx, mux, req, "/order_detail.v1.OrderDetailService/Upsert", runtime.WithHTTPPathPattern("/v1/order-detail/upsert"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_OrderDetailService_Upsert_0(ctx, inboundMarshaler, client, req, pathParams)
-		ctx = runtime.NewServerMetadataContext(ctx, md)
+		resp, md, err := request_OrderDetailService_Upsert_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
-			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
 
-		forward_OrderDetailService_Upsert_0(ctx, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_OrderDetailService_Upsert_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 
 	})
 
@@ -895,17 +755,17 @@ func RegisterOrderDetailServiceHandlerClient(ctx context.Context, mux *runtime.S
 }
 
 var (
-	pattern_OrderDetailService_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "order", "order_id", "product", "product_id", "order-detail"}, ""))
+	pattern_OrderDetailService_Delete_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "order-detail", "order_detail_id"}, ""))
 
-	pattern_OrderDetailService_Insert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "order", "order_id", "product", "product_id", "order-detail"}, ""))
+	pattern_OrderDetailService_Insert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1}, []string{"v1", "order-detail"}, ""))
 
-	pattern_OrderDetailService_Order_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 2, 1}, []string{"v1", "order", "order_id", "product", "product_id", "order-detail"}, ""))
+	pattern_OrderDetailService_Order_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"v1", "order-detail", "order_detail_id", "order"}, ""))
 
-	pattern_OrderDetailService_OrderDetailByOrderIDProductID_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "order", "order_id", "product", "product_id", "order-detail"}, ""))
+	pattern_OrderDetailService_OrderDetailByOrderDetailID_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "order-detail", "order_detail_id"}, ""))
 
-	pattern_OrderDetailService_Product_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 2, 3}, []string{"v1", "order", "order_id", "product", "product_id", "order-detail"}, ""))
+	pattern_OrderDetailService_Product_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3}, []string{"v1", "order-detail", "order_detail_id", "product"}, ""))
 
-	pattern_OrderDetailService_Update_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "order", "order_id", "product", "product_id", "order-detail"}, ""))
+	pattern_OrderDetailService_Update_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2}, []string{"v1", "order-detail", "order_detail_id"}, ""))
 
 	pattern_OrderDetailService_Upsert_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "order-detail", "upsert"}, ""))
 )
@@ -917,7 +777,7 @@ var (
 
 	forward_OrderDetailService_Order_0 = runtime.ForwardResponseMessage
 
-	forward_OrderDetailService_OrderDetailByOrderIDProductID_0 = runtime.ForwardResponseMessage
+	forward_OrderDetailService_OrderDetailByOrderDetailID_0 = runtime.ForwardResponseMessage
 
 	forward_OrderDetailService_Product_0 = runtime.ForwardResponseMessage
 

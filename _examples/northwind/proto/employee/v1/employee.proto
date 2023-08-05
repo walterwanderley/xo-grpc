@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package employee.v1;
 
-option go_package = "northwind/proto/employee/v1";
+option go_package = "northwind/api/employee/v1";
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
@@ -16,13 +16,6 @@ service EmployeeService {
     rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             delete: "/v1/employee/{employee_id}"
-            
-        };
-    }
-    
-    rpc Employee(EmployeeRequest) returns (typespb.v1.Employee) {
-        option (google.api.http) = {
-            get: "/v1/employee/{employee_id}/employee"
             
         };
     }
@@ -61,77 +54,37 @@ service EmployeeService {
 }
 
 message DeleteRequest { 
-    int32 employee_id = 1;
-}
-
-message EmployeeRequest { 
-    int32 employee_id = 1;
+    google.protobuf.Int64Value employee_id = 1;
 }
 
 message EmployeeByEmployeeIDRequest { 
-    int32 employee_id = 1;
+    google.protobuf.Int64Value employee_id = 1;
 }
 
 message InsertRequest { 
-    google.protobuf.StringValue address = 1;
-    google.protobuf.Timestamp birth_date = 2;
-    google.protobuf.StringValue city = 3;
-    google.protobuf.StringValue country = 4;
-    int32 employee_id = 5;
-    google.protobuf.StringValue extension = 6;
-    string first_name = 7;
-    google.protobuf.Timestamp hire_date = 8;
-    google.protobuf.StringValue home_phone = 9;
-    string last_name = 10;
-    google.protobuf.StringValue notes = 11;
-    bytes photo = 12;
-    google.protobuf.StringValue photo_path = 13;
-    google.protobuf.StringValue postal_code = 14;
-    google.protobuf.StringValue region = 15;
-    google.protobuf.Int64Value reports_to = 16;
-    google.protobuf.StringValue title = 17;
-    google.protobuf.StringValue title_of_courtesy = 18;
+    google.protobuf.Timestamp birth_date = 1;
+    google.protobuf.Int64Value employee_id = 2;
+    google.protobuf.StringValue first_name = 3;
+    google.protobuf.StringValue last_name = 4;
+    google.protobuf.StringValue notes = 5;
+    google.protobuf.StringValue photo = 6;
 }
 
 message UpdateRequest { 
-    google.protobuf.StringValue address = 1;
-    google.protobuf.Timestamp birth_date = 2;
-    google.protobuf.StringValue city = 3;
-    google.protobuf.StringValue country = 4;
+    google.protobuf.Timestamp birth_date = 1;
     // Output only.
-    int32 employee_id = 5;
-    google.protobuf.StringValue extension = 6;
-    string first_name = 7;
-    google.protobuf.Timestamp hire_date = 8;
-    google.protobuf.StringValue home_phone = 9;
-    string last_name = 10;
-    google.protobuf.StringValue notes = 11;
-    bytes photo = 12;
-    google.protobuf.StringValue photo_path = 13;
-    google.protobuf.StringValue postal_code = 14;
-    google.protobuf.StringValue region = 15;
-    google.protobuf.Int64Value reports_to = 16;
-    google.protobuf.StringValue title = 17;
-    google.protobuf.StringValue title_of_courtesy = 18;
+    google.protobuf.Int64Value employee_id = 2;
+    google.protobuf.StringValue first_name = 3;
+    google.protobuf.StringValue last_name = 4;
+    google.protobuf.StringValue notes = 5;
+    google.protobuf.StringValue photo = 6;
 }
 
 message UpsertRequest { 
-    google.protobuf.StringValue address = 1;
-    google.protobuf.Timestamp birth_date = 2;
-    google.protobuf.StringValue city = 3;
-    google.protobuf.StringValue country = 4;
-    int32 employee_id = 5;
-    google.protobuf.StringValue extension = 6;
-    string first_name = 7;
-    google.protobuf.Timestamp hire_date = 8;
-    google.protobuf.StringValue home_phone = 9;
-    string last_name = 10;
-    google.protobuf.StringValue notes = 11;
-    bytes photo = 12;
-    google.protobuf.StringValue photo_path = 13;
-    google.protobuf.StringValue postal_code = 14;
-    google.protobuf.StringValue region = 15;
-    google.protobuf.Int64Value reports_to = 16;
-    google.protobuf.StringValue title = 17;
-    google.protobuf.StringValue title_of_courtesy = 18;
+    google.protobuf.Timestamp birth_date = 1;
+    google.protobuf.Int64Value employee_id = 2;
+    google.protobuf.StringValue first_name = 3;
+    google.protobuf.StringValue last_name = 4;
+    google.protobuf.StringValue notes = 5;
+    google.protobuf.StringValue photo = 6;
 }

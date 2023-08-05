@@ -17,16 +17,7 @@
       "name": "CustomerService"
     },
     {
-      "name": "CustomerCustomerDemoService"
-    },
-    {
-      "name": "CustomerDemographicService"
-    },
-    {
       "name": "EmployeeService"
-    },
-    {
-      "name": "EmployeeTerritoryService"
     },
     {
       "name": "OrderService"
@@ -38,19 +29,10 @@
       "name": "ProductService"
     },
     {
-      "name": "RegionService"
-    },
-    {
       "name": "ShipperService"
     },
     {
       "name": "SupplierService"
-    },
-    {
-      "name": "TerritoryService"
-    },
-    {
-      "name": "UsStateService"
     }
   ],
   "consumes": [
@@ -148,8 +130,8 @@
             "name": "categoryId",
             "in": "path",
             "required": true,
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "format": "int64"
           }
         ],
         "tags": [
@@ -178,8 +160,8 @@
             "name": "categoryId",
             "in": "path",
             "required": true,
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "format": "int64"
           }
         ],
         "tags": [
@@ -209,8 +191,8 @@
             "description": "Output only.",
             "in": "path",
             "required": true,
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "format": "int64"
           },
           {
             "name": "body",
@@ -224,10 +206,6 @@
                 },
                 "description": {
                   "type": "string"
-                },
-                "picture": {
-                  "type": "string",
-                  "format": "byte"
                 }
               }
             }
@@ -268,174 +246,6 @@
         ],
         "tags": [
           "CustomerService"
-        ]
-      }
-    },
-    "/v1/customer-demographic": {
-      "post": {
-        "operationId": "CustomerDemographicService_Insert",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/customer_demographicv1InsertRequest"
-            }
-          }
-        ],
-        "tags": [
-          "CustomerDemographicService"
-        ]
-      }
-    },
-    "/v1/customer-demographic/upsert": {
-      "post": {
-        "operationId": "CustomerDemographicService_Upsert",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/customer_demographicv1UpsertRequest"
-            }
-          }
-        ],
-        "tags": [
-          "CustomerDemographicService"
-        ]
-      }
-    },
-    "/v1/customer-demographic/{customerTypeId}": {
-      "get": {
-        "operationId": "CustomerDemographicService_CustomerDemographicByCustomerTypeID",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1CustomerDemographic"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "customerTypeId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "CustomerDemographicService"
-        ]
-      },
-      "delete": {
-        "operationId": "CustomerDemographicService_Delete",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "customerTypeId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "CustomerDemographicService"
-        ]
-      },
-      "put": {
-        "operationId": "CustomerDemographicService_Update",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "customerTypeId",
-            "description": "Output only.",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "customerDesc": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        ],
-        "tags": [
-          "CustomerDemographicService"
         ]
       }
     },
@@ -494,7 +304,8 @@
             "name": "customerId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "format": "int64"
           }
         ],
         "tags": [
@@ -523,7 +334,8 @@
             "name": "customerId",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "format": "int64"
           }
         ],
         "tags": [
@@ -553,7 +365,8 @@
             "description": "Output only.",
             "in": "path",
             "required": true,
-            "type": "string"
+            "type": "string",
+            "format": "int64"
           },
           {
             "name": "body",
@@ -568,28 +381,16 @@
                 "city": {
                   "type": "string"
                 },
-                "companyName": {
-                  "type": "string"
-                },
                 "contactName": {
-                  "type": "string"
-                },
-                "contactTitle": {
                   "type": "string"
                 },
                 "country": {
                   "type": "string"
                 },
-                "fax": {
-                  "type": "string"
-                },
-                "phone": {
+                "customerName": {
                   "type": "string"
                 },
                 "postalCode": {
-                  "type": "string"
-                },
-                "region": {
                   "type": "string"
                 }
               }
@@ -598,184 +399,6 @@
         ],
         "tags": [
           "CustomerService"
-        ]
-      }
-    },
-    "/v1/customer/{customerId}/customer-type/{customerTypeId}/customer-customer-demo": {
-      "get": {
-        "operationId": "CustomerCustomerDemoService_CustomerCustomerDemoByCustomerIDCustomerTypeID",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1CustomerCustomerDemo"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "customerId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "customerTypeId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "CustomerCustomerDemoService"
-        ]
-      },
-      "delete": {
-        "operationId": "CustomerCustomerDemoService_Delete",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "customerId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "customerTypeId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "CustomerCustomerDemoService"
-        ]
-      },
-      "post": {
-        "operationId": "CustomerCustomerDemoService_Insert",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "customerId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "customerTypeId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "CustomerCustomerDemoService"
-        ]
-      }
-    },
-    "/v1/customer/{customerId}/customer-type/{customerTypeId}/customer-customer-demo/customer": {
-      "get": {
-        "operationId": "CustomerCustomerDemoService_Customer",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1Customer"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "customerId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "customerTypeId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "CustomerCustomerDemoService"
-        ]
-      }
-    },
-    "/v1/customer/{customerId}/customer-type/{customerTypeId}/customer-customer-demo/customer-demographic": {
-      "get": {
-        "operationId": "CustomerCustomerDemoService_CustomerDemographic",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1CustomerDemographic"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "customerId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "customerTypeId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "CustomerCustomerDemoService"
         ]
       }
     },
@@ -867,8 +490,8 @@
             "name": "employeeId",
             "in": "path",
             "required": true,
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "format": "int64"
           }
         ],
         "tags": [
@@ -897,8 +520,8 @@
             "name": "employeeId",
             "in": "path",
             "required": true,
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "format": "int64"
           }
         ],
         "tags": [
@@ -928,8 +551,8 @@
             "description": "Output only.",
             "in": "path",
             "required": true,
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "format": "int64"
           },
           {
             "name": "body",
@@ -938,30 +561,11 @@
             "schema": {
               "type": "object",
               "properties": {
-                "address": {
-                  "type": "string"
-                },
                 "birthDate": {
                   "type": "string",
                   "format": "date-time"
                 },
-                "city": {
-                  "type": "string"
-                },
-                "country": {
-                  "type": "string"
-                },
-                "extension": {
-                  "type": "string"
-                },
                 "firstName": {
-                  "type": "string"
-                },
-                "hireDate": {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                "homePhone": {
                   "type": "string"
                 },
                 "lastName": {
@@ -971,26 +575,6 @@
                   "type": "string"
                 },
                 "photo": {
-                  "type": "string",
-                  "format": "byte"
-                },
-                "photoPath": {
-                  "type": "string"
-                },
-                "postalCode": {
-                  "type": "string"
-                },
-                "region": {
-                  "type": "string"
-                },
-                "reportsTo": {
-                  "type": "string",
-                  "format": "int64"
-                },
-                "title": {
-                  "type": "string"
-                },
-                "titleOfCourtesy": {
                   "type": "string"
                 }
               }
@@ -999,220 +583,6 @@
         ],
         "tags": [
           "EmployeeService"
-        ]
-      }
-    },
-    "/v1/employee/{employeeId}/employee": {
-      "get": {
-        "operationId": "EmployeeService_Employee",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1Employee"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "employeeId",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
-        "tags": [
-          "EmployeeService"
-        ]
-      }
-    },
-    "/v1/employee/{employeeId}/territory/{territoryId}/employee-territory": {
-      "get": {
-        "operationId": "EmployeeTerritoryService_EmployeeTerritoryByEmployeeIDTerritoryID",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1EmployeeTerritory"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "employeeId",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "territoryId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "EmployeeTerritoryService"
-        ]
-      },
-      "delete": {
-        "operationId": "EmployeeTerritoryService_Delete",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "employeeId",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "territoryId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "EmployeeTerritoryService"
-        ]
-      },
-      "post": {
-        "operationId": "EmployeeTerritoryService_Insert",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "employeeId",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "territoryId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "EmployeeTerritoryService"
-        ]
-      }
-    },
-    "/v1/employee/{employeeId}/territory/{territoryId}/employee-territory/employee": {
-      "get": {
-        "operationId": "EmployeeTerritoryService_Employee",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1Employee"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "employeeId",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "territoryId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "EmployeeTerritoryService"
-        ]
-      }
-    },
-    "/v1/employee/{employeeId}/territory/{territoryId}/employee-territory/territory": {
-      "get": {
-        "operationId": "EmployeeTerritoryService_Territory",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1Territory"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "employeeId",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "territoryId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "EmployeeTerritoryService"
         ]
       }
     },
@@ -1249,6 +619,39 @@
         ]
       }
     },
+    "/v1/order-detail": {
+      "post": {
+        "operationId": "OrderDetailService_Insert",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/order_detailv1InsertRequest"
+            }
+          }
+        ],
+        "tags": [
+          "OrderDetailService"
+        ]
+      }
+    },
     "/v1/order-detail/upsert": {
       "post": {
         "operationId": "OrderDetailService_Upsert",
@@ -1275,6 +678,182 @@
             "schema": {
               "$ref": "#/definitions/order_detailv1UpsertRequest"
             }
+          }
+        ],
+        "tags": [
+          "OrderDetailService"
+        ]
+      }
+    },
+    "/v1/order-detail/{orderDetailId}": {
+      "get": {
+        "operationId": "OrderDetailService_OrderDetailByOrderDetailID",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1OrderDetail"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "orderDetailId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "OrderDetailService"
+        ]
+      },
+      "delete": {
+        "operationId": "OrderDetailService_Delete",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "orderDetailId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "OrderDetailService"
+        ]
+      },
+      "put": {
+        "operationId": "OrderDetailService_Update",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "orderDetailId",
+            "description": "Output only.",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "orderId": {
+                  "type": "string",
+                  "format": "int64"
+                },
+                "productId": {
+                  "type": "string",
+                  "format": "int64"
+                },
+                "quantity": {
+                  "type": "string",
+                  "format": "int64"
+                }
+              }
+            }
+          }
+        ],
+        "tags": [
+          "OrderDetailService"
+        ]
+      }
+    },
+    "/v1/order-detail/{orderDetailId}/order": {
+      "get": {
+        "operationId": "OrderDetailService_Order",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Order"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "orderDetailId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
+          }
+        ],
+        "tags": [
+          "OrderDetailService"
+        ]
+      }
+    },
+    "/v1/order-detail/{orderDetailId}/product": {
+      "get": {
+        "operationId": "OrderDetailService_Product",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/v1Product"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "orderDetailId",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "format": "int64"
           }
         ],
         "tags": [
@@ -1337,8 +916,8 @@
             "name": "orderId",
             "in": "path",
             "required": true,
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "format": "int64"
           }
         ],
         "tags": [
@@ -1367,8 +946,8 @@
             "name": "orderId",
             "in": "path",
             "required": true,
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "format": "int64"
           }
         ],
         "tags": [
@@ -1398,8 +977,8 @@
             "description": "Output only.",
             "in": "path",
             "required": true,
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "format": "int64"
           },
           {
             "name": "body",
@@ -1409,49 +988,20 @@
               "type": "object",
               "properties": {
                 "customerId": {
-                  "type": "string"
+                  "type": "string",
+                  "format": "int64"
                 },
                 "employeeId": {
                   "type": "string",
                   "format": "int64"
                 },
-                "freight": {
-                  "type": "number",
-                  "format": "double"
-                },
                 "orderDate": {
                   "type": "string",
                   "format": "date-time"
                 },
-                "requiredDate": {
-                  "type": "string",
-                  "format": "date-time"
-                },
-                "shipAddress": {
-                  "type": "string"
-                },
-                "shipCity": {
-                  "type": "string"
-                },
-                "shipCountry": {
-                  "type": "string"
-                },
-                "shipName": {
-                  "type": "string"
-                },
-                "shipPostalCode": {
-                  "type": "string"
-                },
-                "shipRegion": {
-                  "type": "string"
-                },
-                "shipVia": {
+                "shipperId": {
                   "type": "string",
                   "format": "int64"
-                },
-                "shippedDate": {
-                  "type": "string",
-                  "format": "date-time"
                 }
               }
             }
@@ -1484,8 +1034,8 @@
             "name": "orderId",
             "in": "path",
             "required": true,
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "format": "int64"
           }
         ],
         "tags": [
@@ -1515,283 +1065,12 @@
             "name": "orderId",
             "in": "path",
             "required": true,
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "format": "int64"
           }
         ],
         "tags": [
           "OrderService"
-        ]
-      }
-    },
-    "/v1/order/{orderId}/product/{productId}/order-detail": {
-      "get": {
-        "operationId": "OrderDetailService_OrderDetailByOrderIDProductID",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1OrderDetail"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "orderId",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "productId",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
-        "tags": [
-          "OrderDetailService"
-        ]
-      },
-      "delete": {
-        "operationId": "OrderDetailService_Delete",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "orderId",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "productId",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
-        "tags": [
-          "OrderDetailService"
-        ]
-      },
-      "post": {
-        "operationId": "OrderDetailService_Insert",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "orderId",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "productId",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "discount": {
-                  "type": "number",
-                  "format": "float"
-                },
-                "quantity": {
-                  "type": "integer",
-                  "format": "int32"
-                },
-                "unitPrice": {
-                  "type": "number",
-                  "format": "float"
-                }
-              }
-            }
-          }
-        ],
-        "tags": [
-          "OrderDetailService"
-        ]
-      },
-      "put": {
-        "operationId": "OrderDetailService_Update",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "orderId",
-            "description": "Output only.",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "productId",
-            "description": "Output only.",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "discount": {
-                  "type": "number",
-                  "format": "float"
-                },
-                "quantity": {
-                  "type": "integer",
-                  "format": "int32"
-                },
-                "unitPrice": {
-                  "type": "number",
-                  "format": "float"
-                }
-              }
-            }
-          }
-        ],
-        "tags": [
-          "OrderDetailService"
-        ]
-      }
-    },
-    "/v1/order/{orderId}/product/{productId}/order-detail/order": {
-      "get": {
-        "operationId": "OrderDetailService_Order",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1Order"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "orderId",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "productId",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
-        "tags": [
-          "OrderDetailService"
-        ]
-      }
-    },
-    "/v1/order/{orderId}/product/{productId}/order-detail/product": {
-      "get": {
-        "operationId": "OrderDetailService_Product",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1Product"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "orderId",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "productId",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
-        "tags": [
-          "OrderDetailService"
         ]
       }
     },
@@ -1817,8 +1096,8 @@
             "name": "orderId",
             "in": "path",
             "required": true,
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "format": "int64"
           }
         ],
         "tags": [
@@ -1914,8 +1193,8 @@
             "name": "productId",
             "in": "path",
             "required": true,
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "format": "int64"
           }
         ],
         "tags": [
@@ -1944,8 +1223,8 @@
             "name": "productId",
             "in": "path",
             "required": true,
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "format": "int64"
           }
         ],
         "tags": [
@@ -1975,8 +1254,8 @@
             "description": "Output only.",
             "in": "path",
             "required": true,
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "format": "int64"
           },
           {
             "name": "body",
@@ -1989,35 +1268,19 @@
                   "type": "string",
                   "format": "int64"
                 },
-                "discontinued": {
-                  "type": "string",
-                  "format": "int64"
+                "price": {
+                  "type": "number",
+                  "format": "double"
                 },
                 "productName": {
                   "type": "string"
-                },
-                "quantityPerUnit": {
-                  "type": "string"
-                },
-                "reorderLevel": {
-                  "type": "string",
-                  "format": "int64"
                 },
                 "supplierId": {
                   "type": "string",
                   "format": "int64"
                 },
-                "unitPrice": {
-                  "type": "number",
-                  "format": "double"
-                },
-                "unitsInStock": {
-                  "type": "string",
-                  "format": "int64"
-                },
-                "unitsOnOrder": {
-                  "type": "string",
-                  "format": "int64"
+                "unit": {
+                  "type": "string"
                 }
               }
             }
@@ -2050,8 +1313,8 @@
             "name": "productId",
             "in": "path",
             "required": true,
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "format": "int64"
           }
         ],
         "tags": [
@@ -2081,183 +1344,12 @@
             "name": "productId",
             "in": "path",
             "required": true,
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "format": "int64"
           }
         ],
         "tags": [
           "ProductService"
-        ]
-      }
-    },
-    "/v1/region": {
-      "post": {
-        "operationId": "RegionService_Insert",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/regionv1InsertRequest"
-            }
-          }
-        ],
-        "tags": [
-          "RegionService"
-        ]
-      }
-    },
-    "/v1/region/upsert": {
-      "post": {
-        "operationId": "RegionService_Upsert",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/regionv1UpsertRequest"
-            }
-          }
-        ],
-        "tags": [
-          "RegionService"
-        ]
-      }
-    },
-    "/v1/region/{regionId}": {
-      "get": {
-        "operationId": "RegionService_RegionByRegionID",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1Region"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "regionId",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
-        "tags": [
-          "RegionService"
-        ]
-      },
-      "delete": {
-        "operationId": "RegionService_Delete",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "regionId",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
-        "tags": [
-          "RegionService"
-        ]
-      },
-      "put": {
-        "operationId": "RegionService_Update",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "regionId",
-            "description": "Output only.",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "regionDescription": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        ],
-        "tags": [
-          "RegionService"
         ]
       }
     },
@@ -2349,8 +1441,8 @@
             "name": "shipperId",
             "in": "path",
             "required": true,
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "format": "int64"
           }
         ],
         "tags": [
@@ -2379,8 +1471,8 @@
             "name": "shipperId",
             "in": "path",
             "required": true,
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "format": "int64"
           }
         ],
         "tags": [
@@ -2410,8 +1502,8 @@
             "description": "Output only.",
             "in": "path",
             "required": true,
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "format": "int64"
           },
           {
             "name": "body",
@@ -2420,10 +1512,10 @@
             "schema": {
               "type": "object",
               "properties": {
-                "companyName": {
+                "phone": {
                   "type": "string"
                 },
-                "phone": {
+                "shipperName": {
                   "type": "string"
                 }
               }
@@ -2523,8 +1615,8 @@
             "name": "supplierId",
             "in": "path",
             "required": true,
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "format": "int64"
           }
         ],
         "tags": [
@@ -2553,8 +1645,8 @@
             "name": "supplierId",
             "in": "path",
             "required": true,
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "format": "int64"
           }
         ],
         "tags": [
@@ -2584,8 +1676,8 @@
             "description": "Output only.",
             "in": "path",
             "required": true,
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "format": "int64"
           },
           {
             "name": "body",
@@ -2600,22 +1692,10 @@
                 "city": {
                   "type": "string"
                 },
-                "companyName": {
-                  "type": "string"
-                },
                 "contactName": {
                   "type": "string"
                 },
-                "contactTitle": {
-                  "type": "string"
-                },
                 "country": {
-                  "type": "string"
-                },
-                "fax": {
-                  "type": "string"
-                },
-                "homepage": {
                   "type": "string"
                 },
                 "phone": {
@@ -2624,7 +1704,7 @@
                 "postalCode": {
                   "type": "string"
                 },
-                "region": {
+                "supplierName": {
                   "type": "string"
                 }
               }
@@ -2635,385 +1715,6 @@
           "SupplierService"
         ]
       }
-    },
-    "/v1/territory": {
-      "post": {
-        "operationId": "TerritoryService_Insert",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/territoryv1InsertRequest"
-            }
-          }
-        ],
-        "tags": [
-          "TerritoryService"
-        ]
-      }
-    },
-    "/v1/territory/upsert": {
-      "post": {
-        "operationId": "TerritoryService_Upsert",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/territoryv1UpsertRequest"
-            }
-          }
-        ],
-        "tags": [
-          "TerritoryService"
-        ]
-      }
-    },
-    "/v1/territory/{territoryId}": {
-      "get": {
-        "operationId": "TerritoryService_TerritoryByTerritoryID",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1Territory"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "territoryId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "TerritoryService"
-        ]
-      },
-      "delete": {
-        "operationId": "TerritoryService_Delete",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "territoryId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "TerritoryService"
-        ]
-      },
-      "put": {
-        "operationId": "TerritoryService_Update",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "territoryId",
-            "description": "Output only.",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "regionId": {
-                  "type": "integer",
-                  "format": "int32"
-                },
-                "territoryDescription": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        ],
-        "tags": [
-          "TerritoryService"
-        ]
-      }
-    },
-    "/v1/territory/{territoryId}/region": {
-      "get": {
-        "operationId": "TerritoryService_Region",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1Region"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "territoryId",
-            "in": "path",
-            "required": true,
-            "type": "string"
-          }
-        ],
-        "tags": [
-          "TerritoryService"
-        ]
-      }
-    },
-    "/v1/us-state": {
-      "post": {
-        "operationId": "UsStateService_Insert",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/us_statev1InsertRequest"
-            }
-          }
-        ],
-        "tags": [
-          "UsStateService"
-        ]
-      }
-    },
-    "/v1/us-state/upsert": {
-      "post": {
-        "operationId": "UsStateService_Upsert",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "$ref": "#/definitions/us_statev1UpsertRequest"
-            }
-          }
-        ],
-        "tags": [
-          "UsStateService"
-        ]
-      }
-    },
-    "/v1/us-state/{stateId}": {
-      "get": {
-        "operationId": "UsStateService_UsStateByStateID",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "$ref": "#/definitions/v1UsState"
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "stateId",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
-        "tags": [
-          "UsStateService"
-        ]
-      },
-      "delete": {
-        "operationId": "UsStateService_Delete",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "stateId",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          }
-        ],
-        "tags": [
-          "UsStateService"
-        ]
-      },
-      "put": {
-        "operationId": "UsStateService_Update",
-        "responses": {
-          "200": {
-            "description": "A successful response.",
-            "schema": {
-              "type": "object",
-              "properties": {}
-            }
-          },
-          "default": {
-            "description": "An unexpected error response.",
-            "schema": {
-              "$ref": "#/definitions/rpcStatus"
-            }
-          }
-        },
-        "parameters": [
-          {
-            "name": "stateId",
-            "description": "Output only.",
-            "in": "path",
-            "required": true,
-            "type": "integer",
-            "format": "int32"
-          },
-          {
-            "name": "body",
-            "in": "body",
-            "required": true,
-            "schema": {
-              "type": "object",
-              "properties": {
-                "stateAbbr": {
-                  "type": "string"
-                },
-                "stateName": {
-                  "type": "string"
-                },
-                "stateRegion": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        ],
-        "tags": [
-          "UsStateService"
-        ]
-      }
     }
   },
   "definitions": {
@@ -3021,18 +1722,14 @@
       "type": "object",
       "properties": {
         "categoryId": {
-          "type": "integer",
-          "format": "int32"
+          "type": "string",
+          "format": "int64"
         },
         "categoryName": {
           "type": "string"
         },
         "description": {
           "type": "string"
-        },
-        "picture": {
-          "type": "string",
-          "format": "byte"
         }
       }
     },
@@ -3040,39 +1737,13 @@
       "type": "object",
       "properties": {
         "categoryId": {
-          "type": "integer",
-          "format": "int32"
+          "type": "string",
+          "format": "int64"
         },
         "categoryName": {
           "type": "string"
         },
         "description": {
-          "type": "string"
-        },
-        "picture": {
-          "type": "string",
-          "format": "byte"
-        }
-      }
-    },
-    "customer_demographicv1InsertRequest": {
-      "type": "object",
-      "properties": {
-        "customerDesc": {
-          "type": "string"
-        },
-        "customerTypeId": {
-          "type": "string"
-        }
-      }
-    },
-    "customer_demographicv1UpsertRequest": {
-      "type": "object",
-      "properties": {
-        "customerDesc": {
-          "type": "string"
-        },
-        "customerTypeId": {
           "type": "string"
         }
       }
@@ -3086,31 +1757,20 @@
         "city": {
           "type": "string"
         },
-        "companyName": {
-          "type": "string"
-        },
         "contactName": {
-          "type": "string"
-        },
-        "contactTitle": {
           "type": "string"
         },
         "country": {
           "type": "string"
         },
         "customerId": {
-          "type": "string"
+          "type": "string",
+          "format": "int64"
         },
-        "fax": {
-          "type": "string"
-        },
-        "phone": {
+        "customerName": {
           "type": "string"
         },
         "postalCode": {
-          "type": "string"
-        },
-        "region": {
           "type": "string"
         }
       }
@@ -3124,31 +1784,20 @@
         "city": {
           "type": "string"
         },
-        "companyName": {
-          "type": "string"
-        },
         "contactName": {
-          "type": "string"
-        },
-        "contactTitle": {
           "type": "string"
         },
         "country": {
           "type": "string"
         },
         "customerId": {
-          "type": "string"
+          "type": "string",
+          "format": "int64"
         },
-        "fax": {
-          "type": "string"
-        },
-        "phone": {
+        "customerName": {
           "type": "string"
         },
         "postalCode": {
-          "type": "string"
-        },
-        "region": {
           "type": "string"
         }
       }
@@ -3156,34 +1805,15 @@
     "employeev1InsertRequest": {
       "type": "object",
       "properties": {
-        "address": {
-          "type": "string"
-        },
         "birthDate": {
           "type": "string",
           "format": "date-time"
         },
-        "city": {
-          "type": "string"
-        },
-        "country": {
-          "type": "string"
-        },
         "employeeId": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "extension": {
-          "type": "string"
+          "type": "string",
+          "format": "int64"
         },
         "firstName": {
-          "type": "string"
-        },
-        "hireDate": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "homePhone": {
           "type": "string"
         },
         "lastName": {
@@ -3193,26 +1823,6 @@
           "type": "string"
         },
         "photo": {
-          "type": "string",
-          "format": "byte"
-        },
-        "photoPath": {
-          "type": "string"
-        },
-        "postalCode": {
-          "type": "string"
-        },
-        "region": {
-          "type": "string"
-        },
-        "reportsTo": {
-          "type": "string",
-          "format": "int64"
-        },
-        "title": {
-          "type": "string"
-        },
-        "titleOfCourtesy": {
           "type": "string"
         }
       }
@@ -3220,34 +1830,15 @@
     "employeev1UpsertRequest": {
       "type": "object",
       "properties": {
-        "address": {
-          "type": "string"
-        },
         "birthDate": {
           "type": "string",
           "format": "date-time"
         },
-        "city": {
-          "type": "string"
-        },
-        "country": {
-          "type": "string"
-        },
         "employeeId": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "extension": {
-          "type": "string"
+          "type": "string",
+          "format": "int64"
         },
         "firstName": {
-          "type": "string"
-        },
-        "hireDate": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "homePhone": {
           "type": "string"
         },
         "lastName": {
@@ -3257,52 +1848,49 @@
           "type": "string"
         },
         "photo": {
-          "type": "string",
-          "format": "byte"
-        },
-        "photoPath": {
           "type": "string"
-        },
-        "postalCode": {
-          "type": "string"
-        },
-        "region": {
-          "type": "string"
-        },
-        "reportsTo": {
+        }
+      }
+    },
+    "order_detailv1InsertRequest": {
+      "type": "object",
+      "properties": {
+        "orderDetailId": {
           "type": "string",
           "format": "int64"
         },
-        "title": {
-          "type": "string"
+        "orderId": {
+          "type": "string",
+          "format": "int64"
         },
-        "titleOfCourtesy": {
-          "type": "string"
+        "productId": {
+          "type": "string",
+          "format": "int64"
+        },
+        "quantity": {
+          "type": "string",
+          "format": "int64"
         }
       }
     },
     "order_detailv1UpsertRequest": {
       "type": "object",
       "properties": {
-        "discount": {
-          "type": "number",
-          "format": "float"
+        "orderDetailId": {
+          "type": "string",
+          "format": "int64"
         },
         "orderId": {
-          "type": "integer",
-          "format": "int32"
+          "type": "string",
+          "format": "int64"
         },
         "productId": {
-          "type": "integer",
-          "format": "int32"
+          "type": "string",
+          "format": "int64"
         },
         "quantity": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "unitPrice": {
-          "type": "number",
-          "format": "float"
+          "type": "string",
+          "format": "int64"
         }
       }
     },
@@ -3310,53 +1898,24 @@
       "type": "object",
       "properties": {
         "customerId": {
-          "type": "string"
+          "type": "string",
+          "format": "int64"
         },
         "employeeId": {
           "type": "string",
           "format": "int64"
-        },
-        "freight": {
-          "type": "number",
-          "format": "double"
         },
         "orderDate": {
           "type": "string",
           "format": "date-time"
         },
         "orderId": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "requiredDate": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "shipAddress": {
-          "type": "string"
-        },
-        "shipCity": {
-          "type": "string"
-        },
-        "shipCountry": {
-          "type": "string"
-        },
-        "shipName": {
-          "type": "string"
-        },
-        "shipPostalCode": {
-          "type": "string"
-        },
-        "shipRegion": {
-          "type": "string"
-        },
-        "shipVia": {
           "type": "string",
           "format": "int64"
         },
-        "shippedDate": {
+        "shipperId": {
           "type": "string",
-          "format": "date-time"
+          "format": "int64"
         }
       }
     },
@@ -3364,53 +1923,24 @@
       "type": "object",
       "properties": {
         "customerId": {
-          "type": "string"
+          "type": "string",
+          "format": "int64"
         },
         "employeeId": {
           "type": "string",
           "format": "int64"
-        },
-        "freight": {
-          "type": "number",
-          "format": "double"
         },
         "orderDate": {
           "type": "string",
           "format": "date-time"
         },
         "orderId": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "requiredDate": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "shipAddress": {
-          "type": "string"
-        },
-        "shipCity": {
-          "type": "string"
-        },
-        "shipCountry": {
-          "type": "string"
-        },
-        "shipName": {
-          "type": "string"
-        },
-        "shipPostalCode": {
-          "type": "string"
-        },
-        "shipRegion": {
-          "type": "string"
-        },
-        "shipVia": {
           "type": "string",
           "format": "int64"
         },
-        "shippedDate": {
+        "shipperId": {
           "type": "string",
-          "format": "date-time"
+          "format": "int64"
         }
       }
     },
@@ -3421,39 +1951,23 @@
           "type": "string",
           "format": "int64"
         },
-        "discontinued": {
-          "type": "string",
-          "format": "int64"
+        "price": {
+          "type": "number",
+          "format": "double"
         },
         "productId": {
-          "type": "integer",
-          "format": "int32"
+          "type": "string",
+          "format": "int64"
         },
         "productName": {
           "type": "string"
-        },
-        "quantityPerUnit": {
-          "type": "string"
-        },
-        "reorderLevel": {
-          "type": "string",
-          "format": "int64"
         },
         "supplierId": {
           "type": "string",
           "format": "int64"
         },
-        "unitPrice": {
-          "type": "number",
-          "format": "double"
-        },
-        "unitsInStock": {
-          "type": "string",
-          "format": "int64"
-        },
-        "unitsOnOrder": {
-          "type": "string",
-          "format": "int64"
+        "unit": {
+          "type": "string"
         }
       }
     },
@@ -3464,39 +1978,23 @@
           "type": "string",
           "format": "int64"
         },
-        "discontinued": {
-          "type": "string",
-          "format": "int64"
+        "price": {
+          "type": "number",
+          "format": "double"
         },
         "productId": {
-          "type": "integer",
-          "format": "int32"
+          "type": "string",
+          "format": "int64"
         },
         "productName": {
           "type": "string"
-        },
-        "quantityPerUnit": {
-          "type": "string"
-        },
-        "reorderLevel": {
-          "type": "string",
-          "format": "int64"
         },
         "supplierId": {
           "type": "string",
           "format": "int64"
         },
-        "unitPrice": {
-          "type": "number",
-          "format": "double"
-        },
-        "unitsInStock": {
-          "type": "string",
-          "format": "int64"
-        },
-        "unitsOnOrder": {
-          "type": "string",
-          "format": "int64"
+        "unit": {
+          "type": "string"
         }
       }
     },
@@ -3508,30 +2006,6 @@
         }
       },
       "additionalProperties": {}
-    },
-    "regionv1InsertRequest": {
-      "type": "object",
-      "properties": {
-        "regionDescription": {
-          "type": "string"
-        },
-        "regionId": {
-          "type": "integer",
-          "format": "int32"
-        }
-      }
-    },
-    "regionv1UpsertRequest": {
-      "type": "object",
-      "properties": {
-        "regionDescription": {
-          "type": "string"
-        },
-        "regionId": {
-          "type": "integer",
-          "format": "int32"
-        }
-      }
     },
     "rpcStatus": {
       "type": "object",
@@ -3546,6 +2020,7 @@
         "details": {
           "type": "array",
           "items": {
+            "type": "object",
             "$ref": "#/definitions/protobufAny"
           }
         }
@@ -3554,30 +2029,30 @@
     "shipperv1InsertRequest": {
       "type": "object",
       "properties": {
-        "companyName": {
-          "type": "string"
-        },
         "phone": {
           "type": "string"
         },
         "shipperId": {
-          "type": "integer",
-          "format": "int32"
+          "type": "string",
+          "format": "int64"
+        },
+        "shipperName": {
+          "type": "string"
         }
       }
     },
     "shipperv1UpsertRequest": {
       "type": "object",
       "properties": {
-        "companyName": {
-          "type": "string"
-        },
         "phone": {
           "type": "string"
         },
         "shipperId": {
-          "type": "integer",
-          "format": "int32"
+          "type": "string",
+          "format": "int64"
+        },
+        "shipperName": {
+          "type": "string"
         }
       }
     },
@@ -3590,22 +2065,10 @@
         "city": {
           "type": "string"
         },
-        "companyName": {
-          "type": "string"
-        },
         "contactName": {
           "type": "string"
         },
-        "contactTitle": {
-          "type": "string"
-        },
         "country": {
-          "type": "string"
-        },
-        "fax": {
-          "type": "string"
-        },
-        "homepage": {
           "type": "string"
         },
         "phone": {
@@ -3614,12 +2077,12 @@
         "postalCode": {
           "type": "string"
         },
-        "region": {
-          "type": "string"
-        },
         "supplierId": {
-          "type": "integer",
-          "format": "int32"
+          "type": "string",
+          "format": "int64"
+        },
+        "supplierName": {
+          "type": "string"
         }
       }
     },
@@ -3632,22 +2095,10 @@
         "city": {
           "type": "string"
         },
-        "companyName": {
-          "type": "string"
-        },
         "contactName": {
           "type": "string"
         },
-        "contactTitle": {
-          "type": "string"
-        },
         "country": {
-          "type": "string"
-        },
-        "fax": {
-          "type": "string"
-        },
-        "homepage": {
           "type": "string"
         },
         "phone": {
@@ -3656,77 +2107,11 @@
         "postalCode": {
           "type": "string"
         },
-        "region": {
-          "type": "string"
-        },
         "supplierId": {
-          "type": "integer",
-          "format": "int32"
-        }
-      }
-    },
-    "territoryv1InsertRequest": {
-      "type": "object",
-      "properties": {
-        "regionId": {
-          "type": "integer",
-          "format": "int32"
+          "type": "string",
+          "format": "int64"
         },
-        "territoryDescription": {
-          "type": "string"
-        },
-        "territoryId": {
-          "type": "string"
-        }
-      }
-    },
-    "territoryv1UpsertRequest": {
-      "type": "object",
-      "properties": {
-        "regionId": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "territoryDescription": {
-          "type": "string"
-        },
-        "territoryId": {
-          "type": "string"
-        }
-      }
-    },
-    "us_statev1InsertRequest": {
-      "type": "object",
-      "properties": {
-        "stateAbbr": {
-          "type": "string"
-        },
-        "stateId": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "stateName": {
-          "type": "string"
-        },
-        "stateRegion": {
-          "type": "string"
-        }
-      }
-    },
-    "us_statev1UpsertRequest": {
-      "type": "object",
-      "properties": {
-        "stateAbbr": {
-          "type": "string"
-        },
-        "stateId": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "stateName": {
-          "type": "string"
-        },
-        "stateRegion": {
+        "supplierName": {
           "type": "string"
         }
       }
@@ -3735,18 +2120,14 @@
       "type": "object",
       "properties": {
         "categoryId": {
-          "type": "integer",
-          "format": "int32"
+          "type": "string",
+          "format": "int64"
         },
         "categoryName": {
           "type": "string"
         },
         "description": {
           "type": "string"
-        },
-        "picture": {
-          "type": "string",
-          "format": "byte"
         }
       }
     },
@@ -3754,15 +2135,13 @@
       "type": "object",
       "properties": {
         "customerId": {
-          "type": "string"
+          "type": "string",
+          "format": "int64"
         },
-        "companyName": {
+        "customerName": {
           "type": "string"
         },
         "contactName": {
-          "type": "string"
-        },
-        "contactTitle": {
           "type": "string"
         },
         "address": {
@@ -3771,41 +2150,10 @@
         "city": {
           "type": "string"
         },
-        "region": {
-          "type": "string"
-        },
         "postalCode": {
           "type": "string"
         },
         "country": {
-          "type": "string"
-        },
-        "phone": {
-          "type": "string"
-        },
-        "fax": {
-          "type": "string"
-        }
-      }
-    },
-    "v1CustomerCustomerDemo": {
-      "type": "object",
-      "properties": {
-        "customerId": {
-          "type": "string"
-        },
-        "customerTypeId": {
-          "type": "string"
-        }
-      }
-    },
-    "v1CustomerDemographic": {
-      "type": "object",
-      "properties": {
-        "customerTypeId": {
-          "type": "string"
-        },
-        "customerDesc": {
           "type": "string"
         }
       }
@@ -3814,8 +2162,8 @@
       "type": "object",
       "properties": {
         "employeeId": {
-          "type": "integer",
-          "format": "int32"
+          "type": "string",
+          "format": "int64"
         },
         "lastName": {
           "type": "string"
@@ -3823,65 +2171,14 @@
         "firstName": {
           "type": "string"
         },
-        "title": {
-          "type": "string"
-        },
-        "titleOfCourtesy": {
-          "type": "string"
-        },
         "birthDate": {
           "type": "string",
           "format": "date-time"
         },
-        "hireDate": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "address": {
-          "type": "string"
-        },
-        "city": {
-          "type": "string"
-        },
-        "region": {
-          "type": "string"
-        },
-        "postalCode": {
-          "type": "string"
-        },
-        "country": {
-          "type": "string"
-        },
-        "homePhone": {
-          "type": "string"
-        },
-        "extension": {
-          "type": "string"
-        },
         "photo": {
-          "type": "string",
-          "format": "byte"
+          "type": "string"
         },
         "notes": {
-          "type": "string"
-        },
-        "reportsTo": {
-          "type": "string",
-          "format": "int64"
-        },
-        "photoPath": {
-          "type": "string"
-        }
-      }
-    },
-    "v1EmployeeTerritory": {
-      "type": "object",
-      "properties": {
-        "employeeId": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "territoryId": {
           "type": "string"
         }
       }
@@ -3890,11 +2187,12 @@
       "type": "object",
       "properties": {
         "orderId": {
-          "type": "integer",
-          "format": "int32"
+          "type": "string",
+          "format": "int64"
         },
         "customerId": {
-          "type": "string"
+          "type": "string",
+          "format": "int64"
         },
         "employeeId": {
           "type": "string",
@@ -3904,64 +2202,30 @@
           "type": "string",
           "format": "date-time"
         },
-        "requiredDate": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "shippedDate": {
-          "type": "string",
-          "format": "date-time"
-        },
-        "shipVia": {
+        "shipperId": {
           "type": "string",
           "format": "int64"
-        },
-        "freight": {
-          "type": "number",
-          "format": "double"
-        },
-        "shipName": {
-          "type": "string"
-        },
-        "shipAddress": {
-          "type": "string"
-        },
-        "shipCity": {
-          "type": "string"
-        },
-        "shipRegion": {
-          "type": "string"
-        },
-        "shipPostalCode": {
-          "type": "string"
-        },
-        "shipCountry": {
-          "type": "string"
         }
       }
     },
     "v1OrderDetail": {
       "type": "object",
       "properties": {
+        "orderDetailId": {
+          "type": "string",
+          "format": "int64"
+        },
         "orderId": {
-          "type": "integer",
-          "format": "int32"
+          "type": "string",
+          "format": "int64"
         },
         "productId": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "unitPrice": {
-          "type": "number",
-          "format": "float"
+          "type": "string",
+          "format": "int64"
         },
         "quantity": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "discount": {
-          "type": "number",
-          "format": "float"
+          "type": "string",
+          "format": "int64"
         }
       }
     },
@@ -3969,8 +2233,8 @@
       "type": "object",
       "properties": {
         "productId": {
-          "type": "integer",
-          "format": "int32"
+          "type": "string",
+          "format": "int64"
         },
         "productName": {
           "type": "string"
@@ -3983,40 +2247,12 @@
           "type": "string",
           "format": "int64"
         },
-        "quantityPerUnit": {
+        "unit": {
           "type": "string"
         },
-        "unitPrice": {
+        "price": {
           "type": "number",
           "format": "double"
-        },
-        "unitsInStock": {
-          "type": "string",
-          "format": "int64"
-        },
-        "unitsOnOrder": {
-          "type": "string",
-          "format": "int64"
-        },
-        "reorderLevel": {
-          "type": "string",
-          "format": "int64"
-        },
-        "discontinued": {
-          "type": "string",
-          "format": "int64"
-        }
-      }
-    },
-    "v1Region": {
-      "type": "object",
-      "properties": {
-        "regionId": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "regionDescription": {
-          "type": "string"
         }
       }
     },
@@ -4024,10 +2260,10 @@
       "type": "object",
       "properties": {
         "shipperId": {
-          "type": "integer",
-          "format": "int32"
+          "type": "string",
+          "format": "int64"
         },
-        "companyName": {
+        "shipperName": {
           "type": "string"
         },
         "phone": {
@@ -4039,25 +2275,19 @@
       "type": "object",
       "properties": {
         "supplierId": {
-          "type": "integer",
-          "format": "int32"
+          "type": "string",
+          "format": "int64"
         },
-        "companyName": {
+        "supplierName": {
           "type": "string"
         },
         "contactName": {
-          "type": "string"
-        },
-        "contactTitle": {
           "type": "string"
         },
         "address": {
           "type": "string"
         },
         "city": {
-          "type": "string"
-        },
-        "region": {
           "type": "string"
         },
         "postalCode": {
@@ -4067,45 +2297,6 @@
           "type": "string"
         },
         "phone": {
-          "type": "string"
-        },
-        "fax": {
-          "type": "string"
-        },
-        "homepage": {
-          "type": "string"
-        }
-      }
-    },
-    "v1Territory": {
-      "type": "object",
-      "properties": {
-        "territoryId": {
-          "type": "string"
-        },
-        "territoryDescription": {
-          "type": "string"
-        },
-        "regionId": {
-          "type": "integer",
-          "format": "int32"
-        }
-      }
-    },
-    "v1UsState": {
-      "type": "object",
-      "properties": {
-        "stateId": {
-          "type": "integer",
-          "format": "int32"
-        },
-        "stateName": {
-          "type": "string"
-        },
-        "stateAbbr": {
-          "type": "string"
-        },
-        "stateRegion": {
           "type": "string"
         }
       }

@@ -7,27 +7,27 @@ import (
 	"database/sql"
 )
 
-// Shipper represents a row from 'public.shippers'.
+// Shipper represents a row from 'Shippers'.
 type Shipper struct {
-	ShipperID   int16          `json:"shipper_id"`   // shipper_id
-	CompanyName string         `json:"company_name"` // company_name
-	Phone       sql.NullString `json:"phone"`        // phone
+	ShipperID   sql.NullInt64  `json:"ShipperID"`   // ShipperID
+	ShipperName sql.NullString `json:"ShipperName"` // ShipperName
+	Phone       sql.NullString `json:"Phone"`       // Phone
 	// xo fields
 	_exists, _deleted bool
 }
 
-// Exists returns true when the Shipper exists in the database.
+// Exists returns true when the [Shipper] exists in the database.
 func (s *Shipper) Exists() bool {
 	return s._exists
 }
 
-// Deleted returns true when the Shipper has been marked for deletion from
-// the database.
+// Deleted returns true when the [Shipper] has been marked for deletion
+// from the database.
 func (s *Shipper) Deleted() bool {
 	return s._deleted
 }
 
-// Insert inserts the Shipper to the database.
+// Insert inserts the [Shipper] to the database.
 func (s *Shipper) Insert(ctx context.Context, db DB) error {
 	switch {
 	case s._exists: // already exists
@@ -35,23 +35,30 @@ func (s *Shipper) Insert(ctx context.Context, db DB) error {
 	case s._deleted: // deleted
 		return logerror(&ErrInsertFailed{ErrMarkedForDeletion})
 	}
-	// insert (basic)
-	const sqlstr = `INSERT INTO public.shippers (` +
-		`shipper_id, company_name, phone` +
+	// insert (primary key generated and returned by database)
+	const sqlstr = `INSERT INTO Shippers (` +
+		`ShipperID, ShipperName, Phone` +
 		`) VALUES (` +
 		`$1, $2, $3` +
 		`)`
 	// run
-	logf(sqlstr, s.ShipperID, s.CompanyName, s.Phone)
-	if _, err := db.ExecContext(ctx, sqlstr, s.ShipperID, s.CompanyName, s.Phone); err != nil {
+	logf(sqlstr, s.ShipperName, s.Phone)
+	res, err := db.ExecContext(ctx, sqlstr, s.ShipperID, s.ShipperName, s.Phone)
+	if err != nil {
 		return logerror(err)
 	}
+	// retrieve id
+	id, err := res.LastInsertId()
+	if err != nil {
+		return logerror(err)
+	} // set primary key
+	s.ShipperID = sql.NullInt64{Valid: true, Int64: id}
 	// set exists
 	s._exists = true
 	return nil
 }
 
-// Update updates a Shipper in the database.
+// Update updates a [Shipper] in the database.
 func (s *Shipper) Update(ctx context.Context, db DB) error {
 	switch {
 	case !s._exists: // doesn't exist
@@ -59,21 +66,19 @@ func (s *Shipper) Update(ctx context.Context, db DB) error {
 	case s._deleted: // deleted
 		return logerror(&ErrUpdateFailed{ErrMarkedForDeletion})
 	}
-	// update with composite primary key
-	const sqlstr = `UPDATE public.shippers SET (` +
-		`company_name, phone` +
-		`) = ( ` +
-		`$1, $2` +
-		`) WHERE shipper_id = $3`
+	// update with primary key
+	const sqlstr = `UPDATE Shippers SET ` +
+		`ShipperName = $1, Phone = $2 ` +
+		`WHERE ShipperID = $3`
 	// run
-	logf(sqlstr, s.CompanyName, s.Phone, s.ShipperID)
-	if _, err := db.ExecContext(ctx, sqlstr, s.CompanyName, s.Phone, s.ShipperID); err != nil {
+	logf(sqlstr, s.ShipperName, s.Phone, s.ShipperID)
+	if _, err := db.ExecContext(ctx, sqlstr, s.ShipperName, s.Phone, s.ShipperID); err != nil {
 		return logerror(err)
 	}
 	return nil
 }
 
-// Save saves the Shipper to the database.
+// Save saves the [Shipper] to the database.
 func (s *Shipper) Save(ctx context.Context, db DB) error {
 	if s.Exists() {
 		return s.Update(ctx, db)
@@ -81,35 +86,32 @@ func (s *Shipper) Save(ctx context.Context, db DB) error {
 	return s.Insert(ctx, db)
 }
 
-// Upsert performs an upsert for Shipper.
-//
-// NOTE: PostgreSQL 9.5+ only
+// Upsert performs an upsert for [Shipper].
 func (s *Shipper) Upsert(ctx context.Context, db DB) error {
 	switch {
 	case s._deleted: // deleted
 		return logerror(&ErrUpsertFailed{ErrMarkedForDeletion})
 	}
 	// upsert
-	const sqlstr = `INSERT INTO public.shippers (` +
-		`shipper_id, company_name, phone` +
+	const sqlstr = `INSERT INTO Shippers (` +
+		`ShipperID, ShipperName, Phone` +
 		`) VALUES (` +
 		`$1, $2, $3` +
-		`) ON CONFLICT (shipper_id) DO UPDATE SET (` +
-		`shipper_id, company_name, phone` +
-		`) = (` +
-		`EXCLUDED.shipper_id, EXCLUDED.company_name, EXCLUDED.phone` +
-		`)`
+		`)` +
+		` ON CONFLICT (ShipperID) DO ` +
+		`UPDATE SET ` +
+		`ShipperName = EXCLUDED.ShipperName, Phone = EXCLUDED.Phone `
 	// run
-	logf(sqlstr, s.ShipperID, s.CompanyName, s.Phone)
-	if _, err := db.ExecContext(ctx, sqlstr, s.ShipperID, s.CompanyName, s.Phone); err != nil {
-		return err
+	logf(sqlstr, s.ShipperID, s.ShipperName, s.Phone)
+	if _, err := db.ExecContext(ctx, sqlstr, s.ShipperID, s.ShipperName, s.Phone); err != nil {
+		return logerror(err)
 	}
 	// set exists
 	s._exists = true
 	return nil
 }
 
-// Delete deletes the Shipper from the database.
+// Delete deletes the [Shipper] from the database.
 func (s *Shipper) Delete(ctx context.Context, db DB) error {
 	switch {
 	case !s._exists: // doesn't exist
@@ -118,7 +120,8 @@ func (s *Shipper) Delete(ctx context.Context, db DB) error {
 		return nil
 	}
 	// delete with single primary key
-	const sqlstr = `DELETE FROM public.shippers WHERE shipper_id = $1`
+	const sqlstr = `DELETE FROM Shippers ` +
+		`WHERE ShipperID = $1`
 	// run
 	logf(sqlstr, s.ShipperID)
 	if _, err := db.ExecContext(ctx, sqlstr, s.ShipperID); err != nil {
@@ -129,21 +132,21 @@ func (s *Shipper) Delete(ctx context.Context, db DB) error {
 	return nil
 }
 
-// ShipperByShipperID retrieves a row from 'public.shippers' as a Shipper.
+// ShipperByShipperID retrieves a row from 'Shippers' as a [Shipper].
 //
-// Generated from index 'shippers_pkey'.
-func ShipperByShipperID(ctx context.Context, db DB, shipperID int16) (*Shipper, error) {
+// Generated from index 'Shippers_ShipperID_pkey'.
+func ShipperByShipperID(ctx context.Context, db DB, shipperID sql.NullInt64) (*Shipper, error) {
 	// query
 	const sqlstr = `SELECT ` +
-		`shipper_id, company_name, phone ` +
-		`FROM public.shippers ` +
-		`WHERE shipper_id = $1`
+		`ShipperID, ShipperName, Phone ` +
+		`FROM Shippers ` +
+		`WHERE ShipperID = $1`
 	// run
 	logf(sqlstr, shipperID)
 	s := Shipper{
 		_exists: true,
 	}
-	if err := db.QueryRowContext(ctx, sqlstr, shipperID).Scan(&s.ShipperID, &s.CompanyName, &s.Phone); err != nil {
+	if err := db.QueryRowContext(ctx, sqlstr, shipperID).Scan(&s.ShipperID, &s.ShipperName, &s.Phone); err != nil {
 		return nil, logerror(err)
 	}
 	return &s, nil

@@ -28,7 +28,10 @@ func NewCategoryService(logger *zap.Logger, db *sql.DB) pb.CategoryServiceServer
 
 func (s *CategoryService) CategoryByCategoryID(ctx context.Context, req *pb.CategoryByCategoryIDRequest) (res *typespb.Category, err error) {
 
-	categoryID := int16(req.GetCategoryId())
+	var categoryID sql.NullInt64
+	if v := req.GetCategoryId(); v != nil {
+		categoryID = sql.NullInt64{Valid: true, Int64: v.Value}
+	}
 
 	result, err := models.CategoryByCategoryID(ctx, s.db, categoryID)
 	if err != nil {
@@ -36,18 +39,21 @@ func (s *CategoryService) CategoryByCategoryID(ctx context.Context, req *pb.Cate
 	}
 
 	res = new(typespb.Category)
-	res.CategoryId = int32(result.CategoryID)
-	res.CategoryName = result.CategoryName
+	if result.CategoryID.Valid {
+		res.CategoryId = wrapperspb.Int64(result.CategoryID.Int64)
+	}
+	if result.CategoryName.Valid {
+		res.CategoryName = wrapperspb.String(result.CategoryName.String)
+	}
 	if result.Description.Valid {
 		res.Description = wrapperspb.String(result.Description.String)
 	}
-	res.Picture = result.Picture
 
 	return
 }
 
 func (s *CategoryService) Delete(ctx context.Context, req *pb.DeleteRequest) (res *emptypb.Empty, err error) {
-	m, err := models.CategoryByCategoryID(ctx, s.db, int16(req.CategoryId))
+	m, err := models.CategoryByCategoryID(ctx, s.db, sql.NullInt64{Valid: true, Int64: req.CategoryId.Value})
 	if err != nil {
 		return
 	}
@@ -64,12 +70,15 @@ func (s *CategoryService) Delete(ctx context.Context, req *pb.DeleteRequest) (re
 
 func (s *CategoryService) Insert(ctx context.Context, req *pb.InsertRequest) (res *emptypb.Empty, err error) {
 	var m models.Category
-	m.CategoryID = int16(req.GetCategoryId())
-	m.CategoryName = req.GetCategoryName()
+	if v := req.GetCategoryId(); v != nil {
+		m.CategoryID = sql.NullInt64{Valid: true, Int64: v.Value}
+	}
+	if v := req.GetCategoryName(); v != nil {
+		m.CategoryName = sql.NullString{Valid: true, String: v.Value}
+	}
 	if v := req.GetDescription(); v != nil {
 		m.Description = sql.NullString{Valid: true, String: v.Value}
 	}
-	m.Picture = req.GetPicture()
 
 	err = m.Insert(ctx, s.db)
 	if err != nil {
@@ -84,16 +93,19 @@ func (s *CategoryService) Insert(ctx context.Context, req *pb.InsertRequest) (re
 }
 
 func (s *CategoryService) Update(ctx context.Context, req *pb.UpdateRequest) (res *emptypb.Empty, err error) {
-	m, err := models.CategoryByCategoryID(ctx, s.db, int16(req.CategoryId))
+	m, err := models.CategoryByCategoryID(ctx, s.db, sql.NullInt64{Valid: true, Int64: req.CategoryId.Value})
 	if err != nil {
 		return
 	}
-	m.CategoryID = int16(req.GetCategoryId())
-	m.CategoryName = req.GetCategoryName()
+	if v := req.GetCategoryId(); v != nil {
+		m.CategoryID = sql.NullInt64{Valid: true, Int64: v.Value}
+	}
+	if v := req.GetCategoryName(); v != nil {
+		m.CategoryName = sql.NullString{Valid: true, String: v.Value}
+	}
 	if v := req.GetDescription(); v != nil {
 		m.Description = sql.NullString{Valid: true, String: v.Value}
 	}
-	m.Picture = req.GetPicture()
 
 	err = m.Update(ctx, s.db)
 	if err != nil {
@@ -107,12 +119,15 @@ func (s *CategoryService) Update(ctx context.Context, req *pb.UpdateRequest) (re
 
 func (s *CategoryService) Upsert(ctx context.Context, req *pb.UpsertRequest) (res *emptypb.Empty, err error) {
 	var m models.Category
-	m.CategoryID = int16(req.GetCategoryId())
-	m.CategoryName = req.GetCategoryName()
+	if v := req.GetCategoryId(); v != nil {
+		m.CategoryID = sql.NullInt64{Valid: true, Int64: v.Value}
+	}
+	if v := req.GetCategoryName(); v != nil {
+		m.CategoryName = sql.NullString{Valid: true, String: v.Value}
+	}
 	if v := req.GetDescription(); v != nil {
 		m.Description = sql.NullString{Valid: true, String: v.Value}
 	}
-	m.Picture = req.GetPicture()
 
 	err = m.Upsert(ctx, s.db)
 	if err != nil {

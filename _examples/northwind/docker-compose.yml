@@ -6,17 +6,6 @@ services:
       - "8080:8080"    
     volumes:
       - .:/app
-    depends_on:
-      - postgres
-
-  postgres:
-    image: postgres:13-alpine
-    volumes:
-      - ./northwind_ddl.sql:/docker-entrypoint-initdb.d/1-ddl.sql
-      - ./northwind_data.sql:/docker-entrypoint-initdb.d/2-data.sql
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=secret
 
   prometheus:
     image: prom/prometheus

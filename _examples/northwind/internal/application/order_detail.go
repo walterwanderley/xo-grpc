@@ -5,6 +5,7 @@ package application
 import (
 	"context"
 	"database/sql"
+	"fmt"
 
 	"go.uber.org/zap"
 	"google.golang.org/protobuf/types/known/emptypb"
@@ -27,7 +28,7 @@ func NewOrderDetailService(logger *zap.Logger, db *sql.DB) pb.OrderDetailService
 }
 
 func (s *OrderDetailService) Delete(ctx context.Context, req *pb.DeleteRequest) (res *emptypb.Empty, err error) {
-	m, err := models.OrderDetailByOrderIDProductID(ctx, s.db, int16(req.OrderId), int16(req.ProductId))
+	m, err := models.OrderDetailByOrderDetailID(ctx, s.db, sql.NullInt64{Valid: true, Int64: req.OrderDetailId.Value})
 	if err != nil {
 		return
 	}
@@ -44,11 +45,18 @@ func (s *OrderDetailService) Delete(ctx context.Context, req *pb.DeleteRequest) 
 
 func (s *OrderDetailService) Insert(ctx context.Context, req *pb.InsertRequest) (res *emptypb.Empty, err error) {
 	var m models.OrderDetail
-	m.Discount = req.GetDiscount()
-	m.OrderID = int16(req.GetOrderId())
-	m.ProductID = int16(req.GetProductId())
-	m.Quantity = int16(req.GetQuantity())
-	m.UnitPrice = req.GetUnitPrice()
+	if v := req.GetOrderDetailId(); v != nil {
+		m.OrderDetailID = sql.NullInt64{Valid: true, Int64: v.Value}
+	}
+	if v := req.GetOrderId(); v != nil {
+		m.OrderID = sql.NullInt64{Valid: true, Int64: v.Value}
+	}
+	if v := req.GetProductId(); v != nil {
+		m.ProductID = sql.NullInt64{Valid: true, Int64: v.Value}
+	}
+	if v := req.GetQuantity(); v != nil {
+		m.Quantity = sql.NullInt64{Valid: true, Int64: v.Value}
+	}
 
 	err = m.Insert(ctx, s.db)
 	if err != nil {
@@ -57,13 +65,13 @@ func (s *OrderDetailService) Insert(ctx context.Context, req *pb.InsertRequest) 
 
 	res = new(emptypb.Empty)
 
-	err = sendResourceLocation(ctx, "")
+	err = sendResourceLocation(ctx, fmt.Sprintf("/%v", m.OrderDetailID))
 
 	return
 }
 
 func (s *OrderDetailService) Order(ctx context.Context, req *pb.OrderRequest) (res *typespb.Order, err error) {
-	m, err := models.OrderDetailByOrderIDProductID(ctx, s.db, int16(req.OrderId), int16(req.ProductId))
+	m, err := models.OrderDetailByOrderDetailID(ctx, s.db, sql.NullInt64{Valid: true, Int64: req.OrderDetailId.Value})
 	if err != nil {
 		return
 	}
@@ -74,72 +82,54 @@ func (s *OrderDetailService) Order(ctx context.Context, req *pb.OrderRequest) (r
 	}
 
 	res = new(typespb.Order)
-	res.OrderId = int32(result.OrderID)
+	if result.OrderID.Valid {
+		res.OrderId = wrapperspb.Int64(result.OrderID.Int64)
+	}
 	if result.CustomerID.Valid {
-		res.CustomerId = wrapperspb.String(result.CustomerID.String)
+		res.CustomerId = wrapperspb.Int64(result.CustomerID.Int64)
 	}
 	if result.EmployeeID.Valid {
 		res.EmployeeId = wrapperspb.Int64(result.EmployeeID.Int64)
 	}
-	if result.OrderDate.Valid {
-		res.OrderDate = timestamppb.New(result.OrderDate.Time)
-	}
-	if result.RequiredDate.Valid {
-		res.RequiredDate = timestamppb.New(result.RequiredDate.Time)
-	}
-	if result.ShippedDate.Valid {
-		res.ShippedDate = timestamppb.New(result.ShippedDate.Time)
-	}
-	if result.ShipVia.Valid {
-		res.ShipVia = wrapperspb.Int64(result.ShipVia.Int64)
-	}
-	if result.Freight.Valid {
-		res.Freight = wrapperspb.Double(result.Freight.Float64)
-	}
-	if result.ShipName.Valid {
-		res.ShipName = wrapperspb.String(result.ShipName.String)
-	}
-	if result.ShipAddress.Valid {
-		res.ShipAddress = wrapperspb.String(result.ShipAddress.String)
-	}
-	if result.ShipCity.Valid {
-		res.ShipCity = wrapperspb.String(result.ShipCity.String)
-	}
-	if result.ShipRegion.Valid {
-		res.ShipRegion = wrapperspb.String(result.ShipRegion.String)
-	}
-	if result.ShipPostalCode.Valid {
-		res.ShipPostalCode = wrapperspb.String(result.ShipPostalCode.String)
-	}
-	if result.ShipCountry.Valid {
-		res.ShipCountry = wrapperspb.String(result.ShipCountry.String)
+	res.OrderDate = timestamppb.New(result.OrderDate.Time())
+	if result.ShipperID.Valid {
+		res.ShipperId = wrapperspb.Int64(result.ShipperID.Int64)
 	}
 
 	return
 }
 
-func (s *OrderDetailService) OrderDetailByOrderIDProductID(ctx context.Context, req *pb.OrderDetailByOrderIDProductIDRequest) (res *typespb.OrderDetail, err error) {
+func (s *OrderDetailService) OrderDetailByOrderDetailID(ctx context.Context, req *pb.OrderDetailByOrderDetailIDRequest) (res *typespb.OrderDetail, err error) {
 
-	orderID := int16(req.GetOrderId())
-	productID := int16(req.GetProductId())
+	var orderDetailID sql.NullInt64
+	if v := req.GetOrderDetailId(); v != nil {
+		orderDetailID = sql.NullInt64{Valid: true, Int64: v.Value}
+	}
 
-	result, err := models.OrderDetailByOrderIDProductID(ctx, s.db, orderID, productID)
+	result, err := models.OrderDetailByOrderDetailID(ctx, s.db, orderDetailID)
 	if err != nil {
 		return
 	}
 
 	res = new(typespb.OrderDetail)
-	res.OrderId = int32(result.OrderID)
-	res.ProductId = int32(result.ProductID)
-	res.UnitPrice = result.UnitPrice
-	res.Quantity = int32(result.Quantity)
-	res.Discount = result.Discount
+	if result.OrderDetailID.Valid {
+		res.OrderDetailId = wrapperspb.Int64(result.OrderDetailID.Int64)
+	}
+	if result.OrderID.Valid {
+		res.OrderId = wrapperspb.Int64(result.OrderID.Int64)
+	}
+	if result.ProductID.Valid {
+		res.ProductId = wrapperspb.Int64(result.ProductID.Int64)
+	}
+	if result.Quantity.Valid {
+		res.Quantity = wrapperspb.Int64(result.Quantity.Int64)
+	}
 
 	return
 }
 
 func (s *OrderDetailService) Product(ctx context.Context, req *pb.ProductRequest) (res *typespb.Product, err error) {
-	m, err := models.OrderDetailByOrderIDProductID(ctx, s.db, int16(req.OrderId), int16(req.ProductId))
+	m, err := models.OrderDetailByOrderDetailID(ctx, s.db, sql.NullInt64{Valid: true, Int64: req.OrderDetailId.Value})
 	if err != nil {
 		return
 	}
@@ -150,44 +140,45 @@ func (s *OrderDetailService) Product(ctx context.Context, req *pb.ProductRequest
 	}
 
 	res = new(typespb.Product)
-	res.ProductId = int32(result.ProductID)
-	res.ProductName = result.ProductName
+	if result.ProductID.Valid {
+		res.ProductId = wrapperspb.Int64(result.ProductID.Int64)
+	}
+	if result.ProductName.Valid {
+		res.ProductName = wrapperspb.String(result.ProductName.String)
+	}
 	if result.SupplierID.Valid {
 		res.SupplierId = wrapperspb.Int64(result.SupplierID.Int64)
 	}
 	if result.CategoryID.Valid {
 		res.CategoryId = wrapperspb.Int64(result.CategoryID.Int64)
 	}
-	if result.QuantityPerUnit.Valid {
-		res.QuantityPerUnit = wrapperspb.String(result.QuantityPerUnit.String)
+	if result.Unit.Valid {
+		res.Unit = wrapperspb.String(result.Unit.String)
 	}
-	if result.UnitPrice.Valid {
-		res.UnitPrice = wrapperspb.Double(result.UnitPrice.Float64)
+	if result.Price.Valid {
+		res.Price = wrapperspb.Double(result.Price.Float64)
 	}
-	if result.UnitsInStock.Valid {
-		res.UnitsInStock = wrapperspb.Int64(result.UnitsInStock.Int64)
-	}
-	if result.UnitsOnOrder.Valid {
-		res.UnitsOnOrder = wrapperspb.Int64(result.UnitsOnOrder.Int64)
-	}
-	if result.ReorderLevel.Valid {
-		res.ReorderLevel = wrapperspb.Int64(result.ReorderLevel.Int64)
-	}
-	res.Discontinued = int64(result.Discontinued)
 
 	return
 }
 
 func (s *OrderDetailService) Update(ctx context.Context, req *pb.UpdateRequest) (res *emptypb.Empty, err error) {
-	m, err := models.OrderDetailByOrderIDProductID(ctx, s.db, int16(req.OrderId), int16(req.ProductId))
+	m, err := models.OrderDetailByOrderDetailID(ctx, s.db, sql.NullInt64{Valid: true, Int64: req.OrderDetailId.Value})
 	if err != nil {
 		return
 	}
-	m.Discount = req.GetDiscount()
-	m.OrderID = int16(req.GetOrderId())
-	m.ProductID = int16(req.GetProductId())
-	m.Quantity = int16(req.GetQuantity())
-	m.UnitPrice = req.GetUnitPrice()
+	if v := req.GetOrderDetailId(); v != nil {
+		m.OrderDetailID = sql.NullInt64{Valid: true, Int64: v.Value}
+	}
+	if v := req.GetOrderId(); v != nil {
+		m.OrderID = sql.NullInt64{Valid: true, Int64: v.Value}
+	}
+	if v := req.GetProductId(); v != nil {
+		m.ProductID = sql.NullInt64{Valid: true, Int64: v.Value}
+	}
+	if v := req.GetQuantity(); v != nil {
+		m.Quantity = sql.NullInt64{Valid: true, Int64: v.Value}
+	}
 
 	err = m.Update(ctx, s.db)
 	if err != nil {
@@ -201,11 +192,18 @@ func (s *OrderDetailService) Update(ctx context.Context, req *pb.UpdateRequest) 
 
 func (s *OrderDetailService) Upsert(ctx context.Context, req *pb.UpsertRequest) (res *emptypb.Empty, err error) {
 	var m models.OrderDetail
-	m.Discount = req.GetDiscount()
-	m.OrderID = int16(req.GetOrderId())
-	m.ProductID = int16(req.GetProductId())
-	m.Quantity = int16(req.GetQuantity())
-	m.UnitPrice = req.GetUnitPrice()
+	if v := req.GetOrderDetailId(); v != nil {
+		m.OrderDetailID = sql.NullInt64{Valid: true, Int64: v.Value}
+	}
+	if v := req.GetOrderId(); v != nil {
+		m.OrderID = sql.NullInt64{Valid: true, Int64: v.Value}
+	}
+	if v := req.GetProductId(); v != nil {
+		m.ProductID = sql.NullInt64{Valid: true, Int64: v.Value}
+	}
+	if v := req.GetQuantity(); v != nil {
+		m.Quantity = sql.NullInt64{Valid: true, Int64: v.Value}
+	}
 
 	err = m.Upsert(ctx, s.db)
 	if err != nil {

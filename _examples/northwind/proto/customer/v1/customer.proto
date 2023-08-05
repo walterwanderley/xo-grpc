@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package customer.v1;
 
-option go_package = "northwind/proto/customer/v1";
+option go_package = "northwind/api/customer/v1";
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
@@ -53,52 +53,40 @@ service CustomerService {
 }
 
 message CustomerByCustomerIDRequest { 
-    string customer_id = 1;
+    google.protobuf.Int64Value customer_id = 1;
 }
 
 message DeleteRequest { 
-    string customer_id = 1;
+    google.protobuf.Int64Value customer_id = 1;
 }
 
 message InsertRequest { 
     google.protobuf.StringValue address = 1;
     google.protobuf.StringValue city = 2;
-    string company_name = 3;
-    google.protobuf.StringValue contact_name = 4;
-    google.protobuf.StringValue contact_title = 5;
-    google.protobuf.StringValue country = 6;
-    string customer_id = 7;
-    google.protobuf.StringValue fax = 8;
-    google.protobuf.StringValue phone = 9;
-    google.protobuf.StringValue postal_code = 10;
-    google.protobuf.StringValue region = 11;
+    google.protobuf.StringValue contact_name = 3;
+    google.protobuf.StringValue country = 4;
+    google.protobuf.Int64Value customer_id = 5;
+    google.protobuf.StringValue customer_name = 6;
+    google.protobuf.StringValue postal_code = 7;
 }
 
 message UpdateRequest { 
     google.protobuf.StringValue address = 1;
     google.protobuf.StringValue city = 2;
-    string company_name = 3;
-    google.protobuf.StringValue contact_name = 4;
-    google.protobuf.StringValue contact_title = 5;
-    google.protobuf.StringValue country = 6;
+    google.protobuf.StringValue contact_name = 3;
+    google.protobuf.StringValue country = 4;
     // Output only.
-    string customer_id = 7;
-    google.protobuf.StringValue fax = 8;
-    google.protobuf.StringValue phone = 9;
-    google.protobuf.StringValue postal_code = 10;
-    google.protobuf.StringValue region = 11;
+    google.protobuf.Int64Value customer_id = 5;
+    google.protobuf.StringValue customer_name = 6;
+    google.protobuf.StringValue postal_code = 7;
 }
 
 message UpsertRequest { 
     google.protobuf.StringValue address = 1;
     google.protobuf.StringValue city = 2;
-    string company_name = 3;
-    google.protobuf.StringValue contact_name = 4;
-    google.protobuf.StringValue contact_title = 5;
-    google.protobuf.StringValue country = 6;
-    string customer_id = 7;
-    google.protobuf.StringValue fax = 8;
-    google.protobuf.StringValue phone = 9;
-    google.protobuf.StringValue postal_code = 10;
-    google.protobuf.StringValue region = 11;
+    google.protobuf.StringValue contact_name = 3;
+    google.protobuf.StringValue country = 4;
+    google.protobuf.Int64Value customer_id = 5;
+    google.protobuf.StringValue customer_name = 6;
+    google.protobuf.StringValue postal_code = 7;
 }

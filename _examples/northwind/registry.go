@@ -10,18 +10,12 @@ import (
 
 	pb_Category "northwind/api/category/v1"
 	pb_Customer "northwind/api/customer/v1"
-	pb_CustomerCustomerDemo "northwind/api/customer_customer_demo/v1"
-	pb_CustomerDemographic "northwind/api/customer_demographic/v1"
 	pb_Employee "northwind/api/employee/v1"
-	pb_EmployeeTerritory "northwind/api/employee_territory/v1"
 	pb_Order "northwind/api/order/v1"
 	pb_OrderDetail "northwind/api/order_detail/v1"
 	pb_Product "northwind/api/product/v1"
-	pb_Region "northwind/api/region/v1"
 	pb_Shipper "northwind/api/shipper/v1"
 	pb_Supplier "northwind/api/supplier/v1"
-	pb_Territory "northwind/api/territory/v1"
-	pb_UsState "northwind/api/us_state/v1"
 	"northwind/internal/application"
 	"northwind/internal/server"
 )
@@ -30,18 +24,12 @@ func registerServer(logger *zap.Logger, db *sql.DB) server.RegisterServer {
 	return func(grpcServer *grpc.Server) {
 		pb_Category.RegisterCategoryServiceServer(grpcServer, application.NewCategoryService(logger, db))
 		pb_Customer.RegisterCustomerServiceServer(grpcServer, application.NewCustomerService(logger, db))
-		pb_CustomerCustomerDemo.RegisterCustomerCustomerDemoServiceServer(grpcServer, application.NewCustomerCustomerDemoService(logger, db))
-		pb_CustomerDemographic.RegisterCustomerDemographicServiceServer(grpcServer, application.NewCustomerDemographicService(logger, db))
 		pb_Employee.RegisterEmployeeServiceServer(grpcServer, application.NewEmployeeService(logger, db))
-		pb_EmployeeTerritory.RegisterEmployeeTerritoryServiceServer(grpcServer, application.NewEmployeeTerritoryService(logger, db))
 		pb_Order.RegisterOrderServiceServer(grpcServer, application.NewOrderService(logger, db))
 		pb_OrderDetail.RegisterOrderDetailServiceServer(grpcServer, application.NewOrderDetailService(logger, db))
 		pb_Product.RegisterProductServiceServer(grpcServer, application.NewProductService(logger, db))
-		pb_Region.RegisterRegionServiceServer(grpcServer, application.NewRegionService(logger, db))
 		pb_Shipper.RegisterShipperServiceServer(grpcServer, application.NewShipperService(logger, db))
 		pb_Supplier.RegisterSupplierServiceServer(grpcServer, application.NewSupplierService(logger, db))
-		pb_Territory.RegisterTerritoryServiceServer(grpcServer, application.NewTerritoryService(logger, db))
-		pb_UsState.RegisterUsStateServiceServer(grpcServer, application.NewUsStateService(logger, db))
 
 	}
 }
@@ -51,18 +39,12 @@ func registerHandlers() []server.RegisterHandler {
 
 	handlers = append(handlers, pb_Category.RegisterCategoryServiceHandler)
 	handlers = append(handlers, pb_Customer.RegisterCustomerServiceHandler)
-	handlers = append(handlers, pb_CustomerCustomerDemo.RegisterCustomerCustomerDemoServiceHandler)
-	handlers = append(handlers, pb_CustomerDemographic.RegisterCustomerDemographicServiceHandler)
 	handlers = append(handlers, pb_Employee.RegisterEmployeeServiceHandler)
-	handlers = append(handlers, pb_EmployeeTerritory.RegisterEmployeeTerritoryServiceHandler)
 	handlers = append(handlers, pb_Order.RegisterOrderServiceHandler)
 	handlers = append(handlers, pb_OrderDetail.RegisterOrderDetailServiceHandler)
 	handlers = append(handlers, pb_Product.RegisterProductServiceHandler)
-	handlers = append(handlers, pb_Region.RegisterRegionServiceHandler)
 	handlers = append(handlers, pb_Shipper.RegisterShipperServiceHandler)
 	handlers = append(handlers, pb_Supplier.RegisterSupplierServiceHandler)
-	handlers = append(handlers, pb_Territory.RegisterTerritoryServiceHandler)
-	handlers = append(handlers, pb_UsState.RegisterUsStateServiceHandler)
 
 	return handlers
 }

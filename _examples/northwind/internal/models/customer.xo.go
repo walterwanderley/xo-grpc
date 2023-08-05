@@ -7,35 +7,31 @@ import (
 	"database/sql"
 )
 
-// Customer represents a row from 'public.customers'.
+// Customer represents a row from 'Customers'.
 type Customer struct {
-	CustomerID   string         `json:"customer_id"`   // customer_id
-	CompanyName  string         `json:"company_name"`  // company_name
-	ContactName  sql.NullString `json:"contact_name"`  // contact_name
-	ContactTitle sql.NullString `json:"contact_title"` // contact_title
-	Address      sql.NullString `json:"address"`       // address
-	City         sql.NullString `json:"city"`          // city
-	Region       sql.NullString `json:"region"`        // region
-	PostalCode   sql.NullString `json:"postal_code"`   // postal_code
-	Country      sql.NullString `json:"country"`       // country
-	Phone        sql.NullString `json:"phone"`         // phone
-	Fax          sql.NullString `json:"fax"`           // fax
+	CustomerID   sql.NullInt64  `json:"CustomerID"`   // CustomerID
+	CustomerName sql.NullString `json:"CustomerName"` // CustomerName
+	ContactName  sql.NullString `json:"ContactName"`  // ContactName
+	Address      sql.NullString `json:"Address"`      // Address
+	City         sql.NullString `json:"City"`         // City
+	PostalCode   sql.NullString `json:"PostalCode"`   // PostalCode
+	Country      sql.NullString `json:"Country"`      // Country
 	// xo fields
 	_exists, _deleted bool
 }
 
-// Exists returns true when the Customer exists in the database.
+// Exists returns true when the [Customer] exists in the database.
 func (c *Customer) Exists() bool {
 	return c._exists
 }
 
-// Deleted returns true when the Customer has been marked for deletion from
-// the database.
+// Deleted returns true when the [Customer] has been marked for deletion
+// from the database.
 func (c *Customer) Deleted() bool {
 	return c._deleted
 }
 
-// Insert inserts the Customer to the database.
+// Insert inserts the [Customer] to the database.
 func (c *Customer) Insert(ctx context.Context, db DB) error {
 	switch {
 	case c._exists: // already exists
@@ -43,23 +39,30 @@ func (c *Customer) Insert(ctx context.Context, db DB) error {
 	case c._deleted: // deleted
 		return logerror(&ErrInsertFailed{ErrMarkedForDeletion})
 	}
-	// insert (basic)
-	const sqlstr = `INSERT INTO public.customers (` +
-		`customer_id, company_name, contact_name, contact_title, address, city, region, postal_code, country, phone, fax` +
+	// insert (primary key generated and returned by database)
+	const sqlstr = `INSERT INTO Customers (` +
+		`CustomerID, CustomerName, ContactName, Address, City, PostalCode, Country` +
 		`) VALUES (` +
-		`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11` +
+		`$1, $2, $3, $4, $5, $6, $7` +
 		`)`
 	// run
-	logf(sqlstr, c.CustomerID, c.CompanyName, c.ContactName, c.ContactTitle, c.Address, c.City, c.Region, c.PostalCode, c.Country, c.Phone, c.Fax)
-	if _, err := db.ExecContext(ctx, sqlstr, c.CustomerID, c.CompanyName, c.ContactName, c.ContactTitle, c.Address, c.City, c.Region, c.PostalCode, c.Country, c.Phone, c.Fax); err != nil {
+	logf(sqlstr, c.CustomerName, c.ContactName, c.Address, c.City, c.PostalCode, c.Country)
+	res, err := db.ExecContext(ctx, sqlstr, c.CustomerID, c.CustomerName, c.ContactName, c.Address, c.City, c.PostalCode, c.Country)
+	if err != nil {
 		return logerror(err)
 	}
+	// retrieve id
+	id, err := res.LastInsertId()
+	if err != nil {
+		return logerror(err)
+	} // set primary key
+	c.CustomerID = sql.NullInt64{Valid: true, Int64: id}
 	// set exists
 	c._exists = true
 	return nil
 }
 
-// Update updates a Customer in the database.
+// Update updates a [Customer] in the database.
 func (c *Customer) Update(ctx context.Context, db DB) error {
 	switch {
 	case !c._exists: // doesn't exist
@@ -67,21 +70,19 @@ func (c *Customer) Update(ctx context.Context, db DB) error {
 	case c._deleted: // deleted
 		return logerror(&ErrUpdateFailed{ErrMarkedForDeletion})
 	}
-	// update with composite primary key
-	const sqlstr = `UPDATE public.customers SET (` +
-		`company_name, contact_name, contact_title, address, city, region, postal_code, country, phone, fax` +
-		`) = ( ` +
-		`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10` +
-		`) WHERE customer_id = $11`
+	// update with primary key
+	const sqlstr = `UPDATE Customers SET ` +
+		`CustomerName = $1, ContactName = $2, Address = $3, City = $4, PostalCode = $5, Country = $6 ` +
+		`WHERE CustomerID = $7`
 	// run
-	logf(sqlstr, c.CompanyName, c.ContactName, c.ContactTitle, c.Address, c.City, c.Region, c.PostalCode, c.Country, c.Phone, c.Fax, c.CustomerID)
-	if _, err := db.ExecContext(ctx, sqlstr, c.CompanyName, c.ContactName, c.ContactTitle, c.Address, c.City, c.Region, c.PostalCode, c.Country, c.Phone, c.Fax, c.CustomerID); err != nil {
+	logf(sqlstr, c.CustomerName, c.ContactName, c.Address, c.City, c.PostalCode, c.Country, c.CustomerID)
+	if _, err := db.ExecContext(ctx, sqlstr, c.CustomerName, c.ContactName, c.Address, c.City, c.PostalCode, c.Country, c.CustomerID); err != nil {
 		return logerror(err)
 	}
 	return nil
 }
 
-// Save saves the Customer to the database.
+// Save saves the [Customer] to the database.
 func (c *Customer) Save(ctx context.Context, db DB) error {
 	if c.Exists() {
 		return c.Update(ctx, db)
@@ -89,35 +90,32 @@ func (c *Customer) Save(ctx context.Context, db DB) error {
 	return c.Insert(ctx, db)
 }
 
-// Upsert performs an upsert for Customer.
-//
-// NOTE: PostgreSQL 9.5+ only
+// Upsert performs an upsert for [Customer].
 func (c *Customer) Upsert(ctx context.Context, db DB) error {
 	switch {
 	case c._deleted: // deleted
 		return logerror(&ErrUpsertFailed{ErrMarkedForDeletion})
 	}
 	// upsert
-	const sqlstr = `INSERT INTO public.customers (` +
-		`customer_id, company_name, contact_name, contact_title, address, city, region, postal_code, country, phone, fax` +
+	const sqlstr = `INSERT INTO Customers (` +
+		`CustomerID, CustomerName, ContactName, Address, City, PostalCode, Country` +
 		`) VALUES (` +
-		`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11` +
-		`) ON CONFLICT (customer_id) DO UPDATE SET (` +
-		`customer_id, company_name, contact_name, contact_title, address, city, region, postal_code, country, phone, fax` +
-		`) = (` +
-		`EXCLUDED.customer_id, EXCLUDED.company_name, EXCLUDED.contact_name, EXCLUDED.contact_title, EXCLUDED.address, EXCLUDED.city, EXCLUDED.region, EXCLUDED.postal_code, EXCLUDED.country, EXCLUDED.phone, EXCLUDED.fax` +
-		`)`
+		`$1, $2, $3, $4, $5, $6, $7` +
+		`)` +
+		` ON CONFLICT (CustomerID) DO ` +
+		`UPDATE SET ` +
+		`CustomerName = EXCLUDED.CustomerName, ContactName = EXCLUDED.ContactName, Address = EXCLUDED.Address, City = EXCLUDED.City, PostalCode = EXCLUDED.PostalCode, Country = EXCLUDED.Country `
 	// run
-	logf(sqlstr, c.CustomerID, c.CompanyName, c.ContactName, c.ContactTitle, c.Address, c.City, c.Region, c.PostalCode, c.Country, c.Phone, c.Fax)
-	if _, err := db.ExecContext(ctx, sqlstr, c.CustomerID, c.CompanyName, c.ContactName, c.ContactTitle, c.Address, c.City, c.Region, c.PostalCode, c.Country, c.Phone, c.Fax); err != nil {
-		return err
+	logf(sqlstr, c.CustomerID, c.CustomerName, c.ContactName, c.Address, c.City, c.PostalCode, c.Country)
+	if _, err := db.ExecContext(ctx, sqlstr, c.CustomerID, c.CustomerName, c.ContactName, c.Address, c.City, c.PostalCode, c.Country); err != nil {
+		return logerror(err)
 	}
 	// set exists
 	c._exists = true
 	return nil
 }
 
-// Delete deletes the Customer from the database.
+// Delete deletes the [Customer] from the database.
 func (c *Customer) Delete(ctx context.Context, db DB) error {
 	switch {
 	case !c._exists: // doesn't exist
@@ -126,7 +124,8 @@ func (c *Customer) Delete(ctx context.Context, db DB) error {
 		return nil
 	}
 	// delete with single primary key
-	const sqlstr = `DELETE FROM public.customers WHERE customer_id = $1`
+	const sqlstr = `DELETE FROM Customers ` +
+		`WHERE CustomerID = $1`
 	// run
 	logf(sqlstr, c.CustomerID)
 	if _, err := db.ExecContext(ctx, sqlstr, c.CustomerID); err != nil {
@@ -137,21 +136,21 @@ func (c *Customer) Delete(ctx context.Context, db DB) error {
 	return nil
 }
 
-// CustomerByCustomerID retrieves a row from 'public.customers' as a Customer.
+// CustomerByCustomerID retrieves a row from 'Customers' as a [Customer].
 //
-// Generated from index 'customers_pkey'.
-func CustomerByCustomerID(ctx context.Context, db DB, customerID string) (*Customer, error) {
+// Generated from index 'Customers_CustomerID_pkey'.
+func CustomerByCustomerID(ctx context.Context, db DB, customerID sql.NullInt64) (*Customer, error) {
 	// query
 	const sqlstr = `SELECT ` +
-		`customer_id, company_name, contact_name, contact_title, address, city, region, postal_code, country, phone, fax ` +
-		`FROM public.customers ` +
-		`WHERE customer_id = $1`
+		`CustomerID, CustomerName, ContactName, Address, City, PostalCode, Country ` +
+		`FROM Customers ` +
+		`WHERE CustomerID = $1`
 	// run
 	logf(sqlstr, customerID)
 	c := Customer{
 		_exists: true,
 	}
-	if err := db.QueryRowContext(ctx, sqlstr, customerID).Scan(&c.CustomerID, &c.CompanyName, &c.ContactName, &c.ContactTitle, &c.Address, &c.City, &c.Region, &c.PostalCode, &c.Country, &c.Phone, &c.Fax); err != nil {
+	if err := db.QueryRowContext(ctx, sqlstr, customerID).Scan(&c.CustomerID, &c.CustomerName, &c.ContactName, &c.Address, &c.City, &c.PostalCode, &c.Country); err != nil {
 		return nil, logerror(err)
 	}
 	return &c, nil

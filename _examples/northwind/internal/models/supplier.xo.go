@@ -7,36 +7,32 @@ import (
 	"database/sql"
 )
 
-// Supplier represents a row from 'public.suppliers'.
+// Supplier represents a row from 'Suppliers'.
 type Supplier struct {
-	SupplierID   int16          `json:"supplier_id"`   // supplier_id
-	CompanyName  string         `json:"company_name"`  // company_name
-	ContactName  sql.NullString `json:"contact_name"`  // contact_name
-	ContactTitle sql.NullString `json:"contact_title"` // contact_title
-	Address      sql.NullString `json:"address"`       // address
-	City         sql.NullString `json:"city"`          // city
-	Region       sql.NullString `json:"region"`        // region
-	PostalCode   sql.NullString `json:"postal_code"`   // postal_code
-	Country      sql.NullString `json:"country"`       // country
-	Phone        sql.NullString `json:"phone"`         // phone
-	Fax          sql.NullString `json:"fax"`           // fax
-	Homepage     sql.NullString `json:"homepage"`      // homepage
+	SupplierID   sql.NullInt64  `json:"SupplierID"`   // SupplierID
+	SupplierName sql.NullString `json:"SupplierName"` // SupplierName
+	ContactName  sql.NullString `json:"ContactName"`  // ContactName
+	Address      sql.NullString `json:"Address"`      // Address
+	City         sql.NullString `json:"City"`         // City
+	PostalCode   sql.NullString `json:"PostalCode"`   // PostalCode
+	Country      sql.NullString `json:"Country"`      // Country
+	Phone        sql.NullString `json:"Phone"`        // Phone
 	// xo fields
 	_exists, _deleted bool
 }
 
-// Exists returns true when the Supplier exists in the database.
+// Exists returns true when the [Supplier] exists in the database.
 func (s *Supplier) Exists() bool {
 	return s._exists
 }
 
-// Deleted returns true when the Supplier has been marked for deletion from
-// the database.
+// Deleted returns true when the [Supplier] has been marked for deletion
+// from the database.
 func (s *Supplier) Deleted() bool {
 	return s._deleted
 }
 
-// Insert inserts the Supplier to the database.
+// Insert inserts the [Supplier] to the database.
 func (s *Supplier) Insert(ctx context.Context, db DB) error {
 	switch {
 	case s._exists: // already exists
@@ -44,23 +40,30 @@ func (s *Supplier) Insert(ctx context.Context, db DB) error {
 	case s._deleted: // deleted
 		return logerror(&ErrInsertFailed{ErrMarkedForDeletion})
 	}
-	// insert (basic)
-	const sqlstr = `INSERT INTO public.suppliers (` +
-		`supplier_id, company_name, contact_name, contact_title, address, city, region, postal_code, country, phone, fax, homepage` +
+	// insert (primary key generated and returned by database)
+	const sqlstr = `INSERT INTO Suppliers (` +
+		`SupplierID, SupplierName, ContactName, Address, City, PostalCode, Country, Phone` +
 		`) VALUES (` +
-		`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12` +
+		`$1, $2, $3, $4, $5, $6, $7, $8` +
 		`)`
 	// run
-	logf(sqlstr, s.SupplierID, s.CompanyName, s.ContactName, s.ContactTitle, s.Address, s.City, s.Region, s.PostalCode, s.Country, s.Phone, s.Fax, s.Homepage)
-	if _, err := db.ExecContext(ctx, sqlstr, s.SupplierID, s.CompanyName, s.ContactName, s.ContactTitle, s.Address, s.City, s.Region, s.PostalCode, s.Country, s.Phone, s.Fax, s.Homepage); err != nil {
+	logf(sqlstr, s.SupplierName, s.ContactName, s.Address, s.City, s.PostalCode, s.Country, s.Phone)
+	res, err := db.ExecContext(ctx, sqlstr, s.SupplierID, s.SupplierName, s.ContactName, s.Address, s.City, s.PostalCode, s.Country, s.Phone)
+	if err != nil {
 		return logerror(err)
 	}
+	// retrieve id
+	id, err := res.LastInsertId()
+	if err != nil {
+		return logerror(err)
+	} // set primary key
+	s.SupplierID = sql.NullInt64{Valid: true, Int64: id}
 	// set exists
 	s._exists = true
 	return nil
 }
 
-// Update updates a Supplier in the database.
+// Update updates a [Supplier] in the database.
 func (s *Supplier) Update(ctx context.Context, db DB) error {
 	switch {
 	case !s._exists: // doesn't exist
@@ -68,21 +71,19 @@ func (s *Supplier) Update(ctx context.Context, db DB) error {
 	case s._deleted: // deleted
 		return logerror(&ErrUpdateFailed{ErrMarkedForDeletion})
 	}
-	// update with composite primary key
-	const sqlstr = `UPDATE public.suppliers SET (` +
-		`company_name, contact_name, contact_title, address, city, region, postal_code, country, phone, fax, homepage` +
-		`) = ( ` +
-		`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11` +
-		`) WHERE supplier_id = $12`
+	// update with primary key
+	const sqlstr = `UPDATE Suppliers SET ` +
+		`SupplierName = $1, ContactName = $2, Address = $3, City = $4, PostalCode = $5, Country = $6, Phone = $7 ` +
+		`WHERE SupplierID = $8`
 	// run
-	logf(sqlstr, s.CompanyName, s.ContactName, s.ContactTitle, s.Address, s.City, s.Region, s.PostalCode, s.Country, s.Phone, s.Fax, s.Homepage, s.SupplierID)
-	if _, err := db.ExecContext(ctx, sqlstr, s.CompanyName, s.ContactName, s.ContactTitle, s.Address, s.City, s.Region, s.PostalCode, s.Country, s.Phone, s.Fax, s.Homepage, s.SupplierID); err != nil {
+	logf(sqlstr, s.SupplierName, s.ContactName, s.Address, s.City, s.PostalCode, s.Country, s.Phone, s.SupplierID)
+	if _, err := db.ExecContext(ctx, sqlstr, s.SupplierName, s.ContactName, s.Address, s.City, s.PostalCode, s.Country, s.Phone, s.SupplierID); err != nil {
 		return logerror(err)
 	}
 	return nil
 }
 
-// Save saves the Supplier to the database.
+// Save saves the [Supplier] to the database.
 func (s *Supplier) Save(ctx context.Context, db DB) error {
 	if s.Exists() {
 		return s.Update(ctx, db)
@@ -90,35 +91,32 @@ func (s *Supplier) Save(ctx context.Context, db DB) error {
 	return s.Insert(ctx, db)
 }
 
-// Upsert performs an upsert for Supplier.
-//
-// NOTE: PostgreSQL 9.5+ only
+// Upsert performs an upsert for [Supplier].
 func (s *Supplier) Upsert(ctx context.Context, db DB) error {
 	switch {
 	case s._deleted: // deleted
 		return logerror(&ErrUpsertFailed{ErrMarkedForDeletion})
 	}
 	// upsert
-	const sqlstr = `INSERT INTO public.suppliers (` +
-		`supplier_id, company_name, contact_name, contact_title, address, city, region, postal_code, country, phone, fax, homepage` +
+	const sqlstr = `INSERT INTO Suppliers (` +
+		`SupplierID, SupplierName, ContactName, Address, City, PostalCode, Country, Phone` +
 		`) VALUES (` +
-		`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12` +
-		`) ON CONFLICT (supplier_id) DO UPDATE SET (` +
-		`supplier_id, company_name, contact_name, contact_title, address, city, region, postal_code, country, phone, fax, homepage` +
-		`) = (` +
-		`EXCLUDED.supplier_id, EXCLUDED.company_name, EXCLUDED.contact_name, EXCLUDED.contact_title, EXCLUDED.address, EXCLUDED.city, EXCLUDED.region, EXCLUDED.postal_code, EXCLUDED.country, EXCLUDED.phone, EXCLUDED.fax, EXCLUDED.homepage` +
-		`)`
+		`$1, $2, $3, $4, $5, $6, $7, $8` +
+		`)` +
+		` ON CONFLICT (SupplierID) DO ` +
+		`UPDATE SET ` +
+		`SupplierName = EXCLUDED.SupplierName, ContactName = EXCLUDED.ContactName, Address = EXCLUDED.Address, City = EXCLUDED.City, PostalCode = EXCLUDED.PostalCode, Country = EXCLUDED.Country, Phone = EXCLUDED.Phone `
 	// run
-	logf(sqlstr, s.SupplierID, s.CompanyName, s.ContactName, s.ContactTitle, s.Address, s.City, s.Region, s.PostalCode, s.Country, s.Phone, s.Fax, s.Homepage)
-	if _, err := db.ExecContext(ctx, sqlstr, s.SupplierID, s.CompanyName, s.ContactName, s.ContactTitle, s.Address, s.City, s.Region, s.PostalCode, s.Country, s.Phone, s.Fax, s.Homepage); err != nil {
-		return err
+	logf(sqlstr, s.SupplierID, s.SupplierName, s.ContactName, s.Address, s.City, s.PostalCode, s.Country, s.Phone)
+	if _, err := db.ExecContext(ctx, sqlstr, s.SupplierID, s.SupplierName, s.ContactName, s.Address, s.City, s.PostalCode, s.Country, s.Phone); err != nil {
+		return logerror(err)
 	}
 	// set exists
 	s._exists = true
 	return nil
 }
 
-// Delete deletes the Supplier from the database.
+// Delete deletes the [Supplier] from the database.
 func (s *Supplier) Delete(ctx context.Context, db DB) error {
 	switch {
 	case !s._exists: // doesn't exist
@@ -127,7 +125,8 @@ func (s *Supplier) Delete(ctx context.Context, db DB) error {
 		return nil
 	}
 	// delete with single primary key
-	const sqlstr = `DELETE FROM public.suppliers WHERE supplier_id = $1`
+	const sqlstr = `DELETE FROM Suppliers ` +
+		`WHERE SupplierID = $1`
 	// run
 	logf(sqlstr, s.SupplierID)
 	if _, err := db.ExecContext(ctx, sqlstr, s.SupplierID); err != nil {
@@ -138,21 +137,21 @@ func (s *Supplier) Delete(ctx context.Context, db DB) error {
 	return nil
 }
 
-// SupplierBySupplierID retrieves a row from 'public.suppliers' as a Supplier.
+// SupplierBySupplierID retrieves a row from 'Suppliers' as a [Supplier].
 //
-// Generated from index 'suppliers_pkey'.
-func SupplierBySupplierID(ctx context.Context, db DB, supplierID int16) (*Supplier, error) {
+// Generated from index 'Suppliers_SupplierID_pkey'.
+func SupplierBySupplierID(ctx context.Context, db DB, supplierID sql.NullInt64) (*Supplier, error) {
 	// query
 	const sqlstr = `SELECT ` +
-		`supplier_id, company_name, contact_name, contact_title, address, city, region, postal_code, country, phone, fax, homepage ` +
-		`FROM public.suppliers ` +
-		`WHERE supplier_id = $1`
+		`SupplierID, SupplierName, ContactName, Address, City, PostalCode, Country, Phone ` +
+		`FROM Suppliers ` +
+		`WHERE SupplierID = $1`
 	// run
 	logf(sqlstr, supplierID)
 	s := Supplier{
 		_exists: true,
 	}
-	if err := db.QueryRowContext(ctx, sqlstr, supplierID).Scan(&s.SupplierID, &s.CompanyName, &s.ContactName, &s.ContactTitle, &s.Address, &s.City, &s.Region, &s.PostalCode, &s.Country, &s.Phone, &s.Fax, &s.Homepage); err != nil {
+	if err := db.QueryRowContext(ctx, sqlstr, supplierID).Scan(&s.SupplierID, &s.SupplierName, &s.ContactName, &s.Address, &s.City, &s.PostalCode, &s.Country, &s.Phone); err != nil {
 		return nil, logerror(err)
 	}
 	return &s, nil

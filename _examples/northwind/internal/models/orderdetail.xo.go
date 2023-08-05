@@ -4,31 +4,31 @@ package models
 
 import (
 	"context"
+	"database/sql"
 )
 
-// OrderDetail represents a row from 'public.order_details'.
+// OrderDetail represents a row from 'OrderDetails'.
 type OrderDetail struct {
-	OrderID   int16   `json:"order_id"`   // order_id
-	ProductID int16   `json:"product_id"` // product_id
-	UnitPrice float32 `json:"unit_price"` // unit_price
-	Quantity  int16   `json:"quantity"`   // quantity
-	Discount  float32 `json:"discount"`   // discount
+	OrderDetailID sql.NullInt64 `json:"OrderDetailID"` // OrderDetailID
+	OrderID       sql.NullInt64 `json:"OrderID"`       // OrderID
+	ProductID     sql.NullInt64 `json:"ProductID"`     // ProductID
+	Quantity      sql.NullInt64 `json:"Quantity"`      // Quantity
 	// xo fields
 	_exists, _deleted bool
 }
 
-// Exists returns true when the OrderDetail exists in the database.
+// Exists returns true when the [OrderDetail] exists in the database.
 func (od *OrderDetail) Exists() bool {
 	return od._exists
 }
 
-// Deleted returns true when the OrderDetail has been marked for deletion from
-// the database.
+// Deleted returns true when the [OrderDetail] has been marked for deletion
+// from the database.
 func (od *OrderDetail) Deleted() bool {
 	return od._deleted
 }
 
-// Insert inserts the OrderDetail to the database.
+// Insert inserts the [OrderDetail] to the database.
 func (od *OrderDetail) Insert(ctx context.Context, db DB) error {
 	switch {
 	case od._exists: // already exists
@@ -36,23 +36,30 @@ func (od *OrderDetail) Insert(ctx context.Context, db DB) error {
 	case od._deleted: // deleted
 		return logerror(&ErrInsertFailed{ErrMarkedForDeletion})
 	}
-	// insert (basic)
-	const sqlstr = `INSERT INTO public.order_details (` +
-		`order_id, product_id, unit_price, quantity, discount` +
+	// insert (primary key generated and returned by database)
+	const sqlstr = `INSERT INTO OrderDetails (` +
+		`OrderDetailID, OrderID, ProductID, Quantity` +
 		`) VALUES (` +
-		`$1, $2, $3, $4, $5` +
+		`$1, $2, $3, $4` +
 		`)`
 	// run
-	logf(sqlstr, od.OrderID, od.ProductID, od.UnitPrice, od.Quantity, od.Discount)
-	if _, err := db.ExecContext(ctx, sqlstr, od.OrderID, od.ProductID, od.UnitPrice, od.Quantity, od.Discount); err != nil {
+	logf(sqlstr, od.OrderID, od.ProductID, od.Quantity)
+	res, err := db.ExecContext(ctx, sqlstr, od.OrderDetailID, od.OrderID, od.ProductID, od.Quantity)
+	if err != nil {
 		return logerror(err)
 	}
+	// retrieve id
+	id, err := res.LastInsertId()
+	if err != nil {
+		return logerror(err)
+	} // set primary key
+	od.OrderDetailID = sql.NullInt64{Valid: true, Int64: id}
 	// set exists
 	od._exists = true
 	return nil
 }
 
-// Update updates a OrderDetail in the database.
+// Update updates a [OrderDetail] in the database.
 func (od *OrderDetail) Update(ctx context.Context, db DB) error {
 	switch {
 	case !od._exists: // doesn't exist
@@ -60,21 +67,19 @@ func (od *OrderDetail) Update(ctx context.Context, db DB) error {
 	case od._deleted: // deleted
 		return logerror(&ErrUpdateFailed{ErrMarkedForDeletion})
 	}
-	// update with composite primary key
-	const sqlstr = `UPDATE public.order_details SET (` +
-		`unit_price, quantity, discount` +
-		`) = ( ` +
-		`$1, $2, $3` +
-		`) WHERE order_id = $4 AND product_id = $5`
+	// update with primary key
+	const sqlstr = `UPDATE OrderDetails SET ` +
+		`OrderID = $1, ProductID = $2, Quantity = $3 ` +
+		`WHERE OrderDetailID = $4`
 	// run
-	logf(sqlstr, od.UnitPrice, od.Quantity, od.Discount, od.OrderID, od.ProductID)
-	if _, err := db.ExecContext(ctx, sqlstr, od.UnitPrice, od.Quantity, od.Discount, od.OrderID, od.ProductID); err != nil {
+	logf(sqlstr, od.OrderID, od.ProductID, od.Quantity, od.OrderDetailID)
+	if _, err := db.ExecContext(ctx, sqlstr, od.OrderID, od.ProductID, od.Quantity, od.OrderDetailID); err != nil {
 		return logerror(err)
 	}
 	return nil
 }
 
-// Save saves the OrderDetail to the database.
+// Save saves the [OrderDetail] to the database.
 func (od *OrderDetail) Save(ctx context.Context, db DB) error {
 	if od.Exists() {
 		return od.Update(ctx, db)
@@ -82,35 +87,32 @@ func (od *OrderDetail) Save(ctx context.Context, db DB) error {
 	return od.Insert(ctx, db)
 }
 
-// Upsert performs an upsert for OrderDetail.
-//
-// NOTE: PostgreSQL 9.5+ only
+// Upsert performs an upsert for [OrderDetail].
 func (od *OrderDetail) Upsert(ctx context.Context, db DB) error {
 	switch {
 	case od._deleted: // deleted
 		return logerror(&ErrUpsertFailed{ErrMarkedForDeletion})
 	}
 	// upsert
-	const sqlstr = `INSERT INTO public.order_details (` +
-		`order_id, product_id, unit_price, quantity, discount` +
+	const sqlstr = `INSERT INTO OrderDetails (` +
+		`OrderDetailID, OrderID, ProductID, Quantity` +
 		`) VALUES (` +
-		`$1, $2, $3, $4, $5` +
-		`) ON CONFLICT (order_id, product_id) DO UPDATE SET (` +
-		`order_id, product_id, unit_price, quantity, discount` +
-		`) = (` +
-		`EXCLUDED.order_id, EXCLUDED.product_id, EXCLUDED.unit_price, EXCLUDED.quantity, EXCLUDED.discount` +
-		`)`
+		`$1, $2, $3, $4` +
+		`)` +
+		` ON CONFLICT (OrderDetailID) DO ` +
+		`UPDATE SET ` +
+		`OrderID = EXCLUDED.OrderID, ProductID = EXCLUDED.ProductID, Quantity = EXCLUDED.Quantity `
 	// run
-	logf(sqlstr, od.OrderID, od.ProductID, od.UnitPrice, od.Quantity, od.Discount)
-	if _, err := db.ExecContext(ctx, sqlstr, od.OrderID, od.ProductID, od.UnitPrice, od.Quantity, od.Discount); err != nil {
-		return err
+	logf(sqlstr, od.OrderDetailID, od.OrderID, od.ProductID, od.Quantity)
+	if _, err := db.ExecContext(ctx, sqlstr, od.OrderDetailID, od.OrderID, od.ProductID, od.Quantity); err != nil {
+		return logerror(err)
 	}
 	// set exists
 	od._exists = true
 	return nil
 }
 
-// Delete deletes the OrderDetail from the database.
+// Delete deletes the [OrderDetail] from the database.
 func (od *OrderDetail) Delete(ctx context.Context, db DB) error {
 	switch {
 	case !od._exists: // doesn't exist
@@ -118,11 +120,12 @@ func (od *OrderDetail) Delete(ctx context.Context, db DB) error {
 	case od._deleted: // deleted
 		return nil
 	}
-	// delete with composite primary key
-	const sqlstr = `DELETE FROM public.order_details WHERE order_id = $1 AND product_id = $2`
+	// delete with single primary key
+	const sqlstr = `DELETE FROM OrderDetails ` +
+		`WHERE OrderDetailID = $1`
 	// run
-	logf(sqlstr, od.OrderID, od.ProductID)
-	if _, err := db.ExecContext(ctx, sqlstr, od.OrderID, od.ProductID); err != nil {
+	logf(sqlstr, od.OrderDetailID)
+	if _, err := db.ExecContext(ctx, sqlstr, od.OrderDetailID); err != nil {
 		return logerror(err)
 	}
 	// set deleted
@@ -130,36 +133,36 @@ func (od *OrderDetail) Delete(ctx context.Context, db DB) error {
 	return nil
 }
 
-// OrderDetailByOrderIDProductID retrieves a row from 'public.order_details' as a OrderDetail.
+// OrderDetailByOrderDetailID retrieves a row from 'OrderDetails' as a [OrderDetail].
 //
-// Generated from index 'order_details_pkey'.
-func OrderDetailByOrderIDProductID(ctx context.Context, db DB, orderID, productID int16) (*OrderDetail, error) {
+// Generated from index 'OrderDetails_OrderDetailID_pkey'.
+func OrderDetailByOrderDetailID(ctx context.Context, db DB, orderDetailID sql.NullInt64) (*OrderDetail, error) {
 	// query
 	const sqlstr = `SELECT ` +
-		`order_id, product_id, unit_price, quantity, discount ` +
-		`FROM public.order_details ` +
-		`WHERE order_id = $1 AND product_id = $2`
+		`OrderDetailID, OrderID, ProductID, Quantity ` +
+		`FROM OrderDetails ` +
+		`WHERE OrderDetailID = $1`
 	// run
-	logf(sqlstr, orderID, productID)
+	logf(sqlstr, orderDetailID)
 	od := OrderDetail{
 		_exists: true,
 	}
-	if err := db.QueryRowContext(ctx, sqlstr, orderID, productID).Scan(&od.OrderID, &od.ProductID, &od.UnitPrice, &od.Quantity, &od.Discount); err != nil {
+	if err := db.QueryRowContext(ctx, sqlstr, orderDetailID).Scan(&od.OrderDetailID, &od.OrderID, &od.ProductID, &od.Quantity); err != nil {
 		return nil, logerror(err)
 	}
 	return &od, nil
 }
 
-// Order returns the Order associated with the OrderDetail's OrderID (order_id).
+// Order returns the Order associated with the [OrderDetail]'s (OrderID).
 //
-// Generated from foreign key 'order_details_order_id_fkey'.
+// Generated from foreign key 'OrderDetails_OrderID_fkey'.
 func (od *OrderDetail) Order(ctx context.Context, db DB) (*Order, error) {
 	return OrderByOrderID(ctx, db, od.OrderID)
 }
 
-// Product returns the Product associated with the OrderDetail's ProductID (product_id).
+// Product returns the Product associated with the [OrderDetail]'s (ProductID).
 //
-// Generated from foreign key 'order_details_product_id_fkey'.
+// Generated from foreign key 'OrderDetails_ProductID_fkey'.
 func (od *OrderDetail) Product(ctx context.Context, db DB) (*Product, error) {
 	return ProductByProductID(ctx, db, od.ProductID)
 }

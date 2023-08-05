@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package category.v1;
 
-option go_package = "northwind/proto/category/v1";
+option go_package = "northwind/api/category/v1";
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
@@ -53,31 +53,28 @@ service CategoryService {
 }
 
 message CategoryByCategoryIDRequest { 
-    int32 category_id = 1;
+    google.protobuf.Int64Value category_id = 1;
 }
 
 message DeleteRequest { 
-    int32 category_id = 1;
+    google.protobuf.Int64Value category_id = 1;
 }
 
 message InsertRequest { 
-    int32 category_id = 1;
-    string category_name = 2;
+    google.protobuf.Int64Value category_id = 1;
+    google.protobuf.StringValue category_name = 2;
     google.protobuf.StringValue description = 3;
-    bytes picture = 4;
 }
 
 message UpdateRequest { 
     // Output only.
-    int32 category_id = 1;
-    string category_name = 2;
+    google.protobuf.Int64Value category_id = 1;
+    google.protobuf.StringValue category_name = 2;
     google.protobuf.StringValue description = 3;
-    bytes picture = 4;
 }
 
 message UpsertRequest { 
-    int32 category_id = 1;
-    string category_name = 2;
+    google.protobuf.Int64Value category_id = 1;
+    google.protobuf.StringValue category_name = 2;
     google.protobuf.StringValue description = 3;
-    bytes picture = 4;
 }

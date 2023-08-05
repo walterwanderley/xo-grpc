@@ -27,7 +27,7 @@ func NewSupplierService(logger *zap.Logger, db *sql.DB) pb.SupplierServiceServer
 }
 
 func (s *SupplierService) Delete(ctx context.Context, req *pb.DeleteRequest) (res *emptypb.Empty, err error) {
-	m, err := models.SupplierBySupplierID(ctx, s.db, int16(req.SupplierId))
+	m, err := models.SupplierBySupplierID(ctx, s.db, sql.NullInt64{Valid: true, Int64: req.SupplierId.Value})
 	if err != nil {
 		return
 	}
@@ -50,21 +50,11 @@ func (s *SupplierService) Insert(ctx context.Context, req *pb.InsertRequest) (re
 	if v := req.GetCity(); v != nil {
 		m.City = sql.NullString{Valid: true, String: v.Value}
 	}
-	m.CompanyName = req.GetCompanyName()
 	if v := req.GetContactName(); v != nil {
 		m.ContactName = sql.NullString{Valid: true, String: v.Value}
 	}
-	if v := req.GetContactTitle(); v != nil {
-		m.ContactTitle = sql.NullString{Valid: true, String: v.Value}
-	}
 	if v := req.GetCountry(); v != nil {
 		m.Country = sql.NullString{Valid: true, String: v.Value}
-	}
-	if v := req.GetFax(); v != nil {
-		m.Fax = sql.NullString{Valid: true, String: v.Value}
-	}
-	if v := req.GetHomepage(); v != nil {
-		m.Homepage = sql.NullString{Valid: true, String: v.Value}
 	}
 	if v := req.GetPhone(); v != nil {
 		m.Phone = sql.NullString{Valid: true, String: v.Value}
@@ -72,10 +62,12 @@ func (s *SupplierService) Insert(ctx context.Context, req *pb.InsertRequest) (re
 	if v := req.GetPostalCode(); v != nil {
 		m.PostalCode = sql.NullString{Valid: true, String: v.Value}
 	}
-	if v := req.GetRegion(); v != nil {
-		m.Region = sql.NullString{Valid: true, String: v.Value}
+	if v := req.GetSupplierId(); v != nil {
+		m.SupplierID = sql.NullInt64{Valid: true, Int64: v.Value}
 	}
-	m.SupplierID = int16(req.GetSupplierId())
+	if v := req.GetSupplierName(); v != nil {
+		m.SupplierName = sql.NullString{Valid: true, String: v.Value}
+	}
 
 	err = m.Insert(ctx, s.db)
 	if err != nil {
@@ -91,7 +83,10 @@ func (s *SupplierService) Insert(ctx context.Context, req *pb.InsertRequest) (re
 
 func (s *SupplierService) SupplierBySupplierID(ctx context.Context, req *pb.SupplierBySupplierIDRequest) (res *typespb.Supplier, err error) {
 
-	supplierID := int16(req.GetSupplierId())
+	var supplierID sql.NullInt64
+	if v := req.GetSupplierId(); v != nil {
+		supplierID = sql.NullInt64{Valid: true, Int64: v.Value}
+	}
 
 	result, err := models.SupplierBySupplierID(ctx, s.db, supplierID)
 	if err != nil {
@@ -99,22 +94,20 @@ func (s *SupplierService) SupplierBySupplierID(ctx context.Context, req *pb.Supp
 	}
 
 	res = new(typespb.Supplier)
-	res.SupplierId = int32(result.SupplierID)
-	res.CompanyName = result.CompanyName
+	if result.SupplierID.Valid {
+		res.SupplierId = wrapperspb.Int64(result.SupplierID.Int64)
+	}
+	if result.SupplierName.Valid {
+		res.SupplierName = wrapperspb.String(result.SupplierName.String)
+	}
 	if result.ContactName.Valid {
 		res.ContactName = wrapperspb.String(result.ContactName.String)
-	}
-	if result.ContactTitle.Valid {
-		res.ContactTitle = wrapperspb.String(result.ContactTitle.String)
 	}
 	if result.Address.Valid {
 		res.Address = wrapperspb.String(result.Address.String)
 	}
 	if result.City.Valid {
 		res.City = wrapperspb.String(result.City.String)
-	}
-	if result.Region.Valid {
-		res.Region = wrapperspb.String(result.Region.String)
 	}
 	if result.PostalCode.Valid {
 		res.PostalCode = wrapperspb.String(result.PostalCode.String)
@@ -125,18 +118,12 @@ func (s *SupplierService) SupplierBySupplierID(ctx context.Context, req *pb.Supp
 	if result.Phone.Valid {
 		res.Phone = wrapperspb.String(result.Phone.String)
 	}
-	if result.Fax.Valid {
-		res.Fax = wrapperspb.String(result.Fax.String)
-	}
-	if result.Homepage.Valid {
-		res.Homepage = wrapperspb.String(result.Homepage.String)
-	}
 
 	return
 }
 
 func (s *SupplierService) Update(ctx context.Context, req *pb.UpdateRequest) (res *emptypb.Empty, err error) {
-	m, err := models.SupplierBySupplierID(ctx, s.db, int16(req.SupplierId))
+	m, err := models.SupplierBySupplierID(ctx, s.db, sql.NullInt64{Valid: true, Int64: req.SupplierId.Value})
 	if err != nil {
 		return
 	}
@@ -146,21 +133,11 @@ func (s *SupplierService) Update(ctx context.Context, req *pb.UpdateRequest) (re
 	if v := req.GetCity(); v != nil {
 		m.City = sql.NullString{Valid: true, String: v.Value}
 	}
-	m.CompanyName = req.GetCompanyName()
 	if v := req.GetContactName(); v != nil {
 		m.ContactName = sql.NullString{Valid: true, String: v.Value}
 	}
-	if v := req.GetContactTitle(); v != nil {
-		m.ContactTitle = sql.NullString{Valid: true, String: v.Value}
-	}
 	if v := req.GetCountry(); v != nil {
 		m.Country = sql.NullString{Valid: true, String: v.Value}
-	}
-	if v := req.GetFax(); v != nil {
-		m.Fax = sql.NullString{Valid: true, String: v.Value}
-	}
-	if v := req.GetHomepage(); v != nil {
-		m.Homepage = sql.NullString{Valid: true, String: v.Value}
 	}
 	if v := req.GetPhone(); v != nil {
 		m.Phone = sql.NullString{Valid: true, String: v.Value}
@@ -168,10 +145,12 @@ func (s *SupplierService) Update(ctx context.Context, req *pb.UpdateRequest) (re
 	if v := req.GetPostalCode(); v != nil {
 		m.PostalCode = sql.NullString{Valid: true, String: v.Value}
 	}
-	if v := req.GetRegion(); v != nil {
-		m.Region = sql.NullString{Valid: true, String: v.Value}
+	if v := req.GetSupplierId(); v != nil {
+		m.SupplierID = sql.NullInt64{Valid: true, Int64: v.Value}
 	}
-	m.SupplierID = int16(req.GetSupplierId())
+	if v := req.GetSupplierName(); v != nil {
+		m.SupplierName = sql.NullString{Valid: true, String: v.Value}
+	}
 
 	err = m.Update(ctx, s.db)
 	if err != nil {
@@ -191,21 +170,11 @@ func (s *SupplierService) Upsert(ctx context.Context, req *pb.UpsertRequest) (re
 	if v := req.GetCity(); v != nil {
 		m.City = sql.NullString{Valid: true, String: v.Value}
 	}
-	m.CompanyName = req.GetCompanyName()
 	if v := req.GetContactName(); v != nil {
 		m.ContactName = sql.NullString{Valid: true, String: v.Value}
 	}
-	if v := req.GetContactTitle(); v != nil {
-		m.ContactTitle = sql.NullString{Valid: true, String: v.Value}
-	}
 	if v := req.GetCountry(); v != nil {
 		m.Country = sql.NullString{Valid: true, String: v.Value}
-	}
-	if v := req.GetFax(); v != nil {
-		m.Fax = sql.NullString{Valid: true, String: v.Value}
-	}
-	if v := req.GetHomepage(); v != nil {
-		m.Homepage = sql.NullString{Valid: true, String: v.Value}
 	}
 	if v := req.GetPhone(); v != nil {
 		m.Phone = sql.NullString{Valid: true, String: v.Value}
@@ -213,10 +182,12 @@ func (s *SupplierService) Upsert(ctx context.Context, req *pb.UpsertRequest) (re
 	if v := req.GetPostalCode(); v != nil {
 		m.PostalCode = sql.NullString{Valid: true, String: v.Value}
 	}
-	if v := req.GetRegion(); v != nil {
-		m.Region = sql.NullString{Valid: true, String: v.Value}
+	if v := req.GetSupplierId(); v != nil {
+		m.SupplierID = sql.NullInt64{Valid: true, Int64: v.Value}
 	}
-	m.SupplierID = int16(req.GetSupplierId())
+	if v := req.GetSupplierName(); v != nil {
+		m.SupplierName = sql.NullString{Valid: true, String: v.Value}
+	}
 
 	err = m.Upsert(ctx, s.db)
 	if err != nil {

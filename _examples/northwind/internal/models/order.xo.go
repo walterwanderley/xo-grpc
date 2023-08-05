@@ -7,38 +7,29 @@ import (
 	"database/sql"
 )
 
-// Order represents a row from 'public.orders'.
+// Order represents a row from 'Orders'.
 type Order struct {
-	OrderID        int16           `json:"order_id"`         // order_id
-	CustomerID     sql.NullString  `json:"customer_id"`      // customer_id
-	EmployeeID     sql.NullInt64   `json:"employee_id"`      // employee_id
-	OrderDate      sql.NullTime    `json:"order_date"`       // order_date
-	RequiredDate   sql.NullTime    `json:"required_date"`    // required_date
-	ShippedDate    sql.NullTime    `json:"shipped_date"`     // shipped_date
-	ShipVia        sql.NullInt64   `json:"ship_via"`         // ship_via
-	Freight        sql.NullFloat64 `json:"freight"`          // freight
-	ShipName       sql.NullString  `json:"ship_name"`        // ship_name
-	ShipAddress    sql.NullString  `json:"ship_address"`     // ship_address
-	ShipCity       sql.NullString  `json:"ship_city"`        // ship_city
-	ShipRegion     sql.NullString  `json:"ship_region"`      // ship_region
-	ShipPostalCode sql.NullString  `json:"ship_postal_code"` // ship_postal_code
-	ShipCountry    sql.NullString  `json:"ship_country"`     // ship_country
+	OrderID    sql.NullInt64 `json:"OrderID"`    // OrderID
+	CustomerID sql.NullInt64 `json:"CustomerID"` // CustomerID
+	EmployeeID sql.NullInt64 `json:"EmployeeID"` // EmployeeID
+	OrderDate  *Time         `json:"OrderDate"`  // OrderDate
+	ShipperID  sql.NullInt64 `json:"ShipperID"`  // ShipperID
 	// xo fields
 	_exists, _deleted bool
 }
 
-// Exists returns true when the Order exists in the database.
+// Exists returns true when the [Order] exists in the database.
 func (o *Order) Exists() bool {
 	return o._exists
 }
 
-// Deleted returns true when the Order has been marked for deletion from
-// the database.
+// Deleted returns true when the [Order] has been marked for deletion
+// from the database.
 func (o *Order) Deleted() bool {
 	return o._deleted
 }
 
-// Insert inserts the Order to the database.
+// Insert inserts the [Order] to the database.
 func (o *Order) Insert(ctx context.Context, db DB) error {
 	switch {
 	case o._exists: // already exists
@@ -46,23 +37,30 @@ func (o *Order) Insert(ctx context.Context, db DB) error {
 	case o._deleted: // deleted
 		return logerror(&ErrInsertFailed{ErrMarkedForDeletion})
 	}
-	// insert (basic)
-	const sqlstr = `INSERT INTO public.orders (` +
-		`order_id, customer_id, employee_id, order_date, required_date, shipped_date, ship_via, freight, ship_name, ship_address, ship_city, ship_region, ship_postal_code, ship_country` +
+	// insert (primary key generated and returned by database)
+	const sqlstr = `INSERT INTO Orders (` +
+		`OrderID, CustomerID, EmployeeID, OrderDate, ShipperID` +
 		`) VALUES (` +
-		`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14` +
+		`$1, $2, $3, $4, $5` +
 		`)`
 	// run
-	logf(sqlstr, o.OrderID, o.CustomerID, o.EmployeeID, o.OrderDate, o.RequiredDate, o.ShippedDate, o.ShipVia, o.Freight, o.ShipName, o.ShipAddress, o.ShipCity, o.ShipRegion, o.ShipPostalCode, o.ShipCountry)
-	if _, err := db.ExecContext(ctx, sqlstr, o.OrderID, o.CustomerID, o.EmployeeID, o.OrderDate, o.RequiredDate, o.ShippedDate, o.ShipVia, o.Freight, o.ShipName, o.ShipAddress, o.ShipCity, o.ShipRegion, o.ShipPostalCode, o.ShipCountry); err != nil {
+	logf(sqlstr, o.CustomerID, o.EmployeeID, o.OrderDate, o.ShipperID)
+	res, err := db.ExecContext(ctx, sqlstr, o.OrderID, o.CustomerID, o.EmployeeID, o.OrderDate, o.ShipperID)
+	if err != nil {
 		return logerror(err)
 	}
+	// retrieve id
+	id, err := res.LastInsertId()
+	if err != nil {
+		return logerror(err)
+	} // set primary key
+	o.OrderID = sql.NullInt64{Valid: true, Int64: id}
 	// set exists
 	o._exists = true
 	return nil
 }
 
-// Update updates a Order in the database.
+// Update updates a [Order] in the database.
 func (o *Order) Update(ctx context.Context, db DB) error {
 	switch {
 	case !o._exists: // doesn't exist
@@ -70,21 +68,19 @@ func (o *Order) Update(ctx context.Context, db DB) error {
 	case o._deleted: // deleted
 		return logerror(&ErrUpdateFailed{ErrMarkedForDeletion})
 	}
-	// update with composite primary key
-	const sqlstr = `UPDATE public.orders SET (` +
-		`customer_id, employee_id, order_date, required_date, shipped_date, ship_via, freight, ship_name, ship_address, ship_city, ship_region, ship_postal_code, ship_country` +
-		`) = ( ` +
-		`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13` +
-		`) WHERE order_id = $14`
+	// update with primary key
+	const sqlstr = `UPDATE Orders SET ` +
+		`CustomerID = $1, EmployeeID = $2, OrderDate = $3, ShipperID = $4 ` +
+		`WHERE OrderID = $5`
 	// run
-	logf(sqlstr, o.CustomerID, o.EmployeeID, o.OrderDate, o.RequiredDate, o.ShippedDate, o.ShipVia, o.Freight, o.ShipName, o.ShipAddress, o.ShipCity, o.ShipRegion, o.ShipPostalCode, o.ShipCountry, o.OrderID)
-	if _, err := db.ExecContext(ctx, sqlstr, o.CustomerID, o.EmployeeID, o.OrderDate, o.RequiredDate, o.ShippedDate, o.ShipVia, o.Freight, o.ShipName, o.ShipAddress, o.ShipCity, o.ShipRegion, o.ShipPostalCode, o.ShipCountry, o.OrderID); err != nil {
+	logf(sqlstr, o.CustomerID, o.EmployeeID, o.OrderDate, o.ShipperID, o.OrderID)
+	if _, err := db.ExecContext(ctx, sqlstr, o.CustomerID, o.EmployeeID, o.OrderDate, o.ShipperID, o.OrderID); err != nil {
 		return logerror(err)
 	}
 	return nil
 }
 
-// Save saves the Order to the database.
+// Save saves the [Order] to the database.
 func (o *Order) Save(ctx context.Context, db DB) error {
 	if o.Exists() {
 		return o.Update(ctx, db)
@@ -92,35 +88,32 @@ func (o *Order) Save(ctx context.Context, db DB) error {
 	return o.Insert(ctx, db)
 }
 
-// Upsert performs an upsert for Order.
-//
-// NOTE: PostgreSQL 9.5+ only
+// Upsert performs an upsert for [Order].
 func (o *Order) Upsert(ctx context.Context, db DB) error {
 	switch {
 	case o._deleted: // deleted
 		return logerror(&ErrUpsertFailed{ErrMarkedForDeletion})
 	}
 	// upsert
-	const sqlstr = `INSERT INTO public.orders (` +
-		`order_id, customer_id, employee_id, order_date, required_date, shipped_date, ship_via, freight, ship_name, ship_address, ship_city, ship_region, ship_postal_code, ship_country` +
+	const sqlstr = `INSERT INTO Orders (` +
+		`OrderID, CustomerID, EmployeeID, OrderDate, ShipperID` +
 		`) VALUES (` +
-		`$1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14` +
-		`) ON CONFLICT (order_id) DO UPDATE SET (` +
-		`order_id, customer_id, employee_id, order_date, required_date, shipped_date, ship_via, freight, ship_name, ship_address, ship_city, ship_region, ship_postal_code, ship_country` +
-		`) = (` +
-		`EXCLUDED.order_id, EXCLUDED.customer_id, EXCLUDED.employee_id, EXCLUDED.order_date, EXCLUDED.required_date, EXCLUDED.shipped_date, EXCLUDED.ship_via, EXCLUDED.freight, EXCLUDED.ship_name, EXCLUDED.ship_address, EXCLUDED.ship_city, EXCLUDED.ship_region, EXCLUDED.ship_postal_code, EXCLUDED.ship_country` +
-		`)`
+		`$1, $2, $3, $4, $5` +
+		`)` +
+		` ON CONFLICT (OrderID) DO ` +
+		`UPDATE SET ` +
+		`CustomerID = EXCLUDED.CustomerID, EmployeeID = EXCLUDED.EmployeeID, OrderDate = EXCLUDED.OrderDate, ShipperID = EXCLUDED.ShipperID `
 	// run
-	logf(sqlstr, o.OrderID, o.CustomerID, o.EmployeeID, o.OrderDate, o.RequiredDate, o.ShippedDate, o.ShipVia, o.Freight, o.ShipName, o.ShipAddress, o.ShipCity, o.ShipRegion, o.ShipPostalCode, o.ShipCountry)
-	if _, err := db.ExecContext(ctx, sqlstr, o.OrderID, o.CustomerID, o.EmployeeID, o.OrderDate, o.RequiredDate, o.ShippedDate, o.ShipVia, o.Freight, o.ShipName, o.ShipAddress, o.ShipCity, o.ShipRegion, o.ShipPostalCode, o.ShipCountry); err != nil {
-		return err
+	logf(sqlstr, o.OrderID, o.CustomerID, o.EmployeeID, o.OrderDate, o.ShipperID)
+	if _, err := db.ExecContext(ctx, sqlstr, o.OrderID, o.CustomerID, o.EmployeeID, o.OrderDate, o.ShipperID); err != nil {
+		return logerror(err)
 	}
 	// set exists
 	o._exists = true
 	return nil
 }
 
-// Delete deletes the Order from the database.
+// Delete deletes the [Order] from the database.
 func (o *Order) Delete(ctx context.Context, db DB) error {
 	switch {
 	case !o._exists: // doesn't exist
@@ -129,7 +122,8 @@ func (o *Order) Delete(ctx context.Context, db DB) error {
 		return nil
 	}
 	// delete with single primary key
-	const sqlstr = `DELETE FROM public.orders WHERE order_id = $1`
+	const sqlstr = `DELETE FROM Orders ` +
+		`WHERE OrderID = $1`
 	// run
 	logf(sqlstr, o.OrderID)
 	if _, err := db.ExecContext(ctx, sqlstr, o.OrderID); err != nil {
@@ -140,43 +134,43 @@ func (o *Order) Delete(ctx context.Context, db DB) error {
 	return nil
 }
 
-// OrderByOrderID retrieves a row from 'public.orders' as a Order.
+// OrderByOrderID retrieves a row from 'Orders' as a [Order].
 //
-// Generated from index 'orders_pkey'.
-func OrderByOrderID(ctx context.Context, db DB, orderID int16) (*Order, error) {
+// Generated from index 'Orders_OrderID_pkey'.
+func OrderByOrderID(ctx context.Context, db DB, orderID sql.NullInt64) (*Order, error) {
 	// query
 	const sqlstr = `SELECT ` +
-		`order_id, customer_id, employee_id, order_date, required_date, shipped_date, ship_via, freight, ship_name, ship_address, ship_city, ship_region, ship_postal_code, ship_country ` +
-		`FROM public.orders ` +
-		`WHERE order_id = $1`
+		`OrderID, CustomerID, EmployeeID, OrderDate, ShipperID ` +
+		`FROM Orders ` +
+		`WHERE OrderID = $1`
 	// run
 	logf(sqlstr, orderID)
 	o := Order{
 		_exists: true,
 	}
-	if err := db.QueryRowContext(ctx, sqlstr, orderID).Scan(&o.OrderID, &o.CustomerID, &o.EmployeeID, &o.OrderDate, &o.RequiredDate, &o.ShippedDate, &o.ShipVia, &o.Freight, &o.ShipName, &o.ShipAddress, &o.ShipCity, &o.ShipRegion, &o.ShipPostalCode, &o.ShipCountry); err != nil {
+	if err := db.QueryRowContext(ctx, sqlstr, orderID).Scan(&o.OrderID, &o.CustomerID, &o.EmployeeID, &o.OrderDate, &o.ShipperID); err != nil {
 		return nil, logerror(err)
 	}
 	return &o, nil
 }
 
-// Customer returns the Customer associated with the Order's CustomerID (customer_id).
+// Customer returns the Customer associated with the [Order]'s (CustomerID).
 //
-// Generated from foreign key 'orders_customer_id_fkey'.
+// Generated from foreign key 'Orders_CustomerID_fkey'.
 func (o *Order) Customer(ctx context.Context, db DB) (*Customer, error) {
-	return CustomerByCustomerID(ctx, db, o.CustomerID.String)
+	return CustomerByCustomerID(ctx, db, o.CustomerID)
 }
 
-// Employee returns the Employee associated with the Order's EmployeeID (employee_id).
+// Employee returns the Employee associated with the [Order]'s (EmployeeID).
 //
-// Generated from foreign key 'orders_employee_id_fkey'.
+// Generated from foreign key 'Orders_EmployeeID_fkey'.
 func (o *Order) Employee(ctx context.Context, db DB) (*Employee, error) {
-	return EmployeeByEmployeeID(ctx, db, int16(o.EmployeeID.Int64))
+	return EmployeeByEmployeeID(ctx, db, o.EmployeeID)
 }
 
-// Shipper returns the Shipper associated with the Order's ShipVia (ship_via).
+// Shipper returns the Shipper associated with the [Order]'s (ShipperID).
 //
-// Generated from foreign key 'orders_ship_via_fkey'.
+// Generated from foreign key 'Orders_ShipperID_fkey'.
 func (o *Order) Shipper(ctx context.Context, db DB) (*Shipper, error) {
-	return ShipperByShipperID(ctx, db, int16(o.ShipVia.Int64))
+	return ShipperByShipperID(ctx, db, o.ShipperID)
 }

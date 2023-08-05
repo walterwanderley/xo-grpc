@@ -29,7 +29,7 @@ func NewOrderService(logger *zap.Logger, db *sql.DB) pb.OrderServiceServer {
 }
 
 func (s *OrderService) Customer(ctx context.Context, req *pb.CustomerRequest) (res *typespb.Customer, err error) {
-	m, err := models.OrderByOrderID(ctx, s.db, int16(req.OrderId))
+	m, err := models.OrderByOrderID(ctx, s.db, sql.NullInt64{Valid: true, Int64: req.OrderId.Value})
 	if err != nil {
 		return
 	}
@@ -40,13 +40,14 @@ func (s *OrderService) Customer(ctx context.Context, req *pb.CustomerRequest) (r
 	}
 
 	res = new(typespb.Customer)
-	res.CustomerId = result.CustomerID
-	res.CompanyName = result.CompanyName
+	if result.CustomerID.Valid {
+		res.CustomerId = wrapperspb.Int64(result.CustomerID.Int64)
+	}
+	if result.CustomerName.Valid {
+		res.CustomerName = wrapperspb.String(result.CustomerName.String)
+	}
 	if result.ContactName.Valid {
 		res.ContactName = wrapperspb.String(result.ContactName.String)
-	}
-	if result.ContactTitle.Valid {
-		res.ContactTitle = wrapperspb.String(result.ContactTitle.String)
 	}
 	if result.Address.Valid {
 		res.Address = wrapperspb.String(result.Address.String)
@@ -54,27 +55,18 @@ func (s *OrderService) Customer(ctx context.Context, req *pb.CustomerRequest) (r
 	if result.City.Valid {
 		res.City = wrapperspb.String(result.City.String)
 	}
-	if result.Region.Valid {
-		res.Region = wrapperspb.String(result.Region.String)
-	}
 	if result.PostalCode.Valid {
 		res.PostalCode = wrapperspb.String(result.PostalCode.String)
 	}
 	if result.Country.Valid {
 		res.Country = wrapperspb.String(result.Country.String)
 	}
-	if result.Phone.Valid {
-		res.Phone = wrapperspb.String(result.Phone.String)
-	}
-	if result.Fax.Valid {
-		res.Fax = wrapperspb.String(result.Fax.String)
-	}
 
 	return
 }
 
 func (s *OrderService) Delete(ctx context.Context, req *pb.DeleteRequest) (res *emptypb.Empty, err error) {
-	m, err := models.OrderByOrderID(ctx, s.db, int16(req.OrderId))
+	m, err := models.OrderByOrderID(ctx, s.db, sql.NullInt64{Valid: true, Int64: req.OrderId.Value})
 	if err != nil {
 		return
 	}
@@ -90,7 +82,7 @@ func (s *OrderService) Delete(ctx context.Context, req *pb.DeleteRequest) (res *
 }
 
 func (s *OrderService) Employee(ctx context.Context, req *pb.EmployeeRequest) (res *typespb.Employee, err error) {
-	m, err := models.OrderByOrderID(ctx, s.db, int16(req.OrderId))
+	m, err := models.OrderByOrderID(ctx, s.db, sql.NullInt64{Valid: true, Int64: req.OrderId.Value})
 	if err != nil {
 		return
 	}
@@ -101,51 +93,21 @@ func (s *OrderService) Employee(ctx context.Context, req *pb.EmployeeRequest) (r
 	}
 
 	res = new(typespb.Employee)
-	res.EmployeeId = int32(result.EmployeeID)
-	res.LastName = result.LastName
-	res.FirstName = result.FirstName
-	if result.Title.Valid {
-		res.Title = wrapperspb.String(result.Title.String)
+	if result.EmployeeID.Valid {
+		res.EmployeeId = wrapperspb.Int64(result.EmployeeID.Int64)
 	}
-	if result.TitleOfCourtesy.Valid {
-		res.TitleOfCourtesy = wrapperspb.String(result.TitleOfCourtesy.String)
+	if result.LastName.Valid {
+		res.LastName = wrapperspb.String(result.LastName.String)
 	}
-	if result.BirthDate.Valid {
-		res.BirthDate = timestamppb.New(result.BirthDate.Time)
+	if result.FirstName.Valid {
+		res.FirstName = wrapperspb.String(result.FirstName.String)
 	}
-	if result.HireDate.Valid {
-		res.HireDate = timestamppb.New(result.HireDate.Time)
+	res.BirthDate = timestamppb.New(result.BirthDate.Time())
+	if result.Photo.Valid {
+		res.Photo = wrapperspb.String(result.Photo.String)
 	}
-	if result.Address.Valid {
-		res.Address = wrapperspb.String(result.Address.String)
-	}
-	if result.City.Valid {
-		res.City = wrapperspb.String(result.City.String)
-	}
-	if result.Region.Valid {
-		res.Region = wrapperspb.String(result.Region.String)
-	}
-	if result.PostalCode.Valid {
-		res.PostalCode = wrapperspb.String(result.PostalCode.String)
-	}
-	if result.Country.Valid {
-		res.Country = wrapperspb.String(result.Country.String)
-	}
-	if result.HomePhone.Valid {
-		res.HomePhone = wrapperspb.String(result.HomePhone.String)
-	}
-	if result.Extension.Valid {
-		res.Extension = wrapperspb.String(result.Extension.String)
-	}
-	res.Photo = result.Photo
 	if result.Notes.Valid {
 		res.Notes = wrapperspb.String(result.Notes.String)
-	}
-	if result.ReportsTo.Valid {
-		res.ReportsTo = wrapperspb.Int64(result.ReportsTo.Int64)
-	}
-	if result.PhotoPath.Valid {
-		res.PhotoPath = wrapperspb.String(result.PhotoPath.String)
 	}
 
 	return
@@ -154,65 +116,24 @@ func (s *OrderService) Employee(ctx context.Context, req *pb.EmployeeRequest) (r
 func (s *OrderService) Insert(ctx context.Context, req *pb.InsertRequest) (res *emptypb.Empty, err error) {
 	var m models.Order
 	if v := req.GetCustomerId(); v != nil {
-		m.CustomerID = sql.NullString{Valid: true, String: v.Value}
+		m.CustomerID = sql.NullInt64{Valid: true, Int64: v.Value}
 	}
 	if v := req.GetEmployeeId(); v != nil {
 		m.EmployeeID = sql.NullInt64{Valid: true, Int64: v.Value}
-	}
-	if v := req.GetFreight(); v != nil {
-		m.Freight = sql.NullFloat64{Valid: true, Float64: v.Value}
 	}
 	if v := req.GetOrderDate(); v != nil {
 		if err = v.CheckValid(); err != nil {
 			err = fmt.Errorf("invalid OrderDate: %s%w", err.Error(), validation.ErrUserInput)
 			return
 		}
-		if t := v.AsTime(); !t.IsZero() {
-			m.OrderDate.Valid = true
-			m.OrderDate.Time = t
-		}
+		t := models.NewTime(v.AsTime())
+		m.OrderDate = &t
 	}
-	m.OrderID = int16(req.GetOrderId())
-	if v := req.GetRequiredDate(); v != nil {
-		if err = v.CheckValid(); err != nil {
-			err = fmt.Errorf("invalid RequiredDate: %s%w", err.Error(), validation.ErrUserInput)
-			return
-		}
-		if t := v.AsTime(); !t.IsZero() {
-			m.RequiredDate.Valid = true
-			m.RequiredDate.Time = t
-		}
+	if v := req.GetOrderId(); v != nil {
+		m.OrderID = sql.NullInt64{Valid: true, Int64: v.Value}
 	}
-	if v := req.GetShipAddress(); v != nil {
-		m.ShipAddress = sql.NullString{Valid: true, String: v.Value}
-	}
-	if v := req.GetShipCity(); v != nil {
-		m.ShipCity = sql.NullString{Valid: true, String: v.Value}
-	}
-	if v := req.GetShipCountry(); v != nil {
-		m.ShipCountry = sql.NullString{Valid: true, String: v.Value}
-	}
-	if v := req.GetShipName(); v != nil {
-		m.ShipName = sql.NullString{Valid: true, String: v.Value}
-	}
-	if v := req.GetShipPostalCode(); v != nil {
-		m.ShipPostalCode = sql.NullString{Valid: true, String: v.Value}
-	}
-	if v := req.GetShipRegion(); v != nil {
-		m.ShipRegion = sql.NullString{Valid: true, String: v.Value}
-	}
-	if v := req.GetShipVia(); v != nil {
-		m.ShipVia = sql.NullInt64{Valid: true, Int64: v.Value}
-	}
-	if v := req.GetShippedDate(); v != nil {
-		if err = v.CheckValid(); err != nil {
-			err = fmt.Errorf("invalid ShippedDate: %s%w", err.Error(), validation.ErrUserInput)
-			return
-		}
-		if t := v.AsTime(); !t.IsZero() {
-			m.ShippedDate.Valid = true
-			m.ShippedDate.Time = t
-		}
+	if v := req.GetShipperId(); v != nil {
+		m.ShipperID = sql.NullInt64{Valid: true, Int64: v.Value}
 	}
 
 	err = m.Insert(ctx, s.db)
@@ -229,7 +150,10 @@ func (s *OrderService) Insert(ctx context.Context, req *pb.InsertRequest) (res *
 
 func (s *OrderService) OrderByOrderID(ctx context.Context, req *pb.OrderByOrderIDRequest) (res *typespb.Order, err error) {
 
-	orderID := int16(req.GetOrderId())
+	var orderID sql.NullInt64
+	if v := req.GetOrderId(); v != nil {
+		orderID = sql.NullInt64{Valid: true, Int64: v.Value}
+	}
 
 	result, err := models.OrderByOrderID(ctx, s.db, orderID)
 	if err != nil {
@@ -237,52 +161,25 @@ func (s *OrderService) OrderByOrderID(ctx context.Context, req *pb.OrderByOrderI
 	}
 
 	res = new(typespb.Order)
-	res.OrderId = int32(result.OrderID)
+	if result.OrderID.Valid {
+		res.OrderId = wrapperspb.Int64(result.OrderID.Int64)
+	}
 	if result.CustomerID.Valid {
-		res.CustomerId = wrapperspb.String(result.CustomerID.String)
+		res.CustomerId = wrapperspb.Int64(result.CustomerID.Int64)
 	}
 	if result.EmployeeID.Valid {
 		res.EmployeeId = wrapperspb.Int64(result.EmployeeID.Int64)
 	}
-	if result.OrderDate.Valid {
-		res.OrderDate = timestamppb.New(result.OrderDate.Time)
-	}
-	if result.RequiredDate.Valid {
-		res.RequiredDate = timestamppb.New(result.RequiredDate.Time)
-	}
-	if result.ShippedDate.Valid {
-		res.ShippedDate = timestamppb.New(result.ShippedDate.Time)
-	}
-	if result.ShipVia.Valid {
-		res.ShipVia = wrapperspb.Int64(result.ShipVia.Int64)
-	}
-	if result.Freight.Valid {
-		res.Freight = wrapperspb.Double(result.Freight.Float64)
-	}
-	if result.ShipName.Valid {
-		res.ShipName = wrapperspb.String(result.ShipName.String)
-	}
-	if result.ShipAddress.Valid {
-		res.ShipAddress = wrapperspb.String(result.ShipAddress.String)
-	}
-	if result.ShipCity.Valid {
-		res.ShipCity = wrapperspb.String(result.ShipCity.String)
-	}
-	if result.ShipRegion.Valid {
-		res.ShipRegion = wrapperspb.String(result.ShipRegion.String)
-	}
-	if result.ShipPostalCode.Valid {
-		res.ShipPostalCode = wrapperspb.String(result.ShipPostalCode.String)
-	}
-	if result.ShipCountry.Valid {
-		res.ShipCountry = wrapperspb.String(result.ShipCountry.String)
+	res.OrderDate = timestamppb.New(result.OrderDate.Time())
+	if result.ShipperID.Valid {
+		res.ShipperId = wrapperspb.Int64(result.ShipperID.Int64)
 	}
 
 	return
 }
 
 func (s *OrderService) Shipper(ctx context.Context, req *pb.ShipperRequest) (res *typespb.Shipper, err error) {
-	m, err := models.OrderByOrderID(ctx, s.db, int16(req.OrderId))
+	m, err := models.OrderByOrderID(ctx, s.db, sql.NullInt64{Valid: true, Int64: req.OrderId.Value})
 	if err != nil {
 		return
 	}
@@ -293,8 +190,12 @@ func (s *OrderService) Shipper(ctx context.Context, req *pb.ShipperRequest) (res
 	}
 
 	res = new(typespb.Shipper)
-	res.ShipperId = int32(result.ShipperID)
-	res.CompanyName = result.CompanyName
+	if result.ShipperID.Valid {
+		res.ShipperId = wrapperspb.Int64(result.ShipperID.Int64)
+	}
+	if result.ShipperName.Valid {
+		res.ShipperName = wrapperspb.String(result.ShipperName.String)
+	}
 	if result.Phone.Valid {
 		res.Phone = wrapperspb.String(result.Phone.String)
 	}
@@ -303,70 +204,29 @@ func (s *OrderService) Shipper(ctx context.Context, req *pb.ShipperRequest) (res
 }
 
 func (s *OrderService) Update(ctx context.Context, req *pb.UpdateRequest) (res *emptypb.Empty, err error) {
-	m, err := models.OrderByOrderID(ctx, s.db, int16(req.OrderId))
+	m, err := models.OrderByOrderID(ctx, s.db, sql.NullInt64{Valid: true, Int64: req.OrderId.Value})
 	if err != nil {
 		return
 	}
 	if v := req.GetCustomerId(); v != nil {
-		m.CustomerID = sql.NullString{Valid: true, String: v.Value}
+		m.CustomerID = sql.NullInt64{Valid: true, Int64: v.Value}
 	}
 	if v := req.GetEmployeeId(); v != nil {
 		m.EmployeeID = sql.NullInt64{Valid: true, Int64: v.Value}
-	}
-	if v := req.GetFreight(); v != nil {
-		m.Freight = sql.NullFloat64{Valid: true, Float64: v.Value}
 	}
 	if v := req.GetOrderDate(); v != nil {
 		if err = v.CheckValid(); err != nil {
 			err = fmt.Errorf("invalid OrderDate: %s%w", err.Error(), validation.ErrUserInput)
 			return
 		}
-		if t := v.AsTime(); !t.IsZero() {
-			m.OrderDate.Valid = true
-			m.OrderDate.Time = t
-		}
+		t := models.NewTime(v.AsTime())
+		m.OrderDate = &t
 	}
-	m.OrderID = int16(req.GetOrderId())
-	if v := req.GetRequiredDate(); v != nil {
-		if err = v.CheckValid(); err != nil {
-			err = fmt.Errorf("invalid RequiredDate: %s%w", err.Error(), validation.ErrUserInput)
-			return
-		}
-		if t := v.AsTime(); !t.IsZero() {
-			m.RequiredDate.Valid = true
-			m.RequiredDate.Time = t
-		}
+	if v := req.GetOrderId(); v != nil {
+		m.OrderID = sql.NullInt64{Valid: true, Int64: v.Value}
 	}
-	if v := req.GetShipAddress(); v != nil {
-		m.ShipAddress = sql.NullString{Valid: true, String: v.Value}
-	}
-	if v := req.GetShipCity(); v != nil {
-		m.ShipCity = sql.NullString{Valid: true, String: v.Value}
-	}
-	if v := req.GetShipCountry(); v != nil {
-		m.ShipCountry = sql.NullString{Valid: true, String: v.Value}
-	}
-	if v := req.GetShipName(); v != nil {
-		m.ShipName = sql.NullString{Valid: true, String: v.Value}
-	}
-	if v := req.GetShipPostalCode(); v != nil {
-		m.ShipPostalCode = sql.NullString{Valid: true, String: v.Value}
-	}
-	if v := req.GetShipRegion(); v != nil {
-		m.ShipRegion = sql.NullString{Valid: true, String: v.Value}
-	}
-	if v := req.GetShipVia(); v != nil {
-		m.ShipVia = sql.NullInt64{Valid: true, Int64: v.Value}
-	}
-	if v := req.GetShippedDate(); v != nil {
-		if err = v.CheckValid(); err != nil {
-			err = fmt.Errorf("invalid ShippedDate: %s%w", err.Error(), validation.ErrUserInput)
-			return
-		}
-		if t := v.AsTime(); !t.IsZero() {
-			m.ShippedDate.Valid = true
-			m.ShippedDate.Time = t
-		}
+	if v := req.GetShipperId(); v != nil {
+		m.ShipperID = sql.NullInt64{Valid: true, Int64: v.Value}
 	}
 
 	err = m.Update(ctx, s.db)
@@ -382,65 +242,24 @@ func (s *OrderService) Update(ctx context.Context, req *pb.UpdateRequest) (res *
 func (s *OrderService) Upsert(ctx context.Context, req *pb.UpsertRequest) (res *emptypb.Empty, err error) {
 	var m models.Order
 	if v := req.GetCustomerId(); v != nil {
-		m.CustomerID = sql.NullString{Valid: true, String: v.Value}
+		m.CustomerID = sql.NullInt64{Valid: true, Int64: v.Value}
 	}
 	if v := req.GetEmployeeId(); v != nil {
 		m.EmployeeID = sql.NullInt64{Valid: true, Int64: v.Value}
-	}
-	if v := req.GetFreight(); v != nil {
-		m.Freight = sql.NullFloat64{Valid: true, Float64: v.Value}
 	}
 	if v := req.GetOrderDate(); v != nil {
 		if err = v.CheckValid(); err != nil {
 			err = fmt.Errorf("invalid OrderDate: %s%w", err.Error(), validation.ErrUserInput)
 			return
 		}
-		if t := v.AsTime(); !t.IsZero() {
-			m.OrderDate.Valid = true
-			m.OrderDate.Time = t
-		}
+		t := models.NewTime(v.AsTime())
+		m.OrderDate = &t
 	}
-	m.OrderID = int16(req.GetOrderId())
-	if v := req.GetRequiredDate(); v != nil {
-		if err = v.CheckValid(); err != nil {
-			err = fmt.Errorf("invalid RequiredDate: %s%w", err.Error(), validation.ErrUserInput)
-			return
-		}
-		if t := v.AsTime(); !t.IsZero() {
-			m.RequiredDate.Valid = true
-			m.RequiredDate.Time = t
-		}
+	if v := req.GetOrderId(); v != nil {
+		m.OrderID = sql.NullInt64{Valid: true, Int64: v.Value}
 	}
-	if v := req.GetShipAddress(); v != nil {
-		m.ShipAddress = sql.NullString{Valid: true, String: v.Value}
-	}
-	if v := req.GetShipCity(); v != nil {
-		m.ShipCity = sql.NullString{Valid: true, String: v.Value}
-	}
-	if v := req.GetShipCountry(); v != nil {
-		m.ShipCountry = sql.NullString{Valid: true, String: v.Value}
-	}
-	if v := req.GetShipName(); v != nil {
-		m.ShipName = sql.NullString{Valid: true, String: v.Value}
-	}
-	if v := req.GetShipPostalCode(); v != nil {
-		m.ShipPostalCode = sql.NullString{Valid: true, String: v.Value}
-	}
-	if v := req.GetShipRegion(); v != nil {
-		m.ShipRegion = sql.NullString{Valid: true, String: v.Value}
-	}
-	if v := req.GetShipVia(); v != nil {
-		m.ShipVia = sql.NullInt64{Valid: true, Int64: v.Value}
-	}
-	if v := req.GetShippedDate(); v != nil {
-		if err = v.CheckValid(); err != nil {
-			err = fmt.Errorf("invalid ShippedDate: %s%w", err.Error(), validation.ErrUserInput)
-			return
-		}
-		if t := v.AsTime(); !t.IsZero() {
-			m.ShippedDate.Valid = true
-			m.ShippedDate.Time = t
-		}
+	if v := req.GetShipperId(); v != nil {
+		m.ShipperID = sql.NullInt64{Valid: true, Int64: v.Value}
 	}
 
 	err = m.Upsert(ctx, s.db)

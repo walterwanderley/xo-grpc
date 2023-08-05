@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package shipper.v1;
 
-option go_package = "northwind/proto/shipper/v1";
+option go_package = "northwind/api/shipper/v1";
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
@@ -53,28 +53,28 @@ service ShipperService {
 }
 
 message DeleteRequest { 
-    int32 shipper_id = 1;
+    google.protobuf.Int64Value shipper_id = 1;
 }
 
 message InsertRequest { 
-    string company_name = 1;
-    google.protobuf.StringValue phone = 2;
-    int32 shipper_id = 3;
+    google.protobuf.StringValue phone = 1;
+    google.protobuf.Int64Value shipper_id = 2;
+    google.protobuf.StringValue shipper_name = 3;
 }
 
 message ShipperByShipperIDRequest { 
-    int32 shipper_id = 1;
+    google.protobuf.Int64Value shipper_id = 1;
 }
 
 message UpdateRequest { 
-    string company_name = 1;
-    google.protobuf.StringValue phone = 2;
+    google.protobuf.StringValue phone = 1;
     // Output only.
-    int32 shipper_id = 3;
+    google.protobuf.Int64Value shipper_id = 2;
+    google.protobuf.StringValue shipper_name = 3;
 }
 
 message UpsertRequest { 
-    string company_name = 1;
-    google.protobuf.StringValue phone = 2;
-    int32 shipper_id = 3;
+    google.protobuf.StringValue phone = 1;
+    google.protobuf.Int64Value shipper_id = 2;
+    google.protobuf.StringValue shipper_name = 3;
 }
