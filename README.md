@@ -4,7 +4,7 @@ Create a **gRPC** (and **HTTP/JSON** provided by grpc-gateway reverse proxy) **S
 
 ### Requirements
 
-- Go 1.16 or superior
+- Go 1.20 or superior
 - [xo](https://github.com/xo/xo)
 - [buf](https://buf.build/)
 

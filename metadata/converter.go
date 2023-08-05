@@ -55,13 +55,13 @@ func toProtoType(typ string) string {
 		return "google.protobuf.DoubleValue"
 	case "sql.NullString":
 		return "google.protobuf.StringValue"
-	case "sql.NullTime", "time.Time", "pq.NullTime", "mysql.NullTime", "xoutil.SqTime":
+	case "sql.NullTime", "time.Time", "pq.NullTime", "mysql.NullTime", "xoutil.SqTime", "Time":
 		return "google.protobuf.Timestamp"
 	case "uuid.UUID", "net.HardwareAddr", "net.IP":
 		return "string"
 	default:
 		if firstIsUpper(typ) {
-			return "typespb." + typ
+			return "typespb.v1." + typ
 		}
 
 		if strings.Contains(typ, textUnmarshalerTypePrefix) || strings.Contains(typ, parserTypePrefix) {
@@ -123,6 +123,8 @@ func bindToProto(src, dst, attrName, attrType string) []string {
 		res = append(res, fmt.Sprintf("%s.%s = timestamppb.New(%s.%s.Time) }", dst, camelCaseProto(attrName), src, attrName))
 	case "time.Time":
 		res = append(res, fmt.Sprintf("%s.%s = timestamppb.New(%s.%s)", dst, camelCaseProto(attrName), src, attrName))
+	case "Time":
+		res = append(res, fmt.Sprintf("%s.%s = timestamppb.New(%s.%s.Time())", dst, camelCaseProto(attrName), src, attrName))
 	case "xoutil.SqTime":
 		res = append(res, fmt.Sprintf("%s.%s = timestamppb.New(%s.%s.Timr)", dst, camelCaseProto(attrName), src, attrName))
 	case "uuid.UUID", "net.HardwareAddr", "net.IP":
@@ -245,6 +247,16 @@ func bindToGo(src, dst, attrName, attrType string, newVar bool) []string {
 		res = append(res, fmt.Sprintf("if err = v.CheckValid(); err != nil { err = fmt.Errorf(\"invalid %s: %%s%%w\", err.Error(), validation.ErrUserInput)", attrName))
 		res = append(res, "return }")
 		res = append(res, fmt.Sprintf("%s.Time = v.AsTime()", dst))
+		res = append(res, "}")
+	case "Time":
+		if newVar {
+			res = append(res, fmt.Sprintf("var %s models.%s", dst, attrType))
+		}
+		res = append(res, fmt.Sprintf("if v := %s.Get%s(); v != nil {", src, camelCaseProto(attrName)))
+		res = append(res, fmt.Sprintf("if err = v.CheckValid(); err != nil { err = fmt.Errorf(\"invalid %s: %%s%%w\", err.Error(), validation.ErrUserInput)", attrName))
+		res = append(res, "return }")
+		res = append(res, "t := models.NewTime(v.AsTime())")
+		res = append(res, fmt.Sprintf("%s = &t", dst))
 		res = append(res, "}")
 	case "uuid.UUID":
 		if newVar {

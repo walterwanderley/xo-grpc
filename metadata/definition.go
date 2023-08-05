@@ -93,17 +93,17 @@ func (p *Package) importEmpty() bool {
 func (p *Package) importTimestamp() bool {
 	for _, s := range p.Services {
 		for _, n := range s.InputTypes {
-			if n == "time.Time" || strings.HasSuffix(n, ".NullTime") {
+			if n == "time.Time" || strings.HasSuffix(n, ".NullTime") || n == "*Time" {
 				return true
 			}
 		}
 		for _, n := range s.InputMethodTypes {
-			if n == "time.Time" || strings.HasSuffix(n, ".NullTime") {
+			if n == "time.Time" || strings.HasSuffix(n, ".NullTime") || n == "*Time" {
 				return true
 			}
 		}
 		for _, n := range s.Output {
-			if n == "time.Time" || strings.HasSuffix(n, ".NullTime") {
+			if n == "time.Time" || strings.HasSuffix(n, ".NullTime") || n == "*Time" {
 				return true
 			}
 		}

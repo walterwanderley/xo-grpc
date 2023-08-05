@@ -82,6 +82,8 @@ func (s *Service) InputParams(prefix string) string {
 			params[i] = "int16(" + prefix + camelCaseProto(n) + ")"
 		case "uint16":
 			params[i] = "uint16(" + prefix + camelCaseProto(n) + ")"
+		case "sql.NullInt64":
+			params[i] = "sql.NullInt64{Valid: true, Int64: " + prefix + camelCaseProto(n) + ".Value}"
 		default:
 			params[i] = prefix + camelCaseProto(n)
 		}

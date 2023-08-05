@@ -64,7 +64,7 @@ func (m *Message) adjustType(messages map[string]*Message) {
 
 func (m *Message) importTimestamp() bool {
 	for _, typ := range m.AttrTypes {
-		if typ == "time.Time" || strings.HasSuffix(typ, ".NullTime") {
+		if typ == "time.Time" || strings.HasSuffix(typ, ".NullTime") || typ == "*Time" {
 			return true
 		}
 	}
