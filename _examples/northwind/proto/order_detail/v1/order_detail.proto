@@ -2,104 +2,86 @@ syntax = "proto3";
 
 package order_detail.v1;
 
-option go_package = "northwind/api/order_detail/v1";
-
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/wrappers.proto";
 import "typespb/v1/typespb.proto";
 
+option go_package = "northwind/api/order_detail/v1";
 
 service OrderDetailService {
-    
-    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            delete: "/v1/order-detail/{order_detail_id}"
-            
-        };
-    }
-    
-    rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            post: "/v1/order-detail"
-            body: "*"
-            
-        };
-    }
-    
-    rpc Order(OrderRequest) returns (typespb.v1.Order) {
-        option (google.api.http) = {
-            get: "/v1/order-detail/{order_detail_id}/order"
-            
-        };
-    }
-    
-    rpc OrderDetailByOrderDetailID(OrderDetailByOrderDetailIDRequest) returns (typespb.v1.OrderDetail) {
-        option (google.api.http) = {
-            get: "/v1/order-detail/{order_detail_id}"
-            
-        };
-    }
-    
-    rpc Product(ProductRequest) returns (typespb.v1.Product) {
-        option (google.api.http) = {
-            get: "/v1/order-detail/{order_detail_id}/product"
-            
-        };
-    }
-    
-    rpc Update(UpdateRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            put: "/v1/order-detail/{order_detail_id}"
-            body: "*"
-            
-        };
-    }
-    
-    rpc Upsert(UpsertRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            post: "/v1/order-detail/upsert"
-            body: "*"
-            
-        };
-    }
-    
+  rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {delete: "/v1/order-detail/{order_detail_id}"};
+  }
+
+  rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/order-detail"
+      body: "*"
+    };
+  }
+
+  rpc Order(OrderRequest) returns (typespb.v1.Order) {
+    option (google.api.http) = {get: "/v1/order-detail/{order_detail_id}/order"};
+  }
+
+  rpc OrderDetailByOrderDetailID(OrderDetailByOrderDetailIDRequest) returns (typespb.v1.OrderDetail) {
+    option (google.api.http) = {get: "/v1/order-detail/{order_detail_id}"};
+  }
+
+  rpc Product(ProductRequest) returns (typespb.v1.Product) {
+    option (google.api.http) = {get: "/v1/order-detail/{order_detail_id}/product"};
+  }
+
+  rpc Update(UpdateRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      put: "/v1/order-detail/{order_detail_id}"
+      body: "*"
+    };
+  }
+
+  rpc Upsert(UpsertRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/order-detail/upsert"
+      body: "*"
+    };
+  }
 }
 
-message DeleteRequest { 
-    google.protobuf.Int64Value order_detail_id = 1;
+message DeleteRequest {
+  google.protobuf.Int64Value order_detail_id = 1;
 }
 
-message InsertRequest { 
-    google.protobuf.Int64Value order_detail_id = 1;
-    google.protobuf.Int64Value order_id = 2;
-    google.protobuf.Int64Value product_id = 3;
-    google.protobuf.Int64Value quantity = 4;
+message InsertRequest {
+  google.protobuf.Int64Value order_detail_id = 1;
+  google.protobuf.Int64Value order_id = 2;
+  google.protobuf.Int64Value product_id = 3;
+  google.protobuf.Int64Value quantity = 4;
 }
 
-message OrderRequest { 
-    google.protobuf.Int64Value order_detail_id = 1;
+message OrderRequest {
+  google.protobuf.Int64Value order_detail_id = 1;
 }
 
-message OrderDetailByOrderDetailIDRequest { 
-    google.protobuf.Int64Value order_detail_id = 1;
+message OrderDetailByOrderDetailIDRequest {
+  google.protobuf.Int64Value order_detail_id = 1;
 }
 
-message ProductRequest { 
-    google.protobuf.Int64Value order_detail_id = 1;
+message ProductRequest {
+  google.protobuf.Int64Value order_detail_id = 1;
 }
 
-message UpdateRequest { 
-    // Output only.
-    google.protobuf.Int64Value order_detail_id = 1;
-    google.protobuf.Int64Value order_id = 2;
-    google.protobuf.Int64Value product_id = 3;
-    google.protobuf.Int64Value quantity = 4;
+message UpdateRequest {
+  // Output only.
+  google.protobuf.Int64Value order_detail_id = 1;
+  google.protobuf.Int64Value order_id = 2;
+  google.protobuf.Int64Value product_id = 3;
+  google.protobuf.Int64Value quantity = 4;
 }
 
-message UpsertRequest { 
-    google.protobuf.Int64Value order_detail_id = 1;
-    google.protobuf.Int64Value order_id = 2;
-    google.protobuf.Int64Value product_id = 3;
-    google.protobuf.Int64Value quantity = 4;
+message UpsertRequest {
+  google.protobuf.Int64Value order_detail_id = 1;
+  google.protobuf.Int64Value order_id = 2;
+  google.protobuf.Int64Value product_id = 3;
+  google.protobuf.Int64Value quantity = 4;
 }

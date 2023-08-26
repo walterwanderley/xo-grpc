@@ -2,79 +2,67 @@ syntax = "proto3";
 
 package category.v1;
 
-option go_package = "northwind/api/category/v1";
-
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/wrappers.proto";
 import "typespb/v1/typespb.proto";
 
+option go_package = "northwind/api/category/v1";
 
 service CategoryService {
-    
-    rpc CategoryByCategoryID(CategoryByCategoryIDRequest) returns (typespb.v1.Category) {
-        option (google.api.http) = {
-            get: "/v1/category/{category_id}"
-            
-        };
-    }
-    
-    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            delete: "/v1/category/{category_id}"
-            
-        };
-    }
-    
-    rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            post: "/v1/category"
-            body: "*"
-            
-        };
-    }
-    
-    rpc Update(UpdateRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            put: "/v1/category/{category_id}"
-            body: "*"
-            
-        };
-    }
-    
-    rpc Upsert(UpsertRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            post: "/v1/category/upsert"
-            body: "*"
-            
-        };
-    }
-    
+  rpc CategoryByCategoryID(CategoryByCategoryIDRequest) returns (typespb.v1.Category) {
+    option (google.api.http) = {get: "/v1/category/{category_id}"};
+  }
+
+  rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {delete: "/v1/category/{category_id}"};
+  }
+
+  rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/category"
+      body: "*"
+    };
+  }
+
+  rpc Update(UpdateRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      put: "/v1/category/{category_id}"
+      body: "*"
+    };
+  }
+
+  rpc Upsert(UpsertRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/category/upsert"
+      body: "*"
+    };
+  }
 }
 
-message CategoryByCategoryIDRequest { 
-    google.protobuf.Int64Value category_id = 1;
+message CategoryByCategoryIDRequest {
+  google.protobuf.Int64Value category_id = 1;
 }
 
-message DeleteRequest { 
-    google.protobuf.Int64Value category_id = 1;
+message DeleteRequest {
+  google.protobuf.Int64Value category_id = 1;
 }
 
-message InsertRequest { 
-    google.protobuf.Int64Value category_id = 1;
-    google.protobuf.StringValue category_name = 2;
-    google.protobuf.StringValue description = 3;
+message InsertRequest {
+  google.protobuf.Int64Value category_id = 1;
+  google.protobuf.StringValue category_name = 2;
+  google.protobuf.StringValue description = 3;
 }
 
-message UpdateRequest { 
-    // Output only.
-    google.protobuf.Int64Value category_id = 1;
-    google.protobuf.StringValue category_name = 2;
-    google.protobuf.StringValue description = 3;
+message UpdateRequest {
+  // Output only.
+  google.protobuf.Int64Value category_id = 1;
+  google.protobuf.StringValue category_name = 2;
+  google.protobuf.StringValue description = 3;
 }
 
-message UpsertRequest { 
-    google.protobuf.Int64Value category_id = 1;
-    google.protobuf.StringValue category_name = 2;
-    google.protobuf.StringValue description = 3;
+message UpsertRequest {
+  google.protobuf.Int64Value category_id = 1;
+  google.protobuf.StringValue category_name = 2;
+  google.protobuf.StringValue description = 3;
 }

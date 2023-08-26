@@ -115,6 +115,7 @@ func postProcess(def *metadata.Definition, workingDirectory string) {
 		panic(err)
 	}
 	execCommand("buf generate")
+	execCommand("buf format -w")
 	execCommand("go mod tidy")
 	fmt.Println("Finished!")
 }

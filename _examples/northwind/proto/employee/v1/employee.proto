@@ -2,89 +2,77 @@ syntax = "proto3";
 
 package employee.v1;
 
-option go_package = "northwind/api/employee/v1";
-
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
 import "typespb/v1/typespb.proto";
 
+option go_package = "northwind/api/employee/v1";
 
 service EmployeeService {
-    
-    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            delete: "/v1/employee/{employee_id}"
-            
-        };
-    }
-    
-    rpc EmployeeByEmployeeID(EmployeeByEmployeeIDRequest) returns (typespb.v1.Employee) {
-        option (google.api.http) = {
-            get: "/v1/employee/{employee_id}"
-            
-        };
-    }
-    
-    rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            post: "/v1/employee"
-            body: "*"
-            
-        };
-    }
-    
-    rpc Update(UpdateRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            put: "/v1/employee/{employee_id}"
-            body: "*"
-            
-        };
-    }
-    
-    rpc Upsert(UpsertRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            post: "/v1/employee/upsert"
-            body: "*"
-            
-        };
-    }
-    
+  rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {delete: "/v1/employee/{employee_id}"};
+  }
+
+  rpc EmployeeByEmployeeID(EmployeeByEmployeeIDRequest) returns (typespb.v1.Employee) {
+    option (google.api.http) = {get: "/v1/employee/{employee_id}"};
+  }
+
+  rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/employee"
+      body: "*"
+    };
+  }
+
+  rpc Update(UpdateRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      put: "/v1/employee/{employee_id}"
+      body: "*"
+    };
+  }
+
+  rpc Upsert(UpsertRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/employee/upsert"
+      body: "*"
+    };
+  }
 }
 
-message DeleteRequest { 
-    google.protobuf.Int64Value employee_id = 1;
+message DeleteRequest {
+  google.protobuf.Int64Value employee_id = 1;
 }
 
-message EmployeeByEmployeeIDRequest { 
-    google.protobuf.Int64Value employee_id = 1;
+message EmployeeByEmployeeIDRequest {
+  google.protobuf.Int64Value employee_id = 1;
 }
 
-message InsertRequest { 
-    google.protobuf.Timestamp birth_date = 1;
-    google.protobuf.Int64Value employee_id = 2;
-    google.protobuf.StringValue first_name = 3;
-    google.protobuf.StringValue last_name = 4;
-    google.protobuf.StringValue notes = 5;
-    google.protobuf.StringValue photo = 6;
+message InsertRequest {
+  google.protobuf.Timestamp birth_date = 1;
+  google.protobuf.Int64Value employee_id = 2;
+  google.protobuf.StringValue first_name = 3;
+  google.protobuf.StringValue last_name = 4;
+  google.protobuf.StringValue notes = 5;
+  google.protobuf.StringValue photo = 6;
 }
 
-message UpdateRequest { 
-    google.protobuf.Timestamp birth_date = 1;
-    // Output only.
-    google.protobuf.Int64Value employee_id = 2;
-    google.protobuf.StringValue first_name = 3;
-    google.protobuf.StringValue last_name = 4;
-    google.protobuf.StringValue notes = 5;
-    google.protobuf.StringValue photo = 6;
+message UpdateRequest {
+  google.protobuf.Timestamp birth_date = 1;
+  // Output only.
+  google.protobuf.Int64Value employee_id = 2;
+  google.protobuf.StringValue first_name = 3;
+  google.protobuf.StringValue last_name = 4;
+  google.protobuf.StringValue notes = 5;
+  google.protobuf.StringValue photo = 6;
 }
 
-message UpsertRequest { 
-    google.protobuf.Timestamp birth_date = 1;
-    google.protobuf.Int64Value employee_id = 2;
-    google.protobuf.StringValue first_name = 3;
-    google.protobuf.StringValue last_name = 4;
-    google.protobuf.StringValue notes = 5;
-    google.protobuf.StringValue photo = 6;
+message UpsertRequest {
+  google.protobuf.Timestamp birth_date = 1;
+  google.protobuf.Int64Value employee_id = 2;
+  google.protobuf.StringValue first_name = 3;
+  google.protobuf.StringValue last_name = 4;
+  google.protobuf.StringValue notes = 5;
+  google.protobuf.StringValue photo = 6;
 }

@@ -2,119 +2,98 @@ syntax = "proto3";
 
 package order.v1;
 
-option go_package = "northwind/api/order/v1";
-
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/timestamp.proto";
 import "google/protobuf/wrappers.proto";
 import "typespb/v1/typespb.proto";
 
+option go_package = "northwind/api/order/v1";
 
 service OrderService {
-    
-    rpc Customer(CustomerRequest) returns (typespb.v1.Customer) {
-        option (google.api.http) = {
-            get: "/v1/order/{order_id}/customer"
-            
-        };
-    }
-    
-    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            delete: "/v1/order/{order_id}"
-            
-        };
-    }
-    
-    rpc Employee(EmployeeRequest) returns (typespb.v1.Employee) {
-        option (google.api.http) = {
-            get: "/v1/order/{order_id}/employee"
-            
-        };
-    }
-    
-    rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            post: "/v1/order"
-            body: "*"
-            
-        };
-    }
-    
-    rpc OrderByOrderID(OrderByOrderIDRequest) returns (typespb.v1.Order) {
-        option (google.api.http) = {
-            get: "/v1/order/{order_id}"
-            
-        };
-    }
-    
-    rpc Shipper(ShipperRequest) returns (typespb.v1.Shipper) {
-        option (google.api.http) = {
-            get: "/v1/order/{order_id}/shipper"
-            
-        };
-    }
-    
-    rpc Update(UpdateRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            put: "/v1/order/{order_id}"
-            body: "*"
-            
-        };
-    }
-    
-    rpc Upsert(UpsertRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            post: "/v1/order/upsert"
-            body: "*"
-            
-        };
-    }
-    
+  rpc Customer(CustomerRequest) returns (typespb.v1.Customer) {
+    option (google.api.http) = {get: "/v1/order/{order_id}/customer"};
+  }
+
+  rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {delete: "/v1/order/{order_id}"};
+  }
+
+  rpc Employee(EmployeeRequest) returns (typespb.v1.Employee) {
+    option (google.api.http) = {get: "/v1/order/{order_id}/employee"};
+  }
+
+  rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/order"
+      body: "*"
+    };
+  }
+
+  rpc OrderByOrderID(OrderByOrderIDRequest) returns (typespb.v1.Order) {
+    option (google.api.http) = {get: "/v1/order/{order_id}"};
+  }
+
+  rpc Shipper(ShipperRequest) returns (typespb.v1.Shipper) {
+    option (google.api.http) = {get: "/v1/order/{order_id}/shipper"};
+  }
+
+  rpc Update(UpdateRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      put: "/v1/order/{order_id}"
+      body: "*"
+    };
+  }
+
+  rpc Upsert(UpsertRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/order/upsert"
+      body: "*"
+    };
+  }
 }
 
-message CustomerRequest { 
-    google.protobuf.Int64Value order_id = 1;
+message CustomerRequest {
+  google.protobuf.Int64Value order_id = 1;
 }
 
-message DeleteRequest { 
-    google.protobuf.Int64Value order_id = 1;
+message DeleteRequest {
+  google.protobuf.Int64Value order_id = 1;
 }
 
-message EmployeeRequest { 
-    google.protobuf.Int64Value order_id = 1;
+message EmployeeRequest {
+  google.protobuf.Int64Value order_id = 1;
 }
 
-message InsertRequest { 
-    google.protobuf.Int64Value customer_id = 1;
-    google.protobuf.Int64Value employee_id = 2;
-    google.protobuf.Timestamp order_date = 3;
-    google.protobuf.Int64Value order_id = 4;
-    google.protobuf.Int64Value shipper_id = 5;
+message InsertRequest {
+  google.protobuf.Int64Value customer_id = 1;
+  google.protobuf.Int64Value employee_id = 2;
+  google.protobuf.Timestamp order_date = 3;
+  google.protobuf.Int64Value order_id = 4;
+  google.protobuf.Int64Value shipper_id = 5;
 }
 
-message OrderByOrderIDRequest { 
-    google.protobuf.Int64Value order_id = 1;
+message OrderByOrderIDRequest {
+  google.protobuf.Int64Value order_id = 1;
 }
 
-message ShipperRequest { 
-    google.protobuf.Int64Value order_id = 1;
+message ShipperRequest {
+  google.protobuf.Int64Value order_id = 1;
 }
 
-message UpdateRequest { 
-    google.protobuf.Int64Value customer_id = 1;
-    google.protobuf.Int64Value employee_id = 2;
-    google.protobuf.Timestamp order_date = 3;
-    // Output only.
-    google.protobuf.Int64Value order_id = 4;
-    google.protobuf.Int64Value shipper_id = 5;
+message UpdateRequest {
+  google.protobuf.Int64Value customer_id = 1;
+  google.protobuf.Int64Value employee_id = 2;
+  google.protobuf.Timestamp order_date = 3;
+  // Output only.
+  google.protobuf.Int64Value order_id = 4;
+  google.protobuf.Int64Value shipper_id = 5;
 }
 
-message UpsertRequest { 
-    google.protobuf.Int64Value customer_id = 1;
-    google.protobuf.Int64Value employee_id = 2;
-    google.protobuf.Timestamp order_date = 3;
-    google.protobuf.Int64Value order_id = 4;
-    google.protobuf.Int64Value shipper_id = 5;
+message UpsertRequest {
+  google.protobuf.Int64Value customer_id = 1;
+  google.protobuf.Int64Value employee_id = 2;
+  google.protobuf.Timestamp order_date = 3;
+  google.protobuf.Int64Value order_id = 4;
+  google.protobuf.Int64Value shipper_id = 5;
 }

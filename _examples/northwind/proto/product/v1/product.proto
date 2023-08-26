@@ -2,110 +2,92 @@ syntax = "proto3";
 
 package product.v1;
 
-option go_package = "northwind/api/product/v1";
-
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/wrappers.proto";
 import "typespb/v1/typespb.proto";
 
+option go_package = "northwind/api/product/v1";
 
 service ProductService {
-    
-    rpc Category(CategoryRequest) returns (typespb.v1.Category) {
-        option (google.api.http) = {
-            get: "/v1/product/{product_id}/category"
-            
-        };
-    }
-    
-    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            delete: "/v1/product/{product_id}"
-            
-        };
-    }
-    
-    rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            post: "/v1/product"
-            body: "*"
-            
-        };
-    }
-    
-    rpc ProductByProductID(ProductByProductIDRequest) returns (typespb.v1.Product) {
-        option (google.api.http) = {
-            get: "/v1/product/{product_id}"
-            
-        };
-    }
-    
-    rpc Supplier(SupplierRequest) returns (typespb.v1.Supplier) {
-        option (google.api.http) = {
-            get: "/v1/product/{product_id}/supplier"
-            
-        };
-    }
-    
-    rpc Update(UpdateRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            put: "/v1/product/{product_id}"
-            body: "*"
-            
-        };
-    }
-    
-    rpc Upsert(UpsertRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            post: "/v1/product/upsert"
-            body: "*"
-            
-        };
-    }
-    
+  rpc Category(CategoryRequest) returns (typespb.v1.Category) {
+    option (google.api.http) = {get: "/v1/product/{product_id}/category"};
+  }
+
+  rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {delete: "/v1/product/{product_id}"};
+  }
+
+  rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/product"
+      body: "*"
+    };
+  }
+
+  rpc ProductByProductID(ProductByProductIDRequest) returns (typespb.v1.Product) {
+    option (google.api.http) = {get: "/v1/product/{product_id}"};
+  }
+
+  rpc Supplier(SupplierRequest) returns (typespb.v1.Supplier) {
+    option (google.api.http) = {get: "/v1/product/{product_id}/supplier"};
+  }
+
+  rpc Update(UpdateRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      put: "/v1/product/{product_id}"
+      body: "*"
+    };
+  }
+
+  rpc Upsert(UpsertRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/product/upsert"
+      body: "*"
+    };
+  }
 }
 
-message CategoryRequest { 
-    google.protobuf.Int64Value product_id = 1;
+message CategoryRequest {
+  google.protobuf.Int64Value product_id = 1;
 }
 
-message DeleteRequest { 
-    google.protobuf.Int64Value product_id = 1;
+message DeleteRequest {
+  google.protobuf.Int64Value product_id = 1;
 }
 
-message InsertRequest { 
-    google.protobuf.Int64Value category_id = 1;
-    google.protobuf.DoubleValue price = 2;
-    google.protobuf.Int64Value product_id = 3;
-    google.protobuf.StringValue product_name = 4;
-    google.protobuf.Int64Value supplier_id = 5;
-    google.protobuf.StringValue unit = 6;
+message InsertRequest {
+  google.protobuf.Int64Value category_id = 1;
+  google.protobuf.DoubleValue price = 2;
+  google.protobuf.Int64Value product_id = 3;
+  google.protobuf.StringValue product_name = 4;
+  google.protobuf.Int64Value supplier_id = 5;
+  google.protobuf.StringValue unit = 6;
 }
 
-message ProductByProductIDRequest { 
-    google.protobuf.Int64Value product_id = 1;
+message ProductByProductIDRequest {
+  google.protobuf.Int64Value product_id = 1;
 }
 
-message SupplierRequest { 
-    google.protobuf.Int64Value product_id = 1;
+message SupplierRequest {
+  google.protobuf.Int64Value product_id = 1;
 }
 
-message UpdateRequest { 
-    google.protobuf.Int64Value category_id = 1;
-    google.protobuf.DoubleValue price = 2;
-    // Output only.
-    google.protobuf.Int64Value product_id = 3;
-    google.protobuf.StringValue product_name = 4;
-    google.protobuf.Int64Value supplier_id = 5;
-    google.protobuf.StringValue unit = 6;
+message UpdateRequest {
+  google.protobuf.Int64Value category_id = 1;
+  google.protobuf.DoubleValue price = 2;
+  // Output only.
+  google.protobuf.Int64Value product_id = 3;
+  google.protobuf.StringValue product_name = 4;
+  google.protobuf.Int64Value supplier_id = 5;
+  google.protobuf.StringValue unit = 6;
 }
 
-message UpsertRequest { 
-    google.protobuf.Int64Value category_id = 1;
-    google.protobuf.DoubleValue price = 2;
-    google.protobuf.Int64Value product_id = 3;
-    google.protobuf.StringValue product_name = 4;
-    google.protobuf.Int64Value supplier_id = 5;
-    google.protobuf.StringValue unit = 6;
+message UpsertRequest {
+  google.protobuf.Int64Value category_id = 1;
+  google.protobuf.DoubleValue price = 2;
+  google.protobuf.Int64Value product_id = 3;
+  google.protobuf.StringValue product_name = 4;
+  google.protobuf.Int64Value supplier_id = 5;
+  google.protobuf.StringValue unit = 6;
 }

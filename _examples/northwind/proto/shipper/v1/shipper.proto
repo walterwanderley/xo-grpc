@@ -2,79 +2,67 @@ syntax = "proto3";
 
 package shipper.v1;
 
-option go_package = "northwind/api/shipper/v1";
-
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 import "google/protobuf/wrappers.proto";
 import "typespb/v1/typespb.proto";
 
+option go_package = "northwind/api/shipper/v1";
 
 service ShipperService {
-    
-    rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            delete: "/v1/shipper/{shipper_id}"
-            
-        };
-    }
-    
-    rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            post: "/v1/shipper"
-            body: "*"
-            
-        };
-    }
-    
-    rpc ShipperByShipperID(ShipperByShipperIDRequest) returns (typespb.v1.Shipper) {
-        option (google.api.http) = {
-            get: "/v1/shipper/{shipper_id}"
-            
-        };
-    }
-    
-    rpc Update(UpdateRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            put: "/v1/shipper/{shipper_id}"
-            body: "*"
-            
-        };
-    }
-    
-    rpc Upsert(UpsertRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            post: "/v1/shipper/upsert"
-            body: "*"
-            
-        };
-    }
-    
+  rpc Delete(DeleteRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {delete: "/v1/shipper/{shipper_id}"};
+  }
+
+  rpc Insert(InsertRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/shipper"
+      body: "*"
+    };
+  }
+
+  rpc ShipperByShipperID(ShipperByShipperIDRequest) returns (typespb.v1.Shipper) {
+    option (google.api.http) = {get: "/v1/shipper/{shipper_id}"};
+  }
+
+  rpc Update(UpdateRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      put: "/v1/shipper/{shipper_id}"
+      body: "*"
+    };
+  }
+
+  rpc Upsert(UpsertRequest) returns (google.protobuf.Empty) {
+    option (google.api.http) = {
+      post: "/v1/shipper/upsert"
+      body: "*"
+    };
+  }
 }
 
-message DeleteRequest { 
-    google.protobuf.Int64Value shipper_id = 1;
+message DeleteRequest {
+  google.protobuf.Int64Value shipper_id = 1;
 }
 
-message InsertRequest { 
-    google.protobuf.StringValue phone = 1;
-    google.protobuf.Int64Value shipper_id = 2;
-    google.protobuf.StringValue shipper_name = 3;
+message InsertRequest {
+  google.protobuf.StringValue phone = 1;
+  google.protobuf.Int64Value shipper_id = 2;
+  google.protobuf.StringValue shipper_name = 3;
 }
 
-message ShipperByShipperIDRequest { 
-    google.protobuf.Int64Value shipper_id = 1;
+message ShipperByShipperIDRequest {
+  google.protobuf.Int64Value shipper_id = 1;
 }
 
-message UpdateRequest { 
-    google.protobuf.StringValue phone = 1;
-    // Output only.
-    google.protobuf.Int64Value shipper_id = 2;
-    google.protobuf.StringValue shipper_name = 3;
+message UpdateRequest {
+  google.protobuf.StringValue phone = 1;
+  // Output only.
+  google.protobuf.Int64Value shipper_id = 2;
+  google.protobuf.StringValue shipper_name = 3;
 }
 
-message UpsertRequest { 
-    google.protobuf.StringValue phone = 1;
-    google.protobuf.Int64Value shipper_id = 2;
-    google.protobuf.StringValue shipper_name = 3;
+message UpsertRequest {
+  google.protobuf.StringValue phone = 1;
+  google.protobuf.Int64Value shipper_id = 2;
+  google.protobuf.StringValue shipper_name = 3;
 }

@@ -8,7 +8,7 @@ import "google/api/annotations.proto";
 {{range .ProtoImports}}{{ .}}
 {{end}}
 
-service {{.Package | UpperFirst}}Service {
+service {{.Package | PascalCase}}Service {
     {{range .Services}}
     rpc {{.RpcSignature}} {
         option (google.api.http) = {

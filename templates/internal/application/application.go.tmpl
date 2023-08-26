@@ -21,17 +21,17 @@ import (
 	"{{.GoModule}}/internal/validation"
 )
 	
-type {{.Package | UpperFirst}}Service struct {
-    pb.Unimplemented{{.Package | UpperFirst}}ServiceServer
+type {{.Package | PascalCase}}Service struct {
+    pb.Unimplemented{{.Package | PascalCase}}ServiceServer
 	db     *sql.DB
 	logger *zap.Logger
 }
 	
-func New{{.Package | UpperFirst}}Service(logger *zap.Logger, db *sql.DB) pb.{{.Package | UpperFirst}}ServiceServer {
-	return &{{.Package | UpperFirst}}Service{logger: logger, db: db}
+func New{{.Package | PascalCase}}Service(logger *zap.Logger, db *sql.DB) pb.{{.Package | PascalCase}}ServiceServer {
+	return &{{.Package | PascalCase}}Service{logger: logger, db: db}
 }
 {{$package := .Package}}{{$srcPackage := .SrcPackage}}{{ range .Services }}
-func (s *{{$package | UpperFirst}}Service) {{.Name}}(ctx context.Context, req *{{.MethodInputType}}) (res *{{.MethodOutputType}}, err error) {
+func (s *{{$package | PascalCase}}Service) {{.Name}}(ctx context.Context, req *{{.MethodInputType}}) (res *{{.MethodOutputType}}, err error) {
     {{- if and (or (eq .Name "Delete") (eq .Name "Update") (.RelationshipMethod)) (.PKJoin "") (.IsMethod) (.ReaderEntity) -}}
 	m, err := {{$srcPackage}}.{{.ReaderEntity.Name}}({{if .ReaderEntity.HasContext}}ctx, {{end}}s.db, {{.ReaderEntity.InputParams "req."}})
 	if err != nil {
